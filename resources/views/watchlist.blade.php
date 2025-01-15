@@ -1277,8 +1277,11 @@ use App\Providers\Helper;
                                                         $i = 1;
                                                             foreach($mergedData as $watchlist){
                                                                 if($watchlist['script_symbol'] == 'NSEFUT'){
+                                                                    $iii = DB::select('SELECT * FROM future_temp WHERE isIn = ? LIMIT 1', [$watchlist['Isin']]);
+                                                                    $foisin = $iii[0]->instrumentKey;
+                                                                    $tradingSymbol = $iii[0]->tradingSymbol;
                                                                     ?>
-                                    <p style="display: none" id="isin{{ $i }}">NSE_EQ|{{ $watchlist['Isin'] }}</p>
+                                    <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
                                     <div id="orderForm{{ $i }}">
                                         {{-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
                                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle
@@ -1376,7 +1379,7 @@ use App\Providers\Helper;
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Price</span>
-                                                                                                    <input type="text"
+                                                                                                    <input id="realprice{{ $i }}" type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter price">
                                                                                                     <span
@@ -1677,7 +1680,7 @@ use App\Providers\Helper;
                                             {{ $i }}
                                         </td>
                                         <td onclick="showOrderForm({{ $i }})" id="symbol{{ $i }}">{{
-                                            $watchlist['symbol'] }}</td>
+                                            $tradingSymbol }}</td>
                                         <td onclick="showOrderForm({{ $i }})" id="bid{{ $i }}">0</td>
                                         <td onclick="showOrderForm({{ $i }})" id="ask{{ $i }}">0</td>
                                         <td onclick="showOrderForm({{ $i }})" id="ltp{{ $i }}">0</td>
@@ -1983,6 +1986,7 @@ use App\Providers\Helper;
                             
                             // Update the table cells using the extracted rowId
                             document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`high${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0';
                             document.getElementById(`low${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low || '0';
                             document.getElementById(`open${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0';
