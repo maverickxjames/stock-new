@@ -261,6 +261,7 @@ public function updateDepositMsg(Request $request)
                 'client_secret' => $clientSecret,
             ]),
             CURLOPT_HTTPHEADER => [
+                
                   
                 'Content-Type: application/x-www-form-urlencoded',
                 'Accept: application/json',
