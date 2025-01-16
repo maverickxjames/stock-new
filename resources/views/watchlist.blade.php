@@ -1217,23 +1217,11 @@ use App\Providers\Helper;
 
             <?php
             $watchlists = Watchlist::where('userid', Auth::user()->id)->get();
-
-            if ($watchlists->count() > 0) {
-                $mergedData = []; // Array to store all merged watchlist data
-
-                foreach ($watchlists as $watchlist) {
-                    // Retrieve related `script` and `equity` data
-                    $script = Script::find($watchlist->script_id); // Using `find` for brevity
-                    $equity = Equity::find($watchlist->script_name);
-
-                    // Ensure `script` and `equity` are found before merging
-                    if ($script && $equity) {
-                        $mergedItem = array_merge(['watchlist_id' => $watchlist->id],$watchlist->toArray(), $script->toArray(), $equity->toArray());
-                        $mergedData[] = $mergedItem;
-                    }
-                }
-            } else {
-                $mergedData = [];
+            if($watchlists->count() > 0){
+                $mergedData = $watchlists;
+                // print_r($mergedData);
+            }else{
+            $mergedData = [];
             }
 
             ?>
@@ -1276,8 +1264,9 @@ use App\Providers\Helper;
                                     <?php
                                                         $i = 1;
                                                             foreach($mergedData as $watchlist){
-                                                                if($watchlist['script_symbol'] == 'NSEFUT'){
-                                                                    $iii = DB::select('SELECT * FROM future_temp WHERE isIn = ? LIMIT 1', [$watchlist['Isin']]);
+                                                                // print_r($watchlist);
+                                                                if($watchlist['segment'] == 'NSE_FO'){
+                                                                    $iii = DB::select('SELECT * FROM future_temp WHERE exchangeToken = ? LIMIT 1', [$watchlist['exchangeToken']]);
                                                                     $foisin = $iii[0]->instrumentKey;
                                                                     $tradingSymbol = $iii[0]->tradingSymbol;
                                                                     ?>
@@ -1821,7 +1810,7 @@ use App\Providers\Helper;
                 $i = 0;
 
             }else{
-               
+
                 ?>
             <div class="col-12">
                 <div class="card">
@@ -1956,7 +1945,7 @@ use App\Providers\Helper;
 
 
 
- 
+
     </script>
 
 
@@ -1983,7 +1972,7 @@ use App\Providers\Helper;
 
                             const ltp = feedData?.ltpc?.ltp || 1; // Default to 1 to avoid division by zero
                             const cp = feedData?.ltpc?.cp || 0;
-                            
+
                             // Update the table cells using the extracted rowId
                             document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice${rowId}`).value = feedData.ltpc.ltp || '0';
@@ -2013,7 +2002,7 @@ use App\Providers\Helper;
                             document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].bidQ || '0';
                             document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].askQ || '0';
 
-                            
+
 
                             // Optionally update the badge color or value
                             // const badgeElement = document.getElementById(`badge${rowId}`);
@@ -2040,9 +2029,9 @@ use App\Providers\Helper;
             var script = document.getElementById('searchable2').value;
             var callPutSelect = document.getElementById('callPutSelect');
             var strike = document.querySelector('.strike');
-            // 1 = future 
-            // 2 = option 
-            // 3 = mcx future 
+            // 1 = future
+            // 2 = option
+            // 3 = mcx future
             if(segment == 1){
                 const url = `/get-expiry/${script}`;
                 const url2 = `/get-stock/${segment}`;
@@ -2056,7 +2045,7 @@ use App\Providers\Helper;
                     // Handle successful response
                     console.log('Expiry dates:', data);
 
-                    // Clear existing script 
+                    // Clear existing script
                     $('#searchable2').empty();
 
                     // Append new options
@@ -2085,10 +2074,10 @@ use App\Providers\Helper;
                     // Clear existing options
                     $('#expiry').empty();
 
-                    
+
 
                     // Append new options
-                    // data -> 0 -> expiry 
+                    // data -> 0 -> expiry
 
                     data.forEach(function (item) {
                         $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
@@ -2100,7 +2089,7 @@ use App\Providers\Helper;
                 }
             });
 
-            
+
 
 
                 callPutSelect.disabled = true;
@@ -2121,7 +2110,7 @@ use App\Providers\Helper;
                     // Handle successful response
                     console.log('Expiry dates:', data);
 
-                    // Clear existing script 
+                    // Clear existing script
                     $('#searchable2').empty();
 
                     // Append new options
@@ -2151,10 +2140,10 @@ use App\Providers\Helper;
                     // Clear existing options
                     $('#expiry').empty();
 
-                    
+
 
                     // Append new options
-                    // data -> 0 -> expiry 
+                    // data -> 0 -> expiry
 
                     data.forEach(function (item) {
                         $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
@@ -2181,9 +2170,9 @@ use App\Providers\Helper;
             var script = document.getElementById('searchable2').value;
             var callPutSelect = document.getElementById('callPutSelect');
             var strike = document.querySelector('.strike');
-            // 1 = future 
-            // 2 = option 
-            // 3 = mcx future 
+            // 1 = future
+            // 2 = option
+            // 3 = mcx future
             if(segment == 1){
                 const url = `/get-expiry/${script}`;
             // Use jQuery's $.ajax method to make the request
@@ -2198,10 +2187,10 @@ use App\Providers\Helper;
                     // Clear existing options
                     $('#expiry').empty();
 
-                    
+
 
                     // Append new options
-                    // data -> 0 -> expiry 
+                    // data -> 0 -> expiry
 
                     data.forEach(function (item) {
                         $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
@@ -2231,10 +2220,10 @@ use App\Providers\Helper;
                     // Clear existing options
                     $('#expiry').empty();
 
-                    
+
 
                     // Append new options
-                    // data -> 0 -> expiry 
+                    // data -> 0 -> expiry
 
                     data.forEach(function (item) {
                         $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
@@ -2263,10 +2252,10 @@ use App\Providers\Helper;
                     // Clear existing options
                     $('#expiry').empty();
 
-                    
+
 
                     // Append new options
-                    // data -> 0 -> expiry 
+                    // data -> 0 -> expiry
 
                     data.forEach(function (item) {
                         $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);

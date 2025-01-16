@@ -69,18 +69,21 @@ class MarketDataService
 
         echo "Connection successful!\n";
 
-        $nsefo = DB::table('future_temp')
-    ->where('segment', 'NSE_FO')
-    ->pluck('exchangeToken')
-    ->toArray(); // Convert to a plain array if it's a Laravel collection
+        $nsefo = DB::table('watchlist')
+        ->select('exchangeToken') // Select only the 'exchangeToken' column
+        ->distinct()              // Ensure the results are distinct
+        ->get();                  // Retrieve the data
 
-$instrumentKeys = array_map(function ($token) {
-    return "NSE_FO|" . $token;
-}, $nsefo);
+    // Convert the collection to an array of 'exchangeToken' values
+    $tokens = $nsefo->pluck('exchangeToken')->toArray();
 
-$finalArray = ["instrumentKeys" => $instrumentKeys];
+    // Map each token to the required format
+    $instrumentKeys = array_map(function ($token) {
+        return "NSE_FO|" . $token;
+    }, $tokens);
 
-        
+    // Prepare the final array
+    $finalArray = ["instrumentKeys" => $instrumentKeys];
 
         $data = [
             "guid" => "someguid",

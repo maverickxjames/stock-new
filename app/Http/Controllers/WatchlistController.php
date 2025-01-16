@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\JsonResponse;
-// db facades 
+// db facades
 use Illuminate\Support\Facades\DB;
 // import model wathclist
 use App\Models\Watchlist;
@@ -67,9 +67,9 @@ class WatchlistController extends Controller
             ]);
 
             if ($response->successful()) {
-                // websocket 
+                // websocket
                 $data = $response->json();
-                
+
                 event(new \App\Events\Watchlist($data));
             } else {
                 return response()->json([
@@ -98,14 +98,14 @@ class WatchlistController extends Controller
             'strike' => 'nullable|numeric',                     // Strike is optional but must be a number
         ]);
 
+        $tradingSymbol = DB::table('equities')
+            ->where('id', $request->script)
+            ->value('symbol');
+
         $isExists = Watchlist::where('userid', auth()->id())
-            ->where('script_id', $request->segment)
-            ->where('script_name', $request->script)
-            ->where('script_expiry', $request->expiry)
-            ->where('call_put', $request->callPut)
-            ->where('strike_price', $request->strike)
+            ->where('tradingSymbol', $tradingSymbol)
             ->exists();
-        
+
         if ($isExists) {
             return response()->json([
                 'success' => false,
@@ -123,41 +123,43 @@ class WatchlistController extends Controller
             ], 422);
         }
 
-        try {
-            
-            $watchlist = new Watchlist();
 
-            $watchlist->userid = auth()->id();
-            $watchlist->script_id = $request->segment;
-            $watchlist->script_name = $request->script;
-            $watchlist->script_expiry = $request->expiry;
 
-           
-            if ($request->segment == 2) {
-                $watchlist->call_put = $request->callPut;
-                $watchlist->strike_price = $request->strike;
+
+        if($request->segment == 1) {
+            $tradingSymbol = $tradingSymbol . ' FUT '.$request->expiry;
+            $tradingData = DB::table('future_temp')->where('tradingSymbol', $tradingSymbol)->get();
+            // INSERT INTO `watchlist`(`id`, `instrumentKey`, `tradingSymbol`, `segment`, `expiry`, `instrumentType`, `assetSymbol`, `exchange`, `assetType`, `assetKey`, `isIn`, `exchangeToken`, `assetToken`, `created_at`, `updated_at`, `script_id`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]')
+            $query = DB::table('watchlist')->insert([
+                'instrumentKey' => $tradingData[0]->instrumentKey,
+                'tradingSymbol' => $tradingData[0]->tradingSymbol,
+                'segment' => $tradingData[0]->segment,
+                'expiry' => $tradingData[0]->expiry,
+                'instrumentType' => $tradingData[0]->instrumentType,
+                'assetSymbol' => $tradingData[0]->assetSymbol,
+                'exchange' => $tradingData[0]->exchange,
+                'assetType' => $tradingData[0]->assetType,
+                'assetKey' => $tradingData[0]->assetKey,
+                'isIn' => $tradingData[0]->isIn,
+                'exchangeToken' => $tradingData[0]->exchangeToken,
+                'assetToken' => $tradingData[0]->assetToken,
+                'script_id' => $request->script,
+                'userid' => auth()->id(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+            if($query){
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Watchlist entry added successfully.',
+                ], 201);
             } else {
-                $watchlist->call_put = null; 
-                $watchlist->strike_price = null;
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to add watchlist entry.',
+                ], 500);
             }
-
-            // Save the watchlist entry to the database
-            $watchlist->save();
-
-            // Return a success response
-            return response()->json([
-                'success' => true,
-                'message' => 'Watchlist entry added successfully.',
-                'data' => $watchlist,
-            ], 201);
-
-        } catch (\Exception $e) {
-            // Handle any errors that occur during saving
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while adding the watchlist.',
-                'error' => $e->getMessage(),
-            ], 500);
         }
     }
 

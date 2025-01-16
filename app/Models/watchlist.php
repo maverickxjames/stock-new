@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class watchlist extends Model
 {
-    protected $table = 'watchlists';
+    protected $table = 'watchlist';
 }
