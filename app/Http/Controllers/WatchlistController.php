@@ -126,7 +126,7 @@ class WatchlistController extends Controller
 
 
 
-        if($request->segment == 1) {
+        if($request->segment == 1 || $request->segment == 3) {
             $tradingSymbol = $tradingSymbol . ' FUT '.$request->expiry;
             $tradingData = DB::table('future_temp')->where('tradingSymbol', $tradingSymbol)->get();
             // INSERT INTO `watchlist`(`id`, `instrumentKey`, `tradingSymbol`, `segment`, `expiry`, `instrumentType`, `assetSymbol`, `exchange`, `assetType`, `assetKey`, `isIn`, `exchangeToken`, `assetToken`, `created_at`, `updated_at`, `script_id`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]')
@@ -160,6 +160,8 @@ class WatchlistController extends Controller
                     'message' => 'Failed to add watchlist entry.',
                 ], 500);
             }
+        }elseif($request->segment == 2){
+
         }
     }
 

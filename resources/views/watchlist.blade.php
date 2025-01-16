@@ -1270,7 +1270,7 @@ use App\Providers\Helper;
                                                                     $foisin = $iii[0]->instrumentKey;
                                                                     $tradingSymbol = $iii[0]->tradingSymbol;
                                                                     ?>
-                                    <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
+                                    <p style="display: none" id="isin1{{ $i }}">{{ $foisin }}</p>
                                     <div id="orderForm{{ $i }}">
                                         {{-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
                                             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle
@@ -1368,7 +1368,7 @@ use App\Providers\Helper;
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Price</span>
-                                                                                                    <input id="realprice{{ $i }}" type="text"
+                                                                                                    <input id="realprice1{{ $i }}" type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter price">
                                                                                                     <span
@@ -1668,22 +1668,22 @@ use App\Providers\Helper;
                                         <td>
                                             {{ $i }}
                                         </td>
-                                        <td onclick="showOrderForm({{ $i }})" id="symbol{{ $i }}">{{
+                                        <td onclick="showOrderForm({{ $i }})" id="symbol1{{ $i }}">{{
                                             $tradingSymbol }}</td>
-                                        <td onclick="showOrderForm({{ $i }})" id="bid{{ $i }}">0</td>
-                                        <td onclick="showOrderForm({{ $i }})" id="ask{{ $i }}">0</td>
-                                        <td onclick="showOrderForm({{ $i }})" id="ltp{{ $i }}">0</td>
-                                        <td id="ch{{ $i }}">0</td>
-                                        <td id="badge{{ $i }}">
+                                        <td onclick="showOrderForm({{ $i }})" id="bid1{{ $i }}">0</td>
+                                        <td onclick="showOrderForm({{ $i }})" id="ask1{{ $i }}">0</td>
+                                        <td onclick="showOrderForm({{ $i }})" id="ltp1{{ $i }}">0</td>
+                                        <td id="ch1{{ $i }}">0</td>
+                                        <td id="badge1{{ $i }}">
                                             {{-- <span class="badge light badge-danger">
                                                 <i class="fa fa-circle text-danger me-1"></i> --}}
                                                 0
                                                 {{-- </span> --}}
                                         </td>
-                                        <td id="high{{ $i }}">0</td>
-                                        <td id="low{{ $i }}">0</td>
-                                        <td id="open{{ $i }}">0</td>
-                                        <td id="close{{ $i }}">0</td>
+                                        <td id="high1{{ $i }}">0</td>
+                                        <td id="low1{{ $i }}">0</td>
+                                        <td id="open1{{ $i }}">0</td>
+                                        <td id="close1{{ $i }}">0</td>
                                         <td>
 
                                             <i onclick="removeWatchlist({{ $watchlist['watchlist_id'] }})"
@@ -1755,29 +1755,29 @@ use App\Providers\Helper;
                                                     foreach($mergedData as $watchlist){
                                                         if($watchlist['script_symbol'] == 'NSEOPT'){
                                                             ?>
-                                    <p style="display: none" id="isin{{ $i }}">{{ $watchlist['Isin'] }}
+                                    <p style="display: none" id="isin2{{ $i }}">{{ $watchlist['Isin'] }}
                                     </p>
                                     <tr>
                                         <td>
                                             {{ $i }}
                                         </td>
-                                        <td id="symbol{{ $i }}">{{ $watchlist['symbol'] }}</td>
+                                        <td id="symbol2{{ $i }}">{{ $watchlist['symbol'] }}</td>
 
 
-                                        <td id="bid{{ $i }}">0</td>
-                                        <td id="ask{{ $i }}">0</td>
-                                        <td id="ltp{{ $i }}">0</td>
-                                        <td id="ch{{ $i }}">0</td>
-                                        <td id="badge{{ $i }}">
+                                        <td id="bid2{{ $i }}">0</td>
+                                        <td id="ask2{{ $i }}">0</td>
+                                        <td id="ltp2{{ $i }}">0</td>
+                                        <td id="ch2{{ $i }}">0</td>
+                                        <td id="badge2{{ $i }}">
                                             <span class="badge light badge-danger">
                                                 <i class="fa fa-circle text-danger me-1"></i>
                                                 0
                                             </span>
                                         </td>
-                                        <td id="high{{ $i }}">0</td>
-                                        <td id="low{{ $i }}">0</td>
-                                        <td id="open{{ $i }}">0</td>
-                                        <td id="close{{ $i }}">0</td>
+                                        <td id="high2{{ $i }}">0</td>
+                                        <td id="low2{{ $i }}">0</td>
+                                        <td id="open2{{ $i }}">0</td>
+                                        <td id="close2{{ $i }}">0</td>
                                         <td>
 
                                             <i onclick="removeWatchlist({{ $watchlist['watchlist_id'] }})"
@@ -1843,31 +1843,35 @@ use App\Providers\Helper;
                                     <?php
                                                 $i = 1;
                                                     foreach($mergedData as $watchlist){
-                                                        if($watchlist['script_symbol'] == 'MCXFUT'){
+                                                        if($watchlist['segment'] == 'MCX_FO'){
+                                                            $iii = DB::select('SELECT * FROM future_temp WHERE exchangeToken = ? LIMIT 1', [$watchlist['exchangeToken']]);
+                                                                    $foisin = $iii[0]->instrumentKey;
+                                                                    $tradingSymbol = $iii[0]->tradingSymbol;
                                                             ?>
-                                    <p style="display: none" id="isin{{ $i }}">{{ $watchlist['Isin'] }}
+                                    <p style="display: none" id="isin3{{ $i }}">{{ $foisin }}
                                     </p>
                                     <tr>
                                         <td>
                                             {{ $i }}
                                         </td>
-                                        <td id="symbol{{ $i }}">{{ $watchlist['symbol'] }}</td>
+                                        <td id="symbol3{{ $i }}">{{
+                                            $tradingSymbol }}</td>
 
 
-                                        <td id="bid{{ $i }}">0</td>
-                                        <td id="ask{{ $i }}">0</td>
-                                        <td id="ltp{{ $i }}">0</td>
-                                        <td id="ch{{ $i }}">0</td>
-                                        <td id="badge{{ $i }}">
+                                        <td id="bid3{{ $i }}">0</td>
+                                        <td id="ask3{{ $i }}">0</td>
+                                        <td id="ltp3{{ $i }}">0</td>
+                                        <td id="ch3{{ $i }}">0</td>
+                                        <td id="badge3{{ $i }}">
                                             <span class="badge light badge-danger">
                                                 <i class="fa fa-circle text-danger me-1"></i>
                                                 0
                                             </span>
                                         </td>
-                                        <td id="high{{ $i }}">0</td>
-                                        <td id="low{{ $i }}">0</td>
-                                        <td id="open{{ $i }}">0</td>
-                                        <td id="close{{ $i }}">0</td>
+                                        <td id="high3{{ $i }}">0</td>
+                                        <td id="low3{{ $i }}">0</td>
+                                        <td id="open3{{ $i }}">0</td>
+                                        <td id="close3{{ $i }}">0</td>
                                         <td>
 
                                             <i onclick="removeWatchlist({{ $watchlist['watchlist_id'] }})"
@@ -1953,7 +1957,6 @@ use App\Providers\Helper;
     <script>
         Echo.channel('watchlists')
             .listen('Watchlist', (event) => {
-            console.log(event);
                 const feeds = event.watchlist.feeds;
 
                 // Iterate through the received WebSocket data
@@ -1965,26 +1968,31 @@ use App\Providers\Helper;
                         console.log(feedData);
 
                         // Find the <p> tag containing the matching ISIN
-                        const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
+                        const isinElement = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el.textContent === receivedIsin);
+                        const optisinElement = Array.from(document.querySelectorAll("p[id^='isin2']")).find(el => el.textContent === receivedIsin);
+                        // const mcxisinElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el => el.textContent === receivedIsin);
+                     
+                        const elements = Array.from(document.querySelectorAll("p[id^='isin3']"));
+                        const mcxisinElement = elements.find(el => el.textContent.trim() === receivedIsin.trim());
                         if (isinElement) {
                             // Extract the numeric part from the id, e.g., "isin1" → "1"
-                            const rowId = isinElement.id.replace('isin', '');
+                            const rowId = isinElement.id.replace('isin1', '');
 
                             const ltp = feedData?.ltpc?.ltp || 1; // Default to 1 to avoid division by zero
                             const cp = feedData?.ltpc?.cp || 0;
 
                             // Update the table cells using the extracted rowId
-                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`high${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0';
-                            document.getElementById(`low${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`open${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0';
-                            document.getElementById(`close${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`high1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0';
+                            document.getElementById(`low1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`open1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0';
+                            document.getElementById(`close1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close || '0';
                             // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
                             const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
                             const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
                             const percentageIcon = percentageChange > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                            document.getElementById(`ch${rowId}`).innerHTML = `
+                            document.getElementById(`ch1${rowId}`).innerHTML = `
                                 <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
                                     <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
                                 </span>`;
@@ -1993,14 +2001,14 @@ use App\Providers\Helper;
                             const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
                             const badgeIcon = (ltp - cp) > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
-                            document.getElementById(`badge${rowId}`).innerHTML = `
+                            document.getElementById(`badge1${rowId}`).innerHTML = `
                                 <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
                                     <img src="${badgeIcon}" width="12" class="blink" /> ${badgeValue}
                                 </span>`;
 
                             // bid and ask
-                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].bidQ || '0';
-                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].askQ || '0';
+                            document.getElementById(`bid1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].bidQ || '0';
+                            document.getElementById(`ask1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].askQ || '0';
 
 
 
@@ -2014,6 +2022,76 @@ use App\Providers\Helper;
                             //             ${feedData.ch || '0'}
                             //         </span>`;
                             // }
+                        }else if(optisinElement){
+
+                            const rowId = optisinElement.id.replace('isin2', '');
+
+                            const ltp = feedData?.ltpc?.ltp || 1; // Default to 1 to avoid division by zero
+                            const cp = feedData?.ltpc?.cp || 0;
+
+                            // Update the table cells using the extracted rowId
+                            document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`high2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0';
+                            document.getElementById(`low2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`open2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0';
+                            document.getElementById(`close2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close || '0';
+                            // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
+                            const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
+                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
+                            const percentageIcon = percentageChange > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            document.getElementById(`ch2${rowId}`).innerHTML = `
+                                <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
+                                    <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
+                                </span>`;
+
+                            // badge
+                            const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
+                            const badgeIcon = (ltp - cp) > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            const badgeValue = (ltp - cp).toFixed(2) || '0';
+                            document.getElementById(`badge2${rowId}`).innerHTML = `
+                                <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
+                                    <img src="${badgeIcon}" width="12" class="blink" /> ${badgeValue}
+                                </span>`;
+
+                            // bid and ask
+                            document.getElementById(`bid2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].bidQ || '0';
+                            document.getElementById(`ask2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].askQ || '0';
+
+                        }else if(mcxisinElement){
+                            const rowId = mcxisinElement.id.replace('isin3', '');
+
+                            const ltp = feedData?.ltpc?.ltp || 1; // Default to 1 to avoid division by zero
+                            const cp = feedData?.ltpc?.cp || 0;
+
+                            // Update the table cells using the extracted rowId
+                            document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`realprice3${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`high3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0';
+                            document.getElementById(`low3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`open3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0';
+                            document.getElementById(`close3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close || '0';
+                            // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
+                            const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
+                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
+                            const percentageIcon = percentageChange > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            document.getElementById(`ch3${rowId}`).innerHTML = `
+                                <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
+                                    <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
+                                </span>`;
+
+                            // badge
+                            const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
+                            const badgeIcon = (ltp - cp) > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            const badgeValue = (ltp - cp).toFixed(2) || '0';
+                            document.getElementById(`badge3${rowId}`).innerHTML = `
+                                <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
+                                    <img src="${badgeIcon}" width="12" class="blink" /> ${badgeValue}
+                                </span>`;
+
+                            // bid and ask
+                            document.getElementById(`bid3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].bidQ || '0';
+                            document.getElementById(`ask3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].askQ || '0';
                         }
                     }
                 }

@@ -69,21 +69,17 @@ class MarketDataService
 
         echo "Connection successful!\n";
 
-        $nsefo = DB::table('watchlist')
-        ->select('exchangeToken') // Select only the 'exchangeToken' column
+        $nsefo = DB::table('future_temp')
+        ->select('instrumentKey') // Select only the 'exchangeToken' column
         ->distinct()              // Ensure the results are distinct
         ->get();                  // Retrieve the data
 
     // Convert the collection to an array of 'exchangeToken' values
-    $tokens = $nsefo->pluck('exchangeToken')->toArray();
+    $tokens = $nsefo->pluck('instrumentKey')->toArray();
 
-    // Map each token to the required format
-    $instrumentKeys = array_map(function ($token) {
-        return "NSE_FO|" . $token;
-    }, $tokens);
 
     // Prepare the final array
-    $finalArray = ["instrumentKeys" => $instrumentKeys];
+    $finalArray = ["instrumentKeys" => $tokens];
 
         $data = [
             "guid" => "someguid",
@@ -111,7 +107,7 @@ class MarketDataService
                 $apidata = $decodedData->serializeToJsonString();
 
                 $data2 = json_decode($apidata, true);
-                var_dump($data2);
+                // var_dump($data2);
 
                 // Broadcast the processed data to the client
                 broadcast(new \App\Events\Watchlist($data2))->toOthers();
