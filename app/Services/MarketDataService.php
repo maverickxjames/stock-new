@@ -69,7 +69,7 @@ class MarketDataService
 
         echo "Connection successful!\n";
 
-        $nsefo = DB::table('future_temp')
+        $nsefo = DB::table('watchlist')
         ->select('instrumentKey') // Select only the 'exchangeToken' column
         ->distinct()              // Ensure the results are distinct
         ->get();                  // Retrieve the data
