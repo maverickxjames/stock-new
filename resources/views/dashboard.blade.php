@@ -197,24 +197,7 @@ $bseResponse = fetchData($url, $headers, $bseData);
 		<!--**********************************
             Nav header start
         ***********************************-->
-		<div class="nav-header">
-			<a onclick="window.location.href='{{ route('watchlist') }}'" class="brand-logo" >
-			{{-- <a class="brand-logo"> --}}
-				<img src="images/logo-white.png" alt="" width="100" style="cursor:pointer;">
-
-				{{-- <div class="brand-title">
-					<div class="text-center  mb-2 pt-5 logo">
-						<img src="images/logo-white.png" alt="" width="80">
-					</div>
-				</div> --}}
-
-			</a>
-			<div class="nav-control">
-				<div class="hamburger">
-					<span class="line"></span><span class="line"></span><span class="line"></span>
-				</div>
-			</div>
-		</div>
+		<x-nav-header />
 		<!--**********************************
             Nav header end
         ***********************************-->
@@ -222,15 +205,15 @@ $bseResponse = fetchData($url, $headers, $bseData);
 			<!--**********************************
             Header start
         ***********************************-->
-		<div class="header">
+	    <div class="header">
 			<div class="header-content">
 				<nav class="navbar navbar-expand">
 					<div class="collapse navbar-collapse justify-content-between">
 						<div class="header-left">
-
+		
 						</div>
 						<ul class="navbar-nav header-right">
-
+		
 							<li class="nav-item dropdown notification_dropdown">
 								<a class="nav-link bell dz-theme-mode" href="javascript:void(0);">
 									<svg id="icon-light" xmlns="http://www.w3.org/2000/svg"
@@ -258,7 +241,7 @@ $bseResponse = fetchData($url, $headers, $bseData);
 									</svg>
 								</a>
 							</li>
-							<li class="nav-item dropdown notification_dropdown">
+							{{-- <li class="nav-item dropdown notification_dropdown">
 								<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 										width="32px" height="32px" viewBox="0 0 24 24" version="1.1"
@@ -346,9 +329,9 @@ $bseResponse = fetchData($url, $headers, $bseData);
 									<a class="all-notification" href="javascript:void(0);">See all notifications <i
 											class="ti-arrow-end"></i></a>
 								</div>
-							</li>
-
-							<li class="nav-item dropdown notification_dropdown">
+							</li> --}}
+		
+							{{-- <li class="nav-item dropdown notification_dropdown">
 								<a class="nav-link " href="javascript:void(0);" data-bs-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 										width="32px" height="32px" viewBox="0 0 24 24" version="1.1"
@@ -361,8 +344,8 @@ $bseResponse = fetchData($url, $headers, $bseData);
 										</g>
 									</svg>
 								</a>
-
-							</li>
+		
+							</li> --}}
 							<li>
 								<div class="dropdown header-profile2">
 									<a class="nav-link" href="javascript:void(0);" role="button"
@@ -379,23 +362,23 @@ $bseResponse = fetchData($url, $headers, $bseData);
 									</a>
 									<div class="dropdown-menu dropdown-menu-end header-profile3 " style="">
 										<a onclick="window.location.href='{{ route('profile') }}'"
-											class="dropdown-item ai-icon ">
+											class="dropdown-item ai-icon " style="cursor: pointer;">
 											<img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="">
 											<span class="ms-2">Profile </span>
 										</a>
 										<a onclick="window.location.href='{{ route('portfolio') }}'"
-											class="dropdown-item ai-icon ">
+											class="dropdown-item ai-icon " style="cursor: pointer;">
 											<img src="https://cdn-icons-png.flaticon.com/512/943/943026.png" alt="">
 											<span class="ms-2">Portfolio </span>
 										</a>
-
+		
 										<a onclick="window.location.href='{{ route('profile') }}'"
-											class="dropdown-item ai-icon ">
+											class="dropdown-item ai-icon " style="cursor: pointer;">
 											<img src="https://cdn-icons-png.flaticon.com/512/2698/2698011.png" alt="">
 											<span class="ms-2">Settings </span>
 										</a>
 										<a onclick="window.location.href='{{ route('logout') }}'"
-											class="dropdown-item ai-icon">
+											class="dropdown-item ai-icon" style="cursor: pointer;">
 											<img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png" alt="">
 											<span class="ms-2 text-danger">Logout </span>
 										</a>
@@ -411,7 +394,7 @@ $bseResponse = fetchData($url, $headers, $bseData);
 					<h2 class="text-white">Market</h2>
 					<p class="text-warning ms-2">Welcome Back {{ $user['name'] }} !</p>
 				</div>
-
+		
 			</div>
 		</div>
 		<!--**********************************

@@ -1,9 +1,14 @@
-<div class="dlabnav">
+<?php
+$user=Auth::user();
+
+?>
+
+<div class="dlabnav" style="z-index: 1000;">
     <div class="feature-box style-3">
         <div class="wallet-box">
             <img src="https://cdn-icons-png.flaticon.com/512/855/855279.png" width="40px" height="40px" alt="">
             <div class="ms-3">
-                <h4 class="text-white mb-0">₹ 2353.25</h4>
+                <h4 class="text-white mb-0">₹ {{ $user->real_wallet }}</h4>
                 <small>Balance Money</small>
             </div>
         </div>
