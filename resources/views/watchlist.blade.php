@@ -247,9 +247,6 @@ use App\Providers\Helper;
             <div class="container-fluid">
                 <!-- Row -->
                 <div class="row">
-
-
-
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header border-0 flex-wrap">
@@ -258,7 +255,7 @@ use App\Providers\Helper;
                                     <!-- Button trigger modal -->
 
 
-                                    <div class="search-container mb-0 ms-3">
+                                    {{-- <div class="search-container mb-0 ms-3">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search..."
                                                 aria-label="Search">
@@ -267,7 +264,7 @@ use App\Providers\Helper;
                                                     width="20px" height="20px" alt="">
                                             </button>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <form>

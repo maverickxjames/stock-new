@@ -47,21 +47,23 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    
+	    <!-- Style css -->
+		<link class="main-css" href="css/style.css" rel="stylesheet">
+
     <base href="/">
-	<!-- FAVICONS ICON -->
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
-	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
-	<link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-	<!-- Style css -->
-	<link class="main-css" href="css/style.css" rel="stylesheet">
+    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-datepicker-master/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 	<!-- Bootstrap CSS -->
-	<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	{{-- <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 
 	{{-- jquery cdn --}}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 
 
     <style>
@@ -559,20 +561,20 @@
 
 
 
-<!-- Required vendors -->
-<script src="vendor/global/global.min.js"></script>
-<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-<script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="js/plugins-init/datatables.init.js"></script>
-<script src="vendor/chart-js/chart.bundle.min.js"></script>
-<!-- Chart piety plugin files -->
-<script src="vendor/peity/jquery.peity.min.js"></script>
-<script src="js/dashboard/trading-market.js"></script>
-<!-- Dashboard 1 -->
-<script src="js/custom.min.js"></script>
-<script src="js/dlabnav-init.js"></script>
-<script src="js/demo.js"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+  	<!-- Required vendors -->
+      <script src="vendor/global/global.min.js"></script>
+      <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+      <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+      <script src="js/plugins-init/datatables.init.js"></script>
+      <script src="vendor/chart-js/chart.bundle.min.js"></script>
+      <!-- Chart piety plugin files -->
+      <script src="vendor/peity/jquery.peity.min.js"></script>
+      <script src="js/dashboard/trading-market.js"></script>
+      <!-- Dashboard 1 -->
+      <script src="js/custom.min.js"></script>
+      <script src="js/dlabnav-init.js"></script>
+      <script src="js/demo.js"></script>
+      <script src="{{ asset('js/app.js') }}"></script>
 
 
 
