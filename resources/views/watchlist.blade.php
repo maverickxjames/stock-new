@@ -1,9 +1,9 @@
 @php
-$user = Auth::user();
-use App\Models\Script;
-use App\Models\Equity;
-use App\Models\Watchlist;
-use App\Providers\Helper;
+    $user = Auth::user();
+    use App\Models\Script;
+    use App\Models\Equity;
+    use App\Models\Watchlist;
+    use App\Providers\Helper;
 @endphp
 
 <!DOCTYPE html>
@@ -265,7 +265,8 @@ use App\Providers\Helper;
                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px"
                                         viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
+                                            <rect fill="#000000" x="4" y="11" width="16" height="2"
+                                                rx="1" />
                                             <rect fill="#000000" opacity="0.3"
                                                 transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) "
                                                 x="4" y="11" width="16" height="2" rx="1" />
@@ -292,7 +293,8 @@ use App\Providers\Helper;
                                     <li class="active dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -304,7 +306,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -316,7 +319,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -328,7 +332,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -341,7 +346,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -353,7 +359,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -365,7 +372,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -378,7 +386,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -390,7 +399,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -403,7 +413,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -415,7 +426,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -427,7 +439,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -439,7 +452,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -452,7 +466,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -464,7 +479,8 @@ use App\Providers\Helper;
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img"
+                                                    alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -498,8 +514,8 @@ use App\Providers\Helper;
                                     <p class="mb-0 text-success">Online</p>
                                 </div>
                                 <div class="dropdown">
-                                    <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"><svg
-                                            xmlns="http://www.w3.org/2000/svg"
+                                    <a href="javascript:void(0);" data-bs-toggle="dropdown"
+                                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px"
                                             viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -524,7 +540,8 @@ use App\Providers\Helper;
                             <div class="card-body msg_card_body dlab-scroll" id="DLAB_W_Contacts_Body3">
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         Hi, how are you samim?
@@ -537,12 +554,14 @@ use App\Providers\Helper;
                                         <span class="msg_time_send">8:55 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         I am good too, thank you for your chat template
@@ -555,12 +574,14 @@ use App\Providers\Helper;
                                         <span class="msg_time_send">9:05 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         I am looking for your next templates
@@ -573,12 +594,14 @@ use App\Providers\Helper;
                                         <span class="msg_time_send">9:10 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         Bye, see you
@@ -587,7 +610,8 @@ use App\Providers\Helper;
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         Hi, how are you samim?
@@ -600,12 +624,14 @@ use App\Providers\Helper;
                                         <span class="msg_time_send">8:55 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         I am good too, thank you for your chat template
@@ -618,12 +644,14 @@ use App\Providers\Helper;
                                         <span class="msg_time_send">9:05 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         I am looking for your next templates
@@ -636,12 +664,14 @@ use App\Providers\Helper;
                                         <span class="msg_time_send">9:10 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
+                                            alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         Bye, see you
@@ -744,7 +774,8 @@ use App\Providers\Helper;
                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px"
                                         viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
+                                            <rect fill="#000000" x="4" y="11" width="16" height="2"
+                                                rx="1" />
                                             <rect fill="#000000" opacity="0.3"
                                                 transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) "
                                                 x="4" y="11" width="16" height="2" rx="1" />
@@ -881,7 +912,8 @@ use App\Providers\Helper;
                                 </a>
                             </li>
                             <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                                <a class="nav-link" href="javascript:void(0);" role="button"
+                                    data-bs-toggle="dropdown">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                         width="32px" height="32px" viewBox="0 0 24 24" version="1.1"
                                         class="svg-main-icon">
@@ -889,7 +921,8 @@ use App\Providers\Helper;
                                             <path
                                                 d="M17,12 L18.5,12 C19.3284271,12 20,12.6715729 20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 C4,12.6715729 4.67157288,12 5.5,12 L7,12 L7.5582739,6.97553494 C7.80974924,4.71225688 9.72279394,3 12,3 C14.2772061,3 16.1902508,4.71225688 16.4417261,6.97553494 L17,12 Z"
                                                 fill="#fff" />
-                                            <rect fill="#fff" opacity="0.3" x="10" y="16" width="4" height="4" rx="2" />
+                                            <rect fill="#fff" opacity="0.3" x="10" y="16" width="4"
+                                                height="4" rx="2" />
                                         </g>
                                     </svg>
                                 </a>
@@ -996,29 +1029,34 @@ use App\Providers\Helper;
                                                     <span class="d-block text-end">{{ $user['email'] }}</span>
                                                 </div>
                                             </div>
-                                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                                                alt="">
                                         </div>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end header-profile3 " style="">
                                         <a onclick="window.location.href='{{ route('profile') }}'"
                                             class="dropdown-item ai-icon ">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png"
+                                                alt="">
                                             <span class="ms-2">Profile </span>
                                         </a>
                                         <a onclick="window.location.href='{{ route('portfolio') }}'"
                                             class="dropdown-item ai-icon ">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/943/943026.png" alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/943/943026.png"
+                                                alt="">
                                             <span class="ms-2">Portfolio </span>
                                         </a>
 
                                         <a onclick="window.location.href='{{ route('profile') }}'"
                                             class="dropdown-item ai-icon ">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/2698/2698011.png" alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/2698/2698011.png"
+                                                alt="">
                                             <span class="ms-2">Settings </span>
                                         </a>
                                         <a onclick="window.location.href='{{ route('logout') }}'"
                                             class="dropdown-item ai-icon">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png" alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png"
+                                                alt="">
                                             <span class="ms-2 text-danger">Logout </span>
                                         </a>
                                     </div>
@@ -1059,12 +1097,14 @@ use App\Providers\Helper;
         ***********************************-->
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Add New</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -1217,11 +1257,11 @@ use App\Providers\Helper;
 
             <?php
             $watchlists = Watchlist::where('userid', Auth::user()->id)->get();
-            if($watchlists->count() > 0){
+            if ($watchlists->count() > 0) {
                 $mergedData = $watchlists;
                 // print_r($mergedData);
-            }else{
-            $mergedData = [];
+            } else {
+                $mergedData = [];
             }
 
             ?>
@@ -1277,9 +1317,11 @@ use App\Providers\Helper;
                                             bottom offcanvas</button> --}}
 
                                         <div class="offcanvas offcanvas-bottom" tabindex="-1"
-                                            id="offcanvasBottom{{ $i }}" aria-labelledby="offcanvasBottomLabel">
+                                            id="offcanvasBottom{{ $i }}"
+                                            aria-labelledby="offcanvasBottomLabel">
                                             <div class="offcanvas-header">
-                                                <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
+                                                <h5 class="offcanvas-title"
+                                                    id="offcanvasBottomLabel{{ $i }}">Offcanvas
                                                     bottom
                                                 </h5>
                                                 <button type="button" class="btn-close text-reset"
@@ -1303,11 +1345,13 @@ use App\Providers\Helper;
                                                                             style="width: 50%;" id="nav-order-tab"
                                                                             data-bs-toggle="tab"
                                                                             data-bs-target="#nav-order" type="button"
-                                                                            role="tab" aria-selected="true">Buy</button>
+                                                                            role="tab"
+                                                                            aria-selected="true">Buy</button>
                                                                         <button class="nav-link" style="width: 50%"
                                                                             id="nav-histroy-tab" data-bs-toggle="tab"
-                                                                            data-bs-target="#nav-history" type="button"
-                                                                            role="tab" aria-selected="false">Sell
+                                                                            data-bs-target="#nav-history"
+                                                                            type="button" role="tab"
+                                                                            aria-selected="false">Sell
                                                                         </button>
 
                                                                     </div>
@@ -1322,7 +1366,8 @@ use App\Providers\Helper;
                                                                         <div class="table-responsive dataTabletrade">
                                                                             <form>
 
-                                                                                <div class="col-xl-4" style="
+                                                                                <div class="col-xl-4"
+                                                                                    style="
                                                                                         width: 100%;
                                                                                     ">
                                                                                     <div class="card">
@@ -1335,7 +1380,7 @@ use App\Providers\Helper;
                                                                                                     class="small text-muted">Available
                                                                                                     Balance</span>
                                                                                                 <span
-                                                                                                    class="text-dark">₹210,800</span>
+                                                                                                    class="text-dark">{{ Auth::user()->real_wallet }}</span>
                                                                                             </div>
 
                                                                                             <!-- Buy/Sell Form -->
@@ -1345,7 +1390,7 @@ use App\Providers\Helper;
                                                                                                     <label
                                                                                                         class="form-label">Order
                                                                                                         Type</label>
-                                                                                                    <select
+                                                                                                    <select onchange="handleOrderTypeChange('nsefut', {{ $i }}, this.value)"
                                                                                                         class="form-select">
                                                                                                         <option
                                                                                                             value="market"
@@ -1356,10 +1401,6 @@ use App\Providers\Helper;
                                                                                                             value="limit">
                                                                                                             Limit Order
                                                                                                         </option>
-                                                                                                        <option
-                                                                                                            value="intraday">
-                                                                                                            Intraday
-                                                                                                        </option>
                                                                                                     </select>
                                                                                                 </div>
 
@@ -1368,7 +1409,14 @@ use App\Providers\Helper;
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Price</span>
-                                                                                                    <input id="realprice1{{ $i }}" type="text"
+                                                                                                    <input
+                                                                                                        id="realprice1{{ $i }}" disabled
+                                                                                                        type="text"
+                                                                                                        class="form-control"
+                                                                                                        placeholder="Enter price">
+                                                                                                    <input
+                                                                                                        id="limitprice1{{ $i }}" disabled
+                                                                                                        type="hidden"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter price">
                                                                                                     <span
@@ -1380,7 +1428,8 @@ use App\Providers\Helper;
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Size</span>
-                                                                                                    <input type="text"
+                                                                                                    <input
+                                                                                                        type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter size">
                                                                                                     <button
@@ -1403,7 +1452,7 @@ use App\Providers\Helper;
 
 
                                                                                                 <!-- Margin Type -->
-                                                                                                <div class="mb-3">
+                                                                                                {{-- <div class="mb-3">
                                                                                                     <label
                                                                                                         class="form-label">Margin
                                                                                                         Type</label>
@@ -1425,15 +1474,16 @@ use App\Providers\Helper;
                                                                                                             value="10x">
                                                                                                             10x</option>
                                                                                                     </select>
-                                                                                                </div>
+                                                                                                </div> --}}
 
                                                                                                 <!-- Stop Price -->
-                                                                                                <div
+                                                                                                {{-- <div
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Stop
                                                                                                         Price</span>
-                                                                                                    <input type="text"
+                                                                                                    <input
+                                                                                                        type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter stop price">
                                                                                                     <button
@@ -1450,18 +1500,20 @@ use App\Providers\Helper;
                                                                                                                 href="#">Market</a>
                                                                                                         </li>
                                                                                                     </ul>
-                                                                                                </div>
+                                                                                                </div> --}}
 
                                                                                                 <!-- Cost and Max Info -->
                                                                                                 <div
                                                                                                     class="d-flex justify-content-between flex-wrap">
-                                                                                                    <div class="d-flex">
+                                                                                                    <div
+                                                                                                        class="d-flex">
                                                                                                         <div>Cost:</div>
                                                                                                         <div
                                                                                                             class="text-muted px-1">
                                                                                                             ₹0.00</div>
                                                                                                     </div>
-                                                                                                    <div class="d-flex">
+                                                                                                    <div
+                                                                                                        class="d-flex">
                                                                                                         <div>Max:</div>
                                                                                                         <div
                                                                                                             class="text-muted px-1">
@@ -1488,7 +1540,8 @@ use App\Providers\Helper;
                                                                         role="tabpanel">
                                                                         <div class="table-responsive dataTabletrade">
                                                                             <form>
-                                                                                <div class="col-xl-4" style="
+                                                                                <div class="col-xl-4"
+                                                                                    style="
                                                                                 width: 100%;
                                                                             ">
                                                                                     <div class="card">
@@ -1534,7 +1587,8 @@ use App\Providers\Helper;
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Price</span>
-                                                                                                    <input type="text"
+                                                                                                    <input
+                                                                                                        type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter price">
                                                                                                     <span
@@ -1546,7 +1600,8 @@ use App\Providers\Helper;
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Size</span>
-                                                                                                    <input type="text"
+                                                                                                    <input
+                                                                                                        type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter size">
                                                                                                     <button
@@ -1599,7 +1654,8 @@ use App\Providers\Helper;
                                                                                                     <span
                                                                                                         class="input-group-text">Stop
                                                                                                         Price</span>
-                                                                                                    <input type="text"
+                                                                                                    <input
+                                                                                                        type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter stop price">
                                                                                                     <button
@@ -1621,13 +1677,15 @@ use App\Providers\Helper;
                                                                                                 <!-- Cost and Max Info -->
                                                                                                 <div
                                                                                                     class="d-flex justify-content-between flex-wrap">
-                                                                                                    <div class="d-flex">
+                                                                                                    <div
+                                                                                                        class="d-flex">
                                                                                                         <div>Cost:</div>
                                                                                                         <div
                                                                                                             class="text-muted px-1">
                                                                                                             ₹0.00</div>
                                                                                                     </div>
-                                                                                                    <div class="d-flex">
+                                                                                                    <div
+                                                                                                        class="d-flex">
                                                                                                         <div>Max:</div>
                                                                                                         <div
                                                                                                             class="text-muted px-1">
@@ -1668,17 +1726,20 @@ use App\Providers\Helper;
                                         <td>
                                             {{ $i }}
                                         </td>
-                                        <td onclick="showOrderForm({{ $i }})" id="symbol1{{ $i }}">{{
-                                            $tradingSymbol }}</td>
-                                        <td onclick="showOrderForm({{ $i }})" id="bid1{{ $i }}">0</td>
-                                        <td onclick="showOrderForm({{ $i }})" id="ask1{{ $i }}">0</td>
-                                        <td onclick="showOrderForm({{ $i }})" id="ltp1{{ $i }}">0</td>
+                                        <td onclick="showOrderForm({{ $i }})"
+                                            id="symbol1{{ $i }}">{{ $tradingSymbol }}</td>
+                                        <td onclick="showOrderForm({{ $i }})"
+                                            id="bid1{{ $i }}">0</td>
+                                        <td onclick="showOrderForm({{ $i }})"
+                                            id="ask1{{ $i }}">0</td>
+                                        <td onclick="showOrderForm({{ $i }})"
+                                            id="ltp1{{ $i }}">0</td>
                                         <td id="ch1{{ $i }}">0</td>
                                         <td id="badge1{{ $i }}">
                                             {{-- <span class="badge light badge-danger">
                                                 <i class="fa fa-circle text-danger me-1"></i> --}}
-                                                0
-                                                {{-- </span> --}}
+                                            0
+                                            {{-- </span> --}}
                                         </td>
                                         <td id="high1{{ $i }}">0</td>
                                         <td id="low1{{ $i }}">0</td>
@@ -1755,7 +1816,8 @@ use App\Providers\Helper;
                                                     foreach($mergedData as $watchlist){
                                                         if($watchlist['script_symbol'] == 'NSEOPT'){
                                                             ?>
-                                    <p style="display: none" id="isin2{{ $i }}">{{ $watchlist['Isin'] }}
+                                    <p style="display: none" id="isin2{{ $i }}">
+                                        {{ $watchlist['Isin'] }}
                                     </p>
                                     <tr>
                                         <td>
@@ -1854,8 +1916,7 @@ use App\Providers\Helper;
                                         <td>
                                             {{ $i }}
                                         </td>
-                                        <td id="symbol3{{ $i }}">{{
-                                            $tradingSymbol }}</td>
+                                        <td id="symbol3{{ $i }}">{{ $tradingSymbol }}</td>
 
 
                                         <td id="bid3{{ $i }}">0</td>
@@ -1939,16 +2000,36 @@ use App\Providers\Helper;
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script>
-        function showOrderForm(index){
-    const offcanvasId = `offcanvasBottom${index}`;
-        const offcanvasElement = document.getElementById(offcanvasId);
-        const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-        offcanvas.show();
+        function showOrderForm(index) {
+            const offcanvasId = `offcanvasBottom${index}`;
+            const offcanvasElement = document.getElementById(offcanvasId);
+            const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+            offcanvas.show();
 
         }
 
+        function handleOrderTypeChange(segment, id, orderType) {
+    if (segment === 'nsefut') {
+        const priceInput = document.getElementById("realprice1" + id);
+        const limitprice = document.getElementById("limitprice1" + id);
+        if (orderType === 'limit') {
+    // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+    priceInput.setAttribute("type", "hidden");
+    limitprice.setAttribute("type", "text");
+    limitprice.value = priceInput.value; // Copy the value
+    priceInput.disabled = false; // Enable input
+    limitprice.disabled = false; // Enable input
+} else if (orderType === 'market') {
+    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+    priceInput.setAttribute("type", "text");
+    limitprice.setAttribute("type", "hidden");
+    priceInput.disabled = true; // Disable input
+    limitprice.disabled = true; // Disable input
+}
+    }
 
-
+    // You can add additional logic for other segments (nseopt, mcxfut) here if needed
+}
 
     </script>
 
@@ -1965,13 +2046,15 @@ use App\Providers\Helper;
                         const feedData = feeds[key].ff.marketFF; // Data from WebSocket
                         const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
 
-                        console.log(feedData);
+                        // console.log(feedData);
 
                         // Find the <p> tag containing the matching ISIN
-                        const isinElement = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el.textContent === receivedIsin);
-                        const optisinElement = Array.from(document.querySelectorAll("p[id^='isin2']")).find(el => el.textContent === receivedIsin);
+                        const isinElement = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el
+                            .textContent === receivedIsin);
+                        const optisinElement = Array.from(document.querySelectorAll("p[id^='isin2']")).find(el => el
+                            .textContent === receivedIsin);
                         // const mcxisinElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el => el.textContent === receivedIsin);
-                     
+
                         const elements = Array.from(document.querySelectorAll("p[id^='isin3']"));
                         const mcxisinElement = elements.find(el => el.textContent.trim() === receivedIsin.trim());
                         if (isinElement) {
@@ -1984,14 +2067,20 @@ use App\Providers\Helper;
                             // Update the table cells using the extracted rowId
                             document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`high1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0';
-                            document.getElementById(`low1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`open1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0';
-                            document.getElementById(`close1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`high1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                                '0';
+                            document.getElementById(`low1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low ||
+                            '0';
+                            document.getElementById(`open1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open ||
+                                '0';
+                            document.getElementById(`close1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close ||
+                                '0';
                             // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
                             const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
                             const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            const percentageIcon = percentageChange > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            const percentageIcon = percentageChange > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
                             document.getElementById(`ch1${rowId}`).innerHTML = `
                                 <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
                                     <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
@@ -1999,7 +2088,9 @@ use App\Providers\Helper;
 
                             // badge
                             const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
-                            const badgeIcon = (ltp - cp) > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            const badgeIcon = (ltp - cp) > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
                             document.getElementById(`badge1${rowId}`).innerHTML = `
                                 <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
@@ -2007,8 +2098,10 @@ use App\Providers\Helper;
                                 </span>`;
 
                             // bid and ask
-                            document.getElementById(`bid1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].bidQ || '0';
-                            document.getElementById(`ask1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].askQ || '0';
+                            document.getElementById(`bid1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .bidQ || '0';
+                            document.getElementById(`ask1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .askQ || '0';
 
 
 
@@ -2017,12 +2110,12 @@ use App\Providers\Helper;
                             // if (badgeElement) {
                             //     const badgeClass = parseFloat(feedData.ch || 0) > 0 ? 'badge-success' : 'badge-danger';
                             //     badgeElement.innerHTML = `
-                            //         <span class="badge light ${badgeClass}">
-                            //             <i class="fa fa-circle text-${badgeClass === 'badge-success' ? 'success' : 'danger'} me-1"></i>
-                            //             ${feedData.ch || '0'}
-                            //         </span>`;
+                        //         <span class="badge light ${badgeClass}">
+                        //             <i class="fa fa-circle text-${badgeClass === 'badge-success' ? 'success' : 'danger'} me-1"></i>
+                        //             ${feedData.ch || '0'}
+                        //         </span>`;
                             // }
-                        }else if(optisinElement){
+                        } else if (optisinElement) {
 
                             const rowId = optisinElement.id.replace('isin2', '');
 
@@ -2032,14 +2125,20 @@ use App\Providers\Helper;
                             // Update the table cells using the extracted rowId
                             document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             // document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`high2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0';
-                            document.getElementById(`low2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`open2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0';
-                            document.getElementById(`close2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`high2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                                '0';
+                            document.getElementById(`low2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low ||
+                            '0';
+                            document.getElementById(`open2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open ||
+                                '0';
+                            document.getElementById(`close2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close ||
+                                '0';
                             // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
                             const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
                             const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            const percentageIcon = percentageChange > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            const percentageIcon = percentageChange > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
                             document.getElementById(`ch2${rowId}`).innerHTML = `
                                 <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
                                     <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
@@ -2047,7 +2146,9 @@ use App\Providers\Helper;
 
                             // badge
                             const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
-                            const badgeIcon = (ltp - cp) > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            const badgeIcon = (ltp - cp) > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
                             document.getElementById(`badge2${rowId}`).innerHTML = `
                                 <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
@@ -2055,10 +2156,12 @@ use App\Providers\Helper;
                                 </span>`;
 
                             // bid and ask
-                            document.getElementById(`bid2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].bidQ || '0';
-                            document.getElementById(`ask2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].askQ || '0';
+                            document.getElementById(`bid2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .bidQ || '0';
+                            document.getElementById(`ask2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .askQ || '0';
 
-                        }else if(mcxisinElement){
+                        } else if (mcxisinElement) {
                             const rowId = mcxisinElement.id.replace('isin3', '');
 
                             const ltp = feedData?.ltpc?.ltp || 1; // Default to 1 to avoid division by zero
@@ -2067,14 +2170,20 @@ use App\Providers\Helper;
                             // Update the table cells using the extracted rowId
                             document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             // document.getElementById(`realprice3${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`high3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0';
-                            document.getElementById(`low3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`open3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0';
-                            document.getElementById(`close3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`high3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                                '0';
+                            document.getElementById(`low3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low ||
+                            '0';
+                            document.getElementById(`open3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open ||
+                                '0';
+                            document.getElementById(`close3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close ||
+                                '0';
                             // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
                             const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
                             const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            const percentageIcon = percentageChange > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            const percentageIcon = percentageChange > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
                             document.getElementById(`ch3${rowId}`).innerHTML = `
                                 <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
                                     <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
@@ -2082,7 +2191,9 @@ use App\Providers\Helper;
 
                             // badge
                             const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
-                            const badgeIcon = (ltp - cp) > 0 ? 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' : 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                            const badgeIcon = (ltp - cp) > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
                             document.getElementById(`badge3${rowId}`).innerHTML = `
                                 <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
@@ -2090,8 +2201,10 @@ use App\Providers\Helper;
                                 </span>`;
 
                             // bid and ask
-                            document.getElementById(`bid3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].bidQ || '0';
-                            document.getElementById(`ask3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0].askQ || '0';
+                            document.getElementById(`bid3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .bidQ || '0';
+                            document.getElementById(`ask3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .askQ || '0';
                         }
                     }
                 }
@@ -2110,62 +2223,64 @@ use App\Providers\Helper;
             // 1 = future
             // 2 = option
             // 3 = mcx future
-            if(segment == 1){
+            if (segment == 1) {
                 const url = `/get-expiry/${script}`;
                 const url2 = `/get-stock/${segment}`;
 
-            // Use jQuery's $.ajax method to make the request
-            $.ajax({
-                url: url2, // The endpoint to fetch data from
-                method: 'GET', // HTTP method
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Handle successful response
-                    console.log('Expiry dates:', data);
+                // Use jQuery's $.ajax method to make the request
+                $.ajax({
+                    url: url2, // The endpoint to fetch data from
+                    method: 'GET', // HTTP method
+                    dataType: 'json', // Expect JSON response
+                    success: function(data) {
+                        // Handle successful response
+                        console.log('Expiry dates:', data);
 
-                    // Clear existing script
-                    $('#searchable2').empty();
+                        // Clear existing script
+                        $('#searchable2').empty();
 
-                    // Append new options
-                    // data -> 0 -> expiry
-                    data.forEach(function (item) {
-                        $('#searchable2').append(`<option value="${item.id}">${item.symbol}</option>`);
-                    });
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle errors
-                    console.error('Error fetching expiry dates:', textStatus, errorThrown);
-                }
-            });
-
-            // Use jQuery's $.ajax method to make the request
-            $.ajax({
-                url: url, // The endpoint to fetch data from
-                method: 'GET', // HTTP method
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Handle successful response
-                    console.log('Expiry dates:', data);
-
-                    // Clear existing options
-                    $('#expiry').empty();
+                        // Append new options
+                        // data -> 0 -> expiry
+                        data.forEach(function(item) {
+                            $('#searchable2').append(
+                                `<option value="${item.id}">${item.symbol}</option>`);
+                        });
 
 
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle errors
+                        console.error('Error fetching expiry dates:', textStatus, errorThrown);
+                    }
+                });
 
-                    // Append new options
-                    // data -> 0 -> expiry
+                // Use jQuery's $.ajax method to make the request
+                $.ajax({
+                    url: url, // The endpoint to fetch data from
+                    method: 'GET', // HTTP method
+                    dataType: 'json', // Expect JSON response
+                    success: function(data) {
+                        // Handle successful response
+                        console.log('Expiry dates:', data);
 
-                    data.forEach(function (item) {
-                        $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle errors
-                    console.error('Error fetching expiry dates:', textStatus, errorThrown);
-                }
-            });
+                        // Clear existing options
+                        $('#expiry').empty();
+
+
+
+                        // Append new options
+                        // data -> 0 -> expiry
+
+                        data.forEach(function(item) {
+                            $('#expiry').append(
+                                `<option value="${item.expiry}">${item.expiry}</option>`);
+                        });
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle errors
+                        console.error('Error fetching expiry dates:', textStatus, errorThrown);
+                    }
+                });
 
 
 
@@ -2175,63 +2290,65 @@ use App\Providers\Helper;
             } else if (segment == 2) {
                 callPutSelect.disabled = false;
                 strike.disabled = false;
-            }else if(segment == 3){
+            } else if (segment == 3) {
 
                 const url = `/get-stock/${segment}`;
 
-            // Use jQuery's $.ajax method to make the request
-            $.ajax({
-                url: url, // The endpoint to fetch data from
-                method: 'GET', // HTTP method
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Handle successful response
-                    console.log('Expiry dates:', data);
+                // Use jQuery's $.ajax method to make the request
+                $.ajax({
+                    url: url, // The endpoint to fetch data from
+                    method: 'GET', // HTTP method
+                    dataType: 'json', // Expect JSON response
+                    success: function(data) {
+                        // Handle successful response
+                        console.log('Expiry dates:', data);
 
-                    // Clear existing script
-                    $('#searchable2').empty();
+                        // Clear existing script
+                        $('#searchable2').empty();
 
-                    // Append new options
-                    // data -> 0 -> expiry
-                    data.forEach(function (item) {
-                        $('#searchable2').append(`<option value="${item.id}">${item.symbol}</option>`);
-                    });
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle errors
-                    console.error('Error fetching expiry dates:', textStatus, errorThrown);
-                }
-            });
-
-            const url2 = `/get-expiry/${script}`;
-            // Use jQuery's $.ajax method to make the request
-            $.ajax({
-                url: url2, // The endpoint to fetch data from
-                method: 'GET', // HTTP method
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Handle successful response
-                    console.log('Expiry dates:', data);
-
-                    // Clear existing options
-                    $('#expiry').empty();
+                        // Append new options
+                        // data -> 0 -> expiry
+                        data.forEach(function(item) {
+                            $('#searchable2').append(
+                                `<option value="${item.id}">${item.symbol}</option>`);
+                        });
 
 
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle errors
+                        console.error('Error fetching expiry dates:', textStatus, errorThrown);
+                    }
+                });
 
-                    // Append new options
-                    // data -> 0 -> expiry
+                const url2 = `/get-expiry/${script}`;
+                // Use jQuery's $.ajax method to make the request
+                $.ajax({
+                    url: url2, // The endpoint to fetch data from
+                    method: 'GET', // HTTP method
+                    dataType: 'json', // Expect JSON response
+                    success: function(data) {
+                        // Handle successful response
+                        console.log('Expiry dates:', data);
 
-                    data.forEach(function (item) {
-                        $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle errors
-                    console.error('Error fetching expiry dates:', textStatus, errorThrown);
-                }
-            });
+                        // Clear existing options
+                        $('#expiry').empty();
+
+
+
+                        // Append new options
+                        // data -> 0 -> expiry
+
+                        data.forEach(function(item) {
+                            $('#expiry').append(
+                                `<option value="${item.expiry}">${item.expiry}</option>`);
+                        });
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle errors
+                        console.error('Error fetching expiry dates:', textStatus, errorThrown);
+                    }
+                });
 
                 callPutSelect.disabled = true;
                 strike.disabled = true;
@@ -2243,6 +2360,7 @@ use App\Providers\Helper;
         }
 
         segment();
+
         function script() {
             var segment = document.querySelector('.segment').value;
             var script = document.getElementById('searchable2').value;
@@ -2251,34 +2369,35 @@ use App\Providers\Helper;
             // 1 = future
             // 2 = option
             // 3 = mcx future
-            if(segment == 1){
+            if (segment == 1) {
                 const url = `/get-expiry/${script}`;
-            // Use jQuery's $.ajax method to make the request
-            $.ajax({
-                url: url, // The endpoint to fetch data from
-                method: 'GET', // HTTP method
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Handle successful response
-                    console.log('Expiry dates:', data);
+                // Use jQuery's $.ajax method to make the request
+                $.ajax({
+                    url: url, // The endpoint to fetch data from
+                    method: 'GET', // HTTP method
+                    dataType: 'json', // Expect JSON response
+                    success: function(data) {
+                        // Handle successful response
+                        console.log('Expiry dates:', data);
 
-                    // Clear existing options
-                    $('#expiry').empty();
+                        // Clear existing options
+                        $('#expiry').empty();
 
 
 
-                    // Append new options
-                    // data -> 0 -> expiry
+                        // Append new options
+                        // data -> 0 -> expiry
 
-                    data.forEach(function (item) {
-                        $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle errors
-                    console.error('Error fetching expiry dates:', textStatus, errorThrown);
-                }
-            });
+                        data.forEach(function(item) {
+                            $('#expiry').append(
+                                `<option value="${item.expiry}">${item.expiry}</option>`);
+                        });
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle errors
+                        console.error('Error fetching expiry dates:', textStatus, errorThrown);
+                    }
+                });
 
 
                 callPutSelect.disabled = true;
@@ -2286,64 +2405,66 @@ use App\Providers\Helper;
             } else if (segment == 2) {
 
                 const url = `/get-expiry/${script}`;
-            // Use jQuery's $.ajax method to make the request
-            $.ajax({
-                url: url, // The endpoint to fetch data from
-                method: 'GET', // HTTP method
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Handle successful response
-                    console.log('Expiry dates:', data);
+                // Use jQuery's $.ajax method to make the request
+                $.ajax({
+                    url: url, // The endpoint to fetch data from
+                    method: 'GET', // HTTP method
+                    dataType: 'json', // Expect JSON response
+                    success: function(data) {
+                        // Handle successful response
+                        console.log('Expiry dates:', data);
 
-                    // Clear existing options
-                    $('#expiry').empty();
+                        // Clear existing options
+                        $('#expiry').empty();
 
 
 
-                    // Append new options
-                    // data -> 0 -> expiry
+                        // Append new options
+                        // data -> 0 -> expiry
 
-                    data.forEach(function (item) {
-                        $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle errors
-                    console.error('Error fetching expiry dates:', textStatus, errorThrown);
-                }
-            });
+                        data.forEach(function(item) {
+                            $('#expiry').append(
+                                `<option value="${item.expiry}">${item.expiry}</option>`);
+                        });
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle errors
+                        console.error('Error fetching expiry dates:', textStatus, errorThrown);
+                    }
+                });
 
                 callPutSelect.disabled = false;
                 strike.disabled = false;
-            }else if(segment == 3){
+            } else if (segment == 3) {
 
                 const url = `/get-expiry/${script}`;
-            // Use jQuery's $.ajax method to make the request
-            $.ajax({
-                url: url, // The endpoint to fetch data from
-                method: 'GET', // HTTP method
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    // Handle successful response
-                    console.log('Expiry dates:', data);
+                // Use jQuery's $.ajax method to make the request
+                $.ajax({
+                    url: url, // The endpoint to fetch data from
+                    method: 'GET', // HTTP method
+                    dataType: 'json', // Expect JSON response
+                    success: function(data) {
+                        // Handle successful response
+                        console.log('Expiry dates:', data);
 
-                    // Clear existing options
-                    $('#expiry').empty();
+                        // Clear existing options
+                        $('#expiry').empty();
 
 
 
-                    // Append new options
-                    // data -> 0 -> expiry
+                        // Append new options
+                        // data -> 0 -> expiry
 
-                    data.forEach(function (item) {
-                        $('#expiry').append(`<option value="${item.expiry}">${item.expiry}</option>`);
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    // Handle errors
-                    console.error('Error fetching expiry dates:', textStatus, errorThrown);
-                }
-            });
+                        data.forEach(function(item) {
+                            $('#expiry').append(
+                                `<option value="${item.expiry}">${item.expiry}</option>`);
+                        });
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle errors
+                        console.error('Error fetching expiry dates:', textStatus, errorThrown);
+                    }
+                });
 
                 callPutSelect.disabled = true;
                 strike.disabled = true;
