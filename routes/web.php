@@ -108,8 +108,10 @@ Route::middleware('auth')->group(function () {
     Route::post('bank-update', [PaymentController::class, 'updateBankDetails'])->name('update-bank-details');
     Route::get('history', [PaymentController::class, 'history'])->name('history');
     Route::get('updateFuture', [StockController::class, 'updateFuture'])->name('updateFuture');
-    Route::get('/get-expiry/{id}', [StockController::class, 'getExpiry'])->name('getExpiry');
-    Route::get('/get-stock/{id}', [StockController::class, 'getStock'])->name('getStock');
+    Route::get('/get-expiry/future/{id}', [StockController::class, 'futureGetExpiry'])->name('futureGetExpiry');
+    Route::get('/get-stock/future/{id}', [StockController::class, 'futureGetStock'])->name('futureGetStock');
+    Route::get('/get-expiry/mcx/{id}', [StockController::class, 'mcxGetExpiry'])->name('mcxGetExpiry');
+    Route::get('/get-stock/mcx/{id}', [StockController::class, 'mcxGetStock'])->name('mcxGetStock');
 });
 
 

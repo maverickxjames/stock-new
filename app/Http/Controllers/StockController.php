@@ -257,15 +257,49 @@ class StockController extends Controller
         }
     }
 
-    public function getExpiry($id)
+    public function futureGetExpiry($id)
     {
         $scriptid = $id;
         $symbol = DB::table('equities')->where('id', $scriptid)->first();
-        $fetchExpiry = DB::table('future_temp')->where('assetSymbol', $symbol->symbol)->get();
+        $fetchExpiry = DB::table('future_temp')->where('segment','NSE_FO')->where('instrumentType','FUT')->where('assetSymbol', $symbol->symbol)->get();
         return response()->json($fetchExpiry);
     }
 
-    public function getStock($id)
+    public function futureGetStock($id)
+    {
+        if($id == 1){
+            $data = DB::table('equities')
+            ->where('exchange', 'NSE')
+            ->orderBy('symbol', 'asc')
+            ->get();
+
+            return response()->json($data);
+        }elseif($id == 2){
+            $data = DB::table('equities')
+            ->where('exchange', 'NSE')
+            ->orderBy('symbol', 'asc')
+            ->get();
+
+            return response()->json($data);
+        }elseif($id == 3){
+        $data = DB::table('equities')
+            ->where('exchange', 'MCX')
+            ->orderBy('symbol', 'asc')
+            ->get();
+
+            return response()->json($data);
+        }
+
+    }
+    public function mcxGetExpiry($id)
+    {
+        $scriptid = $id;
+        $symbol = DB::table('equities')->where('id', $scriptid)->first();
+        $fetchExpiry = DB::table('future_temp')->where('assetSymbol', $symbol->symbol)->where('segment','MCX_FO')->where('instrumentType','FUT')->get();
+        return response()->json($fetchExpiry);
+    }
+
+    public function mcxGetStock($id)
     {
         if($id == 1){
             $data = DB::table('equities')
