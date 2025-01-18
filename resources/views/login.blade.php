@@ -52,9 +52,9 @@
 <body class="body">
     <div class="authincation d-flex flex-column flex-lg-row flex-column-fluid">
         <div class="login-aside text-center justify-items-center items-center  d-flex flex-column flex-row-auto">
-            <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
+            <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15 ">
                 <div class="text-center  mb-2 pt-5 logo">
-                    <img src="images/logo-white.png" alt="" width="200">
+                    <img src="images/logo-white.png" alt="" width="400">
                 </div>
                 <h3 class="mb-2 text-white">Welcome to StockMantra!</h3>
                 <p class="mb-4">Real-Time Market Insights & Trading Tools <br>Secure. Fast. Reliable.</p>

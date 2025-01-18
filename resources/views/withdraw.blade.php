@@ -60,10 +60,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 	<!-- Bootstrap CSS -->
-	{{-- <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
+	<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
 	{{-- jquery cdn --}}
-	{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    {{-- sweet alert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
 
     <style>
@@ -575,6 +580,10 @@
       <script src="js/dlabnav-init.js"></script>
       <script src="js/demo.js"></script>
       <script src="{{ asset('js/app.js') }}"></script>
+
+   
+
+
 
 
 
