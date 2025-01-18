@@ -3461,9 +3461,10 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_1__["default"]({
   broadcaster: 'pusher',
   key: "5678",
   cluster: "mt1",
-  forceTLS: false,
   wsHost: window.location.hostname,
   wsPort: 6001,
+  wssPort: 6001,
+  forceTLS: true,
   disableStats: true
 });
 
