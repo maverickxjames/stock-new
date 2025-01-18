@@ -1,7 +1,7 @@
 @php
-    $user = Auth::user();
-    use App\Models\withdraw_mode;
-    use App\Models\setting;
+$user = Auth::user();
+use App\Models\withdraw_mode;
+use App\Models\setting;
 @endphp
 
 
@@ -12,10 +12,13 @@
 <!-- Mirrored from themes.pixelstrap.com/pwa/taxify/user-app/finding-driver by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2024 04:37:12 GMT -->
 
 
+<!-- Mirrored from jiade.dexignlab.com/xhtml/history.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:24 GMT -->
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TradingView Chart with Data</title>
+    <!--Title-->
+    <title>Jiade : Crypto Trading UI Admin Bootstrap 5 Template | Dexignlabs</title>
+
+    <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Dexignlabs">
@@ -44,251 +47,65 @@
 
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    
-	    <!-- Style css -->
-		<link class="main-css" href="css/style.css" rel="stylesheet">
-
-    <base href="/">
-	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
-    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap-datepicker-master/css/bootstrap-datepicker.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-	<!-- Bootstrap CSS -->
-	<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-	{{-- jquery cdn --}}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    {{-- sweet alert --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* General Styling */
-        body {
-            font-family: "Lexend", sans-serif;
-            max-width: 600px;
-            position: relative;
-            width: 100%;
-            margin: 0 auto;
-            height: 100vh;
-            background-color: rgba(var(--white), 1);
+        .wallet-balance {
+            font-size: 2rem;
+            font-weight: bold;
         }
 
-        #top {
-            display: block;
-            height: 80px;
+        .btn-deposit,
+        .btn-withdraw {
+            width: 80%;
+            margin-bottom: 10px;
         }
 
-        .main-header {
-            position: sticky;
-            top: 0;
-            padding-top: 25px;
-            background-color: rgba(var(--box-bg), 1);
-            z-index: 2;
-        }
-
-        .inner-page-header {
-            background-color: #ffffff;
-            padding: 20px 0;
-            border-radius: 0px 0px 20px 20px;
-        }
-
-        .custom-container {
-
-            padding: 0 20px;
-
-        }
-
-        .header-panel {
-            position: relative;
-            padding-bottom: 20px;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-pack: justify;
-            -ms-flex-pack: justify;
-            justify-content: space-between;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            line-height: 1;
-            z-index: 1;
-        }
-
-        .header-panel a {
-            text-decoration: none;
-            line-height: 1;
-        }
-
-        .iconsax.icon-btn {
-            font-size: 24px;
-            color: #292D32;
-            transition: transform 0.3s ease;
-        }
-
-        .iconsax.icon-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .main-header .header-panel h3 {
-            position: absolute;
-            font-weight: 600;
-            left: 50%;
-            top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-            text-align: center;
-            /* padding-bottom: 20px; */
-            color: rgba(var(--title-color), 1);
-            white-space: nowrap;
-        }
-
-        h3.title-color {
-            font-size: 24px;
-            font-weight: 600;
-            color: #292D32;
-            margin: 0;
-        }
-
-        @media (max-width: 768px) {
-            /* .header-panel {
-        flex-direction: column;
-        align-items: flex-start;
-    } */
-
-            .header-panel a {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-
-            h3.title-color {
-                font-size: 20px;
-            }
-        }
-
-        /* For SVG Icon */
-        .iconsax {
-            width: 24px;
-            height: 24px;
-            fill: #292D32;
-        }
-
-        .iconsax:hover {
-            fill: #000000;
-        }
-
-        /* Header Style for Mobile */
-        @media (max-width: 600px) {
-            .header-panel {
-                padding: 10px;
-            }
-
-            .header-panel a {
-                margin-right: 10px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .custom-container {
-                padding: 0 calc(15px + 5*(100vw - 320px) / 280);
-            }
-        }
-
-        .custom-container {
-            padding: 0 20px;
-        }
-
-        /* Custom Stylesheet */
-
-        /* General styling for the section */
-        /***** General Section Styling *****/
-        .withdraw-request {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .custom-container {
-            
-            margin: auto;
-        }
-
-        /***** Form and Input Styling *****/
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
 
         .form-label {
+            font-size: 1.2rem;
             font-weight: bold;
             color: #333;
         }
 
         .form-control {
             padding: 10px;
+            font-size: 1rem;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 14px;
         }
-
-        /***** Payment Method List *****/
-
 
         .auth-form {
             padding: 0 !important;
-            /* Remove extra padding */
             margin: 0 auto;
-            /* Center the form */
-            max-width: 400px;
-            /* Limit the width for better readability */
+            max-width: 500px;
         }
 
         .auth-form .form-group {
-            margin-bottom: 15px;
-            /* Add spacing between form groups */
+            margin-bottom: 20px;
         }
 
         .auth-form .form-label {
-            font-size: 1rem;
-            /* Ensure consistent label size */
+            font-size: 16px;
+            font-weight: bold;
             color: #333;
-            /* Use a neutral text color */
         }
 
         .auth-form .form-control {
-            border: 1px solid #ccc;
-            /* Add a subtle border */
-            border-radius: 5px;
-            /* Rounded corners */
             padding: 10px;
-            /* Adjust input padding */
-            font-size: 1rem;
-            /* Make text readable */
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
         .auth-form .form-control:focus {
             border-color: #007bff;
-            /* Highlight border on focus */
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            /* Subtle focus glow */
         }
 
-        @media (max-width: 768px) {
-            .auth-form {
-                /* padding: 10px !important;  */
-                max-width: 100%;
-                /* Make form responsive */
-            }
-        }
+
 
         .payment-method-list {
             display: flex;
@@ -381,20 +198,32 @@
         }
     </style>
 
-    {{-- bootstrap cdn --}}
+    <!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <!-- Datatable -->
+    <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
 
+    <!-- Style css -->
+    <link class="main-css" href="css/style.css" rel="stylesheet">
 
+    {{-- swel fire cdn --}}
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{-- csrf token --}}
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
 
 <body>
-    {{-- <div id="top"></div> --}}
 
-     <!--*******************
+    <!--*******************
         Preloader start
     ********************-->
     <div id="preloader">
@@ -403,13 +232,22 @@
             <div></div>
         </div>
     </div>
- 
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
 
         <!--**********************************
             Nav header start
         ***********************************-->
         <x-nav-header />
-
+        <!--**********************************
+            Nav header end
+        ***********************************-->
 
         <!--**********************************
             Header start
@@ -419,31 +257,18 @@
             Header end ti-comment-alt
         ***********************************-->
 
-
-
         <!--**********************************
             Sidebar start
         ***********************************-->
         <x-sidebar />
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
 
-        <!--**********************************
-            Content body start
-        ***********************************-->
-
-   
-
-      
-      
 
 
         <div class="content-body">
             <div class="container-fluid">
                 <div class="container mt-5">
                     @php
-                        $settings = setting::where('id', 1)->first();
+                    $settings = setting::where('id', 1)->first();
                     @endphp
                     <!-- Withdraw Notice Alert Box -->
                     <div class="alert alert-info" role="alert" style="
@@ -454,15 +279,15 @@
                         {{-- Additional information can be added here if needed --}}
                     </div>
                 </div>
-        
+
                 <div class="custom-container" style="
                 padding: 20px;
                 background-color: #f9f9f9;
                 border-radius: 8px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             ">
-                   
-        
+
+
                     <!-- Amount Input Section -->
                     <form action="" class="">
                         @csrf
@@ -471,7 +296,7 @@
                             <input type="number" class="form-control" id="amount" placeholder="Enter Amount">
                         </div>
                     </form>
-        
+
                     <!-- Payment Methods Section -->
                     <br>
                     <h3 class="fw-semibold title-color text-center">Choose Method</h3>
@@ -482,48 +307,48 @@
                         ?>
                         <li class="payment-method-item border p-3 rounded mb-3">
                             <label class="form-check-label d-flex align-items-center" for="<?= $row['slug'] ?>">
-                                <img src="<?= $row['icon'] ?>" alt="<?= $row['pay_name'] ?>" class="img-fluid me-2" style="width: 30px;">
+                                <img src="<?= $row['icon'] ?>" alt="<?= $row['pay_name'] ?>" class="img-fluid me-2"
+                                    style="width: 30px;">
                                 <?= $row['pay_name'] ?>
                             </label>
-                            <input class="form-check-input me-3" id="<?= $row['slug'] ?>" type="radio" name="paymentMethod">
+                            <input class="form-check-input me-3" id="<?= $row['slug'] ?>" type="radio"
+                                name="paymentMethod">
                         </li>
                         <?php } ?>
                     </ul>
-        
+
                     <!-- Button Section -->
                     <?php if (count($paymentModes) == 0) { ?>
                     <div class="grid-btn mt-2">
-                        <button style="cursor:not-allowed;opacity:0.5" class="btn btn-secondary w-100 m-0" disabled>No Payment Method Available</button>
+                        <button style="cursor:not-allowed;opacity:0.5" class="btn btn-secondary w-100 m-0" disabled>No
+                            Payment Method Available</button>
                     </div>
                     <?php } else { ?>
                     <div class="grid-btn mt-4">
                         <button onclick="initiateWithdraw()" class="btn btn-primary w-100 m-0">Withdraw</button>
                     </div>
                     <?php } ?>
-        
+
                     <!-- Notice Section -->
                     <div class="condition-part mt-4" style="cursor: crosshair">
                         <h4 class="fw-semibold title-color">Notice:</h4>
                         <ul class="condition-list">
                             <li>
                                 <h5>Minimum Withdraw</h5>
-                                <p>Minimum Withdraw is <?= $settings['minWithdraw'] ?> INR</p>
+                                <p>Minimum Withdraw is
+                                    <?= $settings['minWithdraw'] ?> INR
+                                </p>
                             </li>
                             <li>
                                 <h5>Withdraw Frequency</h5>
-                                <p>You can place only 10 free withdrawals in a day. After that, 1% TDS will be applied.</p>
+                                <p>You can place only 10 free withdrawals in a day. After that, 1% TDS will be applied.
+                                </p>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!--**********************************
-            Content body end
-        ***********************************-->
-
-
 
         <!--**********************************
             Footer start
@@ -531,57 +356,59 @@
         <div class="footer">
             <div class="copyright">
                 <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/"
-                        target="_blank">DexignLab</a> <span class="current-year">2024</span>
+                        target="_blank">DexignLab</a>
+                    <span class="current-year">2024</span>
                 </p>
             </div>
-        </div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
+        </div >
 
-       
+
 
 
     </div>
-    <!-- header starts -->
-    {{-- <header id="header" class="main-header inner-page-header">
-        <div class="custom-container">
-            <div class="header-panel">
-                <div>
-                    <a href="dashboard">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2985/2985162.png" alt=""
-                            width="20" height="auto">
-                    </a>
-                </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="vendor/global/global.min.js"></script>
+    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- Datatable -->
+    <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="js/plugins-init/datatables.init.js"></script>
 
 
-                <h3 class="fw-semibold title-color">Withdraw Funds</h3>
-            </div>
-        </div>
-    </header> --}}
-    <!-- header end -->
+    <!-- Dashboard 1 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+    <script src="js/custom.min.js"></script>
+    <script src="js/dlabnav-init.js"></script>
+    <script src="js/demo.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
 
 
 
-  	<!-- Required vendors -->
-      <script src="vendor/global/global.min.js"></script>
-      <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-      <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
-      <script src="js/plugins-init/datatables.init.js"></script>
-      <script src="vendor/chart-js/chart.bundle.min.js"></script>
-      <!-- Chart piety plugin files -->
-      <script src="vendor/peity/jquery.peity.min.js"></script>
-      <script src="js/dashboard/trading-market.js"></script>
-      <!-- Dashboard 1 -->
-      <script src="js/custom.min.js"></script>
-      <script src="js/dlabnav-init.js"></script>
-      <script src="js/demo.js"></script>
-      <script src="{{ asset('js/app.js') }}"></script>
 
-   
+
+
+
 
 
 
