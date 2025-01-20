@@ -1,9 +1,9 @@
 @php
-    $user = Auth::user();
-    use App\Models\Script;
-    use App\Models\Equity;
-    use App\Models\Watchlist;
-    use App\Providers\Helper;
+$user = Auth::user();
+use App\Models\Script;
+use App\Models\Equity;
+use App\Models\Watchlist;
+use App\Providers\Helper;
 @endphp
 
 <!DOCTYPE html>
@@ -265,8 +265,7 @@
                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px"
                                         viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect fill="#000000" x="4" y="11" width="16" height="2"
-                                                rx="1" />
+                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
                                             <rect fill="#000000" opacity="0.3"
                                                 transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) "
                                                 x="4" y="11" width="16" height="2" rx="1" />
@@ -293,8 +292,7 @@
                                     <li class="active dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -306,8 +304,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -319,8 +316,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -332,8 +328,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -346,8 +341,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -359,8 +353,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -372,8 +365,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -386,8 +378,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -399,8 +390,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -413,8 +403,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -426,8 +415,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -439,8 +427,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -452,8 +439,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon"></span>
                                             </div>
                                             <div class="user_info">
@@ -466,8 +452,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -479,8 +464,7 @@
                                     <li class="dlab-chat-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
-                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img"
-                                                    alt="">
+                                                <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
                                                 <span class="online_icon offline"></span>
                                             </div>
                                             <div class="user_info">
@@ -514,8 +498,8 @@
                                     <p class="mb-0 text-success">Online</p>
                                 </div>
                                 <div class="dropdown">
-                                    <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
+                                    <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"><svg
+                                            xmlns="http://www.w3.org/2000/svg"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px"
                                             viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -540,8 +524,7 @@
                             <div class="card-body msg_card_body dlab-scroll" id="DLAB_W_Contacts_Body3">
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         Hi, how are you samim?
@@ -554,14 +537,12 @@
                                         <span class="msg_time_send">8:55 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         I am good too, thank you for your chat template
@@ -574,14 +555,12 @@
                                         <span class="msg_time_send">9:05 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         I am looking for your next templates
@@ -594,14 +573,12 @@
                                         <span class="msg_time_send">9:10 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         Bye, see you
@@ -610,8 +587,7 @@
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         Hi, how are you samim?
@@ -624,14 +600,12 @@
                                         <span class="msg_time_send">8:55 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         I am good too, thank you for your chat template
@@ -644,14 +618,12 @@
                                         <span class="msg_time_send">9:05 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         I am looking for your next templates
@@ -664,14 +636,12 @@
                                         <span class="msg_time_send">9:10 AM, Today</span>
                                     </div>
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-4">
                                     <div class="img_cont_msg">
-                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg"
-                                            alt="">
+                                        <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
                                     </div>
                                     <div class="msg_cotainer">
                                         Bye, see you
@@ -774,8 +744,7 @@
                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px"
                                         viewBox="0 0 24 24" version="1.1">
                                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect fill="#000000" x="4" y="11" width="16" height="2"
-                                                rx="1" />
+                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1" />
                                             <rect fill="#000000" opacity="0.3"
                                                 transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) "
                                                 x="4" y="11" width="16" height="2" rx="1" />
@@ -912,8 +881,7 @@
                                 </a>
                             </li>
                             <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link" href="javascript:void(0);" role="button"
-                                    data-bs-toggle="dropdown">
+                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                         width="32px" height="32px" viewBox="0 0 24 24" version="1.1"
                                         class="svg-main-icon">
@@ -921,8 +889,7 @@
                                             <path
                                                 d="M17,12 L18.5,12 C19.3284271,12 20,12.6715729 20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 C4,12.6715729 4.67157288,12 5.5,12 L7,12 L7.5582739,6.97553494 C7.80974924,4.71225688 9.72279394,3 12,3 C14.2772061,3 16.1902508,4.71225688 16.4417261,6.97553494 L17,12 Z"
                                                 fill="#fff" />
-                                            <rect fill="#fff" opacity="0.3" x="10" y="16" width="4"
-                                                height="4" rx="2" />
+                                            <rect fill="#fff" opacity="0.3" x="10" y="16" width="4" height="4" rx="2" />
                                         </g>
                                     </svg>
                                 </a>
@@ -1029,34 +996,29 @@
                                                     <span class="d-block text-end">{{ $user['email'] }}</span>
                                                 </div>
                                             </div>
-                                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                                                alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">
                                         </div>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end header-profile3 " style="">
                                         <a onclick="window.location.href='{{ route('profile') }}'"
                                             class="dropdown-item ai-icon ">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png"
-                                                alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="">
                                             <span class="ms-2">Profile </span>
                                         </a>
                                         <a onclick="window.location.href='{{ route('portfolio') }}'"
                                             class="dropdown-item ai-icon ">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/943/943026.png"
-                                                alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/943/943026.png" alt="">
                                             <span class="ms-2">Portfolio </span>
                                         </a>
 
                                         <a onclick="window.location.href='{{ route('profile') }}'"
                                             class="dropdown-item ai-icon ">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/2698/2698011.png"
-                                                alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/2698/2698011.png" alt="">
                                             <span class="ms-2">Settings </span>
                                         </a>
                                         <a onclick="window.location.href='{{ route('logout') }}'"
                                             class="dropdown-item ai-icon">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png"
-                                                alt="">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png" alt="">
                                             <span class="ms-2 text-danger">Logout </span>
                                         </a>
                                     </div>
@@ -1097,14 +1059,12 @@
         ***********************************-->
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Add New</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -1309,6 +1269,7 @@
                                                                     $iii = DB::select('SELECT * FROM future_temp WHERE exchangeToken = ? LIMIT 1', [$watchlist['exchangeToken']]);
                                                                     $foisin = $iii[0]->instrumentKey;
                                                                     $tradingSymbol = $iii[0]->tradingSymbol;
+                                                                    $quantity = $iii[0]->lotSize;
                                                                     ?>
                                     <p style="display: none" id="isin1{{ $i }}">{{ $foisin }}</p>
                                     <div id="orderForm{{ $i }}">
@@ -1317,11 +1278,9 @@
                                             bottom offcanvas</button> --}}
 
                                         <div class="offcanvas offcanvas-bottom" tabindex="-1"
-                                            id="offcanvasBottom{{ $i }}"
-                                            aria-labelledby="offcanvasBottomLabel">
+                                            id="offcanvasBottom{{ $i }}" aria-labelledby="offcanvasBottomLabel">
                                             <div class="offcanvas-header">
-                                                <h5 class="offcanvas-title"
-                                                    id="offcanvasBottomLabel{{ $i }}">Offcanvas
+                                                <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
                                                     bottom
                                                 </h5>
                                                 <button type="button" class="btn-close text-reset"
@@ -1345,13 +1304,11 @@
                                                                             style="width: 50%;" id="nav-order-tab"
                                                                             data-bs-toggle="tab"
                                                                             data-bs-target="#nav-order" type="button"
-                                                                            role="tab"
-                                                                            aria-selected="true">Buy</button>
+                                                                            role="tab" aria-selected="true">Buy</button>
                                                                         <button class="nav-link" style="width: 50%"
                                                                             id="nav-histroy-tab" data-bs-toggle="tab"
-                                                                            data-bs-target="#nav-history"
-                                                                            type="button" role="tab"
-                                                                            aria-selected="false">Sell
+                                                                            data-bs-target="#nav-history" type="button"
+                                                                            role="tab" aria-selected="false">Sell
                                                                         </button>
 
                                                                     </div>
@@ -1366,8 +1323,7 @@
                                                                         <div class="table-responsive dataTabletrade">
                                                                             <form>
 
-                                                                                <div class="col-xl-4"
-                                                                                    style="
+                                                                                <div class="col-xl-4" style="
                                                                                         width: 100%;
                                                                                     ">
                                                                                     <div class="card">
@@ -1380,7 +1336,9 @@
                                                                                                     class="small text-muted">Available
                                                                                                     Balance</span>
                                                                                                 <span
-                                                                                                    class="text-dark">{{ Auth::user()->real_wallet }}</span>
+                                                                                                    class="text-dark">{{
+                                                                                                    Auth::user()->real_wallet
+                                                                                                    }}</span>
                                                                                             </div>
 
                                                                                             <!-- Buy/Sell Form -->
@@ -1390,7 +1348,8 @@
                                                                                                     <label
                                                                                                         class="form-label">Order
                                                                                                         Type</label>
-                                                                                                    <select onchange="handleOrderTypeChange('nsefut', {{ $i }}, this.value)"
+                                                                                                    <select
+                                                                                                        onchange="handleOrderTypeChange('nsefut', {{ $i }}, this.value)"
                                                                                                         class="form-select">
                                                                                                         <option
                                                                                                             value="market"
@@ -1401,6 +1360,11 @@
                                                                                                             value="limit">
                                                                                                             Limit Order
                                                                                                         </option>
+                                                                                                        <option
+                                                                                                            value="stoploss">
+                                                                                                            Stop Loss
+                                                                                                            Order
+                                                                                                        </option>
                                                                                                     </select>
                                                                                                 </div>
 
@@ -1410,12 +1374,14 @@
                                                                                                     <span
                                                                                                         class="input-group-text">Price</span>
                                                                                                     <input
-                                                                                                        id="realprice1{{ $i }}" disabled
+                                                                                                        id="realprice1{{ $i }}"
+                                                                                                        disabled
                                                                                                         type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter price">
                                                                                                     <input
-                                                                                                        id="limitprice1{{ $i }}" disabled
+                                                                                                        id="limitprice1{{ $i }}"
+                                                                                                        disabled
                                                                                                         type="hidden"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter price">
@@ -1424,12 +1390,11 @@
                                                                                                 </div>
 
                                                                                                 <!-- Size Input -->
-                                                                                                <div
+                                                                                                {{-- <div
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Size</span>
-                                                                                                    <input
-                                                                                                        type="text"
+                                                                                                    <input type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter size">
                                                                                                     <button
@@ -1446,6 +1411,45 @@
                                                                                                                 href="#">Units</a>
                                                                                                         </li>
                                                                                                     </ul>
+                                                                                                </div> --}}
+
+                                                                                                <div class=""
+                                                                                                    style="display: flex; justify-content:space-between; gap:20px;">
+                                                                                                    <div
+                                                                                                        class="input-group mb-3">
+                                                                                                        <span
+                                                                                                            class="input-group-text">Lot</span>
+                                                                                                        <button
+                                                                                                            onclick="decrementLot({{ $quantity }}, {{ $i }}, 1)"
+                                                                                                            class="btn btn-outline-secondary"
+                                                                                                            type="button"
+                                                                                                            id="decrement">-</button>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            class="form-control text-center"
+                                                                                                            placeholder="Enter size"
+                                                                                                            id="lotSize1{{ $i }}"
+                                                                                                            value="1">
+                                                                                                        <button
+                                                                                                            onclick="incrementLot( {{ $quantity }}, {{ $i }}, 1)"
+                                                                                                            class="btn btn-outline-secondary"
+                                                                                                            type="button"
+                                                                                                            id="increment">+</button>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="input-group mb-3">
+                                                                                                        <span
+                                                                                                            class="input-group-text">Quantity</span>
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            class="form-control"
+                                                                                                            placeholder="Enter size"
+                                                                                                            id="quantity1{{ $i }}"
+                                                                                                            value={{
+                                                                                                            $quantity }}
+                                                                                                            readonly>
+
+                                                                                                    </div>
                                                                                                 </div>
 
                                                                                                 <!-- Take Profit & Stop Loss -->
@@ -1482,8 +1486,7 @@
                                                                                                     <span
                                                                                                         class="input-group-text">Stop
                                                                                                         Price</span>
-                                                                                                    <input
-                                                                                                        type="text"
+                                                                                                    <input type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter stop price">
                                                                                                     <button
@@ -1505,15 +1508,13 @@
                                                                                                 <!-- Cost and Max Info -->
                                                                                                 <div
                                                                                                     class="d-flex justify-content-between flex-wrap">
-                                                                                                    <div
-                                                                                                        class="d-flex">
+                                                                                                    <div class="d-flex">
                                                                                                         <div>Cost:</div>
                                                                                                         <div
                                                                                                             class="text-muted px-1">
                                                                                                             ₹0.00</div>
                                                                                                     </div>
-                                                                                                    <div
-                                                                                                        class="d-flex">
+                                                                                                    <div class="d-flex">
                                                                                                         <div>Max:</div>
                                                                                                         <div
                                                                                                             class="text-muted px-1">
@@ -1540,8 +1541,7 @@
                                                                         role="tabpanel">
                                                                         <div class="table-responsive dataTabletrade">
                                                                             <form>
-                                                                                <div class="col-xl-4"
-                                                                                    style="
+                                                                                <div class="col-xl-4" style="
                                                                                 width: 100%;
                                                                             ">
                                                                                     <div class="card">
@@ -1587,8 +1587,7 @@
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Price</span>
-                                                                                                    <input
-                                                                                                        type="text"
+                                                                                                    <input type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter price">
                                                                                                     <span
@@ -1600,8 +1599,7 @@
                                                                                                     class="input-group mb-3">
                                                                                                     <span
                                                                                                         class="input-group-text">Size</span>
-                                                                                                    <input
-                                                                                                        type="text"
+                                                                                                    <input type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter size">
                                                                                                     <button
@@ -1654,8 +1652,7 @@
                                                                                                     <span
                                                                                                         class="input-group-text">Stop
                                                                                                         Price</span>
-                                                                                                    <input
-                                                                                                        type="text"
+                                                                                                    <input type="text"
                                                                                                         class="form-control"
                                                                                                         placeholder="Enter stop price">
                                                                                                     <button
@@ -1677,15 +1674,13 @@
                                                                                                 <!-- Cost and Max Info -->
                                                                                                 <div
                                                                                                     class="d-flex justify-content-between flex-wrap">
-                                                                                                    <div
-                                                                                                        class="d-flex">
+                                                                                                    <div class="d-flex">
                                                                                                         <div>Cost:</div>
                                                                                                         <div
                                                                                                             class="text-muted px-1">
                                                                                                             ₹0.00</div>
                                                                                                     </div>
-                                                                                                    <div
-                                                                                                        class="d-flex">
+                                                                                                    <div class="d-flex">
                                                                                                         <div>Max:</div>
                                                                                                         <div
                                                                                                             class="text-muted px-1">
@@ -1726,20 +1721,17 @@
                                         <td>
                                             {{ $i }}
                                         </td>
-                                        <td onclick="showOrderForm({{ $i }})"
-                                            id="symbol1{{ $i }}">{{ $tradingSymbol }}</td>
-                                        <td onclick="showOrderForm({{ $i }})"
-                                            id="bid1{{ $i }}">0</td>
-                                        <td onclick="showOrderForm({{ $i }})"
-                                            id="ask1{{ $i }}">0</td>
-                                        <td onclick="showOrderForm({{ $i }})"
-                                            id="ltp1{{ $i }}">0</td>
+                                        <td onclick="showOrderForm({{ $i }})" id="symbol1{{ $i }}">{{ $tradingSymbol }}
+                                        </td>
+                                        <td onclick="showOrderForm({{ $i }})" id="bid1{{ $i }}">0</td>
+                                        <td onclick="showOrderForm({{ $i }})" id="ask1{{ $i }}">0</td>
+                                        <td onclick="showOrderForm({{ $i }})" id="ltp1{{ $i }}">0</td>
                                         <td id="ch1{{ $i }}">0</td>
                                         <td id="badge1{{ $i }}">
                                             {{-- <span class="badge light badge-danger">
                                                 <i class="fa fa-circle text-danger me-1"></i> --}}
-                                            0
-                                            {{-- </span> --}}
+                                                0
+                                                {{-- </span> --}}
                                         </td>
                                         <td id="high1{{ $i }}">0</td>
                                         <td id="low1{{ $i }}">0</td>
@@ -1747,8 +1739,8 @@
                                         <td id="close1{{ $i }}">0</td>
                                         <td>
 
-                                            <i onclick="removeWatchlist({{ $watchlist['id'] }})"
-                                                style="cursor: pointer" class="bi bi-x-square-fill text-danger"></i>
+                                            <i onclick="removeWatchlist({{ $watchlist['id'] }})" style="cursor: pointer"
+                                                class="bi bi-x-square-fill text-danger"></i>
                                             &nbsp;
                                             <!-- <i style="cursor: pointer"
                                                 class="bi bi-bar-chart-line-fill text-success"></i> -->
@@ -1842,8 +1834,8 @@
                                         <td id="close2{{ $i }}">0</td>
                                         <td>
 
-                                            <i onclick="removeWatchlist({{ $watchlist['id'] }})"
-                                                style="cursor: pointer" class="bi bi-x-square-fill text-danger"></i>
+                                            <i onclick="removeWatchlist({{ $watchlist['id'] }})" style="cursor: pointer"
+                                                class="bi bi-x-square-fill text-danger"></i>
                                             &nbsp;
                                             <!-- <i style="cursor: pointer"
                                                 class="bi bi-bar-chart-line-fill text-success"></i> -->
@@ -1935,8 +1927,8 @@
                                         <td id="close3{{ $i }}">0</td>
                                         <td>
 
-                                            <i onclick="removeWatchlist({{ $watchlist['id'] }})"
-                                                style="cursor: pointer" class="bi bi-x-square-fill text-danger"></i>
+                                            <i onclick="removeWatchlist({{ $watchlist['id'] }})" style="cursor: pointer"
+                                                class="bi bi-x-square-fill text-danger"></i>
                                             &nbsp;
                                             <!-- <i style="cursor: pointer"
                                                 class="bi bi-bar-chart-line-fill text-success"></i> -->
@@ -2718,6 +2710,39 @@
 
 
         });
+
+      
+
+
+    function incrementLot(quantityPerLot, uniqueId, segment) {
+
+        if(segment == 1){
+            const lotInput = document.getElementById('lotSize1' + uniqueId);
+            let currentValue = parseInt(lotInput.value) || 0;
+            lotInput.value = currentValue + 1;
+            const quantity = document.getElementById('quantity1' + uniqueId);
+            quantity.value =lotInput.value * quantityPerLot;
+        }else{
+
+        }
+    }
+
+    function decrementLot(quantityPerLot, uniqueId, segment) {
+        if(segment == 1){
+            const lotInput = document.getElementById('lotSize1' + uniqueId);
+            let currentValue = parseInt(lotInput.value) || 0;
+            if (currentValue > 1) {
+                lotInput.value = currentValue - 1;
+                const quantity = document.getElementById('quantity1' + uniqueId);
+                quantity.value =lotInput.value * quantityPerLot;
+            }
+        }else{
+
+        }
+
+        
+        
+    }
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>

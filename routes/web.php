@@ -116,6 +116,7 @@ Route::middleware('auth')->group(function () {
 
 
 
+Route::get('/updatelotsize', [StockController::class, 'updateLotSize'])->name('updateLotSize');
 
 
 require __DIR__ . '/auth.php';
