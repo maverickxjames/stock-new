@@ -115,6 +115,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('quotes', [StockController::class, 'quotes'])->name('quotes');
     Route::get('scripts', [StockController::class, 'scripts'])->name('scripts');
+    Route::get('segment/{id}', [StockController::class, 'segment'])->name('segment');
     Route::get('add-script', [StockController::class, 'addScript'])->name('add-script');
 });
 
