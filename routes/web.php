@@ -112,6 +112,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-stock/future/{id}', [StockController::class, 'futureGetStock'])->name('futureGetStock');
     Route::get('/get-expiry/mcx/{id}', [StockController::class, 'mcxGetExpiry'])->name('mcxGetExpiry');
     Route::get('/get-stock/mcx/{id}', [StockController::class, 'mcxGetStock'])->name('mcxGetStock');
+
+    Route::get('quotes', [StockController::class, 'quotes'])->name('quotes');
+    Route::get('scripts', [StockController::class, 'scripts'])->name('scripts');
+    Route::get('add-script', [StockController::class, 'addScript'])->name('add-script');
 });
 
 

@@ -359,4 +359,28 @@ class StockController extends Controller
         }
 
     }
+
+
+    public function quotes(){
+        $quote = DB::table('quotes')->get();
+
+        return view('quote', ['quote' => $quote]);
+    }
+
+    public function scripts(){
+        $scripts = DB::table('scripts')->get();
+        return view('script', ['scripts' => $scripts]);
+    }
+
+    public function addquote(Request $request){
+        $quote = $request->quote;
+        $insert = DB::table('quotes')->insert([
+            'quote' => $quote
+        ]);
+        if($insert){
+            return redirect()->back()->with('success', 'Quote Added Successfully');
+        }else{
+            return redirect()->back()->with('error', 'Quote Not Added');
+        }
+    }
 }
