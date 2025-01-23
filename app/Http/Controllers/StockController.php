@@ -372,6 +372,70 @@ class StockController extends Controller
         return view('script', ['scripts' => $scripts]);
     }
 
+    public function segment($id){
+
+        if ($id == 1) {
+            $data = DB::table('future_temp')
+                ->where('segment', 'NSE_FO')
+                ->where('instrumentType', 'FUT')
+                ->distinct()
+                ->pluck('assetSymbol');
+            
+            $allData = DB::table('future_temp')
+                ->where('segment', 'NSE_FO')
+                ->where('instrumentType', 'FUT')
+                ->get()
+                ->groupBy('assetSymbol');
+            
+        } elseif ($id == 2) {
+            $data = DB::table('future_temp')
+                ->where('segment', 'NSE_FO')
+                ->where(function ($query) {
+                    $query->where('instrumentType', 'PE')
+                          ->orWhere('instrumentType', 'CE');
+                })
+                ->distinct()
+                ->pluck('assetSymbol');
+            
+            $allData = DB::table('future_temp')
+                ->where('segment', 'NSE_FO')
+                ->where(function ($query) {
+                    $query->where('instrumentType', 'PE')
+                          ->orWhere('instrumentType', 'CE');
+                })
+                ->get()
+                ->groupBy('assetSymbol');
+            
+        } elseif ($id == 3) {
+            $data = DB::table('future_temp')
+                ->where('segment', 'MCX_FO')
+                ->where('instrumentType', 'FUT')
+                ->distinct()
+                ->pluck('assetSymbol');
+            
+            $allData = DB::table('future_temp')
+                ->where('segment', 'MCX_FO')
+                ->where('instrumentType', 'FUT')
+                ->get()
+                ->groupBy('assetSymbol');
+            
+        } elseif ($id == 4) {
+            $data = DB::table('future_temp')
+                ->where('segment', 'INDICES')
+                ->where('instrumentType', 'FUT')
+                ->distinct()
+                ->pluck('assetSymbol');
+            
+            $allData = DB::table('future_temp')
+                ->where('segment', 'INDICES')
+                ->where('instrumentType', 'FUT')
+                ->get()
+                ->groupBy('assetSymbol');
+        }
+    
+        return view('segment', ['data' => $data, 'allData' => $allData]);
+    }
+
     public function addquote(Request $request){
         $quote = $request->quote;
         $insert = DB::table('quotes')->insert([
