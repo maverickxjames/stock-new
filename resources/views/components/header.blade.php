@@ -1,5 +1,5 @@
 <?php
- $user=auth()->user();
+$user = auth()->user();
 ?>
 
 
@@ -13,15 +13,19 @@
                 <ul class="navbar-nav header-right">
 
                     <li class="nav-item dropdown add_item_dropdown" title="Add Script">
-                        <a class="nav-link add-icon " href="javascript:void(0);">
+                        <a class="nav-link add-icon " href="javascript:void(0);" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <!-- Light Theme Add Icon -->
-                            <svg id="icon-light-add" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="svg-main-icon">
+                            <svg id="icon-light-add" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                viewBox="0 0 24 24" class="svg-main-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="50" height="24" />
-                                    <path d="M12,5 C12.5522847,5 13,5.44771525 13,6 L13,11 L18,11 C18.5522847,11 19,11.4477153 19,12 C19,12.5522847 18.5522847,13 18,13 L13,13 L13,18 C13,18.5522847 12.5522847,19 12,19 C11.4477153,19 11,18.5522847 11,18 L11,13 L6,13 C5.44771525,13 5,12.5522847 5,12 C5,11.4477153 5.44771525,11 6,11 L11,11 L11,6 C11,5.44771525 11.4477153,5 12,5 Z" fill="#FFFFFF" />
+                                    <path
+                                        d="M12,5 C12.5522847,5 13,5.44771525 13,6 L13,11 L18,11 C18.5522847,11 19,11.4477153 19,12 C19,12.5522847 18.5522847,13 18,13 L13,13 L13,18 C13,18.5522847 12.5522847,19 12,19 C11.4477153,19 11,18.5522847 11,18 L11,13 L6,13 C5.44771525,13 5,12.5522847 5,12 C5,11.4477153 5.44771525,11 6,11 L11,11 L11,6 C11,5.44771525 11.4477153,5 12,5 Z"
+                                        fill="#FFFFFF" />
                                 </g>
                             </svg>
-                         
+
                         </a>
                     </li>
 
@@ -52,7 +56,7 @@
                             </svg>
                         </a>
                     </li>
-                   
+
                     {{-- <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -160,8 +164,8 @@
                     </li> --}}
                     <li>
                         <div class="dropdown header-profile2">
-                            <a class="nav-link" href="javascript:void(0);" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <div class="header-info2 d-flex align-items-center">
                                     <div class="d-flex align-items-center sidebar-info">
                                         <div>
@@ -189,9 +193,10 @@
                                     <img src="https://cdn-icons-png.flaticon.com/512/2698/2698011.png" alt="">
                                     <span class="ms-2">Settings </span>
                                 </a>
-                                <a onclick="window.location.href='{{ route('logout') }}'"
-                                    class="dropdown-item ai-icon" style="cursor: pointer;">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png" alt="">
+                                <a onclick="window.location.href='{{ route('logout') }}'" class="dropdown-item ai-icon"
+                                    style="cursor: pointer;">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png"
+                                        alt="">
                                     <span class="ms-2 text-danger">Logout </span>
                                 </a>
                             </div>
