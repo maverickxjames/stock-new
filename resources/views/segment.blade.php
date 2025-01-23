@@ -141,50 +141,87 @@
 								</div>
 							</div>
 						</div>
-                        
-                       
 
                        
-<div class="row">
-    <div class="col-xl-12">
-        <div class="filter cm-content-box box-primary">
-            <div class="content-title SlideToolHeader">
-                <div class="cpa">Segment</div>
-                <div class="tools">
-                    <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
-                </div>
-            </div>
-            <div class="cm-content-body form excerpt">
-                <div class="card-body">
-                    <div class="filter cm-content-box box-primary border">
-                        @foreach ($data as $assetSymbol)
-                            <div class="content-title border-0 SlideToolHeader">
-                                <div class="cpa">
-                                    {{ $assetSymbol }}
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
-                                </div>
-                            </div>
-                            @if (isset($allData[$assetSymbol]))
-                                @foreach ($allData[$assetSymbol] as $ad)
-                                    <div class="cm-content-body form excerpt border-top">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                {{ $ad->tradingSymbol }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+						<div class="row">
+						
+							<div class="col-xl-12">
+								<div class="filter cm-content-box box-primary">
+									<div class="content-title d-sm-flex d-block flex-wrap">
+										<div class="cpa d-flex align-items-center flex-wrap">
+											<span class="pe-3 pb-sm-0 pb-3">Segment</span>
+										</div>
+									</div>
+									<div class="cm-content-body form excerpt rounded-0">
+										<div class="card-body">
+											
+											<div class="col-xl-12">
+												<div class="dd" id="nestable">
+													<ol class="dd-list accordion" id="accordionExample">
+														<!-- <div class="dd-handle"></div> -->
+														
+													
+														<li class="accordion-item dd-item menu-ac-item" data-id="2">
+															<div class="accordion-header position-relative">
+																<div class="move-media dd-handle">
+																	<i class="fa-solid fa-arrows-up-down-left-right"></i>
+																</div>
+															  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+																Privacy Policy
+															  </button>
+															</div>
+															<div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+																<div class="accordion-body">
+                                                                    <ol class="dd-list">
+                                                                        <li class="dd-item" data-id="3">
+                                                                            <div class="dd-handle">Privacy Policy</div>
+                                                                        </li>
+                                                                        <li class="dd-item" data-id="4">
+                                                                            <div class="dd-handle">Terms & Conditions</div>
+                                                                        </li>
+                                                                        <li class="dd-item" data-id="5">
+                                                                            <div class="dd-handle">Disclaimer</div>
+                                                                        </li>
+                                                                    </ol>											
+																</div>
+															</div>
+														</li>
+														<li class="accordion-item dd-item menu-ac-item" data-id="3">
+															<div class="accordion-header position-relative">
+																<div class="move-media dd-handle">
+																	<i class="fa-solid fa-arrows-up-down-left-right"></i>
+																</div>
+															  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+																Privacy Policy
+															  </button>
+															</div>
+															<div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+																<div class="accordion-body">
+                                                                    <ol class="dd-list">
+                                                                        <li class="dd-item" data-id="3">
+                                                                            <div class="dd-handle">Privacy Policy</div>
+                                                                        </li>
+                                                                        <li class="dd-item" data-id="4">
+                                                                            <div class="dd-handle">Terms & Conditions</div>
+                                                                        </li>
+                                                                        <li class="dd-item" data-id="5">
+                                                                            <div class="dd-handle">Disclaimer</div>
+                                                                        </li>
+                                                                    </ol>										
+																</div>
+															</div>
+														</li>
+													
+														
+													</ol>
+												</div>
+											</div>
+										</div>		
+									</div>
+									
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

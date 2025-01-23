@@ -2530,9 +2530,10 @@ use App\Providers\Helper;
                             text: response.message,
                             icon: 'success',
                             confirmButtonText: 'Okay'
-                        }).then(() => {
-                            location.reload();
-                        });
+                        })
+                        // .then(() => {
+                        //     location.reload();
+                        // });
                     } else {
                         Swal.fire({
                             title: 'Error',
