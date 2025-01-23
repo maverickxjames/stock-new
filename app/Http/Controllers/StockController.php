@@ -28,6 +28,38 @@ class StockController extends Controller
         return view('stockview', ['id' => $id]);
     }
 
+    function searchScript(Request $request)
+    {
+        $search = $request->search;
+        $type = $request->type;
+
+        if($type == 'future'){
+            $data = DB::table('future_temp')
+            ->where('assetSymbol', 'like', "%" . $search . "%")
+            ->where('instrumentType', 'FUT')
+            ->get();
+            return response()->json($data);
+        }elseif($type == 'option'){
+            $data = DB::table('future_temp')
+            ->where('assetSymbol', 'like', "%" . $search . "%")
+            ->where('instrumentType', 'CE')
+            ->orWhere('instrumentType', 'PE')
+            ->get();
+            return response()->json($data);
+        }else if($type == 'indices'){
+            $data = DB::table('future_temp')
+            ->where('assetSymbol', 'like', "%" . $search . "%")
+            ->where('instrumentType', 'IDX')
+            ->get();
+            return response()->json($data);
+        }else{
+            $data = DB::table('future_temp')
+            ->where('assetSymbol', 'like', "%" . $search . "%")
+            ->get();
+            return response()->json($data);
+        }
+    }
+
     public function fetchStockData($id)
     {
         $today = Carbon::now();
@@ -368,7 +400,8 @@ class StockController extends Controller
     }
 
     public function scripts(){
-        $scripts = DB::table('scripts')->get();
+        // $scripts = DB::table('scripts')->get();
+        $scripts = DB::table('future_temp')->get();
         return view('script', ['scripts' => $scripts]);
     }
 

@@ -145,7 +145,8 @@ $user=Auth::user();
                                     <div class="row align-items-center mb-3">
 
                                         <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3">
-                                            <input type="text" class="form-control" placeholder="Search Script">
+                                            <input type="text" class="form-control" placeholder="Search Script"
+                                                onkeyup="searchScript(this)">
 
                                         </div>
 
@@ -209,25 +210,27 @@ $user=Auth::user();
                                     <div class=" cm-content-body card-body pt-4 pb-0 height370 dlab-scroll">
                                         <div class="contacts-list" id="RecentActivityContent">
 
-                                            @foreach ($scripts as $script)
-                                            <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
+                                            {{-- @foreach ($scripts as $script) --}}
+                                            {{-- <div
+                                                class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
                                                 <div class="d-flex align-items-center">
                                                     <img src="https://cdn-icons-png.flaticon.com/128/14906/14906254.png"
-                                                        alt="" class="avatar">
+                                                        alt="" class="avatar" id="avatar">
                                                     <div class="ms-3">
-                                                        <h5 class="mb-1"><a href="app-profile.html">{{
-                                                                $script->script_symbol }}</a></h5>
-                                                        <span class="fs-14 text-muted">{{ $script->description }}</span>
+                                                        <h5 class="mb-1"><a href="" id="script_symbol">Loading...</a>
+                                                        </h5>
+                                                        <span class="fs-14 text-muted"
+                                                            id="script_description">Loading...</span>
                                                     </div>
                                                 </div>
                                                 <div class="icon-box icon-box-sm bgl-primary">
-                                                    <a href="javascript:void(0)">
+                                                    <a href="javascript:void(0)" id="add_script">
                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
                                                             width="24" alt="">
                                                     </a>
                                                 </div>
-                                            </div>
-                                            @endforeach
+                                            </div> --}}
+                                            {{-- @endforeach --}}
                                         </div>
                                     </div>
                                 </div>
@@ -268,6 +271,8 @@ $user=Auth::user();
         <!-- Dashboard 1 -->
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
         <script>
             let activeFilter = 'ALL'; 
             let activeFilterCP ='ALL';
@@ -287,8 +292,8 @@ $user=Auth::user();
                     document.getElementById('expiry-date').hidden = false;
                     document.getElementById('Order-type').hidden = false;
                 } else if(filterName === 'Future') {
-                    document.getElementById('expiry-date').hidden = true;
-                    document.getElementById('Order-type').hidden = false;
+                    document.getElementById('expiry-date').hidden = false;
+                    document.getElementById('Order-type').hidden = true;
                 } else{
                     document.getElementById('expiry-date').hidden = true;
                     document.getElementById('Order-type').hidden = true;
@@ -328,9 +333,107 @@ $user=Auth::user();
             console.log('Active Filter:', activeFilter);
             console.log('Active FilterCP:', activeFilterCP);
         </script>
+        <script>
+            //fetch all scripts from the server
+           
+
+            //implement search script using of $scripts variable thgen filter the scripts their we serach tradingSymbol
+            function searchScript(input) {
+
+                const searchValue = input.value.toLowerCase();
+                    if(getActiveFilter()=='Future'){
+                        // get api call for future
+                        let url = 'searchScript?search=' + searchValue + '&type=future';
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                // api response 
+                                updateContactsList(data);
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }else if(getActiveFilter()=='Option'){
+
+                        let url = 'searchScript?search=' + searchValue + '&type=option';
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                updateContactsList(data);
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+
+                    }else if(getActiveFilter()=='Indicies'){
+                        let url = 'searchScript?search=' + searchValue + '&type=indices';
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                updateContactsList(data);
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }else{
+                        let url = 'searchScript?search=' + searchValue + '&type=all';
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                updateContactsList(data);
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }
+
+               
+            }
+
+            function updateContactsList(responseData) {
+    const container = document.getElementById("RecentActivityContent");
+
+    // Clear existing content
+    container.innerHTML = "";
+
+    // Loop through API response and create new elements
+    responseData.forEach((item) => {
+        const contentHTML = `
+            <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
+                <div class="d-flex align-items-center">
+                    <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
+                    <div class="ms-3">
+                        <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
+                        <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
+                    </div>
+                </div>
+                <div class="icon-box icon-box-sm bgl-primary">
+                    <a href="javascript:void(0)" id="add_script">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
+                    </a>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML("beforeend", contentHTML);
+    });
+}
+
+            function updateScript(script) {
+                const scriptSymbol = document.getElementById('script_symbol');
+                const scriptDescription = document.getElementById('script_description');
+                const avatar = document.getElementById('avatar');
+                const addScript = document.getElementById('add_script');
+                let logo=`https://s3tv-symbol.dhan.co/symbols/${script.assetSymbol}.svg`;
+
+                scriptSymbol.innerText = script.tradingSymbol;
+                scriptDescription.innerText = script.expiry;
+                avatar.src = logo;
+              
+            }
+        </script>
 
 </body>
 
-<!-- Mirrored from jiade.dexignlab.com/xhtml/history.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:24 GMT -->
+
 
 </html>
