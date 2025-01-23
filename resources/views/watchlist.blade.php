@@ -2531,9 +2531,9 @@ use App\Providers\Helper;
                             icon: 'success',
                             confirmButtonText: 'Okay'
                         })
-                        // .then(() => {
-                        //     location.reload();
-                        // });
+                        .then(() => {
+                            location.reload();
+                        });
                     } else {
                         Swal.fire({
                             title: 'Error',

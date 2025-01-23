@@ -44,6 +44,7 @@ class StockController extends Controller
             ->where('assetSymbol', 'like', "%" . $search . "%")
             ->where('instrumentType', 'CE')
             ->orWhere('instrumentType', 'PE')
+            ->limit(10)
             ->get();
             return response()->json($data);
         }else if($type == 'indices'){
