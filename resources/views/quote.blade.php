@@ -17,19 +17,23 @@ $user = Auth::user();
     <meta name="author" content="Dexignlabs">
     <meta name="robots" content="index, follow">
 
-    <meta name="keywords" content="Admin Dashboard, Bootstrap Template, FrontEnd, Web Application, Responsive Design, User Experience, Customizable, Modern UI, Dashboard Template, Admin Panel, Bootstrap 5, HTML5, CSS3, JavaScript, Admin Template, UI Kit, SASS, SCSS, Analytics, Responsive Dashboard, responsive admin dashboard, ui kit, web app, Admin Dashboard, Template, Admin, Authentication, FrontEnd Integration, Web Application UI, Bootstrap Framework, User Interface Kit, SASS Integration, Customizable Template, HTML5/CSS3, Analytics Dashboard, Admin Dashboard UI, Mobile-Friendly Design, UI Components, Dashboard Widgets, Dashboard Framework, Data Visualization, User Experience (UX), Dashboard Widgets, Real-time Analytics, Cross-Browser Compatibility, Interactive Charts, Performance Optimization, Multi-Purpose Template, Efficient Admin Tools, Modern Web Technologies, Responsive Tables, Dashboard Widgets, Invoice Management, Access Control, Modular Design, Trend Analysis, User-Friendly Interface, Crypto Trading UI, Cryptocurrency Dashboard, Trading Platform Interface, Responsive Crypto Admin, Financial Dashboard, UI Components for Crypto, Cryptocurrency Exchange, Blockchain , Crypto Portfolio Template, Crypto Market Analytics">
+    <meta name="keywords"
+        content="Admin Dashboard, Bootstrap Template, FrontEnd, Web Application, Responsive Design, User Experience, Customizable, Modern UI, Dashboard Template, Admin Panel, Bootstrap 5, HTML5, CSS3, JavaScript, Admin Template, UI Kit, SASS, SCSS, Analytics, Responsive Dashboard, responsive admin dashboard, ui kit, web app, Admin Dashboard, Template, Admin, Authentication, FrontEnd Integration, Web Application UI, Bootstrap Framework, User Interface Kit, SASS Integration, Customizable Template, HTML5/CSS3, Analytics Dashboard, Admin Dashboard UI, Mobile-Friendly Design, UI Components, Dashboard Widgets, Dashboard Framework, Data Visualization, User Experience (UX), Dashboard Widgets, Real-time Analytics, Cross-Browser Compatibility, Interactive Charts, Performance Optimization, Multi-Purpose Template, Efficient Admin Tools, Modern Web Technologies, Responsive Tables, Dashboard Widgets, Invoice Management, Access Control, Modular Design, Trend Analysis, User-Friendly Interface, Crypto Trading UI, Cryptocurrency Dashboard, Trading Platform Interface, Responsive Crypto Admin, Financial Dashboard, UI Components for Crypto, Cryptocurrency Exchange, Blockchain , Crypto Portfolio Template, Crypto Market Analytics">
 
-    <meta name="description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
+    <meta name="description"
+        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
 
     <meta property="og:title" content="Jiade : Crypto Trading UI Admin  Bootstrap 5 Template | Dexignlabs">
-    <meta property="og:description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
+    <meta property="og:description"
+        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
 
     <meta property="og:image" content="social-image.png">
 
     <meta name="format-detection" content="telephone=no">
 
     <meta name="twitter:title" content="Jiade : Crypto Trading UI Admin  Bootstrap 5 Template | Dexignlabs">
-    <meta name="twitter:description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
+    <meta name="twitter:description"
+        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
 
     <meta name="twitter:image" content="social-image.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -48,13 +52,13 @@ $user = Auth::user();
             width: 80%;
             margin-bottom: 10px;
         }
-
     </style>
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
     <!-- Datatable -->
     <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
@@ -64,22 +68,24 @@ $user = Auth::user();
 
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 
 </head>
 
 <style>
     .blink {
-    animation: blink-animation 1.5s infinite;
-}
+        animation: blink-animation 1.5s infinite;
+    }
 
-@keyframes blink-animation {
-    50% { opacity: 0; }
-}
+    @keyframes blink-animation {
+        50% {
+            opacity: 0;
+        }
+    }
 
-/* .badge-success {
+    /* .badge-success {
     background-color: #28a745;
     color: #fff;
 }
@@ -89,87 +95,96 @@ $user = Auth::user();
     color: #fff;
 } */
 
-.trade-container {
-    display: flex;
-    flex-direction: column;
-    padding: 0; /* Remove padding from container */
-    margin: 0;
-}
+    .trade-container {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        /* Remove padding from container */
+        margin: 0;
+    }
 
-.trade-item {
-    padding: 5px 10px; /* Padding inside each trade item */
-    border-bottom: 1px solid #ddd; /* Add a bottom border for separation */
-    font-size: 16px; /* Adjust font size */
-    color: #333; /* Set a nice text color */
-    background-color: #f9f9f9; /* Optional: Add background color */
-    transition: background-color 0.3s; /* Add a smooth transition effect */
-    display: flex;
-    justify-content: space-between;
-}
+    .trade-item {
+        padding: 5px 10px;
+        /* Padding inside each trade item */
+        border-bottom: 1px solid #ddd;
+        /* Add a bottom border for separation */
+        font-size: 16px;
+        /* Adjust font size */
+        color: #333;
+        /* Set a nice text color */
+        background-color: #f9f9f9;
+        /* Optional: Add background color */
+        transition: background-color 0.3s;
+        /* Add a smooth transition effect */
+        display: flex;
+        justify-content: space-between;
+    }
 
-.trade-item h2 {
-    margin: 0; /* Remove margin for the heading */
-    color: #565656;
-    font-family:serif;
-    font-weight: 600;
-}
+    .trade-item h2 {
+        margin: 0;
+        /* Remove margin for the heading */
+        color: #565656;
+        font-family: serif;
+        font-weight: 600;
+    }
 
-.trade-item:last-child {
-    border-bottom: none; /* Remove the border for the last item */
-}
+    .trade-item:last-child {
+        border-bottom: none;
+        /* Remove the border for the last item */
+    }
 
-.trade-item:hover {
-    background-color: #e9ecef; /* Add hover effect for better interactivity */
-    cursor: pointer; /* Pointer cursor for better UX */
-}
-
-
+    .trade-item:hover {
+        background-color: #e9ecef;
+        /* Add hover effect for better interactivity */
+        cursor: pointer;
+        /* Pointer cursor for better UX */
+    }
 </style>
 
 <style>
     .offcanvas-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* padding: 1rem 1.5rem; */
-    border-bottom: 1px solid #e9ecef;
-}
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        /* padding: 1rem 1.5rem; */
+        border-bottom: 1px solid #e9ecef;
+    }
 
-#chart {
-    width: 100%;
-    height: 400px;
-}
+    #chart {
+        width: 100%;
+        height: 400px;
+    }
 
-#symbol-name {
-    text-align: center;
-    font-size: 24px;
-    margin-top: 10px;
-}
+    #symbol-name {
+        text-align: center;
+        font-size: 24px;
+        margin-top: 10px;
+    }
 
-.price-info {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
+    .price-info {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
 
-.toolbar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-    justify-content: center;
-}
+    .toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
 
-.button {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    background-color: #f7f7f7;
-    font-size: 14px;
-}
+    .button {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        background-color: #f7f7f7;
+        font-size: 14px;
+    }
 
-.button.active {
-    background-color: #d1e7ff;
-}
+    .button.active {
+        background-color: #d1e7ff;
+    }
 </style>
 
 <body>
@@ -218,10 +233,12 @@ $user = Auth::user();
 
         {{-- main body --}}
 
-        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 80%;">
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+            aria-labelledby="offcanvasBottomLabel" style="height: 80%;">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
-              <button type="button"  data-bs-dismiss="offcanvas" aria-label="Close" style="border: none"><img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt=""></button>
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
+                <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none"><img
+                        src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt=""></button>
             </div>
             <div class="offcanvas-body small p-0">
                 <div class="card-body p-0 custome-tooltip">
@@ -232,74 +249,16 @@ $user = Auth::user();
                     <div class="p-3 w-50" style="background-color: green;color:#fff">Bid : 2938</div>
                 </div>
                 <div class=' text-center'>
-                   <button class="btn btn-primary w-80">Trade</button>
+                    <button class="btn btn-primary w-80">Trade</button>
                 </div>
 
 
             </div>
-          </div>
+        </div>
 
         <!-- Modal -->
 
-        <div class="modal fade" id="exampleModalCenter">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
-                        <button type="button" data-bs-dismiss="modal" style="border: none">
-                           
-                                <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt="">
 
-            
-                        </button>
-                    </div>
-                    <div class="modal-body p-0">
-                        <div class="trade-container">
-                            <div class="trade-item">
-                                <h2>Trade</h2>
-                                <div class="icon-box icon-box-sm bgl-primary">
-                                    <a href="javascript:void(0)" id="add_script">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                            width="20" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="trade-item"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                <h2 >Chart</h2>
-                                <div class="icon-box icon-box-sm bgl-primary">
-                                    <a href="javascript:void(0)" id="add_script">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                            width="20" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="trade-item">
-                                <h2>Details</h2>
-                                <div class="icon-box icon-box-sm bgl-primary">
-                                    <a href="javascript:void(0)" id="add_script">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                            width="20" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="trade-item">
-                                <h2>Add More Scripts</h2>
-                                <div class="icon-box icon-box-sm bgl-primary">
-                                    <a href="javascript:void(0)" id="add_script">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                            width="20" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
 
@@ -316,19 +275,92 @@ $user = Auth::user();
                                 $i = 1;
                                 foreach($fetch as $key){
                                     $foisin = $key->instrumentKey;
+                                    $isin=$key->isIn;
                                     ?>
-                                    <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
-                            <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                                <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg" >
-                                    <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
+                            <div class="modal fade" id="exampleModalCenter{{ $i }}">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">{{ $isin }} </h5>
+                                            <button type="button" data-bs-dismiss="modal" style="border: none">
+
+                                                <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                    width="20" alt="">
+
+
+                                            </button>
+                                        </div>
+                                        <div class="modal-body p-0">
+                                            <div class="trade-container">
+                                                <div class="trade-item">
+                                                    <h2>Trade</h2>
+                                                    <div class="icon-box icon-box-sm bgl-primary">
+                                                        <a href="javascript:void(0)" id="add_script">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                width="20" alt="">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="trade-item"
+                                                    onclick="fetchData('{{ $isin }}','exampleModalCenter{{ $i }}');"
+                                                     data-bs-dismiss="modal"
+                                                    >
+                                                    <h2 data-bs-dismiss="modal">Chart</h2>
+                                                    <div class="icon-box icon-box-sm bgl-primary">
+                                                        <a href="javascript:void(0)" id="add_script"
+                                                            data-bs-dismiss="modal">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                width="20" alt="">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="trade-item" data-bs-dismiss="modal">
+                                                    <h2>Details</h2>
+                                                    <div class="icon-box icon-box-sm bgl-primary">
+                                                        <a href="javascript:void(0)" id="add_script">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                width="20" alt="">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="trade-item" data-bs-dismiss="modal">
+                                                    <h2>Add More Scripts</h2>
+                                                    <div class="icon-box icon-box-sm bgl-primary">
+                                                        <a href="javascript:void(0)" id="add_script">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                width="20" alt="">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
+                            <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalCenter{{ $i }}">
+                                <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
+                                    <div
+                                        class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">Loading...</p>
-                                               
+                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                id="change{{ $i }}">Loading...</p>
+
                                             </p>
-                                            {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{ $key->instrumentType }} <span class="text-muted">({{ $key->expiry }})</span></h4> --}}
-                                            <h4 class="text-dark mb-0 font-w600" >{{ $key->tradingSymbol }} </h4>
+                                            {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{
+                                                $key->instrumentType }} <span class="text-muted">({{ $key->expiry
+                                                    }})</span></h4> --}}
+                                            <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
                                             <div class="d-flex justify-content-between ">
-                                                <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">LTP: <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4"> 123.8</span></p>
+                                                <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">LTP:
+                                                    <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
+                                                        123.8</span></p>
                                             </div>
                                         </div>
                                         <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
@@ -337,18 +369,21 @@ $user = Auth::user();
                                     </div>
                                     <div class="card-body ">
                                         <div class="d-flex justify-content-between mb-2">
-                                                <div class="me-3">
-                                                    <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600" id="bid{{ $i }}">123.8</span></p>
-                                                </div>
-                                                <div class="me-3">
-                                                    <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600" id="ask{{ $i }}">123.8</span></p>
-                                                </div>
+                                            <div class="me-3">
+                                                <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600"
+                                                        id="bid{{ $i }}">123.8</span></p>
+                                            </div>
+                                            <div class="me-3">
+                                                <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600"
+                                                        id="ask{{ $i }}">123.8</span></p>
+                                            </div>
                                         </div>
                                         <div class="d-flex justify-content-between" style="font-size: xx-small">
                                             <div class="d-flex align-items-center">
                                                 <div class="me-3">
                                                     <p class="mb-0">Open/Close</p>
-                                                    <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">123.8/123.8</p>
+                                                    <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
+                                                        123.8/123.8</p>
                                                 </div>
                                             </div>
                                             <div class="me-3">
@@ -387,10 +422,12 @@ $user = Auth::user();
 
 
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width: 1200px">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
+            style="width: 1200px">
             <div class="offcanvas-header">
                 <h5 id="offcanvasRightLabel">Offcanvas right</h5>
-                <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none">
+                <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
+                    style="border: none">
                     <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt="">
                 </button>
 
@@ -411,16 +448,21 @@ $user = Auth::user();
                             <div class="row align-items-center mb-3">
 
                                 <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3">
-                                    <input type="text" class="form-control" placeholder="Search Script" onkeyup="searchScript(this)">
+                                    <input type="text" class="form-control" placeholder="Search Script"
+                                        onkeyup="searchScript(this)">
 
                                 </div>
 
 
                                 <div class="col-xl-6 col-xxl-4 col-lg-4 align-self-end">
-                                    <button class="btn btn-primary me-2 active-filter filter" type="button" onclick="setActiveFilter(this, 'ALL')">ALL</button>
-                                    <button class="btn btn-primary light filter" type="button" onclick="setActiveFilter(this, 'Future')">Future</button>
-                                    <button class="btn btn-primary light me-2 filter" type="button" onclick="setActiveFilter(this, 'Option')">Option</button>
-                                    <button class="btn btn-primary light filter" type="button" onclick="setActiveFilter(this, 'Indicies')">Indicies</button>
+                                    <button class="btn btn-primary me-2 active-filter filter" type="button"
+                                        onclick="setActiveFilter(this, 'ALL')">ALL</button>
+                                    <button class="btn btn-primary light filter" type="button"
+                                        onclick="setActiveFilter(this, 'Future')">Future</button>
+                                    <button class="btn btn-primary light me-2 filter" type="button"
+                                        onclick="setActiveFilter(this, 'Option')">Option</button>
+                                    <button class="btn btn-primary light filter" type="button"
+                                        onclick="setActiveFilter(this, 'Indicies')">Indicies</button>
                                 </div>
 
                             </div>
@@ -437,9 +479,12 @@ $user = Auth::user();
                                 <div class="col-xl-6 col-xxl-4 col-lg-4 align-self-end" id="Order-type" hidden>
                                     <label class="me-sm-2 form-label">Order Type</label>
                                     <div>
-                                        <button class="btn btn-warning me-2 filterCP filterCP" type="button" onclick="setActiveFilterCP(this, 'ALL')">ALL</button>
-                                        <button class="btn btn-warning light filterCP" type="button" onclick="setActiveFilterCP(this, 'CE')">CE</button>
-                                        <button class="btn btn-warning light me-2 filterCP" type="button" onclick="setActiveFilterCP(this, 'PE')">PE</button>
+                                        <button class="btn btn-warning me-2 filterCP filterCP" type="button"
+                                            onclick="setActiveFilterCP(this, 'ALL')">ALL</button>
+                                        <button class="btn btn-warning light filterCP" type="button"
+                                            onclick="setActiveFilterCP(this, 'CE')">CE</button>
+                                        <button class="btn btn-warning light me-2 filterCP" type="button"
+                                            onclick="setActiveFilterCP(this, 'PE')">PE</button>
                                     </div>
 
                                 </div>
@@ -461,7 +506,8 @@ $user = Auth::user();
                                     Menus
                                 </div>
                                 <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
+                                    <a href="javascript:void(0);" class="expand handle"><i
+                                            class="fal fa-angle-down"></i></a>
                                 </div>
                             </div>
                             <div class=" cm-content-body card-body pt-4 pb-0 height370 dlab-scroll">
@@ -496,11 +542,11 @@ $user = Auth::user();
         </div>
 
 
-  
 
-   
 
-      
+
+
+
 
 
 
@@ -728,6 +774,12 @@ $user = Auth::user();
                     }
                 });
 
+                function closeModal() {
+        let modal = document.getElementById('exampleModalCenter{{ $i }}');
+        let bootstrapModal = bootstrap.Modal.getInstance(modal);
+        bootstrapModal.hide();
+    }
+
         </script>
 
 
@@ -755,8 +807,8 @@ $user = Auth::user();
         <script src="js/styleSwitcher.js"></script>
 
 
-<script>
-    // Initialize chart
+        <script>
+            // Initialize chart
     const chartContainer = document.getElementById("chart");
     const chart = LightweightCharts.createChart(chartContainer, {
         layout: {
@@ -803,9 +855,26 @@ $user = Auth::user();
     }
 
     // Fetch data
-    async function fetchData() {
+    async function fetchData(isin,model) {
+        // alert(model);
+        // const closeMode = document.getElementById(model);
+        // let bootstrapModal = bootstrap.Modal.getInstance(closeMode);
+        // bootstrapModal.hide();
+
+        // closeMode.setAttribute('aria-hidden', 'true');
+
+        // // Ensure the backdrop is removed
+        // let backdrop = document.querySelector('.modal-backdrop');
+        // if (backdrop) {
+        //     backdrop.remove();
+        // }
+
+        var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
+        offcanvas.show();
+
+
         try {
-            const response = await fetch("/fetch-stock-data/INE298A01020");
+            const response = await fetch("/fetch-stock-data/" + isin);
             if (!response.ok) throw new Error("Network response was not ok");
 
             const rawData = await response.json();
@@ -826,13 +895,13 @@ $user = Auth::user();
     }
 
     // Fetch initial data and set timeframe
-    fetchData();
+    
 
     function setTimeFrame(timeFrame) {
         fetchData(); // This function should ideally use `timeFrame` to adjust the API call
     }
 
-</script>
+        </script>
 
 
 

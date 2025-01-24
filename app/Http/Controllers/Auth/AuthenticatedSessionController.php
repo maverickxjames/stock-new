@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/watchlist');
+            return redirect()->intended('/quotes');
         }
     
         return back()->withErrors([

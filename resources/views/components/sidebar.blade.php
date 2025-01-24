@@ -24,7 +24,7 @@ $user=Auth::user();
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0);" class="item" onclick="window.location.href='{{ route('dashboard') }}'">
+                    <a href="javascript:void(0);" class="item" onclick="window.location.href='{{ route('quotes') }}'">
                         <i class="material-symbols-outlined">dashboard</i>
                         
                         <span class="nav-text">Quotes</span>
@@ -86,7 +86,7 @@ $user=Auth::user();
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0);">
+                    <a href="javascript:void(0);" onclick="window.location.href='{{ route('logout') }}'">
                         <i class="material-symbols-outlined">logout</i>
                         <span class="nav-text">Logout</span>
                     </a>
