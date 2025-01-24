@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -17,23 +17,19 @@
     <meta name="author" content="Dexignlabs">
     <meta name="robots" content="index, follow">
 
-    <meta name="keywords"
-        content="Admin Dashboard, Bootstrap Template, FrontEnd, Web Application, Responsive Design, User Experience, Customizable, Modern UI, Dashboard Template, Admin Panel, Bootstrap 5, HTML5, CSS3, JavaScript, Admin Template, UI Kit, SASS, SCSS, Analytics, Responsive Dashboard, responsive admin dashboard, ui kit, web app, Admin Dashboard, Template, Admin, Authentication, FrontEnd Integration, Web Application UI, Bootstrap Framework, User Interface Kit, SASS Integration, Customizable Template, HTML5/CSS3, Analytics Dashboard, Admin Dashboard UI, Mobile-Friendly Design, UI Components, Dashboard Widgets, Dashboard Framework, Data Visualization, User Experience (UX), Dashboard Widgets, Real-time Analytics, Cross-Browser Compatibility, Interactive Charts, Performance Optimization, Multi-Purpose Template, Efficient Admin Tools, Modern Web Technologies, Responsive Tables, Dashboard Widgets, Invoice Management, Access Control, Modular Design, Trend Analysis, User-Friendly Interface, Crypto Trading UI, Cryptocurrency Dashboard, Trading Platform Interface, Responsive Crypto Admin, Financial Dashboard, UI Components for Crypto, Cryptocurrency Exchange, Blockchain , Crypto Portfolio Template, Crypto Market Analytics">
+    <meta name="keywords" content="Admin Dashboard, Bootstrap Template, FrontEnd, Web Application, Responsive Design, User Experience, Customizable, Modern UI, Dashboard Template, Admin Panel, Bootstrap 5, HTML5, CSS3, JavaScript, Admin Template, UI Kit, SASS, SCSS, Analytics, Responsive Dashboard, responsive admin dashboard, ui kit, web app, Admin Dashboard, Template, Admin, Authentication, FrontEnd Integration, Web Application UI, Bootstrap Framework, User Interface Kit, SASS Integration, Customizable Template, HTML5/CSS3, Analytics Dashboard, Admin Dashboard UI, Mobile-Friendly Design, UI Components, Dashboard Widgets, Dashboard Framework, Data Visualization, User Experience (UX), Dashboard Widgets, Real-time Analytics, Cross-Browser Compatibility, Interactive Charts, Performance Optimization, Multi-Purpose Template, Efficient Admin Tools, Modern Web Technologies, Responsive Tables, Dashboard Widgets, Invoice Management, Access Control, Modular Design, Trend Analysis, User-Friendly Interface, Crypto Trading UI, Cryptocurrency Dashboard, Trading Platform Interface, Responsive Crypto Admin, Financial Dashboard, UI Components for Crypto, Cryptocurrency Exchange, Blockchain , Crypto Portfolio Template, Crypto Market Analytics">
 
-    <meta name="description"
-        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
+    <meta name="description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
 
     <meta property="og:title" content="Jiade : Crypto Trading UI Admin  Bootstrap 5 Template | Dexignlabs">
-    <meta property="og:description"
-        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
+    <meta property="og:description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
 
     <meta property="og:image" content="social-image.png">
 
     <meta name="format-detection" content="telephone=no">
 
     <meta name="twitter:title" content="Jiade : Crypto Trading UI Admin  Bootstrap 5 Template | Dexignlabs">
-    <meta name="twitter:description"
-        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
+    <meta name="twitter:description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
 
     <meta name="twitter:image" content="social-image.png">
     <meta name="twitter:card" content="summary_large_image">
@@ -52,13 +48,13 @@
             width: 80%;
             margin-bottom: 10px;
         }
+
     </style>
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
     <!-- Datatable -->
     <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
@@ -67,6 +63,62 @@
     <link class="main-css" href="css/style.css" rel="stylesheet">
 
 </head>
+
+<style>
+    .blink {
+    animation: blink-animation 1.5s infinite;
+}
+
+@keyframes blink-animation {
+    50% { opacity: 0; }
+}
+
+/* .badge-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: #fff;
+} */
+
+.trade-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0; /* Remove padding from container */
+    margin: 0;
+}
+
+.trade-item {
+    padding: 5px 10px; /* Padding inside each trade item */
+    border-bottom: 1px solid #ddd; /* Add a bottom border for separation */
+    font-size: 16px; /* Adjust font size */
+    color: #333; /* Set a nice text color */
+    background-color: #f9f9f9; /* Optional: Add background color */
+    transition: background-color 0.3s; /* Add a smooth transition effect */
+    display: flex;
+    justify-content: space-between;
+}
+
+.trade-item h2 {
+    margin: 0; /* Remove margin for the heading */
+    color: #565656;
+    font-family:serif;
+    font-weight: 600;
+}
+
+.trade-item:last-child {
+    border-bottom: none; /* Remove the border for the last item */
+}
+
+.trade-item:hover {
+    background-color: #e9ecef; /* Add hover effect for better interactivity */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+
+</style>
 
 <body>
 
@@ -112,12 +164,170 @@
         Main wrapper end
     ***********************************-->
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
-            style="width: 1200px">
+        {{-- main body --}}
+
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 70%;">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body small">
+              ...
+            </div>
+          </div>
+
+        <!-- Modal -->
+
+        <div class="modal fade" id="exampleModalCenter">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" data-bs-dismiss="modal" style="border: none">
+                           
+                                <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt="">
+
+            
+                        </button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="trade-container">
+                            <div class="trade-item">
+                                <h2>Trade</h2>
+                                <div class="icon-box icon-box-sm bgl-primary">
+                                    <a href="javascript:void(0)" id="add_script">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                            width="20" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="trade-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                <h2>Chart</h2>
+                                <div class="icon-box icon-box-sm bgl-primary">
+                                    <a href="javascript:void(0)" id="add_script">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                            width="20" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="trade-item">
+                                <h2>Details</h2>
+                                <div class="icon-box icon-box-sm bgl-primary">
+                                    <a href="javascript:void(0)" id="add_script">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                            width="20" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="trade-item">
+                                <h2>Add More Scripts</h2>
+                                <div class="icon-box icon-box-sm bgl-primary">
+                                    <a href="javascript:void(0)" id="add_script">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                            width="20" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="content-body">
+            <!-- row -->
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-xl-12">
+                        <div class="row">
+
+                            <?php 
+                                $fetch = DB::table('watchlist')->where('userid', $user->id)->get();
+                                $i = 1;
+                                foreach($fetch as $key){
+                                    $foisin = $key->instrumentKey;
+                                    ?>
+                                    <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
+                            <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg" >
+                                    <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">Loading...</p>
+                                               
+                                            </p>
+                                            {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{ $key->instrumentType }} <span class="text-muted">({{ $key->expiry }})</span></h4> --}}
+                                            <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
+                                            <div class="d-flex justify-content-between ">
+                                                <p class="mb-0">Last Trade Price: <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4"> 123.8</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="text-end">
+                                            <p class="text-muted mb-1 fs-13" title="National Stock Exchange">{{$key->exchange }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="card-body ">
+                                        <div class="d-flex justify-content-between mb-2">
+                                                <div class="me-3">
+                                                    <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600" id="bid{{ $i }}">123.8</span></p>
+                                                </div>
+                                                <div class="me-3">
+                                                    <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600" id="ask{{ $i }}">123.8</span></p>
+                                                </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between" style="font-size: xx-small">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3">
+                                                    <p class="mb-0">Open/Close</p>
+                                                    <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">123.8/123.8</p>
+                                                </div>
+                                            </div>
+                                            <div class="me-3">
+                                                <p class="mb-0">High/Low</p>
+                                                <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">123.8/128.8</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                                    $i++;
+                                }
+                                ?>
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        {{-- main body --}}
+
+
+
+
+
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width: 1200px">
             <div class="offcanvas-header">
                 <h5 id="offcanvasRightLabel">Offcanvas right</h5>
-                <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
-                    style="border: none">
+                <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none">
                     <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt="">
                 </button>
 
@@ -138,21 +348,16 @@
                             <div class="row align-items-center mb-3">
 
                                 <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3">
-                                    <input type="text" class="form-control" placeholder="Search Script"
-                                        onkeyup="searchScript(this)">
+                                    <input type="text" class="form-control" placeholder="Search Script" onkeyup="searchScript(this)">
 
                                 </div>
 
 
                                 <div class="col-xl-6 col-xxl-4 col-lg-4 align-self-end">
-                                    <button class="btn btn-primary me-2 active-filter filter" type="button"
-                                        onclick="setActiveFilter(this, 'ALL')">ALL</button>
-                                    <button class="btn btn-primary light filter" type="button"
-                                        onclick="setActiveFilter(this, 'Future')">Future</button>
-                                    <button class="btn btn-primary light me-2 filter" type="button"
-                                        onclick="setActiveFilter(this, 'Option')">Option</button>
-                                    <button class="btn btn-primary light filter" type="button"
-                                        onclick="setActiveFilter(this, 'Indicies')">Indicies</button>
+                                    <button class="btn btn-primary me-2 active-filter filter" type="button" onclick="setActiveFilter(this, 'ALL')">ALL</button>
+                                    <button class="btn btn-primary light filter" type="button" onclick="setActiveFilter(this, 'Future')">Future</button>
+                                    <button class="btn btn-primary light me-2 filter" type="button" onclick="setActiveFilter(this, 'Option')">Option</button>
+                                    <button class="btn btn-primary light filter" type="button" onclick="setActiveFilter(this, 'Indicies')">Indicies</button>
                                 </div>
 
                             </div>
@@ -169,12 +374,9 @@
                                 <div class="col-xl-6 col-xxl-4 col-lg-4 align-self-end" id="Order-type" hidden>
                                     <label class="me-sm-2 form-label">Order Type</label>
                                     <div>
-                                        <button class="btn btn-warning me-2 filterCP filterCP" type="button"
-                                            onclick="setActiveFilterCP(this, 'ALL')">ALL</button>
-                                        <button class="btn btn-warning light filterCP" type="button"
-                                            onclick="setActiveFilterCP(this, 'CE')">CE</button>
-                                        <button class="btn btn-warning light me-2 filterCP" type="button"
-                                            onclick="setActiveFilterCP(this, 'PE')">PE</button>
+                                        <button class="btn btn-warning me-2 filterCP filterCP" type="button" onclick="setActiveFilterCP(this, 'ALL')">ALL</button>
+                                        <button class="btn btn-warning light filterCP" type="button" onclick="setActiveFilterCP(this, 'CE')">CE</button>
+                                        <button class="btn btn-warning light me-2 filterCP" type="button" onclick="setActiveFilterCP(this, 'PE')">PE</button>
                                     </div>
 
                                 </div>
@@ -196,33 +398,30 @@
                                     Menus
                                 </div>
                                 <div class="tools">
-                                    <a href="javascript:void(0);" class="expand handle"><i
-                                            class="fal fa-angle-down"></i></a>
+                                    <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
                                 </div>
                             </div>
                             <div class=" cm-content-body card-body pt-4 pb-0 height370 dlab-scroll">
                                 <div class="contacts-list" id="RecentActivityContent">
 
                                     {{-- @foreach ($scripts as $script) --}}
-                                    {{-- <div
-                                                        class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://cdn-icons-png.flaticon.com/128/14906/14906254.png"
-                                                                alt="" class="avatar" id="avatar">
-                                                            <div class="ms-3">
-                                                                <h5 class="mb-1"><a href="" id="script_symbol">Loading...</a>
-                                                                </h5>
-                                                                <span class="fs-14 text-muted"
-                                                                    id="script_description">Loading...</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="icon-box icon-box-sm bgl-primary">
-                                                            <a href="javascript:void(0)" id="add_script">
-                                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                    width="24" alt="">
-                                                            </a>
-                                                        </div>
-                                                    </div> --}}
+                                    {{-- <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://cdn-icons-png.flaticon.com/128/14906/14906254.png" alt=""
+                                                class="avatar" id="avatar">
+                                            <div class="ms-3">
+                                                <h5 class="mb-1"><a href="" id="script_symbol">Loading...</a>
+                                                </h5>
+                                                <span class="fs-14 text-muted" id="script_description">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <div class="icon-box icon-box-sm bgl-primary">
+                                            <a href="javascript:void(0)" id="add_script">
+                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                    width="24" alt="">
+                                            </a>
+                                        </div>
+                                    </div> --}}
                                     {{-- @endforeach --}}
                                 </div>
                             </div>
@@ -234,9 +433,11 @@
         </div>
 
 
-        <!--**********************************
-        Scripts
-    ***********************************-->
+  
+
+   
+
+      
 
 
 
@@ -300,6 +501,7 @@
 
             console.log('Active Filter:', activeFilter);
             console.log('Active FilterCP:', activeFilterCP);
+
         </script>
         <script>
             //fetch all scripts from the server
@@ -367,21 +569,21 @@
                 // Loop through API response and create new elements
                 responseData.forEach((item) => {
                     const contentHTML = `
-        <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
-            <div class="d-flex align-items-center">
-                <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
-                <div class="ms-3">
-                    <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
-                    <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
-                </div>
-            </div>
-            <div class="icon-box icon-box-sm bgl-primary">
-                <a href="javascript:void(0)" id="add_script">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
-                </a>
-            </div>
-        </div>
-    `;
+                        <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
+                            <div class="d-flex align-items-center">
+                                <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
+                                <div class="ms-3">
+                                    <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
+                                    <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
+                                </div>
+                            </div>
+                            <div class="icon-box icon-box-sm bgl-primary">
+                                <a href="javascript:void(0)" id="add_script">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    `;
                     container.insertAdjacentHTML("beforeend", contentHTML);
                 });
             }
@@ -398,6 +600,67 @@
                 avatar.src = logo;
 
             }
+
+        </script>
+
+        <script src="{{ asset('js/app.js') }}"></script>
+
+        <script>
+            Echo.channel('watchlists')
+                .listen('Watchlist', (event) => {
+                    const feeds = event.watchlist.feeds;
+                    console.log(feeds);
+
+                    // Iterate through the received WebSocket data
+                    for (const key in feeds) {   
+                        if (feeds.hasOwnProperty(key)) {
+                            const feedData = feeds[key].ff.marketFF; // Data from WebSocket
+                            const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
+
+                            const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
+
+                            // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
+                       
+                                const rowId = isinElement.id.replace('isin', '');
+
+                                const ltp = feedData?.ltpc?.ltp || 1; 
+                                const cp = feedData?.ltpc?.cp || 0;
+
+                                document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                                // document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                                document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high+'/'+feedData.marketOHLC.ohlc[0].low ||'0'+'/'+'0';
+                                document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open+'/'+ feedData.marketOHLC.ohlc[0].close||'0'+'/'+ '0';
+                              
+                                // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
+                               const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
+
+                                const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
+                                const percentageIcon = percentageChange > 0 ?
+                                    'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                    'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                                const badgeValue = (ltp - cp).toFixed(2) || '0';
+
+
+                                document.getElementById(`change${rowId}`).innerHTML = `
+                                        ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+
+                                     
+                                `;
+                                
+                                
+
+
+                                // bid and ask
+                                document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                    .bidQ || '0';
+                                document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                    .askQ || '0';
+                        }
+                    }
+                });
+
         </script>
         <!-- Required vendors -->
         <script src="vendor/global/global.min.js"></script>
@@ -417,6 +680,12 @@
         <script src="js/dlabnav-init.js"></script>
         <script src="js/demo.js"></script>
         <script src="js/styleSwitcher.js"></script>
+
+
+
+
+
+
 </body>
 
 <!-- Mirrored from jiade.dexignlab.com/xhtml/history.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:24 GMT -->
