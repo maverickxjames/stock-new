@@ -1,5 +1,5 @@
 @php
-$user = Auth::user();
+    $user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -69,8 +69,10 @@ $user = Auth::user();
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
+    {{-- meta csrf --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
@@ -238,7 +240,8 @@ $user = Auth::user();
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
                 <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none"><img
-                        src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt=""></button>
+                        src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20"
+                        alt=""></button>
             </div>
             <div class="offcanvas-body small p-0">
                 <div class="card-body p-0 custome-tooltip">
@@ -276,6 +279,7 @@ $user = Auth::user();
                                 foreach($fetch as $key){
                                     $foisin = $key->instrumentKey;
                                     $isin=$key->isIn;
+                                    $id=$key->id;
                                     ?>
                             <div class="modal fade" id="exampleModalCenter{{ $i }}">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -303,8 +307,7 @@ $user = Auth::user();
                                                 </div>
                                                 <div class="trade-item"
                                                     onclick="fetchData('{{ $isin }}','exampleModalCenter{{ $i }}');"
-                                                     data-bs-dismiss="modal"
-                                                    >
+                                                    data-bs-dismiss="modal">
                                                     <h2 data-bs-dismiss="modal">Chart</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
                                                         <a href="javascript:void(0)" id="add_script"
@@ -323,8 +326,9 @@ $user = Auth::user();
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="trade-item" data-bs-dismiss="modal">
-                                                    <h2>Add More Scripts</h2>
+                                                <div class="trade-item" onclick="removeWatchlist({{ $id }})"
+                                                    data-bs-dismiss="modal">
+                                                    <h2>Remove</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
                                                         <a href="javascript:void(0)" id="add_script">
                                                             <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
@@ -358,9 +362,12 @@ $user = Auth::user();
                                                     }})</span></h4> --}}
                                             <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
                                             <div class="d-flex justify-content-between ">
-                                                <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">LTP:
-                                                    <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
-                                                        123.8</span></p>
+                                                <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
+                                                    LTP:
+                                                    <span id="ltp{{ $i }}"
+                                                        class="font-w600 text-primary fs-4">
+                                                        123.8</span>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
@@ -382,13 +389,15 @@ $user = Auth::user();
                                             <div class="d-flex align-items-center">
                                                 <div class="me-3">
                                                     <p class="mb-0">Open/Close</p>
-                                                    <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
+                                                    <p class="text-dark mb-0 font-w600"
+                                                        id="openclose{{ $i }}">
                                                         123.8/123.8</p>
                                                 </div>
                                             </div>
                                             <div class="me-3">
                                                 <p class="mb-0">High/Low</p>
-                                                <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">123.8/128.8</p>
+                                                <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">
+                                                    123.8/128.8</p>
                                             </div>
                                         </div>
                                     </div>
@@ -422,8 +431,8 @@ $user = Auth::user();
 
 
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
-            style="width: 1200px">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel" style="width: 1200px">
             <div class="offcanvas-header">
                 <h5 id="offcanvasRightLabel">Offcanvas right</h5>
                 <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
@@ -610,7 +619,6 @@ $user = Auth::user();
 
             console.log('Active Filter:', activeFilter);
             console.log('Active FilterCP:', activeFilterCP);
-
         </script>
         <script>
             //fetch all scripts from the server
@@ -677,8 +685,10 @@ $user = Auth::user();
 
                 // Loop through API response and create new elements
                 responseData.forEach((item) => {
+                    // console.log(item);
+
                     const contentHTML = `
-                        <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
+                        <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
                             <div class="d-flex align-items-center">
                                 <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
                                 <div class="ms-3">
@@ -709,8 +719,9 @@ $user = Auth::user();
                 avatar.src = logo;
 
             }
-
         </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script src="{{ asset('js/app.js') }}"></script>
 
@@ -721,29 +732,32 @@ $user = Auth::user();
                     console.log(feeds);
 
                     // Iterate through the received WebSocket data
-                    for (const key in feeds) {   
+                    for (const key in feeds) {
                         if (feeds.hasOwnProperty(key)) {
                             const feedData = feeds[key].ff.marketFF; // Data from WebSocket
                             const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
 
-                            const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
+                            const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el
+                                .textContent === receivedIsin);
                             console.log(isinElement);
 
                             // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
-                            if(isinElement){
+                            if (isinElement) {
                                 const rowId = isinElement.id.replace('isin', '');
                                 console.log(rowId);
 
-                                const ltp = feedData?.ltpc?.ltp || 1; 
+                                const ltp = feedData?.ltpc?.ltp || 1;
                                 const cp = feedData?.ltpc?.cp || 0;
 
                                 document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
                                 // document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                                document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high+'/'+feedData.marketOHLC.ohlc[0].low ||'0'+'/'+'0';
-                                document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open+'/'+ feedData.marketOHLC.ohlc[0].close||'0'+'/'+ '0';
-                              
+                                document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high +
+                                    '/' + feedData.marketOHLC.ohlc[0].low || '0' + '/' + '0';
+                                document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                    .open + '/' + feedData.marketOHLC.ohlc[0].close || '0' + '/' + '0';
+
                                 // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-                               const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
+                                const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
 
                                 const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
                                 const percentageIcon = percentageChange > 0 ?
@@ -759,8 +773,8 @@ $user = Auth::user();
 
                                      
                                 `;
-                                
-                                
+
+
 
 
                                 // bid and ask
@@ -769,19 +783,139 @@ $user = Auth::user();
                                 document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                     .askQ || '0';
                             }
-                                
+
                         }
                     }
                 });
 
-                function closeModal() {
-        let modal = document.getElementById('exampleModalCenter{{ $i }}');
-        let bootstrapModal = bootstrap.Modal.getInstance(modal);
-        bootstrapModal.hide();
-    }
-
+            function closeModal() {
+                let modal = document.getElementById('exampleModalCenter{{ $i }}');
+                let bootstrapModal = bootstrap.Modal.getInstance(modal);
+                bootstrapModal.hide();
+            }
         </script>
 
+
+        <script>
+            function addWatchlist(item) {
+
+                console.log(item);
+
+
+
+
+
+                //use ajax and swel fire to add watchlist  using of post method
+                $.ajax({
+                    url: "{{ route('add-watchlist') }}",
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                    },
+                    data: item,
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Adding Watchlist',
+                            html: 'Please wait...',
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function(response) {
+                        Swal.close();
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.message || 'An error occurred.',
+                                icon: 'error',
+                                confirmButtonText: 'Okay'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.close();
+                        Swal.fire({
+                            title: 'Error',
+                            text: xhr.responseJSON?.message ||
+                                'An error occurred while adding the script.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                        console.error(xhr.responseJSON);
+                    }
+                });
+
+
+
+
+
+
+            }
+
+            function removeWatchlist(id) {
+                console.log(id);
+
+                $.ajax({
+                    url: "{{ route('remove-watchlist') }}",
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                    },
+                    data: {
+                        id: id
+                    },
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Removing Watchlist',
+                            html: 'Please wait...',
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function(response) {
+                        Swal.close();
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.message || 'An error occurred.',
+                                icon: 'error',
+                                confirmButtonText: 'Okay'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.close();
+                        Swal.fire({
+                            title: 'Error',
+                            text: xhr.responseJSON?.message ||
+                                'An error occurred while removing the script.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                        console.error(xhr.responseJSON);
+                    }
+                });
+            }
+        </script>
 
         <!-- Required vendors -->
         <script src="vendor/global/global.min.js"></script>
@@ -809,98 +943,97 @@ $user = Auth::user();
 
         <script>
             // Initialize chart
-    const chartContainer = document.getElementById("chart");
-    const chart = LightweightCharts.createChart(chartContainer, {
-        layout: {
-            backgroundColor: "#ffffff"
-            , textColor: "#333"
-        }
-        , grid: {
-            vertLines: {
-                color: "#e1e1e1"
+            const chartContainer = document.getElementById("chart");
+            const chart = LightweightCharts.createChart(chartContainer, {
+                layout: {
+                    backgroundColor: "#ffffff",
+                    textColor: "#333"
+                },
+                grid: {
+                    vertLines: {
+                        color: "#e1e1e1"
+                    },
+                    horzLines: {
+                        color: "#e1e1e1"
+                    }
+                },
+                priceScale: {
+                    borderColor: "#cccccc"
+                },
+                timeScale: {
+                    borderColor: "#cccccc"
+                },
+            });
+
+            // Add candlestick series
+            const candleSeries = chart.addCandlestickSeries({
+                upColor: "#4caf50",
+                downColor: "#f44336",
+                borderUpColor: "#4caf50",
+                borderDownColor: "#f44336",
+                wickUpColor: "#4caf50",
+                wickDownColor: "#f44336",
+            });
+
+
+
+            // Format data function
+            function formatData(data) {
+                return data.map(([timestamp, open, high, low, close]) => ({
+                    time: Math.floor(timestamp / 1000),
+                    open,
+                    high,
+                    low,
+                    close,
+                }));
             }
-            , horzLines: {
-                color: "#e1e1e1"
+
+            // Fetch data
+            async function fetchData(isin, model) {
+                // alert(model);
+                // const closeMode = document.getElementById(model);
+                // let bootstrapModal = bootstrap.Modal.getInstance(closeMode);
+                // bootstrapModal.hide();
+
+                // closeMode.setAttribute('aria-hidden', 'true');
+
+                // // Ensure the backdrop is removed
+                // let backdrop = document.querySelector('.modal-backdrop');
+                // if (backdrop) {
+                //     backdrop.remove();
+                // }
+
+                var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
+                offcanvas.show();
+
+
+                try {
+                    const response = await fetch("/fetch-stock-data/" + isin);
+                    if (!response.ok) throw new Error("Network response was not ok");
+
+                    const rawData = await response.json();
+                    const formattedData = formatData(rawData);
+
+                    if (formattedData.length === 0) throw new Error("No valid data available");
+
+                    candleSeries.setData(formattedData);
+                } catch (error) {
+                    console.error("Error fetching or setting data:", error);
+                    // Fallback data
+                    candleSeries.setData(formatData([
+                        [1696155600000, 25788.45, 25907.6, 25788.05, 25861.3],
+                        [1696155660000, 25861.3, 25873, 25822.35, 25824.05],
+                        [1696155720000, 25824.6, 25831.8, 25743.45, 25759.35],
+                    ]));
+                }
             }
-        }
-        , priceScale: {
-            borderColor: "#cccccc"
-        }
-        , timeScale: {
-            borderColor: "#cccccc"
-        }
-    , });
 
-    // Add candlestick series
-    const candleSeries = chart.addCandlestickSeries({
-        upColor: "#4caf50"
-        , downColor: "#f44336"
-        , borderUpColor: "#4caf50"
-        , borderDownColor: "#f44336"
-        , wickUpColor: "#4caf50"
-        , wickDownColor: "#f44336"
-    , });
+            // Fetch initial data and set timeframe
 
 
-
-    // Format data function
-    function formatData(data) {
-        return data.map(([timestamp, open, high, low, close]) => ({
-            time: Math.floor(timestamp / 1000)
-            , open
-            , high
-            , low
-            , close
-        , }));
-    }
-
-    // Fetch data
-    async function fetchData(isin,model) {
-        // alert(model);
-        // const closeMode = document.getElementById(model);
-        // let bootstrapModal = bootstrap.Modal.getInstance(closeMode);
-        // bootstrapModal.hide();
-
-        // closeMode.setAttribute('aria-hidden', 'true');
-
-        // // Ensure the backdrop is removed
-        // let backdrop = document.querySelector('.modal-backdrop');
-        // if (backdrop) {
-        //     backdrop.remove();
-        // }
-
-        var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
-        offcanvas.show();
-
-
-        try {
-            const response = await fetch("/fetch-stock-data/" + isin);
-            if (!response.ok) throw new Error("Network response was not ok");
-
-            const rawData = await response.json();
-            const formattedData = formatData(rawData);
-
-            if (formattedData.length === 0) throw new Error("No valid data available");
-
-            candleSeries.setData(formattedData);
-        } catch (error) {
-            console.error("Error fetching or setting data:", error);
-            // Fallback data
-            candleSeries.setData(formatData([
-                [1696155600000, 25788.45, 25907.6, 25788.05, 25861.3]
-                , [1696155660000, 25861.3, 25873, 25822.35, 25824.05]
-                , [1696155720000, 25824.6, 25831.8, 25743.45, 25759.35]
-            , ]));
-        }
-    }
-
-    // Fetch initial data and set timeframe
-    
-
-    function setTimeFrame(timeFrame) {
-        fetchData(); // This function should ideally use `timeFrame` to adjust the API call
-    }
-
+            function setTimeFrame(timeFrame) {
+                fetchData(); // This function should ideally use `timeFrame` to adjust the API call
+            }
         </script>
 
 
