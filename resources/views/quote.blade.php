@@ -62,6 +62,12 @@ $user = Auth::user();
     <!-- Style css -->
     <link class="main-css" href="css/style.css" rel="stylesheet">
 
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
 </head>
 
 <style>
@@ -120,6 +126,52 @@ $user = Auth::user();
 
 </style>
 
+<style>
+    .offcanvas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 1rem 1.5rem; */
+    border-bottom: 1px solid #e9ecef;
+}
+
+#chart {
+    width: 100%;
+    height: 400px;
+}
+
+#symbol-name {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.price-info {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #f7f7f7;
+    font-size: 14px;
+}
+
+.button.active {
+    background-color: #d1e7ff;
+}
+</style>
+
 <body>
 
     <!--*******************
@@ -166,13 +218,24 @@ $user = Auth::user();
 
         {{-- main body --}}
 
-        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 70%;">
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel" style="height: 80%;">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
-              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
+              <button type="button"  data-bs-dismiss="offcanvas" aria-label="Close" style="border: none"><img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt=""></button>
             </div>
-            <div class="offcanvas-body small">
-              ...
+            <div class="offcanvas-body small p-0">
+                <div class="card-body p-0 custome-tooltip">
+                    <div id="chart" class="revenueMap"></div>
+                </div>
+                <div class='d-flex justify-content-between p-3 items-center w-100'>
+                    <div class="p-2 w-50" style="background-color: red; color:#fff">Ask : 1265</div>
+                    <div class="p-3 w-50" style="background-color: green;color:#fff">Bid : 2938</div>
+                </div>
+                <div class=' text-center'>
+                   <button class="btn btn-primary w-80">Trade</button>
+                </div>
+
+
             </div>
           </div>
 
@@ -201,8 +264,8 @@ $user = Auth::user();
                                     </a>
                                 </div>
                             </div>
-                            <div class="trade-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                                <h2>Chart</h2>
+                            <div class="trade-item"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                <h2 >Chart</h2>
                                 <div class="icon-box icon-box-sm bgl-primary">
                                     <a href="javascript:void(0)" id="add_script">
                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
@@ -662,6 +725,8 @@ $user = Auth::user();
                 });
 
         </script>
+
+
         <!-- Required vendors -->
         <script src="vendor/global/global.min.js"></script>
         <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
@@ -669,6 +734,10 @@ $user = Auth::user();
         <!-- Datatable -->
         <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
         <script src="js/plugins-init/datatables.init.js"></script>
+
+        {{-- <script src="{{ asset('js/dashboard/future.js') }}"></script> --}}
+
+
 
 
         <!-- Dashboard 1 -->
@@ -682,7 +751,84 @@ $user = Auth::user();
         <script src="js/styleSwitcher.js"></script>
 
 
+<script>
+    // Initialize chart
+    const chartContainer = document.getElementById("chart");
+    const chart = LightweightCharts.createChart(chartContainer, {
+        layout: {
+            backgroundColor: "#ffffff"
+            , textColor: "#333"
+        }
+        , grid: {
+            vertLines: {
+                color: "#e1e1e1"
+            }
+            , horzLines: {
+                color: "#e1e1e1"
+            }
+        }
+        , priceScale: {
+            borderColor: "#cccccc"
+        }
+        , timeScale: {
+            borderColor: "#cccccc"
+        }
+    , });
 
+    // Add candlestick series
+    const candleSeries = chart.addCandlestickSeries({
+        upColor: "#4caf50"
+        , downColor: "#f44336"
+        , borderUpColor: "#4caf50"
+        , borderDownColor: "#f44336"
+        , wickUpColor: "#4caf50"
+        , wickDownColor: "#f44336"
+    , });
+
+
+
+    // Format data function
+    function formatData(data) {
+        return data.map(([timestamp, open, high, low, close]) => ({
+            time: Math.floor(timestamp / 1000)
+            , open
+            , high
+            , low
+            , close
+        , }));
+    }
+
+    // Fetch data
+    async function fetchData() {
+        try {
+            const response = await fetch("/fetch-stock-data/INE298A01020");
+            if (!response.ok) throw new Error("Network response was not ok");
+
+            const rawData = await response.json();
+            const formattedData = formatData(rawData);
+
+            if (formattedData.length === 0) throw new Error("No valid data available");
+
+            candleSeries.setData(formattedData);
+        } catch (error) {
+            console.error("Error fetching or setting data:", error);
+            // Fallback data
+            candleSeries.setData(formatData([
+                [1696155600000, 25788.45, 25907.6, 25788.05, 25861.3]
+                , [1696155660000, 25861.3, 25873, 25822.35, 25824.05]
+                , [1696155720000, 25824.6, 25831.8, 25743.45, 25759.35]
+            , ]));
+        }
+    }
+
+    // Fetch initial data and set timeframe
+    fetchData();
+
+    function setTimeFrame(timeFrame) {
+        fetchData(); // This function should ideally use `timeFrame` to adjust the API call
+    }
+
+</script>
 
 
 
