@@ -326,13 +326,13 @@ $user = Auth::user();
                                                
                                             </p>
                                             {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{ $key->instrumentType }} <span class="text-muted">({{ $key->expiry }})</span></h4> --}}
-                                            <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
+                                            <h4 class="text-dark mb-0 font-w600" >{{ $key->tradingSymbol }} </h4>
                                             <div class="d-flex justify-content-between ">
-                                                <p class="mb-0">Last Trade Price: <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4"> 123.8</span></p>
+                                                <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">LTP: <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4"> 123.8</span></p>
                                             </div>
                                         </div>
-                                        <div class="text-end">
-                                            <p class="text-muted mb-1 fs-13" title="National Stock Exchange">{{$key->exchange }}</p>
+                                        <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
+                                            <p class="text-muted mb-1 fs-13">{{ $key->exchange }}</p>
                                         </div>
                                     </div>
                                     <div class="card-body ">
@@ -681,10 +681,12 @@ $user = Auth::user();
                             const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
 
                             const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
+                            console.log(isinElement);
 
                             // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
-                       
+                            if(isinElement){
                                 const rowId = isinElement.id.replace('isin', '');
+                                console.log(rowId);
 
                                 const ltp = feedData?.ltpc?.ltp || 1; 
                                 const cp = feedData?.ltpc?.cp || 0;
@@ -720,6 +722,8 @@ $user = Auth::user();
                                     .bidQ || '0';
                                 document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                     .askQ || '0';
+                            }
+                                
                         }
                     }
                 });
