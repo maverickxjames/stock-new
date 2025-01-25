@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -125,7 +125,7 @@
     .trade-item h2 {
         margin: 0;
         /* Remove margin for the heading */
-        color: #565656;
+        /* color: #565656; */
         font-family: serif;
         font-weight: 600;
     }
@@ -191,57 +191,42 @@
 
 <body>
 
-    <!--*******************
-        Preloader start
-    ********************-->
+    <!--Preloader start-->
     <div id="preloader">
         <div class="lds-ripple">
             <div></div>
             <div></div>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
+    <!--Preloader end-->
 
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
+
+
+
+    <!--Main wrapper start-->
     <div id="main-wrapper">
 
-        <!--**********************************
-            Nav header start
-        ***********************************-->
+        <!--Nav header start-->
         <x-nav-header />
-        <!--**********************************
-            Nav header end
-        ***********************************-->
+        <!--Nav header end-->
 
-        <!--**********************************
-            Header start
-        ***********************************-->
+        <!--Header start-->
         <x-header />
-        <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
+        <!--Header end-->
 
-        <!--**********************************
-            Sidebar start
-        ***********************************-->
+
+        <!--Sidebar start-->
         <x-sidebar />
-        <!--**********************************
-        Main wrapper end
-    ***********************************-->
+        <!--Sidebar end-->
 
-        {{-- main body --}}
 
+        <!--chart offcanvas start -->
         <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
             aria-labelledby="offcanvasBottomLabel" style="height: 80%;">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
                 <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none"><img
-                        src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20"
-                        alt=""></button>
+                        src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt=""></button>
             </div>
             <div class="offcanvas-body small p-0">
                 <div class="card-body p-0 custome-tooltip">
@@ -258,21 +243,15 @@
 
             </div>
         </div>
+        <!--chart offcanvas end -->
 
-        <!-- Modal -->
-
-
-
-
-
+        <!--content body start-->
         <div class="content-body">
             <!-- row -->
             <div class="container-fluid">
                 <div class="row">
-
                     <div class="col-xl-12">
                         <div class="row">
-
                             <?php 
                                 $fetch = DB::table('watchlist')->where('userid', $user->id)->get();
                                 $i = 1;
@@ -281,21 +260,20 @@
                                     $isin=$key->isIn;
                                     $id=$key->id;
                                     ?>
+
+                            <!--Top up Modal start-->
                             <div class="modal fade" id="exampleModalCenter{{ $i }}">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">{{ $isin }} </h5>
+                                        <div class="modal-header" style="padding-right: 1.875rem;padding-left: 10px;">
+                                            <h2 class="modal-title">{{ $key->tradingSymbol }} </h2>
                                             <button type="button" data-bs-dismiss="modal" style="border: none">
-
                                                 <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
                                                     width="20" alt="">
-
-
                                             </button>
                                         </div>
                                         <div class="modal-body p-0">
-                                            <div class="trade-container">
+                                            <div onclick="showOrderForm({{ $i }})" class="trade-container">
                                                 <div class="trade-item">
                                                     <h2>Trade</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
@@ -306,7 +284,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="trade-item"
-                                                    onclick="fetchData('{{ $isin }}','exampleModalCenter{{ $i }}');"
+                                                    onclick="fetchData('{{ $foisin }}','exampleModalCenter{{ $i }}');"
                                                     data-bs-dismiss="modal">
                                                     <h2 data-bs-dismiss="modal">Chart</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
@@ -346,6 +324,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--Top up Modal end-->
+
+
+                            <!-- Trade offcanvas model -->
+
+                            {{-- <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
+                                aria-labelledby="offcanvasBottomLabel">
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
+                                        bottom
+                                    </h5>
+                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <div class="offcanvas-body small">
+
+                                </div>
+                            </div> --}}
+                            <!-- Trade offcanvas model end -->
+
+
+
+
+
                             <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
                             <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalCenter{{ $i }}">
@@ -364,8 +367,7 @@
                                             <div class="d-flex justify-content-between ">
                                                 <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
                                                     LTP:
-                                                    <span id="ltp{{ $i }}"
-                                                        class="font-w600 text-primary fs-4">
+                                                    <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
                                                         123.8</span>
                                                 </p>
                                             </div>
@@ -389,8 +391,7 @@
                                             <div class="d-flex align-items-center">
                                                 <div class="me-3">
                                                     <p class="mb-0">Open/Close</p>
-                                                    <p class="text-dark mb-0 font-w600"
-                                                        id="openclose{{ $i }}">
+                                                    <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
                                                         123.8/123.8</p>
                                                 </div>
                                             </div>
@@ -431,8 +432,8 @@
 
 
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-            aria-labelledby="offcanvasRightLabel" style="width: 1200px">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
+            style="width: 1200px">
             <div class="offcanvas-header">
                 <h5 id="offcanvasRightLabel">Offcanvas right</h5>
                 <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
@@ -457,7 +458,7 @@
                             <div class="row align-items-center mb-3">
 
                                 <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3">
-                                    <input type="text" class="form-control" placeholder="Search Script"
+                                    <input type="text" class="form-control" id="searchinp" placeholder="Search Script"
                                         onkeyup="searchScript(this)">
 
                                 </div>
@@ -519,8 +520,9 @@
                                             class="fal fa-angle-down"></i></a>
                                 </div>
                             </div>
-                            <div class=" cm-content-body card-body pt-4 pb-0 height370 dlab-scroll">
+                            <div class=" cm-content-body card-body pt-4 pb-0 height800 dlab-scroll">
                                 <div class="contacts-list" id="RecentActivityContent">
+                                    <p id="msg" class="text-center">Enter at least 2 characters in the Search box above to see results here.</p>
 
                                     {{-- @foreach ($scripts as $script) --}}
                                     {{-- <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
@@ -557,9 +559,6 @@
 
 
 
-
-
-
         <script>
             let activeFilter = 'ALL';
             let activeFilterCP = 'ALL';
@@ -585,6 +584,13 @@
                     document.getElementById('expiry-date').hidden = true;
                     document.getElementById('Order-type').hidden = true;
                 }
+
+                // if(getActiveFilter() === 'Future' || getActiveFilter() === 'Option' || getActiveFilter() === 'Indicies') {
+                //     const serachinput = document.getElementById('searchinp');
+                //     console.log(serachinput.value);
+                    
+                //     searchScript(serachinput);
+                // }
 
                 activeFilter = filterName;
 
@@ -619,6 +625,14 @@
 
             console.log('Active Filter:', activeFilter);
             console.log('Active FilterCP:', activeFilterCP);
+
+            function showOrderForm(index) {
+            const offcanvasId = `orderoffcanvasBottom${index}`;
+            const offcanvasElement = document.getElementById(offcanvasId);
+            const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+            offcanvas.show();
+
+        }
         </script>
         <script>
             //fetch all scripts from the server
@@ -628,6 +642,8 @@
             function searchScript(input) {
 
                 const searchValue = input.value.toLowerCase();
+
+            
                 if (getActiveFilter() == 'Future') {
                     // get api call for future
                     let url = 'searchScript?search=' + searchValue + '&type=future';
@@ -990,24 +1006,22 @@
 
             // Fetch data
             async function fetchData(isin, model) {
-                // alert(model);
-                // const closeMode = document.getElementById(model);
-                // let bootstrapModal = bootstrap.Modal.getInstance(closeMode);
-                // bootstrapModal.hide();
-
-                // closeMode.setAttribute('aria-hidden', 'true');
-
-                // // Ensure the backdrop is removed
-                // let backdrop = document.querySelector('.modal-backdrop');
-                // if (backdrop) {
-                //     backdrop.remove();
-                // }
-
+               
                 var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
                 offcanvas.show();
 
-
                 try {
+
+                     // Show a loading popup
+                    Swal.fire({
+                        title: 'Loading',
+                        text: 'Fetching stock data...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        },
+                    });
+
                     const response = await fetch("/fetch-stock-data/" + isin);
                     if (!response.ok) throw new Error("Network response was not ok");
 
@@ -1016,8 +1030,20 @@
 
                     if (formattedData.length === 0) throw new Error("No valid data available");
 
+                    Swal.close();
+ 
+
                     candleSeries.setData(formattedData);
                 } catch (error) {
+
+                    Swal.close();
+
+                        // Show an error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error.message || "Something went wrong!",
+                        });
                     console.error("Error fetching or setting data:", error);
                     // Fallback data
                     candleSeries.setData(formatData([
@@ -1027,9 +1053,6 @@
                     ]));
                 }
             }
-
-            // Fetch initial data and set timeframe
-
 
             function setTimeFrame(timeFrame) {
                 fetchData(); // This function should ideally use `timeFrame` to adjust the API call

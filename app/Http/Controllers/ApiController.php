@@ -37,10 +37,12 @@ class ApiController extends Controller
         $cu = $today->format('Y-m-d');
 
         // Set the URL with the given $id
-        $url = "https://service.upstox.com/charts/v2/open/" . $stocktype . "/IN/NSE_EQ%7C" . $id . "/1minute/" . $cu . "/";
+        $url = "https://service.upstox.com/charts/v2/open/" . $stocktype . "/IN"."/" . $id . "/1minute"."/ ". $cu . "/";
+        return $url;
 
         // Make the HTTP GET request to fetch data
         $response = Http::get($url);
+        return $response;
 
         // Check if the request was successful
         if ($response->successful()) {
@@ -54,7 +56,7 @@ class ApiController extends Controller
             return response()->json($data);
         } else {
             // Return an error response if the request failed
-            return response()->json(['error' => 'Unable to fetch data'], 500);
+            return response()->json(['error' => 'Unable to fetch data','response'], 500);
         }
     }
 
