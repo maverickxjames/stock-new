@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [ProfileController::class, 'profile'])->name('profile');
     Route::POST('change-password', [ProfileController::class, 'changePassword']);
     Route::post('update-profile', [ProfileController::class, 'updateProfile']);
-    // Route::get('logout', [ProfileController::class, 'logout'])->name('logout');
+    
 
 
 

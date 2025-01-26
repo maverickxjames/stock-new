@@ -259,8 +259,13 @@ $user = Auth::user();
                                     $foisin = $key->instrumentKey;
                                     $isin=$key->isIn;
                                     $id=$key->id;
-                                    ?>
+                                    $stock=DB::table('future_temp')->where('isin', $isin)->first();
+                                    $quantity=$stock->lotSize;
 
+                                    ?>
+    <script>
+        console.log("{{ $quantity }}")
+    </script>
                             <!--Top up Modal start-->
                             <div class="modal fade" id="exampleModalCenter{{ $i }}">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -273,8 +278,8 @@ $user = Auth::user();
                                             </button>
                                         </div>
                                         <div class="modal-body p-0">
-                                            <div onclick="showOrderForm({{ $i }})" class="trade-container">
-                                                <div class="trade-item">
+                                            <div  class="trade-container">
+                                                <div data-bs-dismiss="modal" onclick="showOrderForm({{ $i }})" class="trade-item">
                                                     <h2>Trade</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
                                                         <a href="javascript:void(0)" id="add_script">
@@ -329,8 +334,8 @@ $user = Auth::user();
 
                             <!-- Trade offcanvas model -->
 
-                            {{-- <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
-                                aria-labelledby="offcanvasBottomLabel">
+                            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
+                                aria-labelledby="offcanvasBottomLabel" style="height: 70%">
                                 <div class="offcanvas-header">
                                     <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
                                         bottom
@@ -340,9 +345,430 @@ $user = Auth::user();
                                 </div>
 
                                 <div class="offcanvas-body small">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="card">
+                                                <div class="card-header flex-wrap">
+                                                    <!-- <div class="d-flex"> -->
 
+                                                    <nav class="" style="width: 100%;">
+                                                        <div class="nav nav-pills light " id="nav-tab"
+                                                            role="tablist">
+                                                            <button class="nav-link active "
+                                                                style="width: 50%;" id="nav-order-tab"
+                                                                data-bs-toggle="tab"
+                                                                data-bs-target="#nav-order{{ $i }}" type="button"
+                                                                role="tab" aria-selected="true">Buy</button>
+                                                            <button class="nav-link" style="width: 50%"
+                                                                id="nav-histroy-tab" data-bs-toggle="tab"
+                                                                data-bs-target="#nav-history{{ $i }}" type="button"
+                                                                role="tab" aria-selected="false">Sell
+                                                            </button>
+
+                                                        </div>
+                                                    </nav>
+                                                    <!-- </div> -->
+                                                </div>
+                                                <div class="card-body pt-2">
+                                                    <div class="tab-content" id="nav-tabContent">
+                                                        <div class="tab-pane fade show active"
+                                                            id="nav-order{{ $i }}" role="tabpanel"
+                                                            aria-labelledby="nav-order-tab">
+                                                            <div class="table-responsive dataTabletrade">
+                                                                <form>
+
+                                                                    <div class="col-xl-4" style="
+                                                                            width: 100%;
+                                                                        ">
+                                                                        <div class="card">
+
+                                                                            <div class="card-body pt-2">
+                                                                                <!-- Available Balance -->
+                                                                                <div
+                                                                                    class="d-flex align-items-center justify-content-between mt-3 mb-2">
+                                                                                    <span
+                                                                                        class="small text-muted">Available
+                                                                                        Balance</span>
+                                                                                    <span
+                                                                                        class="text-dark">{{
+                                                                                        $user->real_wallet
+                                                                                        }}</span>
+                                                                                </div>
+
+                                                                                <!-- Buy/Sell Form -->
+                                                                                <form>
+                                                                                    <!-- Order Type Selector -->
+                                                                                    <div class="mb-3">
+                                                                                        <label
+                                                                                            class="form-label">Order
+                                                                                            Type</label>
+                                                                                        <select
+                                                                                            onchange="handleOrderTypeChange({{ $i }}, this.value)"
+                                                                                            class="form-select">
+                                                                                            <option
+                                                                                                value="market"
+                                                                                                selected="">
+                                                                                                Market Order
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="limit">
+                                                                                                Limit Order
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="stoploss">
+                                                                                                Stop Loss
+                                                                                                Order
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+
+                                                                                    <!-- Price Input -->
+                                                                                    <div
+                                                                                        class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Price</span>
+                                                                                        <input
+                                                                                            id="realprice{{ $i }}"
+                                                                                            disabled
+                                                                                            type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter price">
+                                                                                        <input
+                                                                                            id="limitprice{{ $i }}"
+                                                                                            disabled
+                                                                                            type="hidden"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter price">
+                                                                                        <span
+                                                                                            class="input-group-text">₹</span>
+                                                                                    </div>
+
+                                                                                    <!-- Size Input -->
+                                                                                    {{-- <div
+                                                                                        class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Size</span>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter size">
+                                                                                        <button
+                                                                                            class="btn btn-primary btn-outline-primary dropdown-toggle"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="dropdown"
+                                                                                            aria-expanded="false">Lot</button>
+                                                                                        <ul
+                                                                                            class="dropdown-menu dropdown-menu-end">
+                                                                                            <li><a class="dropdown-item"
+                                                                                                    href="#">Shares</a>
+                                                                                            </li>
+                                                                                            <li><a class="dropdown-item"
+                                                                                                    href="#">Units</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div> --}}
+
+                                                                                    <div class=""
+                                                                                        style="display: flex; justify-content:space-between; gap:20px;">
+                                                                                        <div
+                                                                                            class="input-group mb-3">
+                                                                                            <span
+                                                                                                class="input-group-text">Lot</span>
+                                                                                            <button
+                                                                                                onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }})"
+                                                                                                class="btn btn-outline-secondary"
+                                                                                                type="button"
+                                                                                                id="decrement">-</button>
+                                                                                            <input
+                                                                                                type="text"
+                                                                                                class="form-control text-center"
+                                                                                                placeholder="Enter size"
+                                                                                                id="lotSize{{ $i }}"
+                                                                                                value="1" disabled>
+                                                                                            <button
+                                                                                                onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }})"
+                                                                                                class="btn btn-outline-secondary"
+                                                                                                type="button"
+                                                                                                id="increment">+</button>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="input-group mb-3">
+                                                                                            <span
+                                                                                                class="input-group-text">Quantity</span>
+                                                                                            <input
+                                                                                                type="text"
+                                                                                                class="form-control"
+                                                                                                placeholder="Enter size"
+                                                                                                id="quantity{{ $i }}"
+                                                                                                value={{
+                                                                                                $quantity }}
+                                                                                                readonly>
+
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <!-- Take Profit & Stop Loss -->
+
+
+                                                                                    <!-- Margin Type -->
+                                                                                    <div class="mb-3">
+                                                                                        <label
+                                                                                            class="form-label">Margin
+                                                                                            Type</label>
+                                                                                        <select
+                                                                                            class="form-select">
+                                                                                            <option
+                                                                                                value="1x"
+                                                                                                selected="">
+                                                                                                1x (No
+                                                                                                Margin)
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="2x">
+                                                                                                2x</option>
+                                                                                            <option
+                                                                                                value="5x">
+                                                                                                5x</option>
+                                                                                            <option
+                                                                                                value="10x">
+                                                                                                10x</option>
+                                                                                        </select>
+                                                                                    </div>
+
+                                                                                    <!-- Stop Price -->
+                                                                                    {{-- <div
+                                                                                        class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Stop
+                                                                                            Price</span>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter stop price">
+                                                                                        <button
+                                                                                            class="btn btn-primary btn-outline-primary dropdown-toggle"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="dropdown"
+                                                                                            aria-expanded="false">Mode</button>
+                                                                                        <ul
+                                                                                            class="dropdown-menu dropdown-menu-end">
+                                                                                            <li><a class="dropdown-item"
+                                                                                                    href="#">Limit</a>
+                                                                                            </li>
+                                                                                            <li><a class="dropdown-item"
+                                                                                                    href="#">Market</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div> --}}
+
+                                                                                    <!-- Cost and Max Info -->
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between flex-wrap">
+                                                                                        <div class="d-flex">
+                                                                                            <div>Cost:</div>
+                                                                                            <div
+                                                                                                id="costPrice{{ $i }}"
+                                                                                                class="px-1">
+                                                                                                ₹0.00</div>
+                                                                                        </div>
+                                                                                        <div class="d-flex">
+                                                                                            <div>Max:</div>
+                                                                                            <div
+                                                                                                id="maxPrice{{ $i }}"
+                                                                                                class=" px-1">
+                                                                                                ₹ {{ $user->real_wallet }}</div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <!-- Buy/Sell Buttons -->
+                                                                                    <div
+                                                                                        class="mt-3 d-flex justify-content-between">
+                                                                                        <button
+                                                                                            type="button"
+                                                                                            class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
+
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="nav-history{{ $i }}"
+                                                            role="tabpanel">
+                                                            <div class="table-responsive dataTabletrade">
+                                                                <form>
+                                                                    <div class="col-xl-4" style="
+                                                                    width: 100%;
+                                                                ">
+                                                                        <div class="card">
+
+                                                                            <div class="card-body pt-2">
+                                                                                <!-- Available Balance -->
+                                                                                <div
+                                                                                    class="d-flex align-items-center justify-content-between mt-3 mb-2">
+                                                                                    <span
+                                                                                        class="small text-muted">Available
+                                                                                        Balance</span>
+                                                                                    <span
+                                                                                        class="text-dark">₹210,800</span>
+                                                                                </div>
+
+                                                                                <!-- Buy/Sell Form -->
+                                                                                <form>
+                                                                                    <!-- Order Type Selector -->
+                                                                                    <div class="mb-3">
+                                                                                        <label
+                                                                                            class="form-label">Order
+                                                                                            Type</label>
+                                                                                        <select
+                                                                                            class="form-select">
+                                                                                            <option
+                                                                                                value="market"
+                                                                                                selected="">
+                                                                                                Market Order
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="limit">
+                                                                                                Limit Order
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="intraday">
+                                                                                                Intraday
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+
+                                                                                    <!-- Price Input -->
+                                                                                    <div
+                                                                                        class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Price</span>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter price">
+                                                                                        <span
+                                                                                            class="input-group-text">₹</span>
+                                                                                    </div>
+
+                                                                                    <!-- Size Input -->
+                                                                                    <div
+                                                                                        class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Size</span>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter size">
+                                                                                        <button
+                                                                                            class="btn btn-primary btn-outline-primary dropdown-toggle"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="dropdown"
+                                                                                            aria-expanded="false">Lot</button>
+                                                                                        <ul
+                                                                                            class="dropdown-menu dropdown-menu-end">
+                                                                                            <li><a class="dropdown-item"
+                                                                                                    href="#">Shares</a>
+                                                                                            </li>
+                                                                                            <li><a class="dropdown-item"
+                                                                                                    href="#">Units</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+
+                                                                                    <!-- Take Profit & Stop Loss -->
+
+
+                                                                                    <!-- Margin Type -->
+                                                                                    <div class="mb-3">
+                                                                                        <label
+                                                                                            class="form-label">Margin
+                                                                                            Type</label>
+                                                                                        <select
+                                                                                            class="form-select">
+                                                                                            <option
+                                                                                                value="1x"
+                                                                                                selected="">
+                                                                                                1x (No
+                                                                                                Margin)
+                                                                                            </option>
+                                                                                            <option
+                                                                                                value="2x">
+                                                                                                2x</option>
+                                                                                            <option
+                                                                                                value="5x">
+                                                                                                5x</option>
+                                                                                            <option
+                                                                                                value="10x">
+                                                                                                10x</option>
+                                                                                        </select>
+                                                                                    </div>
+
+                                                                                    <!-- Stop Price -->
+                                                                                    <div
+                                                                                        class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Stop
+                                                                                            Price</span>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter stop price">
+                                                                                        <button
+                                                                                            class="btn btn-primary btn-outline-primary dropdown-toggle"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="dropdown"
+                                                                                            aria-expanded="false">Mode</button>
+                                                                                        <ul
+                                                                                            class="dropdown-menu dropdown-menu-end">
+                                                                                            <li><a class="dropdown-item"
+                                                                                                    href="#">Limit</a>
+                                                                                            </li>
+                                                                                            <li><a class="dropdown-item"
+                                                                                                    href="#">Market</a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+
+                                                                                    <!-- Cost and Max Info -->
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between flex-wrap">
+                                                                                        <div class="d-flex">
+                                                                                            <div>Cost:</div>
+                                                                                            <div
+                                                                                                class="text-muted px-1">
+                                                                                                ₹0.00</div>
+                                                                                        </div>
+                                                                                        <div class="d-flex">
+                                                                                            <div>Max:</div>
+                                                                                            <div
+                                                                                                class="text-muted px-1">
+                                                                                                ₹6,000</div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <!-- Buy/Sell Buttons -->
+                                                                                    <div
+                                                                                        class="mt-3 d-flex justify-content-between">
+
+                                                                                        <button
+                                                                                            type="button"
+                                                                                            class="btn btn-danger btn-sm light text-uppercase btn-block">SELL</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <!-- Trade offcanvas model end -->
 
 
@@ -742,6 +1168,94 @@ $user = Auth::user();
         <script src="{{ asset('js/app.js') }}"></script>
 
         <script>
+             function handleOrderTypeChange(id, orderType) {
+   
+        const priceInput = document.getElementById("realprice" + id);
+        const limitprice = document.getElementById("limitprice" + id);
+        if (orderType === 'limit') {
+            // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+            priceInput.setAttribute("type", "hidden");
+            limitprice.setAttribute("type", "text");
+            limitprice.value = priceInput.value; // Copy the value
+            priceInput.disabled = false; // Enable input
+            limitprice.disabled = false; // Enable input
+            } else if (orderType === 'market') {
+                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                priceInput.setAttribute("type", "text");
+                limitprice.setAttribute("type", "hidden");
+                priceInput.disabled = true; // Disable input
+                limitprice.disabled = true; // Disable input
+            } else if (orderType === 'stoploss') {
+                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                priceInput.setAttribute("type", "text");
+                limitprice.setAttribute("type", "hidden");
+                priceInput.disabled = false; // Enable input
+                limitprice.disabled = true; // Disable input
+            }
+    
+
+                    // You can add additional logic for other segments (nseopt, mcxfut) here if needed
+                }
+
+                function incrementLot(quantityPerLot, uniqueId,wallet) {
+
+    const lotInput = document.getElementById('lotSize' + uniqueId);
+    const quantity = document.getElementById('quantity' + uniqueId);
+    const costPrice = document.getElementById('costPrice' + uniqueId);
+    const maxPrice = document.getElementById('maxPrice' + uniqueId);
+    const realPrice = document.getElementById('realprice' + uniqueId);
+
+    let currentValue = parseInt(lotInput.value) || 0;
+    let realPriceValue = parseFloat(realPrice.value) || 0;
+
+    lotInput.value = currentValue + 1;
+   
+    quantity.value =lotInput.value * quantityPerLot;
+   
+    let cp=(realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+    costPrice.innerHTML ="₹ "+ cp;
+
+
+    if(wallet > cp){
+        maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+        costPrice.style.color = 'green';
+    }else{
+        maxPrice.style.color = 'red';
+        costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+    }
+
+}
+
+function decrementLot(quantityPerLot, uniqueId,wallet) {
+    const lotInput = document.getElementById('lotSize' + uniqueId);
+    const quantity = document.getElementById('quantity' + uniqueId);
+    const costPrice = document.getElementById('costPrice' + uniqueId);
+    const maxPrice = document.getElementById('maxPrice' + uniqueId);
+    const realPrice = document.getElementById('realprice' + uniqueId);
+
+    let currentValue = parseInt(lotInput.value) || 0;
+    let realPriceValue = parseFloat(realPrice.value) || 0;
+
+    if (currentValue > 1) {
+        lotInput.value = currentValue - 1;
+        quantity.value =lotInput.value * quantityPerLot;
+        let cp=(realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+        costPrice.innerHTML ="₹ "+ cp;
+        if(wallet > cp){
+        maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+        costPrice.style.color = 'green';
+    }else{
+        maxPrice.style.color = 'red';
+        costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+    }
+    }
+
+
+
+}
+        </script>
+
+        <script>
             Echo.channel('watchlists')
                 .listen('Watchlist', (event) => {
                     const feeds = event.watchlist.feeds;
@@ -766,7 +1280,8 @@ $user = Auth::user();
                                 const cp = feedData?.ltpc?.cp || 0;
 
                                 document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                                // document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                                document.getElementById(`realprice${rowId}`).value = feedData.ltpc.ltp || '0';
+                                document.getElementById(`limitprice${rowId}`).value = feedData.ltpc.ltp || '0';
                                 document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high +
                                     '/' + feedData.marketOHLC.ohlc[0].low || '0' + '/' + '0';
                                 document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
