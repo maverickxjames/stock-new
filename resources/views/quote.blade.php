@@ -222,7 +222,7 @@
 
         <!--chart offcanvas start -->
         <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
-            aria-labelledby="offcanvasBottomLabel" style="height: 80%;">
+            aria-labelledby="offcanvasBottomLabel" style="height: fit-content;">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
                 <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none"><img
@@ -336,7 +336,7 @@
 
                             <div class="offcanvas offcanvas-bottom" tabindex="-1"
                                 id="orderoffcanvasBottom{{ $i }}" aria-labelledby="offcanvasBottomLabel"
-                                style="height: 70%">
+                                style="height: fit-content">
                                 <div class="offcanvas-header">
                                     <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
                                         bottom
@@ -377,10 +377,10 @@
                                                             id="nav-order{{ $i }}" role="tabpanel"
                                                             aria-labelledby="nav-order-tab">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}">
+                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}" method="POST" action="{{ route('placeBuyOrder') }}">
                                                                     @csrf
-                                                                    <input type="text" name="id" value="{{ $i }}" id="isin" hidden>
-                                                                    <input type="text" name="instrumentKey1{{ $i }}" value="{{ $foisin }}" id="isin" hidden>
+                                                                    <input type="text" name="id" value="{{ $i }}" id="id" hidden>
+                                                                    <input type="text" name="instrumentKey1{{ $i }}" value="{{ $foisin }}" id="instrumentKey1{{ $i }}" hidden>
                                                                     <div class="col-xl-4" style="width: 100%;">
                                                                         <div class="card">
                                                                             <div class="card-body pt-2">
@@ -413,19 +413,30 @@
                                                                                 <!-- Price Input -->
                                                                                 <div class="input-group mb-3">
                                                                                     <span
-                                                                                        class="input-group-text">Price</span>
+                                                                                        class="input-group-text">Market Price</span>
                                                                                     <input
                                                                                         id="realprice1{{ $i }}"
                                                                                         name="realprice1{{ $i }}"
                                                                                         readonly type="text"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price">
-                                                                                    <input
+                                                                                    
+                                                                                    <span
+                                                                                        class="input-group-text">₹</span>
+                                                                                </div>
+                                                                                <!-- Limit Input -->
+                                                                                <div id="limitblock1{{ $i }}" style="display: none" class="input-group mb-3">
+                                                                                    <span
+                                                                                        class="input-group-text">Limit Price</span>
+                                                                                        <input
                                                                                         id="limitprice1{{ $i }}"
                                                                                         name="limitprice1{{ $i }}"
                                                                                         disabled type="hidden"
                                                                                         class="form-control"
-                                                                                        placeholder="Enter price">
+                                                                                        placeholder="Enter price"
+                                                                                        value="0.00"
+                                                                                        >
+                                                                                    
                                                                                     <span
                                                                                         class="input-group-text">₹</span>
                                                                                 </div>
@@ -582,19 +593,28 @@
                                                                                 <!-- Price Input -->
                                                                                 <div class="input-group mb-3">
                                                                                     <span
-                                                                                        class="input-group-text">Price</span>
+                                                                                        class="input-group-text">Market Price</span>
                                                                                     <input
                                                                                         id="realprice2{{ $i }}"
                                                                                         name="realprice2{{ $i }}"
                                                                                         disabled type="text"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price">
-                                                                                    <input
+                                                                                    
+                                                                                    <span
+                                                                                        class="input-group-text">₹</span>
+                                                                                </div>
+                                                                                <!-- Limit Input -->
+                                                                                <div id="limitblock2{{ $i }}" style="display: none" class="input-group mb-3">
+                                                                                    <span
+                                                                                        class="input-group-text">Limit Price</span>
+                                                                                        <input
                                                                                         id="limitprice2{{ $i }}"
                                                                                         name="limitprice2{{ $i }}"
                                                                                         disabled type="hidden"
                                                                                         class="form-control"
-                                                                                        placeholder="Enter price">
+                                                                                        placeholder="Enter price" value="0.00">
+                                                                                    
                                                                                     <span
                                                                                         class="input-group-text">₹</span>
                                                                                 </div>
@@ -1135,11 +1155,12 @@
         function handleOrderTypeChange(id, orderType, tradeType) {
 
             if (tradeType === 'sell') {
-                const priceInput = document.getElementById("realprice" + id);
-                const limitprice = document.getElementById("limitprice" + id);
+                const priceInput = document.getElementById("realprice2" + id);
+                const limitprice = document.getElementById("limitprice2" + id);
+                const limitblock = document.getElementById("limitblock2" + id);
                 if (orderType === 'limit') {
                     // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                    priceInput.setAttribute("type", "hidden");
+                    limitblock.style.display = 'flex';
                     limitprice.setAttribute("type", "text");
                     limitprice.value = priceInput.value; // Copy the value
                     priceInput.disabled = false; // Enable input
@@ -1148,6 +1169,7 @@
                     // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
                     priceInput.setAttribute("type", "text");
                     limitprice.setAttribute("type", "hidden");
+                    limitblock.style.display = 'none';
                     priceInput.disabled = true; // Disable input
                     limitprice.disabled = true; // Disable input
                 } else if (orderType === 'stoploss') {
@@ -1158,24 +1180,28 @@
                     limitprice.disabled = true; // Disable input
                 }
             } else {
-                const priceInput = document.getElementById("realprice" + id);
-                const limitprice = document.getElementById("limitprice" + id);
+                const priceInput = document.getElementById("realprice1" + id);
+                const limitprice = document.getElementById("limitprice1" + id);
+                const limitblock = document.getElementById("limitblock1" + id);
+
                 if (orderType === 'limit') {
                     // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                    priceInput.setAttribute("type", "hidden");
+                    // priceInput.setAttribute("type", "hidden");
                     limitprice.setAttribute("type", "text");
+                    limitblock.style.display = 'flex';
                     limitprice.value = priceInput.value; // Copy the value
                     priceInput.disabled = false; // Enable input
                     limitprice.disabled = false; // Enable input
                 } else if (orderType === 'market') {
                     // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    priceInput.setAttribute("type", "text");
+                    // priceInput.setAttribute("type", "text");
                     limitprice.setAttribute("type", "hidden");
+                    limitblock.style.display = 'none';
                     priceInput.disabled = true; // Disable input
                     limitprice.disabled = true; // Disable input
                 } else if (orderType === 'stoploss') {
                     // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    priceInput.setAttribute("type", "text");
+                    // priceInput.setAttribute("type", "text");
                     limitprice.setAttribute("type", "hidden");
                     priceInput.disabled = false; // Enable input
                     limitprice.disabled = true; // Disable input
@@ -1217,6 +1243,8 @@
             const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+
+            
 
             let currentValue = parseInt(lotInput.value) || 0;
             let realPriceValue = parseFloat(realPrice.value) || 0;
@@ -1297,11 +1325,11 @@
                 if (wallet >= cp) {
                     maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
                     costPrice.style.color = 'green';
-                    document.getElementById('error-fund').style.display = 'none';
+                    document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
                 } else {
                     maxPrice.style.color = 'red';
                     costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                    document.getElementById('error-fund').style.display = 'block';
+                    document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
                 }
             } else {
                 console.log("Lot size cannot be less than 1.");
@@ -1658,8 +1686,8 @@
 
 
 
-        // Trade Start
-        // $('#buyform').submit(function(e) {
+           // Trade Start
+       
             $(document).on('submit', '[id^="buyform"]', function (e) {
             e.preventDefault();
             var form = $(this);
@@ -1670,64 +1698,64 @@
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
             console.log(formData);
 
+            
             const id=formData.id;
-            var instrumentKey = formData[`instrumentKey1${id}`];
-            console.log(id);
-            console.log(instrumentKey);
+         
 
             let data={
                 instrumentKey:formData[`instrumentKey1${id}`],
-                // orderType:formData[`orderType1${id}`],
-                // quantity=formData[`quantity1${id}`],
-                // price:formData[`realprice1${id}`],
-                // lotSize:formData[`lotSize1${id}`],
-                // costPrice:formData[`costPrice1${id}`],
-                // tradeType:formData[`tradeMode1${id}`],
-                id:formData.id,
+                 orderType:formData[`orderType1${id}`],
+                // quantity:formData[`quantity1${id}`],
+                price:formData[`realprice1${id}`],
+                limitPrice:formData[`limitprice1${id}`],
+                lotSize:formData[`lotSize1${id}`],
+                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
+                tradeType:formData[`tradeMode1${id}`],
+                _token:formData._token,
+                // id:formData.id,
             }
 
-           console.log(data);
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                success: function(response) {
+                    response = JSON.parse(response);
+                    console.log(response);
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'An error occurred.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while placing the order.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                    console.error(xhr.responseJSON);
+                }
+            });
 
 
 
-
-            // $.ajax({
-            //     url: url,
-            //     type: type,
-            //     data: formData,
-            //     success: function(response) {
-            //         console.log(response);
-            //         if (response.success) {
-            //             Swal.fire({
-            //                 icon: 'success',
-            //                 title: response.message,
-            //                 showConfirmButton: false,
-            //                 timer: 1500
-            //             }).then(() => {
-            //                 location.reload();
-            //             });
-            //         } else {
-            //             Swal.fire({
-            //                 title: 'Error',
-            //                 text: response.message || 'An error occurred.',
-            //                 icon: 'error',
-            //                 confirmButtonText: 'Okay'
-            //             });
-            //         }
-            //     },
-            //     error: function(xhr) {
-            //         Swal.fire({
-            //             title: 'Error',
-            //             text: xhr.responseJSON?.message ||
-            //                 'An error occurred while placing the order.',
-            //             icon: 'error',
-            //             confirmButtonText: 'Okay'
-            //         });
-            //         console.error(xhr.responseJSON);
-            //     }
-            // });
         });
-        // Trade End
+        // Trade End 
 
 
     </script>
