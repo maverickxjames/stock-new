@@ -377,7 +377,10 @@
                                                             id="nav-order{{ $i }}" role="tabpanel"
                                                             aria-labelledby="nav-order-tab">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form>
+                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}">
+                                                                    @csrf
+                                                                    <input type="text" name="id" value="{{ $i }}" id="isin" hidden>
+                                                                    <input type="text" name="instrumentKey1{{ $i }}" value="{{ $foisin }}" id="isin" hidden>
                                                                     <div class="col-xl-4" style="width: 100%;">
                                                                         <div class="card">
                                                                             <div class="card-body pt-2">
@@ -394,7 +397,7 @@
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">Order
                                                                                         Type</label>
-                                                                                    <select
+                                                                                    <select id="orderType1{{ $i }}" name="orderType1{{ $i }}"
                                                                                         onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
                                                                                         class="form-select">
                                                                                         <option value="market"
@@ -413,11 +416,13 @@
                                                                                         class="input-group-text">Price</span>
                                                                                     <input
                                                                                         id="realprice1{{ $i }}"
-                                                                                        disabled type="text"
+                                                                                        name="realprice1{{ $i }}"
+                                                                                        readonly type="text"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price">
                                                                                     <input
                                                                                         id="limitprice1{{ $i }}"
+                                                                                        name="limitprice1{{ $i }}"
                                                                                         disabled type="hidden"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price">
@@ -439,7 +444,8 @@
                                                                                             class="form-control text-center"
                                                                                             placeholder="Enter size"
                                                                                             id="lotSize1{{ $i }}"
-                                                                                            value="1" disabled>
+                                                                                            name="lotSize1{{ $i }}"
+                                                                                            value="1" readonly>
                                                                                         <button
                                                                                             onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
                                                                                             class="btn btn-outline-secondary"
@@ -453,6 +459,7 @@
                                                                                             class="form-control"
                                                                                             placeholder="Enter size"
                                                                                             id="quantity1{{ $i }}"
+                                                                                            name="quantity1{{ $i }}"
                                                                                             value={{ $quantity }}
                                                                                             readonly>
                                                                                     </div>
@@ -469,14 +476,14 @@
                                                                                             <input
                                                                                                 class="form-check-input"
                                                                                                 type="radio"
-                                                                                                name="tradeMode{{ $i }}"
-                                                                                                id="deliveryMode{{ $i }}"
+                                                                                                name="tradeMode1{{ $i }}"
+                                                                                                id="deliveryMode1{{ $i }}"
                                                                                                 value="delivery"
                                                                                                 onchange="handleTradeModeChange({{ $i }}, 'delivery')"
                                                                                                 checked>
                                                                                             <label
                                                                                                 class="form-check-label"
-                                                                                                for="deliveryMode{{ $i }}">
+                                                                                                for="deliveryMode1{{ $i }}">
                                                                                                 Delivery Mode
                                                                                             </label>
                                                                                         </div>
@@ -486,13 +493,13 @@
                                                                                             <input
                                                                                                 class="form-check-input"
                                                                                                 type="radio"
-                                                                                                name="tradeMode{{ $i }}"
-                                                                                                id="intradayMode{{ $i }}"
+                                                                                                name="tradeMode1{{ $i }}"
+                                                                                                id="intradayMode1{{ $i }}"
                                                                                                 value="intraday"
                                                                                                 onchange="handleTradeModeChange({{ $i }}, 'intraday')">
                                                                                             <label
                                                                                                 class="form-check-label"
-                                                                                                for="intradayMode{{ $i }}">
+                                                                                                for="intradayMode1{{ $i }}">
                                                                                                 Intraday Mode
                                                                                             </label>
                                                                                         </div>
@@ -506,12 +513,12 @@
                                                                                     class="d-flex justify-content-between flex-wrap">
                                                                                     <div class="d-flex">
                                                                                         <div>Cost:</div>
-                                                                                        <div id="costPrice1{{ $i }}"
+                                                                                        <div id="costPrice1{{ $i }}" name="costPrice1{{ $i }}"
                                                                                             class="px-1">₹0.00</div>
                                                                                     </div>
                                                                                     <div class="d-flex">
                                                                                         <div>Max:</div>
-                                                                                        <div id="maxPrice1{{ $i }}"
+                                                                                        <div id="maxPrice1{{ $i }}" name="maxPrice1{{ $i }}"
                                                                                             class=" px-1">
                                                                                             ₹{{ $user->real_wallet }}
                                                                                         </div>
@@ -521,7 +528,7 @@
                                                                                 <!-- Buy/Sell Buttons -->
                                                                                 <div
                                                                                     class="mt-3 d-flex justify-content-between">
-                                                                                    <button type="button"
+                                                                                    <button type="subit"
                                                                                         class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
                                                                                 </div>
                                                                             </div>
@@ -533,7 +540,8 @@
                                                         <div class="tab-pane fade"
                                                             id="nav-history{{ $i }}" role="tabpanel">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form>
+                                                                <form id="sellform" name="sellform{{ $i }}">
+                                                                    @csrf
                                                                     <div class="col-xl-4"style="width: 100%;">
                                                                         <div class="card">
                                                                             <div class="card-body pt-2">
@@ -552,7 +560,7 @@
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">Order
                                                                                         Type</label>
-                                                                                    <select
+                                                                                    <select id="orderType2{{ $i }}" name="orderType2{{ $i }}"
                                                                                         onchange="handleOrderTypeChange({{ $i }}, this.value,'sell')"
                                                                                         class="form-select">
                                                                                         <option value="market"
@@ -571,11 +579,13 @@
                                                                                         class="input-group-text">Price</span>
                                                                                     <input
                                                                                         id="realprice2{{ $i }}"
+                                                                                        name="realprice2{{ $i }}"
                                                                                         disabled type="text"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price">
                                                                                     <input
                                                                                         id="limitprice2{{ $i }}"
+                                                                                        name="limitprice2{{ $i }}"
                                                                                         disabled type="hidden"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price">
@@ -597,6 +607,7 @@
                                                                                             class="form-control text-center"
                                                                                             placeholder="Enter size"
                                                                                             id="lotSize2{{ $i }}"
+                                                                                            name="lotSize2{{ $i }}"
                                                                                             value="1" disabled>
                                                                                         <button
                                                                                             onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell')"
@@ -611,6 +622,7 @@
                                                                                             class="form-control"
                                                                                             placeholder="Enter size"
                                                                                             id="quantity2{{ $i }}"
+                                                                                            name="quantity2{{ $i }}"
                                                                                             value={{ $quantity }}
                                                                                             readonly>
                                                                                     </div>
@@ -627,14 +639,14 @@
                                                                                             <input
                                                                                                 class="form-check-input"
                                                                                                 type="radio"
-                                                                                                name="tradeMode{{ $i }}"
-                                                                                                id="deliveryMode{{ $i }}"
+                                                                                                name="tradeMode2{{ $i }}"
+                                                                                                id="deliveryMode2{{ $i }}"
                                                                                                 value="delivery"
                                                                                                 onchange="handleTradeModeChange({{ $i }}, 'delivery')"
                                                                                                 checked>
                                                                                             <label
                                                                                                 class="form-check-label"
-                                                                                                for="deliveryMode{{ $i }}">
+                                                                                                for="deliveryMode2{{ $i }}">
                                                                                                 Delivery Mode
                                                                                             </label>
                                                                                         </div>
@@ -644,13 +656,13 @@
                                                                                             <input
                                                                                                 class="form-check-input"
                                                                                                 type="radio"
-                                                                                                name="tradeMode{{ $i }}"
-                                                                                                id="intradayMode{{ $i }}"
+                                                                                                name="tradeMode2{{ $i }}"
+                                                                                                id="intradayMode2{{ $i }}"
                                                                                                 value="intraday"
                                                                                                 onchange="handleTradeModeChange({{ $i }}, 'intraday')">
                                                                                             <label
                                                                                                 class="form-check-label"
-                                                                                                for="intradayMode{{ $i }}">
+                                                                                                for="intradayMode2{{ $i }}">
                                                                                                 Intraday Mode
                                                                                             </label>
                                                                                         </div>
@@ -951,7 +963,7 @@
 
             activeFilter = filterName;
 
-            console.log('Active Filter:', activeFilter);
+            // console.log('Active Filter:', activeFilter);
         }
 
         function setActiveFilterCP(selectedButton, filterName) {
@@ -967,7 +979,7 @@
 
             activeFilterCP = filterName;
 
-            console.log('Active FilterCP:', activeFilterCP);
+            // console.log('Active FilterCP:', activeFilterCP);
         }
 
 
@@ -982,7 +994,7 @@
 
         function handleTradeModeChange(id, tradeMode) {
             mode = tradeMode;
-            console.log('Mode:', mode);
+            // console.log('Mode:', mode);
         }
 
         function getTradeMode() {
@@ -991,9 +1003,9 @@
 
 
 
-        console.log('Active Filter:', activeFilter);
-        console.log('Active FilterCP:', activeFilterCP);
-        console.log('Mode:', mode);
+        // console.log('Active Filter:', activeFilter);
+        // console.log('Active FilterCP:', activeFilterCP);
+        // console.log('Mode:', mode);
 
         function showOrderForm(index) {
             const offcanvasId = `orderoffcanvasBottom${index}`;
@@ -1206,7 +1218,7 @@
             // Update quantity and cost price
             quantity.value = lotInput.value * quantityPerLot;
             let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-            console.log('Cost Price:', cp);
+            // console.log('Cost Price:', cp);
 
             costPrice.innerHTML = "₹ " + cp;
 
@@ -1266,7 +1278,7 @@
                 // Update quantity and cost price
                 quantity.value = lotInput.value * quantityPerLot;
                 let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-                console.log(cp);
+                // console.log(cp);
 
                 costPrice.innerHTML = "₹ " + cp;
 
@@ -1314,7 +1326,7 @@
         Echo.channel('watchlists')
             .listen('Watchlist', (event) => {
                 const feeds = event.watchlist.feeds;
-                console.log(feeds);
+                // console.log(feeds);
 
                 // Iterate through the received WebSocket data
                 for (const key in feeds) {
@@ -1328,7 +1340,7 @@
                         // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
                         if (isinElement) {
                             const rowId = isinElement.id.replace('isin', '');
-                            console.log(rowId);
+                            // console.log(rowId);
 
                             const ltp = feedData?.ltpc?.ltp || 1;
                             const cp = feedData?.ltpc?.cp || 0;
@@ -1630,6 +1642,81 @@
         function setTimeFrame(timeFrame) {
             fetchData(); // This function should ideally use `timeFrame` to adjust the API call
         }
+
+
+
+        // Trade Start
+        // $('#buyform').submit(function(e) {
+            $(document).on('submit', '[id^="buyform"]', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            console.log(form.serialize());
+            var url = form.attr('action');
+            var type = form.attr('method');
+
+            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+            console.log(formData);
+            
+            const id=formData.id;
+            var instrumentKey = formData[`instrumentKey1${id}`];
+            console.log(id);
+            console.log(instrumentKey);
+
+            let data={
+                instrumentKey:formData[`instrumentKey1${id}`],
+                // orderType:formData[`orderType1${id}`],
+                // quantity=formData[`quantity1${id}`],
+                // price:formData[`realprice1${id}`],
+                // lotSize:formData[`lotSize1${id}`],
+                // costPrice:formData[`costPrice1${id}`],
+                // tradeType:formData[`tradeMode1${id}`],
+                id:formData.id,
+            }
+
+           console.log(data);
+           
+            
+            
+
+            // $.ajax({
+            //     url: url,
+            //     type: type,
+            //     data: formData,
+            //     success: function(response) {
+            //         console.log(response);
+            //         if (response.success) {
+            //             Swal.fire({
+            //                 icon: 'success',
+            //                 title: response.message,
+            //                 showConfirmButton: false,
+            //                 timer: 1500
+            //             }).then(() => {
+            //                 location.reload();
+            //             });
+            //         } else {
+            //             Swal.fire({
+            //                 title: 'Error',
+            //                 text: response.message || 'An error occurred.',
+            //                 icon: 'error',
+            //                 confirmButtonText: 'Okay'
+            //             });
+            //         }
+            //     },
+            //     error: function(xhr) {
+            //         Swal.fire({
+            //             title: 'Error',
+            //             text: xhr.responseJSON?.message ||
+            //                 'An error occurred while placing the order.',
+            //             icon: 'error',
+            //             confirmButtonText: 'Okay'
+            //         });
+            //         console.error(xhr.responseJSON);
+            //     }
+            // });
+        });
+        // Trade End 
+
+
     </script>
 
 

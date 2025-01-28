@@ -11,8 +11,7 @@ use App\Http\Controllers\ScriptController;
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\MarketDataController;
 use App\Http\Controllers\SettingsController;
-
-
+use App\Http\Controllers\TradeController;
 
 Route::get('/', function () {
     return view('login');
@@ -118,6 +117,11 @@ Route::middleware('auth')->group(function () {
     Route::get('segment/{id}', [StockController::class, 'segment'])->name('segment');
     Route::get('add-script', [StockController::class, 'addScript'])->name('add-script');
     Route::get('searchScript', [StockController::class, 'searchScript'])->name('searchScript');
+
+
+    // Trade Route 
+    Route::post('placeBuyOrder',[TradeController::class,'placeBuyOrder'])->name('placeBuyOrder');
+    // Trade Route 
 });
 
 
