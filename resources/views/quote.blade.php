@@ -253,7 +253,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="row">
-                            <?php 
+                            <?php
                                 $fetch = DB::table('watchlist')->where('userid', $user->id)->get();
                                 $i = 1;
                                 foreach($fetch as $key){
@@ -522,7 +522,13 @@
                                                                                             class=" px-1">
                                                                                             ₹{{ $user->real_wallet }}
                                                                                         </div>
+
+
                                                                                     </div>
+
+                                                                                </div>
+                                                                                <div>
+                                                                                    <p id="error-fund1{{ $i }}" style="display: none;color:red">Insuffient Fund</p>
                                                                                 </div>
 
                                                                                 <!-- Buy/Sell Buttons -->
@@ -686,6 +692,9 @@
                                                                                     </div>
                                                                                 </div>
 
+                                                                                <div>
+                                                                                    <p id="error-fund2{{ $i }}" style="display: none;color:red">Insuffient Fund</p>
+                                                                                </div>
 
                                                                                 <!-- Buy/Sell Buttons -->
                                                                                 <div
@@ -1031,7 +1040,7 @@
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
-                        // api response 
+                        // api response
                         updateContactsList(data);
                     })
                     .catch(error => {
@@ -1220,15 +1229,17 @@
             let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
             // console.log('Cost Price:', cp);
 
-            costPrice.innerHTML = "₹ " + cp;
+            costPrice.innerHTML = " ₹ " + cp;
 
             // Update color logic
             if (wallet >= cp) {
                 maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
                 costPrice.style.color = 'green';
+                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
             } else {
                 maxPrice.style.color = 'red';
                 costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
             }
 
 
@@ -1286,9 +1297,11 @@
                 if (wallet >= cp) {
                     maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
                     costPrice.style.color = 'green';
+                    document.getElementById('error-fund').style.display = 'none';
                 } else {
                     maxPrice.style.color = 'red';
                     costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                    document.getElementById('error-fund').style.display = 'block';
                 }
             } else {
                 console.log("Lot size cannot be less than 1.");
@@ -1336,7 +1349,7 @@
 
                         const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el
                             .textContent === receivedIsin);
-                            
+
                         // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
                         if (isinElement) {
                             const rowId = isinElement.id.replace('isin', '');
@@ -1370,7 +1383,7 @@
                                          ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
 
-                                     
+
                                 `;
 
 
@@ -1656,7 +1669,7 @@
 
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
             console.log(formData);
-            
+
             const id=formData.id;
             var instrumentKey = formData[`instrumentKey1${id}`];
             console.log(id);
@@ -1674,9 +1687,9 @@
             }
 
            console.log(data);
-           
-            
-            
+
+
+
 
             // $.ajax({
             //     url: url,
@@ -1714,7 +1727,7 @@
             //     }
             // });
         });
-        // Trade End 
+        // Trade End
 
 
     </script>
