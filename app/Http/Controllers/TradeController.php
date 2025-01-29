@@ -69,7 +69,7 @@ class TradeController extends Controller
                                     $trade->save();
 
 
-                                    echo json_encode(['status' => 'success', 'message' => 'Order placed successfully']);
+                                    echo json_encode(['status' => 'success', 'message' => 'Order placed']);
                                 } else {
                                     echo json_encode(['status' => 'error', 'message' => 'Insufficient balance']);
                                 }
@@ -106,7 +106,7 @@ class TradeController extends Controller
                                     $trade->save();
 
 
-                                    echo json_encode(['status' => 'success', 'message' => 'Order placed successfully']);
+                                    echo json_encode(['status' => 'success', 'message' => 'Order placed']);
                                 } else {
                                     echo json_encode(['status' => 'error', 'message' => 'Insufficient balance']);
                                 }
@@ -121,6 +121,116 @@ class TradeController extends Controller
             }
         } else {
             return response()->json(['status' => 'error', 'message' => 'Stock not found']);
+        }
+    }
+
+    public function placeSellOrder(Request $r)
+    {
+        $instrumentKey = $r->instrumentKey;
+        $lotSize = $r->lotSize;
+        $orderType = $r->orderType;
+        $limitPrice = $r->limitPrice;
+        $price = $r->price;
+        $tradeType = $r->tradeType;
+        $user = Auth::user();
+
+        $stockData = DB::table('future_temp')->where('instrumentKey', $instrumentKey)->get();
+        if($stockData->count()>0){
+               if($stockData[0]->segment == 'NSE_FO'){
+                    // starttime = 9:15AM (MON - FRIDAY) to 3:30 PM  (MON - FRIDAY) 
+                    $start_time = strtotime('09:15:00');
+                    $end_time = strtotime('15:30:00');
+                    $current_time = strtotime(date('H:i:s'));
+
+                    if(false){
+                    // if($current_time < $start_time || $current_time > $end_time){
+                        echo json_encode(['status'=>'error','message'=>'Market is closed']);
+                        exit;
+                    }else{
+                        if($stockData[0]->instrumentType == 'FUT'){
+                                if($orderType =='market'){
+                                        $margin = 500;
+                                        $quantity = $lotSize * $stockData[0]->lotSize;
+                                        $cost = $quantity * $price;
+                                        $total_cost = $cost / $margin;
+
+                                       if($tradeType=='delivery' || $tradeType=='intraday'){
+                                        if($total_cost <= $user->real_wallet){
+                                            $user->wallet = $user->real_wallet - $total_cost;
+                                            $updateBalance = DB::table('users')->where('id', $user->id)->update(['real_wallet' => $user->wallet]);
+
+                                            $trade = new trade();
+                                            $trade->user_id = $user->id;
+                                            $trade->stock_symbol = $stockData[0]->assetSymbol;
+                                            $trade->stock_name = $stockData[0]->tradingSymbol;
+                                            $trade->instrumentKey = $stockData[0]->instrumentKey;
+                                            $trade->expiry = $stockData[0]->expiry;
+                                            $trade->action = 'SELL';
+                                            $trade->order_type = $orderType;
+                                            $trade->tradeType = 'FUT';
+                                            $trade->duration = $tradeType;
+                                            $trade->price = $price;
+                                            $trade->quantity = $quantity;
+                                            $trade->lotSize = $lotSize;
+                                            $trade->margin = $margin;
+                                            $trade->cost = $cost;
+                                            $trade->total_cost = $total_cost;
+                                            $trade->status = 'completed';
+                                            $trade->save();
+
+                                            echo json_encode(['status'=>'success','message'=>'Order placed ']);
+                                        }else{
+                                            echo json_encode(['status'=>'error','message'=>'Insufficient balance']);
+                                        }
+                                       }
+                                }else if($orderType == 'limit'){
+                                        $margin = 500;
+                                        $quantity = $lotSize * $stockData[0]->lotSize;
+                                        $cost = $quantity * $limitPrice;
+                                        $total_cost = $cost / $margin;
+
+                                       if($tradeType=='delivery' || $tradeType=='intraday'){
+                                        if($total_cost <= $user->real_wallet){
+                                            $user->wallet = $user->real_wallet - $total_cost;
+                                            $updateBalance = DB::table('users')->where('id', $user->id)->update(['real_wallet' => $user->wallet]);
+
+                                            $trade = new trade();
+                                            $trade->user_id = $user->id;
+                                            $trade->stock_symbol = $stockData[0]->assetSymbol;
+                                            $trade->stock_name = $stockData[0]->tradingSymbol;
+                                            $trade->instrumentKey = $stockData[0]->instrumentKey;
+                                            $trade->expiry = $stockData[0]->expiry;
+                                            $trade->action = 'SELL';
+                                            $trade->order_type = $orderType;
+                                            $trade->tradeType = 'FUT';
+                                            $trade->duration = $tradeType;
+                                            $trade->price = $limitPrice;
+                                            $trade->quantity = $quantity;
+                                            $trade->lotSize = $lotSize;
+                                            $trade->margin = $margin;
+                                            $trade->cost = $cost;
+                                            $trade->total_cost = $total_cost;
+                                            $trade->status = 'pending';
+                                            $trade->save();
+
+                                            echo json_encode(['status'=>'success','message'=>'Order placed']);
+                                        }else{
+                                            echo json_encode(['status'=>'error','message'=>'Insufficient balance']);
+                                        }
+                                       }
+                                }
+                        } elseif($stockData[0]->instrumentType == 'CE' || $stockData[0]->instrumentType == 'PE'){
+                            $margin = 7;
+                        }else{
+                            $margin = 0;
+                        }
+                    }
+                       
+
+
+               }
+        }else{
+            return response()->json(['status'=>'error','message'=>'Stock not found']);
         }
     }
 }

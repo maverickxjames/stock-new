@@ -121,6 +121,7 @@ Route::middleware('auth')->group(function () {
 
     // Trade Route 
     Route::post('placeBuyOrder',[TradeController::class,'placeBuyOrder'])->name('placeBuyOrder');
+    Route::post('placeSellOrder',[TradeController::class,'placeSellOrder'])->name('placeSellOrder');
     // Trade Route 
 });
 

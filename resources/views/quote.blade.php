@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -226,8 +226,7 @@
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
                 <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none"><img
-                        src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20"
-                        alt=""></button>
+                        src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt=""></button>
             </div>
             <div class="offcanvas-body small p-0">
                 <div class="card-body p-0 custome-tooltip">
@@ -260,6 +259,7 @@
                                     $foisin = $key->instrumentKey;
                                     $isin=$key->isIn;
                                     $id=$key->id;
+                                    $instrumentType=$key->instrumentType;
                                     $stock=DB::table('future_temp')->where('isin', $isin)->first();
                                     $quantity=$stock->lotSize;
 
@@ -278,8 +278,8 @@
                                         </div>
                                         <div class="modal-body p-0">
                                             <div class="trade-container">
-                                                <div data-bs-dismiss="modal"
-                                                    onclick="showOrderForm({{ $i }})" class="trade-item">
+                                                <div data-bs-dismiss="modal" onclick="showOrderForm({{ $i }})"
+                                                    class="trade-item">
                                                     <h2>Trade</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
                                                         <a href="javascript:void(0)" id="add_script">
@@ -334,9 +334,8 @@
 
                             <!-- Trade offcanvas model -->
 
-                            <div class="offcanvas offcanvas-bottom" tabindex="-1"
-                                id="orderoffcanvasBottom{{ $i }}" aria-labelledby="offcanvasBottomLabel"
-                                style="height: fit-content">
+                            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
+                                aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
                                 <div class="offcanvas-header">
                                     <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
                                         bottom
@@ -353,18 +352,15 @@
                                                     <!-- <div class="d-flex"> -->
 
                                                     <nav class="" style="width: 100%;">
-                                                        <div class="nav nav-pills light " id="nav-tab"
-                                                            role="tablist">
+                                                        <div class="nav nav-pills light " id="nav-tab" role="tablist">
                                                             <button class="nav-link active " style="width: 50%;"
                                                                 id="nav-order-tab" data-bs-toggle="tab"
-                                                                data-bs-target="#nav-order{{ $i }}"
-                                                                type="button" role="tab"
-                                                                aria-selected="true">Buy</button>
+                                                                data-bs-target="#nav-order{{ $i }}" type="button"
+                                                                role="tab" aria-selected="true">Buy</button>
                                                             <button class="nav-link" style="width: 50%"
                                                                 id="nav-histroy-tab" data-bs-toggle="tab"
-                                                                data-bs-target="#nav-history{{ $i }}"
-                                                                type="button" role="tab"
-                                                                aria-selected="false">Sell
+                                                                data-bs-target="#nav-history{{ $i }}" type="button"
+                                                                role="tab" aria-selected="false">Sell
                                                             </button>
 
                                                         </div>
@@ -373,14 +369,20 @@
                                                 </div>
                                                 <div class="card-body pt-2">
                                                     <div class="tab-content" id="nav-tabContent">
-                                                        <div class="tab-pane fade show active"
-                                                            id="nav-order{{ $i }}" role="tabpanel"
-                                                            aria-labelledby="nav-order-tab">
+                                                        <div class="tab-pane fade show active" id="nav-order{{ $i }}"
+                                                            role="tabpanel" aria-labelledby="nav-order-tab">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}" method="POST" action="{{ route('placeBuyOrder') }}">
+                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}"
+                                                                    method="POST" action="{{ route('placeBuyOrder') }}">
                                                                     @csrf
-                                                                    <input type="text" name="id" value="{{ $i }}" id="id" hidden>
-                                                                    <input type="text" name="instrumentKey1{{ $i }}" value="{{ $foisin }}" id="instrumentKey1{{ $i }}" hidden>
+                                                                    <input type="text" name="id" value="{{ $i }}"
+                                                                        id="id" hidden>
+                                                                    <input type="text" name="instrumentKey1{{ $i }}"
+                                                                        value="{{ $foisin }}"
+                                                                        id="instrumentKey1{{ $i }}" hidden>
+                                                                    <input type="text" name="instrumentType{{ $i }}"
+                                                                        value="{{ $instrumentType }}"
+                                                                        id="instrumentType{{ $i }}" hidden>
                                                                     <div class="col-xl-4" style="width: 100%;">
                                                                         <div class="card">
                                                                             <div class="card-body pt-2">
@@ -390,14 +392,15 @@
                                                                                     <span
                                                                                         class="small text-muted">Available
                                                                                         Balance</span>
-                                                                                    <span
-                                                                                        class="text-dark">{{ $user->real_wallet }}</span>
+                                                                                    <span class="text-dark">{{
+                                                                                        $user->real_wallet }}</span>
                                                                                 </div>
                                                                                 <!-- Order Type Selector -->
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">Order
                                                                                         Type</label>
-                                                                                    <select id="orderType1{{ $i }}" name="orderType1{{ $i }}"
+                                                                                    <select id="orderType1{{ $i }}"
+                                                                                        name="orderType1{{ $i }}"
                                                                                         onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
                                                                                         class="form-select">
                                                                                         <option value="market"
@@ -413,30 +416,30 @@
                                                                                 <!-- Price Input -->
                                                                                 <div class="input-group mb-3">
                                                                                     <span
-                                                                                        class="input-group-text">Market Price</span>
-                                                                                    <input
-                                                                                        id="realprice1{{ $i }}"
+                                                                                        class="input-group-text">Market
+                                                                                        Price</span>
+                                                                                    <input id="realprice1{{ $i }}"
                                                                                         name="realprice1{{ $i }}"
                                                                                         readonly type="text"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price">
-                                                                                    
+
                                                                                     <span
                                                                                         class="input-group-text">₹</span>
                                                                                 </div>
                                                                                 <!-- Limit Input -->
-                                                                                <div id="limitblock1{{ $i }}" style="display: none" class="input-group mb-3">
-                                                                                    <span
-                                                                                        class="input-group-text">Limit Price</span>
-                                                                                        <input
-                                                                                        id="limitprice1{{ $i }}"
+                                                                                <div id="limitblock1{{ $i }}"
+                                                                                    style="display: none"
+                                                                                    class="input-group mb-3">
+                                                                                    <span class="input-group-text">Limit
+                                                                                        Price</span>
+                                                                                    <input id="limitprice1{{ $i }}"
                                                                                         name="limitprice1{{ $i }}"
                                                                                         disabled type="hidden"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price"
-                                                                                        value="0.00"
-                                                                                        >
-                                                                                    
+                                                                                        value="0.00">
+
                                                                                     <span
                                                                                         class="input-group-text">₹</span>
                                                                                 </div>
@@ -456,7 +459,7 @@
                                                                                             placeholder="Enter size"
                                                                                             id="lotSize1{{ $i }}"
                                                                                             name="lotSize1{{ $i }}"
-                                                                                            value="1" readonly>
+                                                                                            value="0" readonly>
                                                                                         <button
                                                                                             onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
                                                                                             class="btn btn-outline-secondary"
@@ -522,14 +525,32 @@
                                                                                 <!-- Cost and Max Info -->
                                                                                 <div
                                                                                     class="d-flex justify-content-between flex-wrap">
-                                                                                    <div class="d-flex">
+                                                                                    {{-- <div class="d-flex">
                                                                                         <div>Cost:</div>
-                                                                                        <div id="costPrice1{{ $i }}" name="costPrice1{{ $i }}"
-                                                                                            class="px-1">₹0.00</div>
+                                                                                        <div id="costPrice1{{ $i }}">
+                                                                                            ₹0.00</div>
+                                                                                    </div> --}}
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between flex-wrap align-items-center">
+                                                                                        <!-- Displaying Cost and Margin Price -->
+                                                                                        <div class="d-flex flex-column">
+                                                                                            <span>
+                                                                                                Cost: <s
+                                                                                                    id="costPrice1{{ $i }}"
+                                                                                                    name="costPrice1{{ $i }}"
+                                                                                                    class="px-1">₹0.00</s>
+                                                                                            </span>
+                                                                                            <span>
+                                                                                                After Margin: <span
+                                                                                                    id="marginCost1{{ $i }}"
+                                                                                                    class="text-success">₹0.00</span>
+                                                                                            </span>
+                                                                                        </div>
                                                                                     </div>
                                                                                     <div class="d-flex">
                                                                                         <div>Max:</div>
-                                                                                        <div id="maxPrice1{{ $i }}" name="maxPrice1{{ $i }}"
+                                                                                        <div id="maxPrice1{{ $i }}"
+                                                                                            name="maxPrice1{{ $i }}"
                                                                                             class=" px-1">
                                                                                             ₹{{ $user->real_wallet }}
                                                                                         </div>
@@ -539,7 +560,9 @@
 
                                                                                 </div>
                                                                                 <div>
-                                                                                    <p id="error-fund1{{ $i }}" style="display: none;color:red">Insuffient Fund</p>
+                                                                                    <p id="error-fund1{{ $i }}"
+                                                                                        style="display: none;color:red">
+                                                                                        Insuffient Fund</p>
                                                                                 </div>
 
                                                                                 <!-- Buy/Sell Buttons -->
@@ -554,12 +577,19 @@
                                                                 </form>
                                                             </div>
                                                         </div>
-                                                        <div class="tab-pane fade"
-                                                            id="nav-history{{ $i }}" role="tabpanel">
+                                                        <div class="tab-pane fade" id="nav-history{{ $i }}"
+                                                            role="tabpanel">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form id="sellform" name="sellform{{ $i }}">
+                                                                <form id="sellform" name="sellform{{ $i }}"
+                                                                    method="POST"
+                                                                    action="{{ route('placeSellOrder') }}">
                                                                     @csrf
-                                                                    <div class="col-xl-4"style="width: 100%;">
+                                                                    <input type="text" name="id2" value="{{ $i }}"
+                                                                        id="id" hidden>
+                                                                    <input type="text" name="instrumentKey2{{ $i }}"
+                                                                        value="{{ $foisin }}"
+                                                                        id="instrumentKey2{{ $i }}" hidden>
+                                                                    <div class="col-xl-4" style="width: 100%;">
                                                                         <div class="card">
                                                                             <div class="card-body pt-2">
                                                                                 <!-- Available Balance -->
@@ -569,15 +599,16 @@
                                                                                     <span
                                                                                         class="small text-muted">Available
                                                                                         Balance</span>
-                                                                                    <span
-                                                                                        class="text-dark">{{ $user->real_wallet }}</span>
+                                                                                    <span class="text-dark">{{
+                                                                                        $user->real_wallet }}</span>
                                                                                 </div>
 
                                                                                 <!-- Order Type Selector -->
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">Order
                                                                                         Type</label>
-                                                                                    <select id="orderType2{{ $i }}" name="orderType2{{ $i }}"
+                                                                                    <select id="orderType2{{ $i }}"
+                                                                                        name="orderType2{{ $i }}"
                                                                                         onchange="handleOrderTypeChange({{ $i }}, this.value,'sell')"
                                                                                         class="form-select">
                                                                                         <option value="market"
@@ -593,28 +624,31 @@
                                                                                 <!-- Price Input -->
                                                                                 <div class="input-group mb-3">
                                                                                     <span
-                                                                                        class="input-group-text">Market Price</span>
-                                                                                    <input
-                                                                                        id="realprice2{{ $i }}"
+                                                                                        class="input-group-text">Market
+                                                                                        Price</span>
+                                                                                    <input id="realprice2{{ $i }}"
                                                                                         name="realprice2{{ $i }}"
-                                                                                        disabled type="text"
+                                                                                        readonly type="text"
                                                                                         class="form-control"
                                                                                         placeholder="Enter price">
-                                                                                    
+
                                                                                     <span
                                                                                         class="input-group-text">₹</span>
                                                                                 </div>
+
                                                                                 <!-- Limit Input -->
-                                                                                <div id="limitblock2{{ $i }}" style="display: none" class="input-group mb-3">
-                                                                                    <span
-                                                                                        class="input-group-text">Limit Price</span>
-                                                                                        <input
-                                                                                        id="limitprice2{{ $i }}"
+                                                                                <div id="limitblock2{{ $i }}"
+                                                                                    style="display: none"
+                                                                                    class="input-group mb-3">
+                                                                                    <span class="input-group-text">Limit
+                                                                                        Price</span>
+                                                                                    <input id="limitprice2{{ $i }}"
                                                                                         name="limitprice2{{ $i }}"
                                                                                         disabled type="hidden"
                                                                                         class="form-control"
-                                                                                        placeholder="Enter price" value="0.00">
-                                                                                    
+                                                                                        placeholder="Enter price"
+                                                                                        value="0.00">
+
                                                                                     <span
                                                                                         class="input-group-text">₹</span>
                                                                                 </div>
@@ -634,7 +668,7 @@
                                                                                             placeholder="Enter size"
                                                                                             id="lotSize2{{ $i }}"
                                                                                             name="lotSize2{{ $i }}"
-                                                                                            value="1" disabled>
+                                                                                            value="0" readonly>
                                                                                         <button
                                                                                             onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell')"
                                                                                             class="btn btn-outline-secondary"
@@ -698,10 +732,27 @@
                                                                                 <!-- Cost and Max Info -->
                                                                                 <div
                                                                                     class="d-flex justify-content-between flex-wrap">
-                                                                                    <div class="d-flex">
+                                                                                    {{-- <div class="d-flex">
                                                                                         <div>Cost:</div>
                                                                                         <div id="costPrice2{{ $i }}"
                                                                                             class="px-1">₹0.00</div>
+                                                                                    </div> --}}
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between flex-wrap align-items-center">
+                                                                                        <!-- Displaying Cost and Margin Price -->
+                                                                                        <div class="d-flex flex-column">
+                                                                                            <span>
+                                                                                                Cost: <s
+                                                                                                    id="costPrice2{{ $i }}"
+                                                                                                    name="costPrice2{{ $i }}"
+                                                                                                    class="px-1">₹0.00</s>
+                                                                                            </span>
+                                                                                            <span>
+                                                                                                After Margin: <span
+                                                                                                    id="marginCost2{{ $i }}"
+                                                                                                    class="text-success">₹0.00</span>
+                                                                                            </span>
+                                                                                        </div>
                                                                                     </div>
                                                                                     <div class="d-flex">
                                                                                         <div>Max:</div>
@@ -713,14 +764,16 @@
                                                                                 </div>
 
                                                                                 <div>
-                                                                                    <p id="error-fund2{{ $i }}" style="display: none;color:red">Insuffient Fund</p>
+                                                                                    <p id="error-fund2{{ $i }}"
+                                                                                        style="display: none;color:red">
+                                                                                        Insuffient Fund</p>
                                                                                 </div>
 
                                                                                 <!-- Buy/Sell Buttons -->
                                                                                 <div
                                                                                     class="mt-3 d-flex justify-content-between">
 
-                                                                                    <button type="button"
+                                                                                    <button type="submit"
                                                                                         class="btn btn-danger btn-sm light text-uppercase btn-block">SELL</button>
                                                                                 </div>
                                                                 </form>
@@ -752,13 +805,13 @@
                     <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
                         <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                    id="change{{ $i }}">Loading...</p>
+                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">Loading...
+                                </p>
 
                                 </p>
                                 {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{
-                                                $key->instrumentType }} <span class="text-muted">({{ $key->expiry
-                                                    }})</span></h4> --}}
+                                    $key->instrumentType }} <span class="text-muted">({{ $key->expiry
+                                        }})</span></h4> --}}
                                 <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
                                 <div class="d-flex justify-content-between ">
                                     <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
@@ -854,8 +907,8 @@
                         <div class="row align-items-center mb-3">
 
                             <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3">
-                                <input type="text" class="form-control" id="searchinp"
-                                    placeholder="Search Script" onkeyup="searchScript(this)">
+                                <input type="text" class="form-control" id="searchinp" placeholder="Search Script"
+                                    onkeyup="searchScript(this)">
 
                             </div>
 
@@ -923,22 +976,22 @@
 
                                 {{-- @foreach ($scripts as $script) --}}
                                 {{-- <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://cdn-icons-png.flaticon.com/128/14906/14906254.png" alt=""
-                                                class="avatar" id="avatar">
-                                            <div class="ms-3">
-                                                <h5 class="mb-1"><a href="" id="script_symbol">Loading...</a>
-                                                </h5>
-                                                <span class="fs-14 text-muted" id="script_description">Loading...</span>
-                                            </div>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/14906/14906254.png" alt=""
+                                            class="avatar" id="avatar">
+                                        <div class="ms-3">
+                                            <h5 class="mb-1"><a href="" id="script_symbol">Loading...</a>
+                                            </h5>
+                                            <span class="fs-14 text-muted" id="script_description">Loading...</span>
                                         </div>
-                                        <div class="icon-box icon-box-sm bgl-primary">
-                                            <a href="javascript:void(0)" id="add_script">
-                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                    width="24" alt="">
-                                            </a>
-                                        </div>
-                                    </div> --}}
+                                    </div>
+                                    <div class="icon-box icon-box-sm bgl-primary">
+                                        <a href="javascript:void(0)" id="add_script">
+                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                width="24" alt="">
+                                        </a>
+                                    </div>
+                                </div> --}}
                                 {{-- @endforeach --}}
                             </div>
                         </div>
@@ -1243,6 +1296,19 @@
             const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+
+            const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
+
+            let margin=0;
+
+           if(instrumentType=='FUT'){
+            margin=500;
+           }else if(instrumentType=='CE' || instrumentType=='PE'){
+            margin=7;
+              }else{
+            margin=0;
+              }
 
             
 
@@ -1255,18 +1321,24 @@
             // Update quantity and cost price
             quantity.value = lotInput.value * quantityPerLot;
             let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-            // console.log('Cost Price:', cp);
+            let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
+            // console.log("cost Price",cp);
+            // console.log("margin cost",mcp);
+            
+            marginCost.innerHTML = "₹ " + mcp;
 
             costPrice.innerHTML = " ₹ " + cp;
 
             // Update color logic
-            if (wallet >= cp) {
+            if (wallet >= mcp) {
                 maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                costPrice.style.color = 'green';
+                // costPrice.style.color = 'green';
+                marginCost.style.color = 'green';
                 document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
             } else {
                 maxPrice.style.color = 'red';
-                costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                // costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
                 document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
             }
 
@@ -1306,6 +1378,19 @@
             const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+
+            const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
+
+                let margin=0;
+
+                if(instrumentType=='FUT'){
+                margin=500;
+                }else if(instrumentType=='CE' || instrumentType=='PE'){
+                margin=7;
+                }else{
+                margin=0;
+                }
 
             let currentValue = parseInt(lotInput.value) || 0;
             let realPriceValue = parseFloat(realPrice.value) || 0;
@@ -1317,12 +1402,14 @@
                 // Update quantity and cost price
                 quantity.value = lotInput.value * quantityPerLot;
                 let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+                let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
                 // console.log(cp);
+                marginCost.innerHTML = "₹ " + mcp;
 
                 costPrice.innerHTML = "₹ " + cp;
 
                 // Update color logic
-                if (wallet >= cp) {
+                if (wallet >= mcp) {
                     maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
                     costPrice.style.color = 'green';
                     document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
@@ -1687,7 +1774,8 @@
 
 
            // Trade Start
-       
+            
+            // buy form
             $(document).on('submit', '[id^="buyform"]', function (e) {
             e.preventDefault();
             var form = $(this);
@@ -1753,6 +1841,77 @@
             });
 
 
+
+        });
+
+
+        // sell form
+        $(document).on('submit', '[id^="sellform"]', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            console.log(form.serialize());
+            var url = form.attr('action');
+            var type = form.attr('method');
+
+            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+            console.log(formData);
+
+            
+            const id=formData.id2;
+         
+
+            let data={
+                instrumentKey:formData[`instrumentKey2${id}`],
+                 orderType:formData[`orderType2${id}`],
+                // quantity:formData[`quantity1${id}`],
+                price:formData[`realprice2${id}`],
+                limitPrice:formData[`limitprice2${id}`],
+                lotSize:formData[`lotSize2${id}`],
+                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
+                tradeType:formData[`tradeMode2${id}`],
+                _token:formData._token,
+                // id:formData.id,
+            }
+
+            console.log(data);
+            
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                success: function(response) {
+                    response = JSON.parse(response);
+                    console.log(response);
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'An error occurred.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while placing the order.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                    console.error(xhr.responseJSON);
+                }
+            });
 
         });
         // Trade End 
