@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/user/{id}', [AdminController::class, 'user'])->name("admin.viewUser");
     Route::get('admin/deposits', [AdminController::class, 'depositTxn'])->name('admin.deposit_txn');
     Route::get('admin/withdraws', [AdminController::class, 'withdrawTXn'])->name('admin.withdraw_txn');
+    Route::get('admin/trades', [AdminController::class, 'tradeTxn'])->name('admin.tradeTxn');
 
     Route::get('/admin/settings', [SettingsController::class, 'settings'])->name('admin.settings');
   

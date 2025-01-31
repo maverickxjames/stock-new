@@ -227,6 +227,12 @@ class AdminController extends Controller
         return view('admin.withdraws', ['withdraws' => $withdraws]);
     }
 
+    public function tradeTxn(Request $request): View
+    {
+        $trades = DB::table('trades')->get();
+        return view('admin.trades', ['trades' => $trades]);
+    }
+
    
 
 
