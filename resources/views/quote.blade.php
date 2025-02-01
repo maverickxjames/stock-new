@@ -1454,7 +1454,7 @@ $user = Auth::user();
         Echo.channel('watchlists')
             .listen('Watchlist', (event) => {
                 const feeds = event.watchlist.feeds;
-                // console.log(feeds);
+                console.log(feeds);
 
                 // Iterate through the received WebSocket data
                 for (const key in feeds) {
@@ -1472,6 +1472,8 @@ $user = Auth::user();
 
                             const ltp = feedData?.ltpc?.ltp || 1;
                             const cp = feedData?.ltpc?.cp || 0;
+
+                            
 
                             document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
