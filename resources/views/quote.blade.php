@@ -372,8 +372,8 @@ $user = Auth::user();
                                                         <div class="tab-pane fade show active" id="nav-order{{ $i }}"
                                                             role="tabpanel" aria-labelledby="nav-order-tab">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}"
-                                                                    method="POST" action="{{ route('placeBuyOrder') }}">
+                                                                <form id="buyform{{ $i }}" method="POST"
+                                                                    action="{{ route('placeBuyOrder') }}">
                                                                     @csrf
                                                                     <input type="text" name="id" value="{{ $i }}"
                                                                         id="id" hidden>
@@ -568,7 +568,7 @@ $user = Auth::user();
                                                                                 <!-- Buy/Sell Buttons -->
                                                                                 <div
                                                                                     class="mt-3 d-flex justify-content-between">
-                                                                                    <button type="subit"
+                                                                                    <button type="submit"
                                                                                         class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
                                                                                 </div>
                                                                             </div>
@@ -580,7 +580,7 @@ $user = Auth::user();
                                                         <div class="tab-pane fade" id="nav-history{{ $i }}"
                                                             role="tabpanel">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form id="sellform" name="sellform{{ $i }}"
+                                                                <form id="sellform{{ $i }}" name="sellform{{ $i }}"
                                                                     method="POST"
                                                                     action="{{ route('placeSellOrder') }}">
                                                                     @csrf
@@ -780,7 +780,7 @@ $user = Auth::user();
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    </form>
+
                                                 </div>
                                             </div>
 
@@ -1002,9 +1002,153 @@ $user = Auth::user();
         </div>
     </div>
 
+<script>
+     $(document).ready(function() {
+
+            
+        $(document).on('submit', '[id^="buyform"]', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            console.log(form.serialize());
+            var url = form.attr('action');
+            var type = form.attr('method');
+
+            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+            console.log(formData);
+
+            
+            const id=formData.id;
+         
+
+            let data={
+                instrumentKey:formData[`instrumentKey1${id}`],
+                 orderType:formData[`orderType1${id}`],
+                // quantity:formData[`quantity1${id}`],
+                price:formData[`realprice1${id}`],
+                limitPrice:formData[`limitprice1${id}`],
+                lotSize:formData[`lotSize1${id}`],
+                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
+                tradeType:formData[`tradeMode1${id}`],
+                _token:formData._token,
+                // id:formData.id,
+            }
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                success: function(response) {
+                    response = JSON.parse(response);
+                    console.log(response);
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'An error occurred.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while placing the order.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                    console.error(xhr.responseJSON);
+                }
+            });
 
 
 
+        });
+
+         // sell form
+         $(document).on('submit', '[id^="sellform"]', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            console.log(form.serialize());
+            var url = form.attr('action');
+            var type = form.attr('method');
+
+            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+            console.log(formData);
+
+            
+            const id=formData.id2;
+         
+
+            let data={
+                instrumentKey:formData[`instrumentKey2${id}`],
+                 orderType:formData[`orderType2${id}`],
+                // quantity:formData[`quantity1${id}`],
+                price:formData[`realprice2${id}`],
+                limitPrice:formData[`limitprice2${id}`],
+                lotSize:formData[`lotSize2${id}`],
+                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
+                tradeType:formData[`tradeMode2${id}`],
+                _token:formData._token,
+                // id:formData.id,
+            }
+
+            console.log(data);
+            
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                success: function(response) {
+                    response = JSON.parse(response);
+                    console.log(response);
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'An error occurred.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while placing the order.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                    console.error(xhr.responseJSON);
+                }
+            });
+
+        });
+        // Trade End 
+
+
+
+    });
+</script>
 
 
 
@@ -1776,147 +1920,14 @@ $user = Auth::user();
 
 
            // Trade Start
+
+       
             
             // buy form
-            $(document).on('submit', '[id^="buyform"]', function (e) {
-            e.preventDefault();
-            var form = $(this);
-            console.log(form.serialize());
-            var url = form.attr('action');
-            var type = form.attr('method');
-
-            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
-            console.log(formData);
-
-            
-            const id=formData.id;
-         
-
-            let data={
-                instrumentKey:formData[`instrumentKey1${id}`],
-                 orderType:formData[`orderType1${id}`],
-                // quantity:formData[`quantity1${id}`],
-                price:formData[`realprice1${id}`],
-                limitPrice:formData[`limitprice1${id}`],
-                lotSize:formData[`lotSize1${id}`],
-                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
-                tradeType:formData[`tradeMode1${id}`],
-                _token:formData._token,
-                // id:formData.id,
-            }
-
-            $.ajax({
-                url: url,
-                type: type,
-                data: data,
-                success: function(response) {
-                    response = JSON.parse(response);
-                    console.log(response);
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.message || 'An error occurred.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON?.message ||
-                            'An error occurred while placing the order.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    });
-                    console.error(xhr.responseJSON);
-                }
-            });
+       
 
 
-
-        });
-
-
-        // sell form
-        $(document).on('submit', '[id^="sellform"]', function (e) {
-            e.preventDefault();
-            var form = $(this);
-            console.log(form.serialize());
-            var url = form.attr('action');
-            var type = form.attr('method');
-
-            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
-            console.log(formData);
-
-            
-            const id=formData.id2;
-         
-
-            let data={
-                instrumentKey:formData[`instrumentKey2${id}`],
-                 orderType:formData[`orderType2${id}`],
-                // quantity:formData[`quantity1${id}`],
-                price:formData[`realprice2${id}`],
-                limitPrice:formData[`limitprice2${id}`],
-                lotSize:formData[`lotSize2${id}`],
-                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
-                tradeType:formData[`tradeMode2${id}`],
-                _token:formData._token,
-                // id:formData.id,
-            }
-
-            console.log(data);
-            
-
-            $.ajax({
-                url: url,
-                type: type,
-                data: data,
-                success: function(response) {
-                    response = JSON.parse(response);
-                    console.log(response);
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.message || 'An error occurred.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON?.message ||
-                            'An error occurred while placing the order.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    });
-                    console.error(xhr.responseJSON);
-                }
-            });
-
-        });
-        // Trade End 
+       
 
 
     </script>

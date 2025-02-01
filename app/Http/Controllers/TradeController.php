@@ -13,6 +13,7 @@ class TradeController extends Controller
 
     public function placeBuyOrder(Request $r)
     {
+       
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
         $orderType = $r->orderType;
