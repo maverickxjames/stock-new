@@ -231,12 +231,12 @@
                                                                         <div class="d-flex align-items-center mb-4">
 
                                                                             <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                                alt="" width=20
-                                                                                style="border-radius: 20px"
-                                                                                class="avatar">
+                                                                                alt="" width=25
+                                                                                style="border-radius: 100%">
                                                                             <div class="ms-1">
                                                                                 <a href="javascript:void(0)">
-                                                                                    <h4 class="card-title mb-0">
+                                                                                    <h4 class="card-title mb-0"
+                                                                                        style="font-size:1rem">
                                                                                         {{ $stock->stock_name }}
                                                                                         {{-- <span>Finance</span> --}}
 
@@ -244,8 +244,17 @@
                                                                                 </a>
                                                                                 <div class="text-end"
                                                                                     style="position: absolute;top: 10px;right: 14px;">
-                                                                                    <p class="text-muted mb-1 fs-13">
-                                                                                        {{ $stock->action }}</p>
+                                                                                    @if ($stock->action == 'BUY')
+                                                                                        <span
+                                                                                            class="badge badge-success">
+                                                                                            {{ $stock->action }}</span>
+                                                                                    @else
+                                                                                        <span
+                                                                                            class="badge badge-danger">
+                                                                                            {{ $stock->action }}</span>
+                                                                                    @endif
+                                                                                    {{-- <p class="text-muted mb-1 fs-13">
+                                                                                        {{ $stock->action }}</p> --}}
                                                                                 </div>
 
                                                                             </div>
