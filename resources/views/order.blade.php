@@ -187,10 +187,13 @@ use App\Models\Stockdata;
                                     <div class="nav nav-pills light" id="nav-tab" role="tablist">
                                         <button class="nav-link active" id="nav-order-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-order" type="button" role="tab"
-                                            aria-selected="true">Active Order</button>
+                                            aria-selected="true">Open Orders</button>
                                         <button class="nav-link" id="nav-histroy-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-history" type="button" role="tab"
-                                            aria-selected="false">Order Log</button>
+                                            aria-selected="false">Pending Orders</button>
+                                        <button class="nav-link" id="nav-histroy-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-trade-history" type="button" role="tab"
+                                            aria-selected="false">All Past Orders</button>
                                         <button class="nav-link" id="nav-trade-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-trade" type="button" role="tab"
                                             aria-selected="false">Executed Trades</button>
@@ -230,7 +233,7 @@ use App\Models\Stockdata;
                                                         ->get();
                                                     ?>
                                                     @foreach ($orders as $order)
-                                                   @if($order->status == 'pending')
+                                                   @if($order->status == 'processing')
                                                       <tr>
                                                             <td>{{ $loop->iteration }}</td> <!-- S.No. -->
                                                             {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
@@ -309,7 +312,86 @@ use App\Models\Stockdata;
                                                         ->get();
                                                     ?>
                                                     @foreach ($orders as $order)
-                                                   @if($order->status == 'completed' || $order->status == 'cancelled')
+                                                   @if($order->status == 'pending')
+                                                      <tr>
+                                                            <td>{{ $loop->iteration }}</td> 
+                                                            {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
+                                                            <td>{{ $order->created_at }}</td> <!-- Time -->
+                                                            <td>
+                                                                <a class="market-title d-flex align-items-center"
+                                                                    href="javascript:void(0);">
+                                                                    <div class="market-icon me-2">
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg" alt="icon"
+                                                                            class="styled-logo">
+                                                                    </div>
+                                                                    {{ $order->stock_symbol }}
+                                                                </a>
+                                                            </td>
+                                                            <td>{{ $order->order_type }}</td>
+                                                            <td>
+                                                                <span
+                                                                    class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
+                                                                    {{ ucfirst($order->action) }}
+                                                                </span>
+                                                            </td>
+                                                           
+                                                            <!-- Adjust based on order type -->
+                                                            <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
+                                                            <td>{{ $order->quantity }}</td> <!-- Price per stock -->
+                                                            <td><span
+                                                                    class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
+                                                            </td> <!-- Total value -->
+                                                            <td>{{ $order->expiry }}</td>
+                                                            {{-- <td>{{ $order->status }}</td> --}}
+                                                            <!-- Quantity -->
+                                                            <td>
+                                                                <div class="text-end">
+                                                                    <a href="#"
+                                                                        class="btn btn-primary shadow btn-xs sharp me-3">
+                                                                        <i class="fas fa-pencil-alt"></i>
+                                                                    </a>
+                                                                    <a href="#"
+                                                                        class="btn btn-danger shadow btn-xs sharp">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                   @endif
+                                                      
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-trade-history" role="tabpanel">
+                                        <div class="table-responsive dataTabletrade">
+                                            <table id="example-history-1"
+                                                class="table shadow-hover display  orderbookTable"
+                                                style="min-width:845px">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No.</th>
+                                                        <th>Time</th>
+                                                        <th>Script</th>
+                                                        <th>Order Type</th>
+                                                        <th>Order Action</th>
+                                                        <th>Lot</th>
+                                                        <th>Quantity</th>
+                                                        <th>Order Price</th>
+                                                        <th>Expiry</th>
+                                                        {{-- <th>Status</th> --}}
+                                                        <th class="text-end">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $orders = DB::table('trades')
+                                                        ->where('user_id', Auth::user()->id)
+                                                        ->get();
+                                                    ?>
+                                                    @foreach ($orders as $order)
+                                                   @if($order->status == 'completed' || $order->status == 'cancelled' || $order->status == 'expired' || $order->status == 'failed')
                                                       <tr>
                                                             <td>{{ $loop->iteration }}</td> 
                                                             {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}

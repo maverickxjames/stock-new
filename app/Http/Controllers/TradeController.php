@@ -66,7 +66,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'completed';
+                                    $trade->status = 'processing';
                                     $trade->save();
 
 
@@ -176,7 +176,7 @@ class TradeController extends Controller
                                             $trade->margin = $margin;
                                             $trade->cost = $cost;
                                             $trade->total_cost = $total_cost;
-                                            $trade->status = 'completed';
+                                            $trade->status = 'processing';
                                             $trade->save();
 
                                             echo json_encode(['status'=>'success','message'=>'Order placed ']);
