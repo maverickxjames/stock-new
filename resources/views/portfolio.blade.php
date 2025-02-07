@@ -1,5 +1,5 @@
 @php
-$user = Auth::user();
+    $user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -114,37 +114,39 @@ $user = Auth::user();
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-12">
-						<div class="row">
-							<div class="col-xl-12">
-								<div class="card trad-card wallet-wrapper overflow-hidden">
-									<div class="card-header border-0 pb-0 card-bx">
-										<div class="me-auto " style="z-index: 1;">
-											<h2 class="text-dark mb-2 font-w600">₹ 65,123</h2>
-                                            <div class="d-flex col-xl-12 align-items-center justify-content-between gap-2" >
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card trad-card wallet-wrapper overflow-hidden">
+                                    <div class="card-header border-0 pb-0 card-bx">
+                                        <div class="me-auto " style="z-index: 1;">
+                                            <h2 class="text-dark mb-2 font-w600">₹ 65,123</h2>
+                                            <div
+                                                class="d-flex col-xl-12 align-items-center justify-content-between gap-2">
                                                 <h6 class="text-dark mb-1 fs-13">Overall Gain</h6>
                                                 <p class="mb-0 fs-13 ">4%(30 days)</p>
                                             </div>
-										</div>
-										{{-- <img src="images/svg/bitcoin-1.svg" alt="">	 --}}
-									</div>
-									<div class="card-body col-xl-12 p-0" style="z-index: 1;">
-                                        <div class="d-flex justify-content-between align-items-center gap-5 p-3 p-md-4 p-lg-5">
-                                            <div >
+                                        </div>
+                                        {{-- <img src="images/svg/bitcoin-1.svg" alt="">	 --}}
+                                    </div>
+                                    <div class="card-body col-xl-12 p-0" style="z-index: 1;">
+                                        <div
+                                            class="d-flex justify-content-between align-items-center gap-5 p-3 p-md-4 p-lg-5">
+                                            <div>
                                                 <h5 class="text-dark mb-1">Invested Value</h5>
                                                 <p class="mb-0 fs-14">₹ 65,123</p>
                                             </div>
-                                            
+
                                             <div>
                                                 <h5 class="text-dark mb-1">Today's Gain</h5>
                                                 <p class="mb-0 fs-14">4%(30 days)</p>
                                             </div>
                                         </div>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-					</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header border-0">
@@ -152,22 +154,23 @@ $user = Auth::user();
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
                                         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all"
-                                            aria-selected="true">All</button>
+                                            data-bs-target="#nav-all" type="button" role="tab"
+                                            aria-controls="nav-all" aria-selected="true">All</button>
                                         <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-fut" type="button" role="tab" aria-controls="nav-fut"
-                                            aria-selected="false">Future</button>
+                                            data-bs-target="#nav-fut" type="button" role="tab"
+                                            aria-controls="nav-fut" aria-selected="false">Future</button>
                                         <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-opt" type="button" role="tab" aria-controls="nav-opt"
-                                            aria-selected="false">Option</button>
+                                            data-bs-target="#nav-opt" type="button" role="tab"
+                                            aria-controls="nav-opt" aria-selected="false">Option</button>
                                     </div>
                                 </nav>
                             </div>
                             <div class="card-body pt-0">
                                 <div class="d-flex flex-wrap">
                                     <div class="input-group width-300 mb-2">
-                                        <input type="text" class="form-control amount" placeholder="Search for a company"
-                                            aria-label="Username" aria-describedby="basic-addon1">
+                                        <input type="text" class="form-control amount"
+                                            placeholder="Search for a company" aria-label="Username"
+                                            aria-describedby="basic-addon1">
                                     </div>
                                     {{-- <select class="default-select p2p-select width-100 mb-2" aria-label="Default"
                                         tabindex="0">
@@ -204,47 +207,78 @@ $user = Auth::user();
                                         aria-labelledby="nav-all-tab">
                                         <div class="tab-content" id="nav-tabContent2">
                                             <div class="tab-pane fade show active" id="nav-order1" role="tabpanel">
-                                                <div class="d-flex align-items-center justify-content-between" style="margin-bottom:20px">
-                                                    <h4 class="card-title">Stocks :  All</h4>
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    style="margin-bottom:20px">
+                                                    <h4 class="card-title">Stocks : All</h4>
                                                 </div>
                                                 <div class="col-xl-12">
                                                     <!-- Row -->
-                                                   <div class="row">
+                                                    <div class="row">
 
-                                                       <?php 
-                                                          $stocks=DB::table('trades')->where('user_id',$user->id)->where('status','processing')->get();
-                                                        //   print_r($stocks);
+                                                        <?php
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->get();
+                                                        // print_r($stocks);
+                                                        $i = 1;
                                                         ?>
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                      
-                                                                           <img src="images/svg/btc1.svg" width=24 alt="">
-                                                                       <div class="ms-1">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Bitcoin  <span>Finance</span></h4></a>
-                                                                           
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">Current : ₹ 65,123</P>
-                                                                           <span class="fs-12">Invest : ₹ 65,123</span>
-                                                                           {{-- <span class="fs-12">Delivery</span> --}}
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">Loss : ₹ 65</P>
-                                                                           <span class="fs-12">Loss % : 10%</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                           
-                                                   </div>	
-                                               </div>
+
+                                                        @foreach ($stocks as $stock)
+                                                            <!-- column -->
+                                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                                <div class="card pull-up"
+                                                                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                    <div
+                                                                        class="card-body align-items-center flex-wrap">
+                                                                        <div class="d-flex align-items-center mb-4">
+
+                                                                            <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                                alt="" width=20
+                                                                                style="border-radius: 20px"
+                                                                                class="avatar">
+                                                                            <div class="ms-1">
+                                                                                <a href="javascript:void(0)">
+                                                                                    <h4 class="card-title mb-0">
+                                                                                        {{ $stock->stock_name }}
+                                                                                        {{-- <span>Finance</span> --}}
+
+                                                                                    </h4>
+                                                                                </a>
+                                                                                <div class="text-end"
+                                                                                    style="position: absolute;top: 10px;right: 14px;">
+                                                                                    <p class="text-muted mb-1 fs-13">
+                                                                                        {{ $stock->action }}</p>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div
+                                                                            class="d-flex align-items-center justify-content-between">
+                                                                            <div>
+                                                                                <p
+                                                                                    class="mb-0 fs-14 text-dark font-w600">
+                                                                                    Current : ₹ 65,123</P>
+                                                                                <span class="fs-12">Invest : ₹
+                                                                                    {{ $stock->price }}</span>
+                                                                                {{-- <span class="fs-12">Delivery</span> --}}
+                                                                            </div>
+                                                                            <div>
+                                                                                <p
+                                                                                    class="mb-0 fs-14 text-success font-w600">
+                                                                                    ₹ 65/10%</P>
+                                                                                <span class="fs-12">Qty :
+                                                                                    {{ $stock->lotSize }}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /column -->
+                                                            <?php $i++; ?>
+                                                        @endforeach
+
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -252,463 +286,598 @@ $user = Auth::user();
                                         aria-labelledby="nav-fut-tab">
                                         <div class="tab-content" id="nav-tabContent3">
                                             <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
-                                                <div class="d-flex align-items-center justify-content-between" style="margin-bottom: 20px">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    style="margin-bottom: 20px">
                                                     <h4 class="card-title">Stocks : Future</h4>
                                                 </div>
-                                              
+
                                                 <div class="col-xl-12">
                                                     <!-- Row -->
-                                                   <div class="row">
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/btc1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Bitcoin</h4></a>
-                                                                           <span>Finance</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/90</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">50%</P>
-                                                                           <span class="fs-12">Ended 12 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                           
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ethereum-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Litecoin</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/lit3.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Etherium</h4></a>
-                                                                           <span>Construction</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$30/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">50%</P>
-                                                                           <span class="fs-12">Ended 25 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/monero.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Monero</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 16 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                       <img src="images/svg/ripple-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Cardano</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/82</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">20%</P>
-                                                                           <span class="fs-12">15 Day Left</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/eth2.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Ardor</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">9 Day Left</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           
-                                                                           <img src="images/svg/lit3.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">OmiGO</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$85/90</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">70%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;"> 
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/monero.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Tether</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 25 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ripple-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Komodo</h4></a>
-                                                                           <span>Devolopment</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 23 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ethereum-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Arc</h4></a>
-                                                                           <span>Technology</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$82/100</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">70%</P>
-                                                                           <span class="fs-12">Ended 27 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/btc1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Quantom</h4></a>
-                                                                           <span>Future</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$75/100</P>
-                                                                           <span class="fs-12">Science</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 25 Oct</span>											
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/dash-pink.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Nem</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ethereum-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Augur</h4></a>
-                                                                           <span>Manufacturing</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$90/100</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">85%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/litecoin-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Atoms</h4></a>
-                                                                           <span>Technology</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/monero.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Startis</h4></a>
-                                                                           <span>Trading</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ltc.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Sango</h4></a>
-                                                                           <span>Curruncy</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$65/100</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">99%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                   </div>	
-                                               </div>
+                                                    <div class="row">
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/btc1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Bitcoin
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Finance</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/90</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                50%</P>
+                                                                            <span class="fs-12">Ended 12 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ethereum-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Litecoin
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/lit3.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Etherium
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Construction</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $30/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                50%</P>
+                                                                            <span class="fs-12">Ended 25 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/monero.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Monero</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 16 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ripple-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Cardano
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/82</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                20%</P>
+                                                                            <span class="fs-12">15 Day Left</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/eth2.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Ardor</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">9 Day Left</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+
+                                                                            <img src="images/svg/lit3.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">OmiGO</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $85/90</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                70%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/monero.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Tether</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 25 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ripple-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Komodo</h4>
+                                                                            </a>
+                                                                            <span>Devolopment</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 23 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ethereum-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Arc</h4>
+                                                                            </a>
+                                                                            <span>Technology</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $82/100</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                70%</P>
+                                                                            <span class="fs-12">Ended 27 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/btc1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Quantom
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Future</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $75/100</P>
+                                                                            <span class="fs-12">Science</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 25 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/dash-pink.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Nem</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ethereum-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Augur</h4>
+                                                                            </a>
+                                                                            <span>Manufacturing</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $90/100</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                85%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/litecoin-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Atoms</h4>
+                                                                            </a>
+                                                                            <span>Technology</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/monero.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Startis
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Trading</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ltc.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Sango</h4>
+                                                                            </a>
+                                                                            <span>Curruncy</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $65/100</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                99%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -716,7 +885,8 @@ $user = Auth::user();
                                         aria-labelledby="nav-opt-tab">
                                         <div class="tab-content" id="nav-tabContent3">
                                             <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
-                                                <div class="d-flex align-items-center justify-content-between" style="margin-bottom: 20px">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    style="margin-bottom: 20px">
                                                     <h4 class="card-title">Stocks : Option</h4>
                                                 </div>
                                                 {{-- <div class="table-responsive dataTabletrade">
@@ -1216,457 +1386,591 @@ $user = Auth::user();
                                                 </div> --}}
                                                 <div class="col-xl-12">
                                                     <!-- Row -->
-                                                   <div class="row">
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/btc1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Bitcoin</h4></a>
-                                                                           <span>Finance</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/90</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">50%</P>
-                                                                           <span class="fs-12">Ended 12 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                           
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ethereum-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Litecoin</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/lit3.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Etherium</h4></a>
-                                                                           <span>Construction</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$30/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">50%</P>
-                                                                           <span class="fs-12">Ended 25 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/monero.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Monero</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 16 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                       <img src="images/svg/ripple-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Cardano</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/82</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">20%</P>
-                                                                           <span class="fs-12">15 Day Left</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/eth2.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Ardor</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">9 Day Left</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           
-                                                                           <img src="images/svg/lit3.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">OmiGO</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$85/90</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">70%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;"> 
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/monero.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Tether</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 25 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ripple-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Komodo</h4></a>
-                                                                           <span>Devolopment</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 23 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ethereum-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Arc</h4></a>
-                                                                           <span>Technology</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$82/100</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">70%</P>
-                                                                           <span class="fs-12">Ended 27 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/btc1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Quantom</h4></a>
-                                                                           <span>Future</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$75/100</P>
-                                                                           <span class="fs-12">Science</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 25 Oct</span>											
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/dash-pink.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Nem</h4></a>
-                                                                           <span>Infrastructure</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100.00</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ethereum-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Augur</h4></a>
-                                                                           <span>Manufacturing</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$90/100</P>
-                                                                           <span class="fs-12">Not Rated</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">85%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/litecoin-1.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Atoms</h4></a>
-                                                                           <span>Technology</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/monero.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Startis</h4></a>
-                                                                           <span>Trading</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$72/100</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">80%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                       
-                                                       <!-- column -->
-                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                           <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                               <div class="card-body align-items-center flex-wrap">
-                                                                   <div class="d-flex align-items-center mb-4">
-                                                                       <a href="javascript:void(0)" class="ico-icon">
-                                                                           <img src="images/svg/ltc.svg" alt="">
-                                                                       </a>
-                                                                       <div class="ms-3">
-                                                                           <a href="javascript:void(0)"><h4 class="card-title mb-0">Sango</h4></a>
-                                                                           <span>Curruncy</span>
-                                                                       </div>
-                                                                   </div>	
-                                                                   <div class="d-flex align-items-center justify-content-between">
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-dark font-w600">$65/100</P>
-                                                                           <span class="fs-12">Neutral</span>
-                                                                       </div>
-                                                                       <div>
-                                                                           <p class="mb-0 fs-14 text-success font-w600">99%</P>
-                                                                           <span class="fs-12">Ended 20 Oct</span>
-                                                                       </div>
-                                                                   </div>
-                                                               </div>	
-                                                           </div>
-                                                       </div>
-                                                       <!-- /column -->
-                                                   </div>	
-                                               </div>
+                                                    <div class="row">
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/btc1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Bitcoin
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Finance</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/90</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                50%</P>
+                                                                            <span class="fs-12">Ended 12 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ethereum-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Litecoin
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/lit3.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Etherium
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Construction</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $30/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                50%</P>
+                                                                            <span class="fs-12">Ended 25 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/monero.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Monero</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 16 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ripple-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Cardano
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/82</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                20%</P>
+                                                                            <span class="fs-12">15 Day Left</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/eth2.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Ardor</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">9 Day Left</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+
+                                                                            <img src="images/svg/lit3.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">OmiGO</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $85/90</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                70%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/monero.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Tether</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 25 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ripple-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Komodo</h4>
+                                                                            </a>
+                                                                            <span>Devolopment</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 23 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ethereum-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Arc</h4>
+                                                                            </a>
+                                                                            <span>Technology</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $82/100</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                70%</P>
+                                                                            <span class="fs-12">Ended 27 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/btc1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Quantom
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Future</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $75/100</P>
+                                                                            <span class="fs-12">Science</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 25 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/dash-pink.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Nem</h4>
+                                                                            </a>
+                                                                            <span>Infrastructure</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100.00</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ethereum-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Augur</h4>
+                                                                            </a>
+                                                                            <span>Manufacturing</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $90/100</P>
+                                                                            <span class="fs-12">Not Rated</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                85%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/litecoin-1.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Atoms</h4>
+                                                                            </a>
+                                                                            <span>Technology</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/monero.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Startis
+                                                                                </h4>
+                                                                            </a>
+                                                                            <span>Trading</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $72/100</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                80%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+
+                                                        <!-- column -->
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+                                                                        <a href="javascript:void(0)" class="ico-icon">
+                                                                            <img src="images/svg/ltc.svg"
+                                                                                alt="">
+                                                                        </a>
+                                                                        <div class="ms-3">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0">Sango</h4>
+                                                                            </a>
+                                                                            <span>Curruncy</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                $65/100</P>
+                                                                            <span class="fs-12">Neutral</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                99%</P>
+                                                                            <span class="fs-12">Ended 20 Oct</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
