@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -52,7 +52,52 @@
     <!-- Datatable -->
     <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
+   <style>
+     .trade-container {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        /* Remove padding from container */
+        margin: 0;
+    }
 
+    .trade-item {
+        padding: 5px 10px;
+        /* Padding inside each trade item */
+        border-bottom: 1px solid #ddd;
+        /* Add a bottom border for separation */
+        font-size: 16px;
+        /* Adjust font size */
+        color: #333;
+        /* Set a nice text color */
+        background-color: #f9f9f9;
+        /* Optional: Add background color */
+        transition: background-color 0.3s;
+        /* Add a smooth transition effect */
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .trade-item h2 {
+        margin: 0;
+        /* Remove margin for the heading */
+        /* color: #565656; */
+        font-family: serif;
+        font-weight: 600;
+    }
+
+    .trade-item:last-child {
+        border-bottom: none;
+        /* Remove the border for the last item */
+    }
+
+    .trade-item:hover {
+        background-color: #e9ecef;
+        /* Add hover effect for better interactivity */
+        cursor: pointer;
+        /* Pointer cursor for better UX */
+    }
+   </style>
 </head>
 
 <body>
@@ -126,7 +171,7 @@
                                                 <p class="mb-0 fs-13 ">4%(30 days)</p>
                                             </div>
                                         </div>
-                                        {{-- <img src="images/svg/bitcoin-1.svg" alt="">	 --}}
+                                        {{-- <img src="images/svg/bitcoin-1.svg" alt=""> --}}
                                     </div>
                                     <div class="card-body col-xl-12 p-0" style="z-index: 1;">
                                         <div
@@ -154,14 +199,14 @@
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
                                         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab"
-                                            aria-controls="nav-all" aria-selected="true">All</button>
+                                            data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all"
+                                            aria-selected="true">All</button>
                                         <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-fut" type="button" role="tab"
-                                            aria-controls="nav-fut" aria-selected="false">Future</button>
+                                            data-bs-target="#nav-fut" type="button" role="tab" aria-controls="nav-fut"
+                                            aria-selected="false">Future</button>
                                         <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-opt" type="button" role="tab"
-                                            aria-controls="nav-opt" aria-selected="false">Option</button>
+                                            data-bs-target="#nav-opt" type="button" role="tab" aria-controls="nav-opt"
+                                            aria-selected="false">Option</button>
                                     </div>
                                 </nav>
                             </div>
@@ -226,73 +271,136 @@
 
 
                                                         ?>
-                                                            <!-- column -->
-                                                            <p style="display: none" id="isin1{{ $i }}">{{ $foisin }}</p>
-                                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                                <div class="card pull-up"
-                                                                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                                    <div
-                                                                        class="card-body align-items-center flex-wrap">
-                                                                        <div class="d-flex align-items-center mb-4">
 
-                                                                            <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                                alt="" width=25
-                                                                                style="border-radius: 100%">
-                                                                            <div class="ms-1">
-                                                                                <a href="javascript:void(0)">
-                                                                                    <h4 class="card-title mb-0"
-                                                                                        style="font-size:1rem">
-                                                                                        {{ $stock->stock_name }}
-                                                                                        {{-- <span>Finance</span> --}}
-
-                                                                                    </h4>
-                                                                                </a>
-                                                                                <div class="text-end"
-                                                                                    style="position: absolute;top: 10px;right: 14px;">
-                                                                                    @if ($stock->action == 'BUY')
-                                                                                        <span
-                                                                                            class="badge badge-success">
-                                                                                            {{ $stock->action }}</span>
-                                                                                    @else
-                                                                                        <span
-                                                                                            class="badge badge-danger">
-                                                                                            {{ $stock->action }}</span>
-                                                                                    @endif
-                                                                                    {{-- <p class="text-muted mb-1 fs-13">
-                                                                                        {{ $stock->action }}</p> --}}
+                                                          <!--Top up Modal start-->
+                                                        <div class="modal fade" id="exampleModalCenter1{{ $i }}">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header" style="padding-right: 1.875rem;padding-left: 10px;">
+                                                                        <h2 class="modal-title">{{ $stock->stock_name }} </h2>
+                                                                        <button type="button" data-bs-dismiss="modal" style="border: none">
+                                                                            <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                                                width="20" alt="">
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body p-0">
+                                                                        <div class="trade-container">
+                                                                            <div data-bs-dismiss="modal" 
+                                                                                class="trade-item">
+                                                                                <h2>Exit Position</h2>
+                                                                                <div class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)" id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
                                                                                 </div>
-
+                                                                            </div>
+                                                                            
+                                                                            <div class="trade-item" data-bs-dismiss="modal">
+                                                                                <h2>Details</h2>
+                                                                                <div class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)" id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="trade-item" 
+                                                                                data-bs-dismiss="modal">
+                                                                                <h2>Remove</h2>
+                                                                                <div class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)" id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div
-                                                                            class="d-flex align-items-center justify-content-between">
-                                                                            <div>
-                                                                                <p
-                                                                                    class="mb-0 fs-14 text-dark font-w600">
-                                                                                    Current : ₹ 65,123</P>
-                                                                                <span class="fs-12">Invest : ₹
-                                                                                    {{ $stock->price }}</span>
-                                                                                {{-- <span class="fs-12">Delivery</span> --}}
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-danger light"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Top up Modal end-->
+                                                        <!-- column -->
+                                                        <p style="display: none" id="isin1{{ $i }}">{{ $foisin }}</p>
+                                                        <p style="display: none" id="invest1{{ $i }}">{{ $stock->price
+                                                            }}</p>
+                                                        <p style="display: none" id="quantity1{{ $i }}">{{
+                                                            $stock->lotSize }}</p>
+
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModalCenter1{{ $i }}">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=25 style="border-radius: 100%">
+                                                                        <div class="ms-1">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem">
+                                                                                    {{ $stock->stock_name }}
+
+
+                                                                                </h4>
+                                                                                <span
+                                                                                    id="stockChange1{{ $i }}">Finance</span>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+                                                                                @if ($stock->action == 'BUY')
+                                                                                <span class="badge badge-success">
+                                                                                    {{ $stock->action }}</span>
+                                                                                @else
+                                                                                <span class="badge badge-danger">
+                                                                                    {{ $stock->action }}</span>
+                                                                                @endif
+                                                                                {{-- <p class="text-muted mb-1 fs-13">
+                                                                                    {{ $stock->action }}</p> --}}
                                                                             </div>
-                                                                            <div>
-                                                                                <p
-                                                                                    class="mb-0 fs-14 text-success font-w600">
-                                                                                    ₹ 65/10%</P>
-                                                                                <span class="fs-12">Qty :
-                                                                                    {{ $stock->lotSize }}
-                                                                                </span>
-                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p id="price1{{ $i }}"
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Current : ₹ 65,123</P>
+                                                                            <span class="fs-12">Invest : ₹
+                                                                                {{ $stock->price }}</span>
+                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                                            --}}
+                                                                        </div>
+                                                                        <div>
+                                                                            {{-- <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                ₹ 65/10%</P> --}}
+                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                                id="change1{{ $i }}">Loading...
+                                                                            </p>
+                                                                            <span class="fs-12">Qty :
+                                                                                {{ $stock->lotSize }}
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- /column -->
-                                                            <?php 
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
                                                             $i++; 
                                                         }
                                                             
                                                             ?>
-                                                     
+
 
 
                                                     </div>
@@ -313,7 +421,7 @@
                                                     <!-- Row -->
                                                     <div class="row">
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','FUT')->where('status', 'processing')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                
@@ -323,75 +431,80 @@
 
 
                                                         ?>
-                                                            <!-- column -->
-                                                            <p style="display: none" id="isin2{{ $i }}">{{ $foisin }}</p>
-                                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                                <div class="card pull-up"
-                                                                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                                    <div
-                                                                        class="card-body align-items-center flex-wrap">
-                                                                        <div class="d-flex align-items-center mb-4">
+                                                        <!-- column -->
+                                                        <p style="display: none" id="isin2{{ $i }}">{{ $foisin }}</p>
+                                                        <p style="display: none" id="invest2{{ $i }}">{{ $stock->price
+                                                            }}</p>
+                                                        <p style="display: none" id="quantity2{{ $i }}">{{
+                                                            $stock->lotSize }}</p>
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
 
-                                                                            <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                                alt="" width=25
-                                                                                style="border-radius: 100%">
-                                                                            <div class="ms-1">
-                                                                                <a href="javascript:void(0)">
-                                                                                    <h4 class="card-title mb-0"
-                                                                                        style="font-size:1rem">
-                                                                                        {{ $stock->stock_name }}
-                                                                                        {{-- <span>Finance</span> --}}
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=25 style="border-radius: 100%">
+                                                                        <div class="ms-1">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem">
+                                                                                    {{ $stock->stock_name }}
+                                                                                    <span
+                                                                                        id="stockChange2{{ $i }}">Finance</span>
 
-                                                                                    </h4>
-                                                                                </a>
-                                                                                <div class="text-end"
-                                                                                    style="position: absolute;top: 10px;right: 14px;">
-                                                                                    @if ($stock->action == 'BUY')
-                                                                                        <span
-                                                                                            class="badge badge-success">
-                                                                                            {{ $stock->action }}</span>
-                                                                                    @else
-                                                                                        <span
-                                                                                            class="badge badge-danger">
-                                                                                            {{ $stock->action }}</span>
-                                                                                    @endif
-                                                                                    {{-- <p class="text-muted mb-1 fs-13">
-                                                                                        {{ $stock->action }}</p> --}}
-                                                                                </div>
-
+                                                                                </h4>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+                                                                                @if ($stock->action == 'BUY')
+                                                                                <span class="badge badge-success">
+                                                                                    {{ $stock->action }}</span>
+                                                                                @else
+                                                                                <span class="badge badge-danger">
+                                                                                    {{ $stock->action }}</span>
+                                                                                @endif
+                                                                                {{-- <p class="text-muted mb-1 fs-13">
+                                                                                    {{ $stock->action }}</p> --}}
                                                                             </div>
+
                                                                         </div>
-                                                                        <div
-                                                                            class="d-flex align-items-center justify-content-between">
-                                                                            <div>
-                                                                                <p
-                                                                                    class="mb-0 fs-14 text-dark font-w600">
-                                                                                    Current : ₹ 65,123</P>
-                                                                                <span class="fs-12">Invest : ₹
-                                                                                    {{ $stock->price }}</span>
-                                                                                {{-- <span class="fs-12">Delivery</span> --}}
-                                                                            </div>
-                                                                            <div>
-                                                                                <p
-                                                                                    class="mb-0 fs-14 text-success font-w600">
-                                                                                    ₹ 65/10%</P>
-                                                                                <span class="fs-12">Qty :
-                                                                                    {{ $stock->lotSize }}
-                                                                                </span>
-                                                                            </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p id="price2{{ $i }}"
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Current : ₹ 65,123</P>
+                                                                            <span class="fs-12">Invest : ₹
+                                                                                {{ $stock->price }}</span>
+                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                                            --}}
+                                                                        </div>
+                                                                        <div>
+                                                                            {{-- <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                ₹ 65/10%</P> --}}
+                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                                id="change2{{ $i }}">Loading...
+                                                                            </p>
+                                                                            <span class="fs-12">Qty :
+                                                                                {{ $stock->lotSize }}
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- /column -->
-                                                            <?php 
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
                                                             $i++; 
                                                         }
                                                             
                                                             ?>
-                                                     
 
-                                                   
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -405,92 +518,98 @@
                                                     style="margin-bottom: 20px">
                                                     <h4 class="card-title">Stocks : Option</h4>
                                                 </div>
-                                              
+
                                                 <div class="col-xl-12">
                                                     <!-- Row -->
                                                     <div class="row">
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','OPT')->where('status', 'processing')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                
 
                                                         foreach ($stocks as $stock){
                                                             $foisin = $stock->instrumentKey;
+                                                            // $price=$stock->price;
 
 
                                                         ?>
-                                                            <!-- column -->
-                                                            <p style="display: none" id="isin3{{ $i }}">{{ $foisin }}</p>
-                                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                                <div class="card pull-up"
-                                                                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                                    <div
-                                                                        class="card-body align-items-center flex-wrap">
-                                                                        <div class="d-flex align-items-center mb-4">
+                                                        <!-- column -->
+                                                        <p style="display: none" id="isin3{{ $i }}">{{ $foisin }}</p>
+                                                        <p style="display: none" id="invest3{{ $i }}">{{ $stock->price
+                                                            }}</p>
+                                                        <p style="display: none" id="quantity3{{ $i }}">{{
+                                                            $stock->lotSize }}</p>
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
 
-                                                                            <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                                alt="" width=25
-                                                                                style="border-radius: 100%">
-                                                                            <div class="ms-1">
-                                                                                <a href="javascript:void(0)">
-                                                                                    <h4 class="card-title mb-0"
-                                                                                        style="font-size:1rem">
-                                                                                        {{ $stock->stock_name }}
-                                                                                        {{-- <span>Finance</span> --}}
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=25 style="border-radius: 100%">
+                                                                        <div class="ms-1">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem">
+                                                                                    {{ $stock->stock_name }}
+                                                                                    <span
+                                                                                        id="stockChange3{{ $i }}">Finance</span>
 
-                                                                                    </h4>
-                                                                                </a>
-                                                                                <div class="text-end"
-                                                                                    style="position: absolute;top: 10px;right: 14px;">
-                                                                                    @if ($stock->action == 'BUY')
-                                                                                        <span
-                                                                                            class="badge badge-success">
-                                                                                            {{ $stock->action }}</span>
-                                                                                    @else
-                                                                                        <span
-                                                                                            class="badge badge-danger">
-                                                                                            {{ $stock->action }}</span>
-                                                                                    @endif
-                                                                                    {{-- <p class="text-muted mb-1 fs-13">
-                                                                                        {{ $stock->action }}</p> --}}
-                                                                                </div>
-
+                                                                                </h4>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+                                                                                @if ($stock->action == 'BUY')
+                                                                                <span class="badge badge-success">
+                                                                                    {{ $stock->action }}</span>
+                                                                                @else
+                                                                                <span class="badge badge-danger">
+                                                                                    {{ $stock->action }}</span>
+                                                                                @endif
+                                                                                {{-- <p class="text-muted mb-1 fs-13">
+                                                                                    {{ $stock->action }}</p> --}}
                                                                             </div>
+
                                                                         </div>
-                                                                        <div
-                                                                            class="d-flex align-items-center justify-content-between">
-                                                                            <div>
-                                                                                <p
-                                                                                    class="mb-0 fs-14 text-dark font-w600">
-                                                                                    Current : ₹ 65,123</P>
-                                                                                <span class="fs-12">Invest : ₹
-                                                                                    {{ $stock->price }}</span>
-                                                                                {{-- <span class="fs-12">Delivery</span> --}}
-                                                                            </div>
-                                                                            <div>
-                                                                                <p
-                                                                                    class="mb-0 fs-14 text-success font-w600">
-                                                                                    ₹ 65/10%</P>
-                                                                                <span class="fs-12">Qty :
-                                                                                    {{ $stock->lotSize }}
-                                                                                </span>
-                                                                            </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p id="price3{{ $i }}"
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Current : ₹ 65,123</P>
+                                                                            <span class="fs-12">Invest : ₹
+                                                                                {{ $stock->price }}</span>
+                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                                            --}}
+                                                                        </div>
+                                                                        <div>
+                                                                            {{-- <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                ₹ 65/10%</P> --}}
+                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                                id="change3{{ $i }}">Loading...
+                                                                            </p>
+                                                                            <span class="fs-12">Qty :
+                                                                                {{ $stock->lotSize }}
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- /column -->
-                                                            <?php 
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
                                                             $i++; 
                                                         }
                                                             
                                                             ?>
-                                                     
 
-                                                       
 
-                                                       
+
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -543,9 +662,9 @@
 
     <!-- Event trigger for the modal -->
     <script>
-        Echo.channel('watchlists')
-            .listen('Watchlist', (event) => {
-                const feeds = event.watchlist.feeds;
+        Echo.channel('trades')
+            .listen('Trade', (event) => {
+                const feeds = event.trade.feeds;
 
                 console.log(feeds);
                 
@@ -556,173 +675,156 @@
                         const feedData = feeds[key].ff.marketFF; // Data from WebSocket
                         const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
 
+                        console.log("receivedIsin",receivedIsin);
+                        
+
                         // console.log(feedData);
+                        // console.log(document.querySelectorAll("p[id^='isin1']"));
 
                         // Find the <p> tag containing the matching ISIN
-                        const allElement = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el
-                            .textContent === receivedIsin);
+                        const allElement = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el.textContent.trim() === receivedIsin.trim());
+                  
+
+                            console.log("allElement",allElement);
                         const futureElement = Array.from(document.querySelectorAll("p[id^='isin2']")).find(el => el
                             .textContent === receivedIsin);
-                        const optionElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el => el
-                            .textContent === receivedIsin);
+                            console.log("futureElement",futureElement); 
+                            
+                            const optionElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el => 
+    el.textContent.trim() === receivedIsin.trim()
+);
+                            console.log("optionElement",optionElement);
                         
                         if (allElement) {
+                            // console.log("allElement",allElement.id);
                             // Extract the numeric part from the id, e.g., "isin1" → "1"
-                            const rowId = allElement.id.replace('isin1', '');
+                            const rowId = allElement.id.replace('isin1','');
 
-                            console.log(rowId,"1",rowId);
-                            
+                            // console.log("rowId1",rowId);
 
-                            // const ltp = feedData?.ltpc?.ltp || 1; // Default to 1 to avoid division by zero
-                            // const cp = feedData?.ltpc?.cp || 0;
+                            const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
+                            const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
+                            const invest = parseFloat(document.getElementById(`invest1${rowId}`).textContent) || 0; // Investment amount
+                            const quantity = parseFloat(document.getElementById(`quantity1${rowId}`).textContent) || 0; // Quantity
 
-                            // Update the table cells using the extracted rowId
-                            // document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`high1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
-                            //     '0';
-                            // document.getElementById(`low1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low ||
-                            // '0';
-                            // document.getElementById(`open1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open ||
-                            //     '0';
-                            // document.getElementById(`close1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close ||
-                            //     '0';
-                            // // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
-                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-                            // const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            // const percentageIcon = percentageChange > 0 ?
-                            //     'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                            //     'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                            // document.getElementById(`ch1${rowId}`).innerHTML = `
-                            //     <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
-                            //         <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
-                            //     </span>`;
+                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc.ltp || '0');
+                         
+                            const badgeValue = (price - cp).toFixed(2) || '0';
+                            const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
 
-                            // // badge
-                            // const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
-                            // const badgeIcon = (ltp - cp) > 0 ?
-                            //     'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                            //     'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                            // const badgeValue = (ltp - cp).toFixed(2) || '0';
-                            // document.getElementById(`badge1${rowId}`).innerHTML = `
-                            //     <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
-                            //         <img src="${badgeIcon}" width="12" class="blink" /> ${badgeValue}
-                            //     </span>`;
+                            const profitAndLoss = ((price - invest) * quantity).toFixed(2); 
+                            const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
 
-                            // // bid and ask
-                            // document.getElementById(`bid1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                            //     .bidQ || '0';
-                            // document.getElementById(`ask1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                            //     .askQ || '0';
+                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
+                            const percentageIcon = percentageChange > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                           
+
+                            // class bage for profit an dloss
+                            const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
+                            const profitAndLossIcon = profitAndLoss > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
+                            document.getElementById(`stockChange1${rowId}`).innerHTML = `
+                                        ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
-                            // Optionally update the badge color or value
-                            // const badgeElement = document.getElementById(`badge${rowId}`);
-                            // if (badgeElement) {
-                            //     const badgeClass = parseFloat(feedData.ch || 0) > 0 ? 'badge-success' : 'badge-danger';
-                            //     badgeElement.innerHTML = `
-                        //         <span class="badge light ${badgeClass}">
-                        //             <i class="fa fa-circle text-${badgeClass === 'badge-success' ? 'success' : 'danger'} me-1"></i>
-                        //             ${feedData.ch || '0'}
-                        //         </span>`;
-                            // }
+
+                            document.getElementById(`change1${rowId}`).innerHTML = `
+                            ${profitAndLoss > 0 
+                                ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
+                                : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
+
                         } else if (futureElement) {
 
-                            const rowId = futureElement.id.replace('isin2', '');
+                            const rowId = futureElement.id.replace('isin2','');
 
-                            console.log(rowId,"2",rowId);
+                            console.log("rowId2",rowId);
+
+                            const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
+                            const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
+                            const invest = parseFloat(document.getElementById(`invest2${rowId}`).textContent) || 0; // Investment amount
+                            const quantity = parseFloat(document.getElementById(`quantity2${rowId}`).textContent) || 0; // Quantity
+
+                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc.ltp || '0');
+
+                            const badgeValue = (price - cp).toFixed(2) || '0';
+                            const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
+
+                            const profitAndLoss = ((price - invest) * quantity).toFixed(2); 
+                            const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
+
+                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
+                            const percentageIcon = percentageChange > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+
+
+                            // class bage for profit an dloss
+                            const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
+                            const profitAndLossIcon = profitAndLoss > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+
+
+                                document.getElementById(`stockChange2${rowId}`).innerHTML = `
+                                        ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
+
+
+                            document.getElementById(`change2${rowId}`).innerHTML = `
+                            ${profitAndLoss > 0 
+                                ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
+                                : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
                             
 
-                            // const ltp = feedData?.ltpc?.ltp || 1; // Default to 1 to avoid division by zero
-                            // const cp = feedData?.ltpc?.cp || 0;
-
-                            // // Update the table cells using the extracted rowId
-                            // document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            // // document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`high2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
-                            //     '0';
-                            // document.getElementById(`low2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low ||
-                            // '0';
-                            // document.getElementById(`open2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open ||
-                            //     '0';
-                            // document.getElementById(`close2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close ||
-                            //     '0';
-                            // // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
-                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-                            // const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            // const percentageIcon = percentageChange > 0 ?
-                            //     'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                            //     'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                            // document.getElementById(`ch2${rowId}`).innerHTML = `
-                            //     <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
-                            //         <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
-                            //     </span>`;
-
-                            // // badge
-                            // const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
-                            // const badgeIcon = (ltp - cp) > 0 ?
-                            //     'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                            //     'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                            // const badgeValue = (ltp - cp).toFixed(2) || '0';
-                            // document.getElementById(`badge2${rowId}`).innerHTML = `
-                            //     <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
-                            //         <img src="${badgeIcon}" width="12" class="blink" /> ${badgeValue}
-                            //     </span>`;
-
-                            // // bid and ask
-                            // document.getElementById(`bid2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                            //     .bidQ || '0';
-                            // document.getElementById(`ask2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                            //     .askQ || '0';
-
+                           
                         } else if (optionElement) {
                             const rowId = optionElement.id.replace('isin3', '');
 
-                            console.log(rowId,"3",rowId);
+                            console.log("rowId3",rowId);
                             
+                            const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
+                            const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
+                            const invest = parseFloat(document.getElementById(`invest3${rowId}`).textContent) || 0; // Investment amount
+                            const quantity = parseFloat(document.getElementById(`quantity3${rowId}`).textContent) || 0; // Quantity
 
-                            // const ltp = feedData?.ltpc?.ltp || 1; // Default to 1 to avoid division by zero
-                            // const cp = feedData?.ltpc?.cp || 0;
+                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc.ltp || '0');
+                         
+                            const badgeValue = (price - cp).toFixed(2) || '0';
+                            const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
 
-                            // // Update the table cells using the extracted rowId
-                            // document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            // // document.getElementById(`realprice3${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`high3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
-                            //     '0';
-                            // document.getElementById(`low3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].low ||
-                            // '0';
-                            // document.getElementById(`open3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open ||
-                            //     '0';
-                            // document.getElementById(`close3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].close ||
-                            //     '0';
-                            // // document.getElementById(`ch${rowId}`).textContent = percentageChange || '0';
-                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-                            // const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            // const percentageIcon = percentageChange > 0 ?
-                            //     'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                            //     'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                            // document.getElementById(`ch3${rowId}`).innerHTML = `
-                            //     <span style="display: inline;margin: auto;" class="badge light ${percentageClass}">
-                            //         <img src="${percentageIcon}" width="12" class="blink"/> ${percentageChange}
-                            //     </span>`;
+                            const profitAndLoss = ((price - invest) * quantity).toFixed(2); 
+                            const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
 
-                            // // badge
-                            // const badgeClass = (ltp - cp) > 0 ? 'badge-success' : 'badge-danger';
-                            // const badgeIcon = (ltp - cp) > 0 ?
-                            //     'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                            //     'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                            // const badgeValue = (ltp - cp).toFixed(2) || '0';
-                            // document.getElementById(`badge3${rowId}`).innerHTML = `
-                            //     <span style="display: inline;margin: auto;" class="badge light ${badgeClass}">
-                            //         <img src="${badgeIcon}" width="12" class="blink" /> ${badgeValue}
-                            //     </span>`;
+                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
+                            const percentageIcon = percentageChange > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                           
 
-                            // // bid and ask
-                            // document.getElementById(`bid3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                            //     .bidQ || '0';
-                            // document.getElementById(`ask3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                            //     .askQ || '0';
+                            // class bage for profit an dloss
+                            const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
+                            const profitAndLossIcon = profitAndLoss > 0 ?
+                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+
+
+                            document.getElementById(`stockChange3${rowId}`).innerHTML = `
+                                        ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
+
+
+                            document.getElementById(`change3${rowId}`).innerHTML = `
+                            ${profitAndLoss > 0 
+                                ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
+                                : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
                         }
                     }
                 }
