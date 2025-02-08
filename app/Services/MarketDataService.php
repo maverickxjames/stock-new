@@ -39,7 +39,8 @@ class MarketDataService
         return $apiInstance->getMarketDataFeedAuthorize($apiVersion);
     }
 
-    public function connectWebSocket(){
+    public function connectWebSocket()
+    {
         $apiVersion = '2.0';
         $accessToken = env('UPSTOX_ACCESS_TOKEN');
 
@@ -70,16 +71,16 @@ class MarketDataService
         echo "Connection successful!\n";
 
         $nsefo = DB::table('watchlist')
-        ->select('instrumentKey') // Select only the 'exchangeToken' column
-        ->distinct()              // Ensure the results are distinct
-        ->get();                  // Retrieve the data
+            ->select('instrumentKey') // Select only the 'exchangeToken' column
+            ->distinct()              // Ensure the results are distinct
+            ->get();                  // Retrieve the data
 
-    // Convert the collection to an array of 'exchangeToken' values
-    $tokens = $nsefo->pluck('instrumentKey')->toArray();
+        // Convert the collection to an array of 'exchangeToken' values
+        $tokens = $nsefo->pluck('instrumentKey')->toArray();
 
 
-    // Prepare the final array
-    $finalArray = ["instrumentKeys" => $tokens];
+        // Prepare the final array
+        $finalArray = ["instrumentKeys" => $tokens];
 
         $data = [
             "guid" => "someguid",
@@ -113,6 +114,5 @@ class MarketDataService
                 broadcast(new \App\Events\Watchlist($data2))->toOthers();
             }
         }
-
     }
 }
