@@ -234,4 +234,11 @@ class TradeController extends Controller
             return response()->json(['status'=>'error','message'=>'Stock not found']);
         }
     }
+
+    public function tradeDetails(Request $r)
+    {
+        $tradeId = $r->tradeId;
+        $trade = DB::table('trades')->where('id', $tradeId)->get();
+        return view('tradeDetail', ['trade' => $trade]);
+    }
 }

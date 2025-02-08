@@ -1003,7 +1003,154 @@ $user = Auth::user();
     </div>
 
 
+  <script>
 
+
+    
+           // Trade Start
+            
+            // buy form
+            $(document).on('submit', '[id^="buyform"]', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            console.log(form.serialize());
+            var url = form.attr('action');
+            var type = form.attr('method');
+
+            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+            console.log(formData);
+
+            
+            const id=formData.id;
+         
+
+            let data={
+                instrumentKey:formData[`instrumentKey1${id}`],
+                 orderType:formData[`orderType1${id}`],
+                // quantity:formData[`quantity1${id}`],
+                price:formData[`realprice1${id}`],
+                limitPrice:formData[`limitprice1${id}`],
+                lotSize:formData[`lotSize1${id}`],
+                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
+                tradeType:formData[`tradeMode1${id}`],
+                _token:formData._token,
+                // id:formData.id,
+            }
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                success: function(response) {
+                    response = JSON.parse(response);
+                    console.log(response);
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'An error occurred.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while placing the order.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                    console.error(xhr.responseJSON);
+                }
+            });
+
+
+
+        });
+
+
+        // sell form
+        $(document).on('submit', '[id^="sellform"]', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            console.log(form.serialize());
+            var url = form.attr('action');
+            var type = form.attr('method');
+
+            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+            console.log(formData);
+
+            
+            const id=formData.id2;
+         
+
+            let data={
+                instrumentKey:formData[`instrumentKey2${id}`],
+                 orderType:formData[`orderType2${id}`],
+                // quantity:formData[`quantity1${id}`],
+                price:formData[`realprice2${id}`],
+                limitPrice:formData[`limitprice2${id}`],
+                lotSize:formData[`lotSize2${id}`],
+                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
+                tradeType:formData[`tradeMode2${id}`],
+                _token:formData._token,
+                // id:formData.id,
+            }
+
+            console.log(data);
+            
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                success: function(response) {
+                    response = JSON.parse(response);
+                    console.log(response);
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'An error occurred.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while placing the order.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                    console.error(xhr.responseJSON);
+                }
+            });
+
+        });
+        // Trade End 
+
+  </script>
 
 
 
@@ -1288,6 +1435,8 @@ $user = Auth::user();
 
             // You can add additional logic for other segments (nseopt, mcxfut) here if needed
         }
+
+
 
         function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
 
@@ -1648,6 +1797,112 @@ $user = Auth::user();
         }
     </script>
 
+<script>
+    // Initialize chart
+    const chartContainer = document.getElementById("chart");
+    const chart = LightweightCharts.createChart(chartContainer, {
+        layout: {
+            backgroundColor: "#ffffff",
+            textColor: "#333"
+        },
+        grid: {
+            vertLines: {
+                color: "#e1e1e1"
+            },
+            horzLines: {
+                color: "#e1e1e1"
+            }
+        },
+        priceScale: {
+            borderColor: "#cccccc"
+        },
+        timeScale: {
+            borderColor: "#cccccc"
+        },
+    });
+
+    // Add candlestick series
+    const candleSeries = chart.addCandlestickSeries({
+        upColor: "#4caf50",
+        downColor: "#f44336",
+        borderUpColor: "#4caf50",
+        borderDownColor: "#f44336",
+        wickUpColor: "#4caf50",
+        wickDownColor: "#f44336",
+    });
+
+
+
+    // Format data function
+    function formatData(data) {
+        return data.map(([timestamp, open, high, low, close]) => ({
+            time: Math.floor(timestamp / 1000),
+            open,
+            high,
+            low,
+            close,
+        }));
+    }
+
+    // Fetch data
+    async function fetchData(isin, model) {
+
+        var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
+        offcanvas.show();
+
+        try {
+
+            // Show a loading popup
+            Swal.fire({
+                title: 'Loading',
+                text: 'Fetching stock data...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            const response = await fetch("/fetch-stock-data/" + isin);
+            if (!response.ok) throw new Error("Network response was not ok");
+
+            const rawData = await response.json();
+            const formattedData = formatData(rawData);
+
+            if (formattedData.length === 0) throw new Error("No valid data available");
+
+            Swal.close();
+
+
+            candleSeries.setData(formattedData);
+        } catch (error) {
+
+            Swal.close();
+
+            // Show an error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || "Something went wrong!",
+            });
+            console.error("Error fetching or setting data:", error);
+            // Fallback data
+            candleSeries.setData(formatData([
+                [1696155600000, 25788.45, 25907.6, 25788.05, 25861.3],
+                [1696155660000, 25861.3, 25873, 25822.35, 25824.05],
+                [1696155720000, 25824.6, 25831.8, 25743.45, 25759.35],
+            ]));
+        }
+    }
+
+    function setTimeFrame(timeFrame) {
+        fetchData(); // This function should ideally use `timeFrame` to adjust the API call
+    }
+
+
+
+
+</script>
+
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
@@ -1672,254 +1927,7 @@ $user = Auth::user();
     <script src="js/styleSwitcher.js"></script>
 
 
-    <script>
-        // Initialize chart
-        const chartContainer = document.getElementById("chart");
-        const chart = LightweightCharts.createChart(chartContainer, {
-            layout: {
-                backgroundColor: "#ffffff",
-                textColor: "#333"
-            },
-            grid: {
-                vertLines: {
-                    color: "#e1e1e1"
-                },
-                horzLines: {
-                    color: "#e1e1e1"
-                }
-            },
-            priceScale: {
-                borderColor: "#cccccc"
-            },
-            timeScale: {
-                borderColor: "#cccccc"
-            },
-        });
-
-        // Add candlestick series
-        const candleSeries = chart.addCandlestickSeries({
-            upColor: "#4caf50",
-            downColor: "#f44336",
-            borderUpColor: "#4caf50",
-            borderDownColor: "#f44336",
-            wickUpColor: "#4caf50",
-            wickDownColor: "#f44336",
-        });
-
-
-
-        // Format data function
-        function formatData(data) {
-            return data.map(([timestamp, open, high, low, close]) => ({
-                time: Math.floor(timestamp / 1000),
-                open,
-                high,
-                low,
-                close,
-            }));
-        }
-
-        // Fetch data
-        async function fetchData(isin, model) {
-
-            var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
-            offcanvas.show();
-
-            try {
-
-                // Show a loading popup
-                Swal.fire({
-                    title: 'Loading',
-                    text: 'Fetching stock data...',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    },
-                });
-
-                const response = await fetch("/fetch-stock-data/" + isin);
-                if (!response.ok) throw new Error("Network response was not ok");
-
-                const rawData = await response.json();
-                const formattedData = formatData(rawData);
-
-                if (formattedData.length === 0) throw new Error("No valid data available");
-
-                Swal.close();
-
-
-                candleSeries.setData(formattedData);
-            } catch (error) {
-
-                Swal.close();
-
-                // Show an error message
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.message || "Something went wrong!",
-                });
-                console.error("Error fetching or setting data:", error);
-                // Fallback data
-                candleSeries.setData(formatData([
-                    [1696155600000, 25788.45, 25907.6, 25788.05, 25861.3],
-                    [1696155660000, 25861.3, 25873, 25822.35, 25824.05],
-                    [1696155720000, 25824.6, 25831.8, 25743.45, 25759.35],
-                ]));
-            }
-        }
-
-        function setTimeFrame(timeFrame) {
-            fetchData(); // This function should ideally use `timeFrame` to adjust the API call
-        }
-
-
-
-           // Trade Start
-            
-            // buy form
-            $(document).on('submit', '[id^="buyform"]', function (e) {
-            e.preventDefault();
-            var form = $(this);
-            console.log(form.serialize());
-            var url = form.attr('action');
-            var type = form.attr('method');
-
-            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
-            console.log(formData);
-
-            
-            const id=formData.id;
-         
-
-            let data={
-                instrumentKey:formData[`instrumentKey1${id}`],
-                 orderType:formData[`orderType1${id}`],
-                // quantity:formData[`quantity1${id}`],
-                price:formData[`realprice1${id}`],
-                limitPrice:formData[`limitprice1${id}`],
-                lotSize:formData[`lotSize1${id}`],
-                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
-                tradeType:formData[`tradeMode1${id}`],
-                _token:formData._token,
-                // id:formData.id,
-            }
-
-            $.ajax({
-                url: url,
-                type: type,
-                data: data,
-                success: function(response) {
-                    response = JSON.parse(response);
-                    console.log(response);
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.message || 'An error occurred.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON?.message ||
-                            'An error occurred while placing the order.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    });
-                    console.error(xhr.responseJSON);
-                }
-            });
-
-
-
-        });
-
-
-        // sell form
-        $(document).on('submit', '[id^="sellform"]', function (e) {
-            e.preventDefault();
-            var form = $(this);
-            console.log(form.serialize());
-            var url = form.attr('action');
-            var type = form.attr('method');
-
-            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
-            console.log(formData);
-
-            
-            const id=formData.id2;
-         
-
-            let data={
-                instrumentKey:formData[`instrumentKey2${id}`],
-                 orderType:formData[`orderType2${id}`],
-                // quantity:formData[`quantity1${id}`],
-                price:formData[`realprice2${id}`],
-                limitPrice:formData[`limitprice2${id}`],
-                lotSize:formData[`lotSize2${id}`],
-                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
-                tradeType:formData[`tradeMode2${id}`],
-                _token:formData._token,
-                // id:formData.id,
-            }
-
-            console.log(data);
-            
-
-            $.ajax({
-                url: url,
-                type: type,
-                data: data,
-                success: function(response) {
-                    response = JSON.parse(response);
-                    console.log(response);
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.message || 'An error occurred.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON?.message ||
-                            'An error occurred while placing the order.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    });
-                    console.error(xhr.responseJSON);
-                }
-            });
-
-        });
-        // Trade End 
-
-
-    </script>
+   
 
 
 

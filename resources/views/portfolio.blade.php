@@ -328,10 +328,14 @@ $user = Auth::user();
                                                         <!--Top up Modal end-->
                                                         <!-- column -->
                                                         <p style="display: none" id="isin1{{ $i }}">{{ $foisin }}</p>
-                                                        <p style="display: none" id="invest1{{ $i }}">{{ $stock->price
+                                                        <p style="display: none" id="invest1{{ $i }}">{{ $stock->total_cost
                                                             }}</p>
-                                                        <p style="display: none" id="quantity1{{ $i }}">{{
+                                                        <p style="display: none" id="lotSize1{{ $i }}">{{
                                                             $stock->lotSize }}</p>
+                                                        <p style="display: none" id="quantity1{{ $i }}">{{
+                                                            $stock->quantity }}</p>
+                                                        <p style="display: none" id="tradeType1{{ $i }}">{{
+                                                            $stock->tradeType }}</p>
 
                                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModalCenter1{{ $i }}">
@@ -375,7 +379,7 @@ $user = Auth::user();
                                                                                 class="mb-0 fs-14 text-dark font-w600">
                                                                                 Current : ₹ 65,123</P>
                                                                             <span class="fs-12">Invest : ₹
-                                                                                {{ $stock->price }}</span>
+                                                                                {{ $stock->total_cost }}</span>
                                                                             {{-- <span class="fs-12">Delivery</span>
                                                                             --}}
                                                                         </div>
@@ -477,7 +481,7 @@ $user = Auth::user();
                                                                                 class="mb-0 fs-14 text-dark font-w600">
                                                                                 Current : ₹ 65,123</P>
                                                                             <span class="fs-12">Invest : ₹
-                                                                                {{ $stock->price }}</span>
+                                                                                {{ $stock->total_cost }}</span>
                                                                             {{-- <span class="fs-12">Delivery</span>
                                                                             --}}
                                                                         </div>
@@ -580,7 +584,7 @@ $user = Auth::user();
                                                                                 class="mb-0 fs-14 text-dark font-w600">
                                                                                 Current : ₹ 65,123</P>
                                                                             <span class="fs-12">Invest : ₹
-                                                                                {{ $stock->price }}</span>
+                                                                                {{ $stock->total_cost }}</span>
                                                                             {{-- <span class="fs-12">Delivery</span>
                                                                             --}}
                                                                         </div>
@@ -691,8 +695,8 @@ $user = Auth::user();
                             console.log("futureElement",futureElement); 
                             
                             const optionElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el => 
-    el.textContent.trim() === receivedIsin.trim()
-);
+                                                el.textContent.trim() === receivedIsin.trim()
+                                            );
                             console.log("optionElement",optionElement);
                         
                         if (allElement) {
@@ -703,17 +707,41 @@ $user = Auth::user();
                             // console.log("rowId1",rowId);
 
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
+                            console.log("price",price);
+                            
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
-                            const invest = parseFloat(document.getElementById(`invest1${rowId}`).textContent) || 0; // Investment amount
-                            const quantity = parseFloat(document.getElementById(`quantity1${rowId}`).textContent) || 0; // Quantity
 
-                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc.ltp || '0');
+                            const invest = parseFloat(document.getElementById(`invest1${rowId}`).textContent) || 0; // Investment amount
+                            // const lotSize = parseFloat(document.getElementById(`lotSize1${rowId}`).textContent) || 0; // Lot size
+                            const quantity = parseFloat(document.getElementById(`quantity1${rowId}`).textContent) || 0; // Quantity
+                            const tradeType = document.getElementById(`tradeType1${rowId}`).textContent; // Trade type
+                           
+                            
+                            let margin=0;
+
+                            if(tradeType=='FUT'){
+                            margin=500;
+                            }else if(tradeType=='CE' || tradeType=='PE'){
+                            margin=7;
+                            }else{
+                            margin=0;
+                            }
+
+                            const currentValue = ((price  * quantity)/margin).toFixed(2); // Actual investment amount
+
+
+                            const profitAndLoss = (currentValue - invest).toFixed(2);
+                            const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
+
+                            // Calculate total portfolio value (including P/L)
+                            const pandloss = invest + parseFloat(profitAndLoss);
+
+                            document.getElementById(`price1${rowId}`).textContent = `Current : ₹${pandloss || '0'}`;
                          
                             const badgeValue = (price - cp).toFixed(2) || '0';
                             const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
 
-                            const profitAndLoss = ((price - invest) * quantity).toFixed(2); 
-                            const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
+                           
 
                             const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
                             const percentageIcon = percentageChange > 0 ?
@@ -738,6 +766,9 @@ $user = Auth::user();
                             ${profitAndLoss > 0 
                                 ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
                                 : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
+
+                                console.log(`Investment: ₹${invest}, Current Value: ₹${currentValue}`);
+console.log(`Profit/Loss: ₹${profitAndLoss} (${profitAndLossPercentage}%)`);
 
                         } else if (futureElement) {
 
