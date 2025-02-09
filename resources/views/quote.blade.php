@@ -422,7 +422,9 @@ $user = Auth::user();
                                                                                         name="realprice1{{ $i }}"
                                                                                         readonly type="text"
                                                                                         class="form-control"
-                                                                                        placeholder="Enter price">
+                                                                                        placeholder="Enter price"
+                                                                                        value="{{ $stock->ltp }}">
+                                                                                        >
 
                                                                                     <span
                                                                                         class="input-group-text">₹</span>
@@ -630,7 +632,9 @@ $user = Auth::user();
                                                                                         name="realprice2{{ $i }}"
                                                                                         readonly type="text"
                                                                                         class="form-control"
-                                                                                        placeholder="Enter price">
+                                                                                        placeholder="Enter price"
+                                                                                        value="{{ $stock->ltp }}">
+                                                                                        >
 
                                                                                     <span
                                                                                         class="input-group-text">₹</span>

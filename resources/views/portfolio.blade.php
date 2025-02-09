@@ -261,14 +261,39 @@
                                                     <div class="row">
 
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->get();
-                                                        // print_r($stocks);
+                                                       $trades = DB::table('trades')
+                                                        ->where('trades.user_id', $user->id)
+                                                        ->where('trades.status', 'processing')
+                                                        ->leftJoin('future_temp', 'future_temp.instrumentKey', '=', 'trades.instrumentKey') // Join future_temp table
+                                                        ->selectRaw('
+                                                            trades.instrumentKey,
+                                                            SUM(trades.quantity) as quantity,
+                                                            AVG(trades.price) as avg_price,
+                                                            ANY_VALUE(trades.stock_name) as stock_name,
+                                                            ANY_VALUE(trades.stock_symbol) as stock_symbol,
+                                                            ANY_VALUE(trades.action) as action,
+                                                            ANY_VALUE(trades.tradeType) as tradeType,
+                                                            ANY_VALUE(trades.duration) as duration,
+                                                            SUM(trades.total_cost) as total_cost,
+                                                            SUM(trades.lotSize) as lotSize,
+                                                            ANY_VALUE(trades.created_at) as created_at,
+                                                            ANY_VALUE(future_temp.ltp) as ltp,
+                                                            ANY_VALUE(future_temp.cp) as cp
+                                                        ')
+                                                        ->groupBy('trades.instrumentKey')
+                                                        ->get();
+
+
+
+                                                        // print_r($trades);
                                                         $i = 1;
                                                
 
-                                                        foreach ($stocks as $stock){
+                                                        foreach ($trades as $stock){
                                                             $foisin = $stock->instrumentKey;
 
+                                                         
+                                                            
 
                                                         ?>
 
@@ -345,16 +370,11 @@
                                                         </div>
                                                         <!--Top up Modal end-->
                                                         <!-- column -->
-                                                        <p style="display: none" id="isin1{{ $i }}">
-                                                            {{ $foisin }}</p>
-                                                        <p style="display: none" id="invest1{{ $i }}">
-                                                            {{ $stock->total_cost }}</p>
-                                                        <p style="display: none" id="lotSize1{{ $i }}">
-                                                            {{ $stock->lotSize }}</p>
-                                                        <p style="display: none" id="quantity1{{ $i }}">
-                                                            {{ $stock->quantity }}</p>
-                                                        <p style="display: none" id="tradeType1{{ $i }}">
-                                                            {{ $stock->tradeType }}</p>
+                                                        <p style="display: none" id="isin1{{ $i }}">{{ $foisin }}</p>
+                                                        <p style="display: none" id="invest1{{ $i }}">{{ $stock->total_cost }}</p>
+                                                        <p style="display: none" id="lotSize1{{ $i }}">{{ $stock->lotSize }}</p>
+                                                        <p style="display: none" id="quantity1{{ $i }}">{{ $stock->quantity }}</p>
+                                                        <p style="display: none" id="tradeType1{{ $i }}">{{ $stock->tradeType }}</p>
 
                                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
                                                             data-bs-toggle="modal"
@@ -421,10 +441,10 @@
                                                                                 ₹ 65/10%</P> --}}
                                                                             <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
                                                                                 id="change1{{ $i }}">
-                                                                                Loading...
+                                                                                {{ $stock->ltp }}
                                                                             </p>
-                                                                            <span class="fs-12">Qty :
-                                                                                {{ $stock->lotSize }}
+                                                                            <span class="fs-12">Lot :
+                                                                                {{ $stock->lotSize }} [ Qty {{ $stock->quantity }}]
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -458,8 +478,8 @@
                                                     <!-- Row -->
                                                     <div class="row">
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','FUT')->where('status', 'processing')->get();
-                                                        // print_r($stocks);
+                                                        $stocks = DB::table('trades')->distinct('instrumentKey')->where('user_id', $user->id)->where('tradeType','FUT')->where('status', 'processing')->get();
+                                                        
                                                         $i = 1;
                                                
 
@@ -718,7 +738,7 @@
                         const feedData = feeds[key].ff.marketFF; // Data from WebSocket
                         const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
 
-                        console.log("receivedIsin", receivedIsin);
+                        // console.log("receivedIsin", receivedIsin);
 
 
                         // console.log(feedData);
@@ -729,15 +749,15 @@
                             .textContent.trim() === receivedIsin.trim());
 
 
-                        console.log("allElement", allElement);
+                        // console.log("allElement", allElement);
                         const futureElement = Array.from(document.querySelectorAll("p[id^='isin2']")).find(el => el
                             .textContent === receivedIsin);
-                        console.log("futureElement", futureElement);
+                        // console.log("futureElement", futureElement);
 
                         const optionElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el =>
                             el.textContent.trim() === receivedIsin.trim()
                         );
-                        console.log("optionElement", optionElement);
+                        // console.log("optionElement", optionElement);
 
                         if (allElement) {
                             // console.log("allElement",allElement.id);
@@ -747,7 +767,7 @@
                             // console.log("rowId1",rowId);
 
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
-                            console.log("price", price);
+                            // console.log("price", price);
 
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
 
@@ -758,7 +778,7 @@
                                 0; // Quantity
                             const tradeType = document.getElementById(`tradeType1${rowId}`).textContent; // Trade type
 
-
+                            console.log("tradeType", tradeType);
                             let margin = 0;
 
                             if (tradeType == 'FUT') {
@@ -766,7 +786,7 @@
                             } else if (tradeType == 'CE' || tradeType == 'PE') {
                                 margin = 7;
                             } else {
-                                margin = 0;
+                                margin = 1;
                             }
 
                             const currentValue = ((price * quantity) / margin).toFixed(2); // Actual investment amount
@@ -782,20 +802,6 @@
 
                             const badgeValue = (price - cp).toFixed(2) || '0';
                             const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
-
-
-
-                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            const percentageIcon = percentageChange > 0 ?
-                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-
-
-                            // class bage for profit an dloss
-                            const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
-                            const profitAndLossIcon = profitAndLoss > 0 ?
-                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
                             document.getElementById(`stockChange1${rowId}`).innerHTML =
@@ -818,7 +824,7 @@
 
                             const rowId = futureElement.id.replace('isin2', '');
 
-                            console.log("rowId2", rowId);
+                            // console.log("rowId2", rowId);
 
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
@@ -867,7 +873,7 @@
                         } else if (optionElement) {
                             const rowId = optionElement.id.replace('isin3', '');
 
-                            console.log("rowId3", rowId);
+                            // console.log("rowId3", rowId);
 
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
