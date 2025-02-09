@@ -969,7 +969,7 @@ $user = Auth::user();
                                         class="fal fa-angle-down"></i></a>
                             </div>
                         </div>
-                        <div class=" cm-content-body card-body pt-4 pb-0 height800 dlab-scroll">
+                        <div id="scrollR" class=" cm-content-body card-body pt-4 pb-0 height800 dlab-scroll">
                             <div class="contacts-list" id="RecentActivityContent">
                                 <p id="msg" class="text-center">Enter at least 2 characters in the Search
                                     box above to see results here.</p>
@@ -1003,11 +1003,8 @@ $user = Auth::user();
     </div>
 
 
-  <script>
-
-
-    
-           // Trade Start
+    <script>
+        // Trade Start
             
             // buy form
             $(document).on('submit', '[id^="buyform"]', function (e) {
@@ -1150,7 +1147,7 @@ $user = Auth::user();
         });
         // Trade End 
 
-  </script>
+    </script>
 
 
 
@@ -1249,59 +1246,70 @@ $user = Auth::user();
 
 
         //implement search script using of $scripts variable thgen filter the scripts their we serach tradingSymbol
-        function searchScript(input) {
+        let searchTimeout;
+let page = 1;
+let isFetching = false;
+let hasMoreData = true;
+let searchValue = '';
 
-            const searchValue = input.value.toLowerCase();
+function searchScript(input) {
+    clearTimeout(searchTimeout);
 
+    searchTimeout = setTimeout(() => {
+        searchValue = input.value.toLowerCase().trim();
+        if (!searchValue) return;
 
-            if (getActiveFilter() == 'Future') {
-                // get api call for future
-                let url = 'searchScript?search=' + searchValue + '&type=future';
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        // api response
-                        updateContactsList(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            } else if (getActiveFilter() == 'Option') {
+        page = 1; 
+        hasMoreData = true;
+        fetchResults(true);
+    }, 500);
+}
 
-                let url = 'searchScript?search=' + searchValue + '&type=option';
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateContactsList(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+function fetchResults(isNewSearch = false) {
+    if (isFetching || !hasMoreData) return;
+    isFetching = true;
 
-            } else if (getActiveFilter() == 'Indicies') {
-                let url = 'searchScript?search=' + searchValue + '&type=indices';
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateContactsList(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+    let type;
+    switch (getActiveFilter()) {
+        case 'Future': type = 'future'; break;
+        case 'Option': type = 'option'; break;
+        case 'Indicies': type = 'indices'; break;
+        default: type = 'all';
+    }
+
+    showLoading();
+
+    let url = `searchScript?search=${encodeURIComponent(searchValue)}&type=${type}&page=${page}&limit=10`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (isNewSearch) {
+                updateContactsList(data);
             } else {
-                let url = 'searchScript?search=' + searchValue + '&type=all';
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateContactsList(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                appendContactsList(data);
             }
 
+            if (data.length < 10) {
+                hasMoreData = false;
+            } else {
+                page++;
+            }
+        })
+        .catch(error => console.error('Error:', error))
+        .finally(() => {
+            isFetching = false;
+        });
+}
 
-        }
+// Detect scroll to bottom
+document.getElementById("scrollR").addEventListener("scroll", function () {
+    let offcanvas = this;
+    if (offcanvas.scrollTop + offcanvas.clientHeight >= offcanvas.scrollHeight - 20) {
+        fetchResults();
+    }
+});
+
 
         function updateContactsList(responseData) {
             const container = document.getElementById("RecentActivityContent");
@@ -1332,6 +1340,52 @@ $user = Auth::user();
                 container.insertAdjacentHTML("beforeend", contentHTML);
             });
         }
+
+        function appendContactsList(responseData) {
+    const container = document.getElementById("RecentActivityContent");
+    const loadingIndicator = document.getElementById("loadingIndicator");
+
+    // Hide loading indicator before adding new data
+    loadingIndicator.style.display = "none";
+
+    // Loop through API response and create new elements
+    responseData.forEach((item) => {
+        const contentHTML = `
+            <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
+                <div class="d-flex align-items-center">
+                    <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
+                    <div class="ms-3">
+                        <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
+                        <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
+                    </div>
+                </div>
+                <div class="icon-box icon-box-sm bgl-primary">
+                    <a href="javascript:void(0)" id="add_script">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
+                    </a>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML("beforeend", contentHTML);
+    });
+}
+
+// Function to show loading indicator
+function showLoading() {
+    const container = document.getElementById("RecentActivityContent");
+    let loadingIndicator = document.getElementById("loadingIndicator");
+
+    if (!loadingIndicator) {
+        loadingIndicator = document.createElement("div");
+        loadingIndicator.id = "loadingIndicator";
+        loadingIndicator.innerHTML = `<div class="text-center my-3"><span class="spinner-border text-primary"></span> Loading...</div>`;
+        container.appendChild(loadingIndicator);
+    }
+
+    loadingIndicator.style.display = "block";
+}
+
+
 
         function updateScript(script) {
             const scriptSymbol = document.getElementById('script_symbol');
@@ -1797,8 +1851,8 @@ $user = Auth::user();
         }
     </script>
 
-<script>
-    // Initialize chart
+    <script>
+        // Initialize chart
     const chartContainer = document.getElementById("chart");
     const chart = LightweightCharts.createChart(chartContainer, {
         layout: {
@@ -1901,7 +1955,7 @@ $user = Auth::user();
 
 
 
-</script>
+    </script>
 
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
@@ -1927,7 +1981,7 @@ $user = Auth::user();
     <script src="js/styleSwitcher.js"></script>
 
 
-   
+
 
 
 

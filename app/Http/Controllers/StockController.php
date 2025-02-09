@@ -28,39 +28,36 @@ class StockController extends Controller
         return view('stockview', ['id' => $id]);
     }
 
+  
+    
     function searchScript(Request $request)
     {
-        $search = $request->search;
-        $type = $request->type;
-
-        if($type == 'future'){
-            $data = DB::table('future_temp')
-            ->where('assetSymbol', 'like', "%" . $search . "%")
-            ->where('instrumentType', 'FUT')
-            ->get();
-            return response()->json($data);
-        }elseif($type == 'option'){
-            $data = DB::table('future_temp')
-            ->where('assetSymbol', 'like', "%" . $search . "%")
-            ->where('instrumentType', 'CE')
-            ->orWhere('instrumentType', 'PE')
-            ->limit(10)
-            ->get();
-            return response()->json($data);
-        }else if($type == 'indices'){
-            $data = DB::table('future_temp')
-            ->where('assetSymbol', 'like', "%" . $search . "%")
-            ->where('instrumentType', 'IDX')
-            ->get();
-            return response()->json($data);
-        }else{
-            $data = DB::table('future_temp')
-            ->where('assetSymbol', 'like', "%" . $search . "%")
-            // ->limit(10)
-            ->get();
-            return response()->json($data);
+        $search = $request->search ?? '';
+        $type = $request->type ?? 'all';
+        $page = (int) ($request->page ?? 1);
+        $limit = (int) ($request->limit ?? 10);
+        $offset = ($page - 1) * $limit;
+    
+        $query = DB::table('future_temp')
+            ->where('assetSymbol', 'like', "%" . $search . "%");
+    
+        if ($type == 'future') {
+            $query->where('instrumentType', 'FUT');
+        } elseif ($type == 'option') {
+            $query->where(function ($q) {
+                $q->where('instrumentType', 'CE')
+                  ->orWhere('instrumentType', 'PE');
+            });
+        } elseif ($type == 'indices') {
+            $query->where('instrumentType', 'IDX');
         }
+    
+        // Apply limit & offset for pagination
+        $data = $query->limit($limit)->offset($offset)->get();
+    
+        return response()->json($data);
     }
+    
 
     public function fetchStockData($id)
     {
