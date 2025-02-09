@@ -153,12 +153,12 @@ use App\Models\Stockdata;
             Nav header end
         ***********************************-->
 
-    
+
 
         <!--**********************************
             Header start
         ***********************************-->
-        <x-header/>
+        <x-header />
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -177,6 +177,371 @@ use App\Models\Stockdata;
         <div class="content-body">
             <!-- row -->
             <div class="container-fluid">
+
+                <div class="row">
+
+
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                {{-- <h4 class="card-title">Buy & Sell Bitcoin</h4> --}}
+                                <nav>
+                                    <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
+                                        <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-all" type="button" role="tab"
+                                            aria-controls="nav-all" aria-selected="true">All</button>
+                                        <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-fut" type="button" role="tab"
+                                            aria-controls="nav-fut" aria-selected="false">Future</button>
+                                        <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-opt" type="button" role="tab"
+                                            aria-controls="nav-opt" aria-selected="false">Option</button>
+                                        <button class="nav-link" id="nav-mcx-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-mcx" type="button" role="tab"
+                                            aria-controls="nav-mcx" aria-selected="false">MCX</button>
+                                        <button class="nav-link" id="nav-indices-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-indices" type="button" role="tab"
+                                            aria-controls="nav-indices" aria-selected="false">Indices</button>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="nav-tabContent1">
+                                    <div class="tab-pane fade show active" id="nav-all" role="tabpanel"
+                                        aria-labelledby="nav-all-tab">
+                                        <div class="tab-content" id="nav-tabContent2">
+                                            <div class="tab-pane fade show active" id="nav-order1" role="tabpanel">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    style="margin-bottom:20px">
+                                                    <h4 class="card-title">Stocks : All</h4>
+                                                </div>
+                                                <div class="col-xl-12">
+                                                    <!-- Row -->
+                                                    <div class="row">
+
+                                                        <?php
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->get();
+                                                        // print_r($stocks);
+                                                        $i = 1;
+                                               
+
+                                                        foreach ($stocks as $stock){
+                                                            $foisin = $stock->instrumentKey;
+
+
+                                                        ?>
+
+
+
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <p
+                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                        @if ($stock->action == 'BUY')
+                                                                            <span class="badge badge-success me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @else
+                                                                            <span class="badge badge-danger me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @endif
+                                                                        @if ($stock->duration == 'delivery')
+                                                                            <span class="badge badge-light ml-2">
+                                                                                Delivery</span>
+                                                                        @else
+                                                                            <span class="badge badge-dark ml-1">
+                                                                                Intraday</span>
+                                                                        @endif
+                                                                    </p>
+                                                                    <div class="d-flex align-items-center mb-4 mt-2">
+
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=25
+                                                                            style="border-radius: 100%">
+                                                                        <div class="ms-1">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem; font-weight: 800">
+                                                                                    {{ $stock->stock_name }}
+
+
+                                                                                </h4>
+                                                                                <span>{{ $stock->order_type }}</span>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+
+                                                                                <p class="text-muted mb-1 fs-13">
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                                </p>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                Exit Price : ₹ 659</P>
+                                                                            <span class="fs-12">Trade Price : ₹ ₹ 659
+                                                                            </span>
+                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                                            --}}
+                                                                        </div>
+                                                                        <div>
+                                                                            {{-- <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                ₹ 65/10%</P> --}}
+                                                                            <p
+                                                                                class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                                {{-- ${profitAndLoss > 0 
+                                                                                    ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
+                                                                                    : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`; --}}
+
+                                                                                <span class="text-success">₹
+                                                                                    1.2(2%)</span>
+                                                                            </p>
+                                                                            <span class="fs-12">Qty :
+                                                                                {{ $stock->lotSize }}({{ $stock->quantity }})
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
+                                                            $i++; 
+                                                        }
+                                                            
+                                                            ?>
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="nav-fut" role="tabpanel"
+                                        aria-labelledby="nav-fut-tab">
+                                        <div class="tab-content" id="nav-tabContent3">
+                                            <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    style="margin-bottom: 20px">
+                                                    <h4 class="card-title">Stocks : Future</h4>
+                                                </div>
+
+                                                <div class="col-xl-12">
+                                                    <!-- Row -->
+                                                    <div class="row">
+                                                        <?php
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','FUT')->where('status', 'processing')->get();
+                                                        // print_r($stocks);
+                                                        $i = 1;
+                                               
+
+                                                        foreach ($stocks as $stock){
+                                                            $foisin = $stock->instrumentKey;
+
+
+                                                        ?>
+                                                        <!-- column -->
+                                                        <p style="display: none" id="isin2{{ $i }}">
+                                                            {{ $foisin }}</p>
+                                                        <p style="display: none" id="invest2{{ $i }}">
+                                                            {{ $stock->price }}</p>
+                                                        <p style="display: none" id="quantity2{{ $i }}">
+                                                            {{ $stock->lotSize }}</p>
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=25
+                                                                            style="border-radius: 100%">
+                                                                        <div class="ms-1">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem">
+                                                                                    {{ $stock->stock_name }}
+                                                                                    <span
+                                                                                        id="stockChange2{{ $i }}">Finance</span>
+
+                                                                                </h4>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+                                                                                @if ($stock->action == 'BUY')
+                                                                                    <span class="badge badge-success">
+                                                                                        {{ $stock->action }}</span>
+                                                                                @else
+                                                                                    <span class="badge badge-danger">
+                                                                                        {{ $stock->action }}</span>
+                                                                                @endif
+                                                                                {{-- <p class="text-muted mb-1 fs-13">
+                                                                                    {{ $stock->action }}</p> --}}
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p id="price2{{ $i }}"
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Current : ₹ 65,123</P>
+                                                                            <span class="fs-12">Invest : ₹
+                                                                                {{ $stock->total_cost }}</span>
+                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                                            --}}
+                                                                        </div>
+                                                                        <div>
+                                                                            {{-- <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                ₹ 65/10%</P> --}}
+                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                                id="change2{{ $i }}">
+                                                                                Loading...
+                                                                            </p>
+                                                                            <span class="fs-12">Qty :
+                                                                                {{ $stock->lotSize }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
+                                                            $i++; 
+                                                        }
+                                                            
+                                                            ?>
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="nav-opt" role="tabpanel"
+                                        aria-labelledby="nav-opt-tab">
+                                        <div class="tab-content" id="nav-tabContent3">
+                                            <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    style="margin-bottom: 20px">
+                                                    <h4 class="card-title">Stocks : Option</h4>
+                                                </div>
+
+                                                <div class="col-xl-12">
+                                                    <!-- Row -->
+                                                    <div class="row">
+                                                        <?php
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','OPT')->where('status', 'processing')->get();
+                                                        // print_r($stocks);
+                                                        $i = 1;
+                                               
+
+                                                        foreach ($stocks as $stock){
+                                                            $foisin = $stock->instrumentKey;
+                                                            // $price=$stock->price;
+
+
+                                                        ?>
+                                                        <!-- column -->
+                                                        <p style="display: none" id="isin3{{ $i }}">
+                                                            {{ $foisin }}</p>
+                                                        <p style="display: none" id="invest3{{ $i }}">
+                                                            {{ $stock->price }}</p>
+                                                        <p style="display: none" id="quantity3{{ $i }}">
+                                                            {{ $stock->lotSize }}</p>
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <div class="d-flex align-items-center mb-4">
+
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=25
+                                                                            style="border-radius: 100%">
+                                                                        <div class="ms-1">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem">
+                                                                                    {{ $stock->stock_name }}
+                                                                                    <span
+                                                                                        id="stockChange3{{ $i }}">Finance</span>
+
+                                                                                </h4>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+                                                                                @if ($stock->action == 'BUY')
+                                                                                    <span class="badge badge-success">
+                                                                                        {{ $stock->action }}</span>
+                                                                                @else
+                                                                                    <span class="badge badge-danger">
+                                                                                        {{ $stock->action }}</span>
+                                                                                @endif
+                                                                                {{-- <p class="text-muted mb-1 fs-13">
+                                                                                    {{ $stock->action }}</p> --}}
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p id="price3{{ $i }}"
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Current : ₹ 65,123</P>
+                                                                            <span class="fs-12">Invest : ₹
+                                                                                {{ $stock->total_cost }}</span>
+                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                                            --}}
+                                                                        </div>
+                                                                        <div>
+                                                                            {{-- <p
+                                                                                class="mb-0 fs-14 text-success font-w600">
+                                                                                ₹ 65/10%</P> --}}
+                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                                id="change3{{ $i }}">
+                                                                                Loading...
+                                                                            </p>
+                                                                            <span class="fs-12">Qty :
+                                                                                {{ $stock->lotSize }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
+                                                            $i++; 
+                                                        }
+                                                            
+                                                            ?>
+
+
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="card">
@@ -233,53 +598,53 @@ use App\Models\Stockdata;
                                                         ->get();
                                                     ?>
                                                     @foreach ($orders as $order)
-                                                   @if($order->status == 'processing')
-                                                      <tr>
-                                                            <td>{{ $loop->iteration }}</td> <!-- S.No. -->
-                                                            {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
-                                                            <td>{{ $order->created_at }}</td> <!-- Time -->
-                                                            <td>
-                                                                <a class="market-title d-flex align-items-center"
-                                                                    href="javascript:void(0);">
-                                                                    <div class="market-icon me-2">
-                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg" alt="icon"
-                                                                            class="styled-logo">
+                                                        @if ($order->status == 'processing')
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td> <!-- S.No. -->
+                                                                {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
+                                                                <td>{{ $order->created_at }}</td> <!-- Time -->
+                                                                <td>
+                                                                    <a class="market-title d-flex align-items-center"
+                                                                        href="javascript:void(0);">
+                                                                        <div class="market-icon me-2">
+                                                                            <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg"
+                                                                                alt="icon" class="styled-logo">
+                                                                        </div>
+                                                                        {{ $order->stock_symbol }}
+                                                                    </a>
+                                                                </td>
+                                                                <td>{{ $order->order_type }}</td>
+                                                                <td>
+                                                                    <span
+                                                                        class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
+                                                                        {{ ucfirst($order->action) }}
+                                                                    </span>
+                                                                </td>
+
+                                                                <!-- Adjust based on order type -->
+                                                                <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
+                                                                <td>{{ $order->quantity }}</td>
+                                                                <!-- Price per stock -->
+                                                                <td><span
+                                                                        class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
+                                                                </td> <!-- Total value -->
+                                                                <td>{{ $order->expiry }}</td>
+                                                                {{-- <td>{{ $order->status }}</td> --}}
+                                                                <!-- Quantity -->
+                                                                <td>
+                                                                    <div class="text-end">
+                                                                        <a href="#"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-3">
+                                                                            <i class="fas fa-pencil-alt"></i>
+                                                                        </a>
+                                                                        <a href="#"
+                                                                            class="btn btn-danger shadow btn-xs sharp">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
                                                                     </div>
-                                                                    {{ $order->stock_symbol }}
-                                                                </a>
-                                                            </td>
-                                                            <td>{{ $order->order_type }}</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
-                                                                    {{ ucfirst($order->action) }}
-                                                                </span>
-                                                            </td>
-                                                           
-                                                            <!-- Adjust based on order type -->
-                                                            <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
-                                                            <td>{{ $order->quantity }}</td> <!-- Price per stock -->
-                                                            <td><span
-                                                                    class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
-                                                            </td> <!-- Total value -->
-                                                            <td>{{ $order->expiry }}</td>
-                                                            {{-- <td>{{ $order->status }}</td> --}}
-                                                            <!-- Quantity -->
-                                                            <td>
-                                                                <div class="text-end">
-                                                                    <a href="#"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-3">
-                                                                        <i class="fas fa-pencil-alt"></i>
-                                                                    </a>
-                                                                    <a href="#"
-                                                                        class="btn btn-danger shadow btn-xs sharp">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                   @endif
-                                                      
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -312,53 +677,53 @@ use App\Models\Stockdata;
                                                         ->get();
                                                     ?>
                                                     @foreach ($orders as $order)
-                                                   @if($order->status == 'pending')
-                                                      <tr>
-                                                            <td>{{ $loop->iteration }}</td> 
-                                                            {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
-                                                            <td>{{ $order->created_at }}</td> <!-- Time -->
-                                                            <td>
-                                                                <a class="market-title d-flex align-items-center"
-                                                                    href="javascript:void(0);">
-                                                                    <div class="market-icon me-2">
-                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg" alt="icon"
-                                                                            class="styled-logo">
+                                                        @if ($order->status == 'pending')
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
+                                                                <td>{{ $order->created_at }}</td> <!-- Time -->
+                                                                <td>
+                                                                    <a class="market-title d-flex align-items-center"
+                                                                        href="javascript:void(0);">
+                                                                        <div class="market-icon me-2">
+                                                                            <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg"
+                                                                                alt="icon" class="styled-logo">
+                                                                        </div>
+                                                                        {{ $order->stock_symbol }}
+                                                                    </a>
+                                                                </td>
+                                                                <td>{{ $order->order_type }}</td>
+                                                                <td>
+                                                                    <span
+                                                                        class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
+                                                                        {{ ucfirst($order->action) }}
+                                                                    </span>
+                                                                </td>
+
+                                                                <!-- Adjust based on order type -->
+                                                                <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
+                                                                <td>{{ $order->quantity }}</td>
+                                                                <!-- Price per stock -->
+                                                                <td><span
+                                                                        class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
+                                                                </td> <!-- Total value -->
+                                                                <td>{{ $order->expiry }}</td>
+                                                                {{-- <td>{{ $order->status }}</td> --}}
+                                                                <!-- Quantity -->
+                                                                <td>
+                                                                    <div class="text-end">
+                                                                        <a href="#"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-3">
+                                                                            <i class="fas fa-pencil-alt"></i>
+                                                                        </a>
+                                                                        <a href="#"
+                                                                            class="btn btn-danger shadow btn-xs sharp">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
                                                                     </div>
-                                                                    {{ $order->stock_symbol }}
-                                                                </a>
-                                                            </td>
-                                                            <td>{{ $order->order_type }}</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
-                                                                    {{ ucfirst($order->action) }}
-                                                                </span>
-                                                            </td>
-                                                           
-                                                            <!-- Adjust based on order type -->
-                                                            <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
-                                                            <td>{{ $order->quantity }}</td> <!-- Price per stock -->
-                                                            <td><span
-                                                                    class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
-                                                            </td> <!-- Total value -->
-                                                            <td>{{ $order->expiry }}</td>
-                                                            {{-- <td>{{ $order->status }}</td> --}}
-                                                            <!-- Quantity -->
-                                                            <td>
-                                                                <div class="text-end">
-                                                                    <a href="#"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-3">
-                                                                        <i class="fas fa-pencil-alt"></i>
-                                                                    </a>
-                                                                    <a href="#"
-                                                                        class="btn btn-danger shadow btn-xs sharp">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                   @endif
-                                                      
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -391,53 +756,57 @@ use App\Models\Stockdata;
                                                         ->get();
                                                     ?>
                                                     @foreach ($orders as $order)
-                                                   @if($order->status == 'completed' || $order->status == 'cancelled' || $order->status == 'expired' || $order->status == 'failed')
-                                                      <tr>
-                                                            <td>{{ $loop->iteration }}</td> 
-                                                            {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
-                                                            <td>{{ $order->created_at }}</td> <!-- Time -->
-                                                            <td>
-                                                                <a class="market-title d-flex align-items-center"
-                                                                    href="javascript:void(0);">
-                                                                    <div class="market-icon me-2">
-                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg" alt="icon"
-                                                                            class="styled-logo">
+                                                        @if (
+                                                            $order->status == 'completed' ||
+                                                                $order->status == 'cancelled' ||
+                                                                $order->status == 'expired' ||
+                                                                $order->status == 'failed')
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
+                                                                <td>{{ $order->created_at }}</td> <!-- Time -->
+                                                                <td>
+                                                                    <a class="market-title d-flex align-items-center"
+                                                                        href="javascript:void(0);">
+                                                                        <div class="market-icon me-2">
+                                                                            <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg"
+                                                                                alt="icon" class="styled-logo">
+                                                                        </div>
+                                                                        {{ $order->stock_symbol }}
+                                                                    </a>
+                                                                </td>
+                                                                <td>{{ $order->order_type }}</td>
+                                                                <td>
+                                                                    <span
+                                                                        class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
+                                                                        {{ ucfirst($order->action) }}
+                                                                    </span>
+                                                                </td>
+
+                                                                <!-- Adjust based on order type -->
+                                                                <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
+                                                                <td>{{ $order->quantity }}</td>
+                                                                <!-- Price per stock -->
+                                                                <td><span
+                                                                        class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
+                                                                </td> <!-- Total value -->
+                                                                <td>{{ $order->expiry }}</td>
+                                                                {{-- <td>{{ $order->status }}</td> --}}
+                                                                <!-- Quantity -->
+                                                                <td>
+                                                                    <div class="text-end">
+                                                                        <a href="#"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-3">
+                                                                            <i class="fas fa-pencil-alt"></i>
+                                                                        </a>
+                                                                        <a href="#"
+                                                                            class="btn btn-danger shadow btn-xs sharp">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
                                                                     </div>
-                                                                    {{ $order->stock_symbol }}
-                                                                </a>
-                                                            </td>
-                                                            <td>{{ $order->order_type }}</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
-                                                                    {{ ucfirst($order->action) }}
-                                                                </span>
-                                                            </td>
-                                                           
-                                                            <!-- Adjust based on order type -->
-                                                            <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
-                                                            <td>{{ $order->quantity }}</td> <!-- Price per stock -->
-                                                            <td><span
-                                                                    class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
-                                                            </td> <!-- Total value -->
-                                                            <td>{{ $order->expiry }}</td>
-                                                            {{-- <td>{{ $order->status }}</td> --}}
-                                                            <!-- Quantity -->
-                                                            <td>
-                                                                <div class="text-end">
-                                                                    <a href="#"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-3">
-                                                                        <i class="fas fa-pencil-alt"></i>
-                                                                    </a>
-                                                                    <a href="#"
-                                                                        class="btn btn-danger shadow btn-xs sharp">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                   @endif
-                                                      
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -473,53 +842,53 @@ use App\Models\Stockdata;
                                                         ->get();
                                                     ?>
                                                     @foreach ($orders as $order)
-                                                   @if($order->status == 'completed')
-                                                      <tr>
-                                                            <td>{{ $loop->iteration }}</td> <!-- S.No. -->
-                                                            {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
-                                                            <td>{{ $order->created_at }}</td> <!-- Time -->
-                                                            <td>
-                                                                <a class="market-title d-flex align-items-center"
-                                                                    href="javascript:void(0);">
-                                                                    <div class="market-icon me-2">
-                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg" alt="icon"
-                                                                            class="styled-logo">
+                                                        @if ($order->status == 'completed')
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td> <!-- S.No. -->
+                                                                {{-- <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>  --}}
+                                                                <td>{{ $order->created_at }}</td> <!-- Time -->
+                                                                <td>
+                                                                    <a class="market-title d-flex align-items-center"
+                                                                        href="javascript:void(0);">
+                                                                        <div class="market-icon me-2">
+                                                                            <img src="https://s3tv-symbol.dhan.co/symbols/{{ $order->stock_symbol }}.svg"
+                                                                                alt="icon" class="styled-logo">
+                                                                        </div>
+                                                                        {{ $order->stock_symbol }}
+                                                                    </a>
+                                                                </td>
+                                                                <td>{{ $order->order_type }}</td>
+                                                                <td>
+                                                                    <span
+                                                                        class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
+                                                                        {{ ucfirst($order->action) }}
+                                                                    </span>
+                                                                </td>
+
+                                                                <!-- Adjust based on order type -->
+                                                                <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
+                                                                <td>{{ $order->quantity }}</td>
+                                                                <!-- Price per stock -->
+                                                                <td><span
+                                                                        class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
+                                                                </td> <!-- Total value -->
+                                                                <td>{{ $order->expiry }}</td>
+                                                                {{-- <td>{{ $order->status }}</td> --}}
+                                                                <!-- Quantity -->
+                                                                <td>
+                                                                    <div class="text-end">
+                                                                        <a href="#"
+                                                                            class="btn btn-primary shadow btn-xs sharp me-3">
+                                                                            <i class="fas fa-pencil-alt"></i>
+                                                                        </a>
+                                                                        <a href="#"
+                                                                            class="btn btn-danger shadow btn-xs sharp">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
                                                                     </div>
-                                                                    {{ $order->stock_symbol }}
-                                                                </a>
-                                                            </td>
-                                                            <td>{{ $order->order_type }}</td>
-                                                            <td>
-                                                                <span
-                                                                    class="badge badge-sm {{ $order->action == 'BUY' ? 'badge-success' : 'badge-danger' }}">
-                                                                    {{ ucfirst($order->action) }}
-                                                                </span>
-                                                            </td>
-                                                           
-                                                            <!-- Adjust based on order type -->
-                                                            <td>{{ $order->lotSize }}</td> <!-- Price per stock -->
-                                                            <td>{{ $order->quantity }}</td> <!-- Price per stock -->
-                                                            <td><span
-                                                                    class="badge badge-sm badge-light">₹{{ number_format($order->price, 2) }}</span>
-                                                            </td> <!-- Total value -->
-                                                            <td>{{ $order->expiry }}</td>
-                                                            {{-- <td>{{ $order->status }}</td> --}}
-                                                            <!-- Quantity -->
-                                                            <td>
-                                                                <div class="text-end">
-                                                                    <a href="#"
-                                                                        class="btn btn-primary shadow btn-xs sharp me-3">
-                                                                        <i class="fas fa-pencil-alt"></i>
-                                                                    </a>
-                                                                    <a href="#"
-                                                                        class="btn btn-danger shadow btn-xs sharp">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                   @endif
-                                                      
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -561,8 +930,7 @@ use App\Models\Stockdata;
                                                 <td>M.COM., P.H.D.</td>
                                                 <td><a href="javascript:void(0);"><strong>123 456 7890</strong></a>
                                                 </td>
-                                                <td><a
-                                                        href="javascript:void(0);"><strong>info@example.com</strong></a>
+                                                <td><a href="javascript:void(0);"><strong>info@example.com</strong></a>
                                                 </td>
                                                 <td>2011/04/25</td>
                                                 <td>
@@ -585,8 +953,7 @@ use App\Models\Stockdata;
                                                 <td>M.COM., P.H.D.</td>
                                                 <td><a href="javascript:void(0);"><strong>987 654 3210</strong></a>
                                                 </td>
-                                                <td><a
-                                                        href="javascript:void(0);"><strong>info@example.com</strong></a>
+                                                <td><a href="javascript:void(0);"><strong>info@example.com</strong></a>
                                                 </td>
                                                 <td>2011/07/25</td>
                                                 <td>
