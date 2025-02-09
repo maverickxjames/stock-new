@@ -41,6 +41,7 @@ $user = Auth::user();
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
         .wallet-balance {
             font-size: 2rem;
@@ -265,533 +266,533 @@ $user = Auth::user();
 
                                     ?>
 
-                            <!--Top up Modal start-->
-                            <div class="modal fade" id="exampleModalCenter{{ $i }}">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header" style="padding-right: 1.875rem;padding-left: 10px;">
-                                            <h2 class="modal-title">{{ $key->tradingSymbol }} </h2>
-                                            <button type="button" data-bs-dismiss="modal" style="border: none">
-                                                <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
-                                                    width="20" alt="">
-                                            </button>
-                                        </div>
-                                        <div class="modal-body p-0">
-                                            <div class="trade-container">
-                                                <div data-bs-dismiss="modal" onclick="showOrderForm({{ $i }})"
-                                                    class="trade-item">
-                                                    <h2>Trade</h2>
-                                                    <div class="icon-box icon-box-sm bgl-primary">
-                                                        <a href="javascript:void(0)" id="add_script">
-                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                width="20" alt="">
-                                                        </a>
-                                                    </div>
+                                    <!--Top up Modal start-->
+                                    <div class="modal fade" id="exampleModalCenter{{ $i }}">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="padding-right: 1.875rem;padding-left: 10px;">
+                                                    <h2 class="modal-title">{{ $key->tradingSymbol }} </h2>
+                                                    <button type="button" data-bs-dismiss="modal" style="border: none">
+                                                        <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                            width="20" alt="">
+                                                    </button>
                                                 </div>
-                                                <div class="trade-item"
-                                                    onclick="fetchData('{{ $foisin }}','exampleModalCenter{{ $i }}');"
-                                                    data-bs-dismiss="modal">
-                                                    <h2 data-bs-dismiss="modal">Chart</h2>
-                                                    <div class="icon-box icon-box-sm bgl-primary">
-                                                        <a href="javascript:void(0)" id="add_script"
+                                                <div class="modal-body p-0">
+                                                    <div class="trade-container">
+                                                        <div data-bs-dismiss="modal" onclick="showOrderForm({{ $i }})"
+                                                            class="trade-item">
+                                                            <h2>Trade</h2>
+                                                            <div class="icon-box icon-box-sm bgl-primary">
+                                                                <a href="javascript:void(0)" id="add_script">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                        width="20" alt="">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="trade-item"
+                                                            onclick="fetchData('{{ $foisin }}','exampleModalCenter{{ $i }}');"
                                                             data-bs-dismiss="modal">
-                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                width="20" alt="">
-                                                        </a>
+                                                            <h2 data-bs-dismiss="modal">Chart</h2>
+                                                            <div class="icon-box icon-box-sm bgl-primary">
+                                                                <a href="javascript:void(0)" id="add_script"
+                                                                    data-bs-dismiss="modal">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                        width="20" alt="">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="trade-item" data-bs-dismiss="modal">
+                                                            <h2>Details</h2>
+                                                            <div class="icon-box icon-box-sm bgl-primary">
+                                                                <a href="javascript:void(0)" id="add_script">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                        width="20" alt="">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="trade-item" onclick="removeWatchlist({{ $id }})"
+                                                            data-bs-dismiss="modal">
+                                                            <h2>Remove</h2>
+                                                            <div class="icon-box icon-box-sm bgl-primary">
+                                                                <a href="javascript:void(0)" id="add_script">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                        width="20" alt="">
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="trade-item" data-bs-dismiss="modal">
-                                                    <h2>Details</h2>
-                                                    <div class="icon-box icon-box-sm bgl-primary">
-                                                        <a href="javascript:void(0)" id="add_script">
-                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                width="20" alt="">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="trade-item" onclick="removeWatchlist({{ $id }})"
-                                                    data-bs-dismiss="modal">
-                                                    <h2>Remove</h2>
-                                                    <div class="icon-box icon-box-sm bgl-primary">
-                                                        <a href="javascript:void(0)" id="add_script">
-                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                width="20" alt="">
-                                                        </a>
-                                                    </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger light"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger light"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!--Top up Modal end-->
+                                    <!--Top up Modal end-->
 
 
-                            <!-- Trade offcanvas model -->
+                                    <!-- Trade offcanvas model -->
 
-                            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
-                                aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
-                                <div class="offcanvas-header">
-                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
-                                        bottom
-                                    </h5>
-                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                        aria-label="Close"></button>
-                                </div>
+                                    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
+                                        aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
+                                        <div class="offcanvas-header">
+                                            <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
+                                                bottom
+                                            </h5>
+                                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                                aria-label="Close"></button>
+                                        </div>
 
-                                <div class="offcanvas-body small">
-                                    <div class="row">
-                                        <div class="col-xl-12">
-                                            <div class="card">
-                                                <div class="card-header flex-wrap">
-                                                    <!-- <div class="d-flex"> -->
+                                        <div class="offcanvas-body small">
+                                            <div class="row">
+                                                <div class="col-xl-12">
+                                                    <div class="card">
+                                                        <div class="card-header flex-wrap">
+                                                            <!-- <div class="d-flex"> -->
 
-                                                    <nav class="" style="width: 100%;">
-                                                        <div class="nav nav-pills light " id="nav-tab" role="tablist">
-                                                            <button class="nav-link active " style="width: 50%;"
-                                                                id="nav-order-tab" data-bs-toggle="tab"
-                                                                data-bs-target="#nav-order{{ $i }}" type="button"
-                                                                role="tab" aria-selected="true">Buy</button>
-                                                            <button class="nav-link" style="width: 50%"
-                                                                id="nav-histroy-tab" data-bs-toggle="tab"
-                                                                data-bs-target="#nav-history{{ $i }}" type="button"
-                                                                role="tab" aria-selected="false">Sell
-                                                            </button>
+                                                            <nav class="" style="width: 100%;">
+                                                                <div class="nav nav-pills light " id="nav-tab" role="tablist">
+                                                                    <button class="nav-link active " style="width: 50%;"
+                                                                        id="nav-order-tab" data-bs-toggle="tab"
+                                                                        data-bs-target="#nav-order{{ $i }}" type="button"
+                                                                        role="tab" aria-selected="true">Buy</button>
+                                                                    <button class="nav-link" style="width: 50%"
+                                                                        id="nav-histroy-tab" data-bs-toggle="tab"
+                                                                        data-bs-target="#nav-history{{ $i }}" type="button"
+                                                                        role="tab" aria-selected="false">Sell
+                                                                    </button>
 
+                                                                </div>
+                                                            </nav>
+                                                            <!-- </div> -->
                                                         </div>
-                                                    </nav>
-                                                    <!-- </div> -->
-                                                </div>
-                                                <div class="card-body pt-2">
-                                                    <div class="tab-content" id="nav-tabContent">
-                                                        <div class="tab-pane fade show active" id="nav-order{{ $i }}"
-                                                            role="tabpanel" aria-labelledby="nav-order-tab">
-                                                            <div class="table-responsive dataTabletrade">
-                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}"
-                                                                    method="POST" action="{{ route('placeBuyOrder') }}">
-                                                                    @csrf
-                                                                    <input type="text" name="id" value="{{ $i }}"
-                                                                        id="id" hidden>
-                                                                    <input type="text" name="instrumentKey1{{ $i }}"
-                                                                        value="{{ $foisin }}"
-                                                                        id="instrumentKey1{{ $i }}" hidden>
-                                                                    <input type="text" name="instrumentType{{ $i }}"
-                                                                        value="{{ $instrumentType }}"
-                                                                        id="instrumentType{{ $i }}" hidden>
-                                                                    <div class="col-xl-4" style="width: 100%;">
-                                                                        <div class="card">
-                                                                            <div class="card-body pt-2">
-                                                                                <!-- Available Balance -->
-                                                                                <div
-                                                                                    class="d-flex align-items-center justify-content-between mt-3 mb-2">
-                                                                                    <span
-                                                                                        class="small text-muted">Available
-                                                                                        Balance</span>
-                                                                                    <span class="text-dark">{{
-                                                                                        $user->real_wallet }}</span>
-                                                                                </div>
-                                                                                <!-- Order Type Selector -->
-                                                                                <div class="mb-3">
-                                                                                    <label class="form-label">Order
-                                                                                        Type</label>
-                                                                                    <select id="orderType1{{ $i }}"
-                                                                                        name="orderType1{{ $i }}"
-                                                                                        onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
-                                                                                        class="form-select">
-                                                                                        <option value="market"
-                                                                                            selected=""> Market
-                                                                                            Order</option>
-                                                                                        <option value="limit">Limit
-                                                                                            Order</option>
-                                                                                        <option value="stoploss">Stop
-                                                                                            Loss Order</option>
-                                                                                    </select>
-                                                                                </div>
+                                                        <div class="card-body pt-2">
+                                                            <div class="tab-content" id="nav-tabContent">
+                                                                <div class="tab-pane fade show active" id="nav-order{{ $i }}"
+                                                                    role="tabpanel" aria-labelledby="nav-order-tab">
+                                                                    <div class="table-responsive dataTabletrade">
+                                                                        <form id="buyform{{ $i }}" name="buyform{{ $i }}"
+                                                                            method="POST" action="{{ route('placeBuyOrder') }}">
+                                                                            @csrf
+                                                                            <input type="text" name="id" value="{{ $i }}"
+                                                                                id="id" hidden>
+                                                                            <input type="text" name="instrumentKey1{{ $i }}"
+                                                                                value="{{ $foisin }}"
+                                                                                id="instrumentKey1{{ $i }}" hidden>
+                                                                            <input type="text" name="instrumentType{{ $i }}"
+                                                                                value="{{ $instrumentType }}"
+                                                                                id="instrumentType{{ $i }}" hidden>
+                                                                            <div class="col-xl-4" style="width: 100%;">
+                                                                                <div class="card">
+                                                                                    <div class="card-body pt-2">
+                                                                                        <!-- Available Balance -->
+                                                                                        <div
+                                                                                            class="d-flex align-items-center justify-content-between mt-3 mb-2">
+                                                                                            <span
+                                                                                                class="small text-muted">Available
+                                                                                                Balance</span>
+                                                                                            <span class="text-dark">{{
+                                                                                                $user->real_wallet }}</span>
+                                                                                        </div>
+                                                                                        <!-- Order Type Selector -->
+                                                                                        <div class="mb-3">
+                                                                                            <label class="form-label">Order
+                                                                                                Type</label>
+                                                                                            <select id="orderType1{{ $i }}"
+                                                                                                name="orderType1{{ $i }}"
+                                                                                                onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
+                                                                                                class="form-select">
+                                                                                                <option value="market"
+                                                                                                    selected=""> Market
+                                                                                                    Order</option>
+                                                                                                <option value="limit">Limit
+                                                                                                    Order</option>
+                                                                                                <option value="stoploss">Stop
+                                                                                                    Loss Order</option>
+                                                                                            </select>
+                                                                                        </div>
 
-                                                                                <!-- Price Input -->
-                                                                                <div class="input-group mb-3">
-                                                                                    <span
-                                                                                        class="input-group-text">Market
-                                                                                        Price</span>
-                                                                                    <input id="realprice1{{ $i }}"
-                                                                                        name="realprice1{{ $i }}"
-                                                                                        readonly type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="Enter price"
-                                                                                        value="{{ $stock->ltp }}">
-                                                                                        >
+                                                                                        <!-- Price Input -->
+                                                                                        <div class="input-group mb-3">
+                                                                                            <span
+                                                                                                class="input-group-text">Market
+                                                                                                Price</span>
+                                                                                            <input id="realprice1{{ $i }}"
+                                                                                                name="realprice1{{ $i }}"
+                                                                                                readonly type="text"
+                                                                                                class="form-control"
+                                                                                                placeholder="Enter price"
+                                                                                                value="{{ $stock->ltp }}">
+                                                                                                >
 
-                                                                                    <span
-                                                                                        class="input-group-text">₹</span>
-                                                                                </div>
-                                                                                <!-- Limit Input -->
-                                                                                <div id="limitblock1{{ $i }}"
-                                                                                    style="display: none"
-                                                                                    class="input-group mb-3">
-                                                                                    <span class="input-group-text">Limit
-                                                                                        Price</span>
-                                                                                    <input id="limitprice1{{ $i }}"
-                                                                                        name="limitprice1{{ $i }}"
-                                                                                        disabled type="hidden"
-                                                                                        class="form-control"
-                                                                                        placeholder="Enter price"
-                                                                                        value="0.00">
+                                                                                            <span
+                                                                                                class="input-group-text">₹</span>
+                                                                                        </div>
+                                                                                        <!-- Limit Input -->
+                                                                                        <div id="limitblock1{{ $i }}"
+                                                                                            style="display: none"
+                                                                                            class="input-group mb-3">
+                                                                                            <span class="input-group-text">Limit
+                                                                                                Price</span>
+                                                                                            <input id="limitprice1{{ $i }}"
+                                                                                                name="limitprice1{{ $i }}"
+                                                                                                disabled type="hidden"
+                                                                                                class="form-control"
+                                                                                                placeholder="Enter price"
+                                                                                                value="0.00">
 
-                                                                                    <span
-                                                                                        class="input-group-text">₹</span>
-                                                                                </div>
+                                                                                            <span
+                                                                                                class="input-group-text">₹</span>
+                                                                                        </div>
 
-                                                                                <div class=""
-                                                                                    style="display: flex; justify-content:space-between; gap:20px;">
-                                                                                    <div class="input-group mb-3">
-                                                                                        <span
-                                                                                            class="input-group-text">Lot</span>
-                                                                                        <button
-                                                                                            onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy')"
-                                                                                            class="btn btn-outline-secondary"
-                                                                                            type="button"
-                                                                                            id="decrement">-</button>
-                                                                                        <input type="text"
-                                                                                            class="form-control text-center"
-                                                                                            placeholder="Enter size"
-                                                                                            id="lotSize1{{ $i }}"
-                                                                                            name="lotSize1{{ $i }}"
-                                                                                            value="0" readonly>
-                                                                                        <button
-                                                                                            onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
-                                                                                            class="btn btn-outline-secondary"
-                                                                                            type="button"
-                                                                                            id="increment">+</button>
-                                                                                    </div>
-                                                                                    <div class="input-group mb-3">
-                                                                                        <span
-                                                                                            class="input-group-text">Quantity</span>
-                                                                                        <input type="text"
-                                                                                            class="form-control"
-                                                                                            placeholder="Enter size"
-                                                                                            id="quantity1{{ $i }}"
-                                                                                            name="quantity1{{ $i }}"
-                                                                                            value={{ $quantity }}
-                                                                                            readonly>
-                                                                                    </div>
-                                                                                </div>
+                                                                                        <div class=""
+                                                                                            style="display: flex; justify-content:space-between; gap:20px;">
+                                                                                            <div class="input-group mb-3">
+                                                                                                <span
+                                                                                                    class="input-group-text">Lot</span>
+                                                                                                <button
+                                                                                                    onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy')"
+                                                                                                    class="btn btn-outline-secondary"
+                                                                                                    type="button"
+                                                                                                    id="decrement">-</button>
+                                                                                                <input type="text"
+                                                                                                    class="form-control text-center"
+                                                                                                    placeholder="Enter size"
+                                                                                                    id="lotSize1{{ $i }}"
+                                                                                                    name="lotSize1{{ $i }}"
+                                                                                                    value="0" readonly>
+                                                                                                <button
+                                                                                                    onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
+                                                                                                    class="btn btn-outline-secondary"
+                                                                                                    type="button"
+                                                                                                    id="increment">+</button>
+                                                                                            </div>
+                                                                                            <div class="input-group mb-3">
+                                                                                                <span
+                                                                                                    class="input-group-text">Quantity</span>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Enter size"
+                                                                                                    id="quantity1{{ $i }}"
+                                                                                                    name="quantity1{{ $i }}"
+                                                                                                    value={{ $quantity }}
+                                                                                                    readonly>
+                                                                                            </div>
+                                                                                        </div>
 
-                                                                                <!-- Take Profit & Stop Loss -->
-                                                                                <div class="mb-3">
-                                                                                    <label
-                                                                                        class="form-label">Mode</label>
-                                                                                    <div
-                                                                                        class="d-flex align-items-center gap-3">
-                                                                                        <!-- Delivery Mode Radio Button -->
-                                                                                        <div class="form-check">
-                                                                                            <input
-                                                                                                class="form-check-input"
-                                                                                                type="radio"
-                                                                                                name="tradeMode1{{ $i }}"
-                                                                                                id="deliveryMode1{{ $i }}"
-                                                                                                value="delivery"
-                                                                                                onchange="handleTradeModeChange({{ $i }}, 'delivery')"
-                                                                                                checked>
+                                                                                        <!-- Take Profit & Stop Loss -->
+                                                                                        <div class="mb-3">
                                                                                             <label
-                                                                                                class="form-check-label"
-                                                                                                for="deliveryMode1{{ $i }}">
-                                                                                                Delivery Mode
-                                                                                            </label>
+                                                                                                class="form-label">Mode</label>
+                                                                                            <div
+                                                                                                class="d-flex align-items-center gap-3">
+                                                                                                <!-- Delivery Mode Radio Button -->
+                                                                                                <div class="form-check">
+                                                                                                    <input
+                                                                                                        class="form-check-input"
+                                                                                                        type="radio"
+                                                                                                        name="tradeMode1{{ $i }}"
+                                                                                                        id="deliveryMode1{{ $i }}"
+                                                                                                        value="delivery"
+                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery')"
+                                                                                                        checked>
+                                                                                                    <label
+                                                                                                        class="form-check-label"
+                                                                                                        for="deliveryMode1{{ $i }}">
+                                                                                                        Delivery Mode
+                                                                                                    </label>
+                                                                                                </div>
+
+                                                                                                <!-- Intraday Mode Radio Button -->
+                                                                                                <div class="form-check">
+                                                                                                    <input
+                                                                                                        class="form-check-input"
+                                                                                                        type="radio"
+                                                                                                        name="tradeMode1{{ $i }}"
+                                                                                                        id="intradayMode1{{ $i }}"
+                                                                                                        value="intraday"
+                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')">
+                                                                                                    <label
+                                                                                                        class="form-check-label"
+                                                                                                        for="intradayMode1{{ $i }}">
+                                                                                                        Intraday Mode
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
 
-                                                                                        <!-- Intraday Mode Radio Button -->
-                                                                                        <div class="form-check">
-                                                                                            <input
-                                                                                                class="form-check-input"
-                                                                                                type="radio"
-                                                                                                name="tradeMode1{{ $i }}"
-                                                                                                id="intradayMode1{{ $i }}"
-                                                                                                value="intraday"
-                                                                                                onchange="handleTradeModeChange({{ $i }}, 'intraday')">
-                                                                                            <label
-                                                                                                class="form-check-label"
-                                                                                                for="intradayMode1{{ $i }}">
-                                                                                                Intraday Mode
-                                                                                            </label>
+
+
+                                                                                        <!-- Cost and Max Info -->
+                                                                                        <div
+                                                                                            class="d-flex justify-content-between flex-wrap">
+                                                                                            {{-- <div class="d-flex">
+                                                                                                <div>Cost:</div>
+                                                                                                <div id="costPrice1{{ $i }}">
+                                                                                                    ₹0.00</div>
+                                                                                            </div> --}}
+                                                                                            <div
+                                                                                                class="d-flex justify-content-between flex-wrap align-items-center">
+                                                                                                <!-- Displaying Cost and Margin Price -->
+                                                                                                <div class="d-flex flex-column">
+                                                                                                    <span>
+                                                                                                        Cost: <s
+                                                                                                            id="costPrice1{{ $i }}"
+                                                                                                            name="costPrice1{{ $i }}"
+                                                                                                            class="px-1">₹0.00</s>
+                                                                                                    </span>
+                                                                                                    <span>
+                                                                                                        After Margin: <span
+                                                                                                            id="marginCost1{{ $i }}"
+                                                                                                            class="text-success">₹0.00</span>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="d-flex">
+                                                                                                <div>Max:</div>
+                                                                                                <div id="maxPrice1{{ $i }}"
+                                                                                                    name="maxPrice1{{ $i }}"
+                                                                                                    class=" px-1">
+                                                                                                    ₹{{ $user->real_wallet }}
+                                                                                                </div>
+
+
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <p id="error-fund1{{ $i }}"
+                                                                                                style="display: none;color:red">
+                                                                                                Insuffient Fund</p>
+                                                                                        </div>
+
+                                                                                        <!-- Buy/Sell Buttons -->
+                                                                                        <div
+                                                                                            class="mt-3 d-flex justify-content-between">
+                                                                                            <button type="subit"
+                                                                                                class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-
-
-
-                                                                                <!-- Cost and Max Info -->
-                                                                                <div
-                                                                                    class="d-flex justify-content-between flex-wrap">
-                                                                                    {{-- <div class="d-flex">
-                                                                                        <div>Cost:</div>
-                                                                                        <div id="costPrice1{{ $i }}">
-                                                                                            ₹0.00</div>
-                                                                                    </div> --}}
-                                                                                    <div
-                                                                                        class="d-flex justify-content-between flex-wrap align-items-center">
-                                                                                        <!-- Displaying Cost and Margin Price -->
-                                                                                        <div class="d-flex flex-column">
-                                                                                            <span>
-                                                                                                Cost: <s
-                                                                                                    id="costPrice1{{ $i }}"
-                                                                                                    name="costPrice1{{ $i }}"
-                                                                                                    class="px-1">₹0.00</s>
-                                                                                            </span>
-                                                                                            <span>
-                                                                                                After Margin: <span
-                                                                                                    id="marginCost1{{ $i }}"
-                                                                                                    class="text-success">₹0.00</span>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="d-flex">
-                                                                                        <div>Max:</div>
-                                                                                        <div id="maxPrice1{{ $i }}"
-                                                                                            name="maxPrice1{{ $i }}"
-                                                                                            class=" px-1">
-                                                                                            ₹{{ $user->real_wallet }}
-                                                                                        </div>
-
-
-                                                                                    </div>
-
-                                                                                </div>
-                                                                                <div>
-                                                                                    <p id="error-fund1{{ $i }}"
-                                                                                        style="display: none;color:red">
-                                                                                        Insuffient Fund</p>
-                                                                                </div>
-
-                                                                                <!-- Buy/Sell Buttons -->
-                                                                                <div
-                                                                                    class="mt-3 d-flex justify-content-between">
-                                                                                    <button type="subit"
-                                                                                        class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tab-pane fade" id="nav-history{{ $i }}"
-                                                            role="tabpanel">
-                                                            <div class="table-responsive dataTabletrade">
-                                                                <form id="sellform" name="sellform{{ $i }}"
-                                                                    method="POST"
-                                                                    action="{{ route('placeSellOrder') }}">
-                                                                    @csrf
-                                                                    <input type="text" name="id2" value="{{ $i }}"
-                                                                        id="id" hidden>
-                                                                    <input type="text" name="instrumentKey2{{ $i }}"
-                                                                        value="{{ $foisin }}"
-                                                                        id="instrumentKey2{{ $i }}" hidden>
-                                                                    <div class="col-xl-4" style="width: 100%;">
-                                                                        <div class="card">
-                                                                            <div class="card-body pt-2">
-                                                                                <!-- Available Balance -->
-                                                                                <!-- Available Balance -->
-                                                                                <div
-                                                                                    class="d-flex align-items-center justify-content-between mt-3 mb-2">
-                                                                                    <span
-                                                                                        class="small text-muted">Available
-                                                                                        Balance</span>
-                                                                                    <span class="text-dark">{{
-                                                                                        $user->real_wallet }}</span>
-                                                                                </div>
+                                                                </div>
+                                                                <div class="tab-pane fade" id="nav-history{{ $i }}"
+                                                                    role="tabpanel">
+                                                                    <div class="table-responsive dataTabletrade">
+                                                                        <form id="sellform" name="sellform{{ $i }}"
+                                                                            method="POST"
+                                                                            action="{{ route('placeSellOrder') }}">
+                                                                            @csrf
+                                                                            <input type="text" name="id2" value="{{ $i }}"
+                                                                                id="id" hidden>
+                                                                            <input type="text" name="instrumentKey2{{ $i }}"
+                                                                                value="{{ $foisin }}"
+                                                                                id="instrumentKey2{{ $i }}" hidden>
+                                                                            <div class="col-xl-4" style="width: 100%;">
+                                                                                <div class="card">
+                                                                                    <div class="card-body pt-2">
+                                                                                        <!-- Available Balance -->
+                                                                                        <!-- Available Balance -->
+                                                                                        <div
+                                                                                            class="d-flex align-items-center justify-content-between mt-3 mb-2">
+                                                                                            <span
+                                                                                                class="small text-muted">Available
+                                                                                                Balance</span>
+                                                                                            <span class="text-dark">{{
+                                                                                                $user->real_wallet }}</span>
+                                                                                        </div>
 
-                                                                                <!-- Order Type Selector -->
-                                                                                <div class="mb-3">
-                                                                                    <label class="form-label">Order
-                                                                                        Type</label>
-                                                                                    <select id="orderType2{{ $i }}"
-                                                                                        name="orderType2{{ $i }}"
-                                                                                        onchange="handleOrderTypeChange({{ $i }}, this.value,'sell')"
-                                                                                        class="form-select">
-                                                                                        <option value="market"
-                                                                                            selected=""> Market
-                                                                                            Order</option>
-                                                                                        <option value="limit">Limit
-                                                                                            Order</option>
-                                                                                        <option value="stoploss">Stop
-                                                                                            Loss Order</option>
-                                                                                    </select>
-                                                                                </div>
+                                                                                        <!-- Order Type Selector -->
+                                                                                        <div class="mb-3">
+                                                                                            <label class="form-label">Order
+                                                                                                Type</label>
+                                                                                            <select id="orderType2{{ $i }}"
+                                                                                                name="orderType2{{ $i }}"
+                                                                                                onchange="handleOrderTypeChange({{ $i }}, this.value,'sell')"
+                                                                                                class="form-select">
+                                                                                                <option value="market"
+                                                                                                    selected=""> Market
+                                                                                                    Order</option>
+                                                                                                <option value="limit">Limit
+                                                                                                    Order</option>
+                                                                                                <option value="stoploss">Stop
+                                                                                                    Loss Order</option>
+                                                                                            </select>
+                                                                                        </div>
 
-                                                                                <!-- Price Input -->
-                                                                                <div class="input-group mb-3">
-                                                                                    <span
-                                                                                        class="input-group-text">Market
-                                                                                        Price</span>
-                                                                                    <input id="realprice2{{ $i }}"
-                                                                                        name="realprice2{{ $i }}"
-                                                                                        readonly type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="Enter price"
-                                                                                        value="{{ $stock->ltp }}">
-                                                                                        >
+                                                                                        <!-- Price Input -->
+                                                                                        <div class="input-group mb-3">
+                                                                                            <span
+                                                                                                class="input-group-text">Market
+                                                                                                Price</span>
+                                                                                            <input id="realprice2{{ $i }}"
+                                                                                                name="realprice2{{ $i }}"
+                                                                                                readonly type="text"
+                                                                                                class="form-control"
+                                                                                                placeholder="Enter price"
+                                                                                                value="{{ $stock->ltp }}">
+                                                                                                >
 
-                                                                                    <span
-                                                                                        class="input-group-text">₹</span>
-                                                                                </div>
+                                                                                            <span
+                                                                                                class="input-group-text">₹</span>
+                                                                                        </div>
 
-                                                                                <!-- Limit Input -->
-                                                                                <div id="limitblock2{{ $i }}"
-                                                                                    style="display: none"
-                                                                                    class="input-group mb-3">
-                                                                                    <span class="input-group-text">Limit
-                                                                                        Price</span>
-                                                                                    <input id="limitprice2{{ $i }}"
-                                                                                        name="limitprice2{{ $i }}"
-                                                                                        disabled type="hidden"
-                                                                                        class="form-control"
-                                                                                        placeholder="Enter price"
-                                                                                        value="0.00">
+                                                                                        <!-- Limit Input -->
+                                                                                        <div id="limitblock2{{ $i }}"
+                                                                                            style="display: none"
+                                                                                            class="input-group mb-3">
+                                                                                            <span class="input-group-text">Limit
+                                                                                                Price</span>
+                                                                                            <input id="limitprice2{{ $i }}"
+                                                                                                name="limitprice2{{ $i }}"
+                                                                                                disabled type="hidden"
+                                                                                                class="form-control"
+                                                                                                placeholder="Enter price"
+                                                                                                value="0.00">
 
-                                                                                    <span
-                                                                                        class="input-group-text">₹</span>
-                                                                                </div>
+                                                                                            <span
+                                                                                                class="input-group-text">₹</span>
+                                                                                        </div>
 
-                                                                                <div class=""
-                                                                                    style="display: flex; justify-content:space-between; gap:20px;">
-                                                                                    <div class="input-group mb-3">
-                                                                                        <span
-                                                                                            class="input-group-text">Lot</span>
-                                                                                        <button
-                                                                                            onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell')"
-                                                                                            class="btn btn-outline-secondary"
-                                                                                            type="button"
-                                                                                            id="decrement">-</button>
-                                                                                        <input type="text"
-                                                                                            class="form-control text-center"
-                                                                                            placeholder="Enter size"
-                                                                                            id="lotSize2{{ $i }}"
-                                                                                            name="lotSize2{{ $i }}"
-                                                                                            value="0" readonly>
-                                                                                        <button
-                                                                                            onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell')"
-                                                                                            class="btn btn-outline-secondary"
-                                                                                            type="button"
-                                                                                            id="increment">+</button>
-                                                                                    </div>
-                                                                                    <div class="input-group mb-3">
-                                                                                        <span
-                                                                                            class="input-group-text">Quantity</span>
-                                                                                        <input type="text"
-                                                                                            class="form-control"
-                                                                                            placeholder="Enter size"
-                                                                                            id="quantity2{{ $i }}"
-                                                                                            name="quantity2{{ $i }}"
-                                                                                            value={{ $quantity }}
-                                                                                            readonly>
-                                                                                    </div>
-                                                                                </div>
+                                                                                        <div class=""
+                                                                                            style="display: flex; justify-content:space-between; gap:20px;">
+                                                                                            <div class="input-group mb-3">
+                                                                                                <span
+                                                                                                    class="input-group-text">Lot</span>
+                                                                                                <button
+                                                                                                    onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell')"
+                                                                                                    class="btn btn-outline-secondary"
+                                                                                                    type="button"
+                                                                                                    id="decrement">-</button>
+                                                                                                <input type="text"
+                                                                                                    class="form-control text-center"
+                                                                                                    placeholder="Enter size"
+                                                                                                    id="lotSize2{{ $i }}"
+                                                                                                    name="lotSize2{{ $i }}"
+                                                                                                    value="0" readonly>
+                                                                                                <button
+                                                                                                    onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell')"
+                                                                                                    class="btn btn-outline-secondary"
+                                                                                                    type="button"
+                                                                                                    id="increment">+</button>
+                                                                                            </div>
+                                                                                            <div class="input-group mb-3">
+                                                                                                <span
+                                                                                                    class="input-group-text">Quantity</span>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Enter size"
+                                                                                                    id="quantity2{{ $i }}"
+                                                                                                    name="quantity2{{ $i }}"
+                                                                                                    value={{ $quantity }}
+                                                                                                    readonly>
+                                                                                            </div>
+                                                                                        </div>
 
-                                                                                <!-- Take Profit & Stop Loss -->
-                                                                                <div class="mb-3">
-                                                                                    <label
-                                                                                        class="form-label">Mode</label>
-                                                                                    <div
-                                                                                        class="d-flex align-items-center gap-3">
-                                                                                        <!-- Delivery Mode Radio Button -->
-                                                                                        <div class="form-check">
-                                                                                            <input
-                                                                                                class="form-check-input"
-                                                                                                type="radio"
-                                                                                                name="tradeMode2{{ $i }}"
-                                                                                                id="deliveryMode2{{ $i }}"
-                                                                                                value="delivery"
-                                                                                                onchange="handleTradeModeChange({{ $i }}, 'delivery')"
-                                                                                                checked>
+                                                                                        <!-- Take Profit & Stop Loss -->
+                                                                                        <div class="mb-3">
                                                                                             <label
-                                                                                                class="form-check-label"
-                                                                                                for="deliveryMode2{{ $i }}">
-                                                                                                Delivery Mode
-                                                                                            </label>
+                                                                                                class="form-label">Mode</label>
+                                                                                            <div
+                                                                                                class="d-flex align-items-center gap-3">
+                                                                                                <!-- Delivery Mode Radio Button -->
+                                                                                                <div class="form-check">
+                                                                                                    <input
+                                                                                                        class="form-check-input"
+                                                                                                        type="radio"
+                                                                                                        name="tradeMode2{{ $i }}"
+                                                                                                        id="deliveryMode2{{ $i }}"
+                                                                                                        value="delivery"
+                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery')"
+                                                                                                        checked>
+                                                                                                    <label
+                                                                                                        class="form-check-label"
+                                                                                                        for="deliveryMode2{{ $i }}">
+                                                                                                        Delivery Mode
+                                                                                                    </label>
+                                                                                                </div>
+
+                                                                                                <!-- Intraday Mode Radio Button -->
+                                                                                                <div class="form-check">
+                                                                                                    <input
+                                                                                                        class="form-check-input"
+                                                                                                        type="radio"
+                                                                                                        name="tradeMode2{{ $i }}"
+                                                                                                        id="intradayMode2{{ $i }}"
+                                                                                                        value="intraday"
+                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')">
+                                                                                                    <label
+                                                                                                        class="form-check-label"
+                                                                                                        for="intradayMode2{{ $i }}">
+                                                                                                        Intraday Mode
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
 
-                                                                                        <!-- Intraday Mode Radio Button -->
-                                                                                        <div class="form-check">
-                                                                                            <input
-                                                                                                class="form-check-input"
-                                                                                                type="radio"
-                                                                                                name="tradeMode2{{ $i }}"
-                                                                                                id="intradayMode2{{ $i }}"
-                                                                                                value="intraday"
-                                                                                                onchange="handleTradeModeChange({{ $i }}, 'intraday')">
-                                                                                            <label
-                                                                                                class="form-check-label"
-                                                                                                for="intradayMode2{{ $i }}">
-                                                                                                Intraday Mode
-                                                                                            </label>
+                                                                                        <!-- Cost and Max Info -->
+                                                                                        <div
+                                                                                            class="d-flex justify-content-between flex-wrap">
+                                                                                            {{-- <div class="d-flex">
+                                                                                                <div>Cost:</div>
+                                                                                                <div id="costPrice2{{ $i }}"
+                                                                                                    class="px-1">₹0.00</div>
+                                                                                            </div> --}}
+                                                                                            <div
+                                                                                                class="d-flex justify-content-between flex-wrap align-items-center">
+                                                                                                <!-- Displaying Cost and Margin Price -->
+                                                                                                <div class="d-flex flex-column">
+                                                                                                    <span>
+                                                                                                        Cost: <s
+                                                                                                            id="costPrice2{{ $i }}"
+                                                                                                            name="costPrice2{{ $i }}"
+                                                                                                            class="px-1">₹0.00</s>
+                                                                                                    </span>
+                                                                                                    <span>
+                                                                                                        After Margin: <span
+                                                                                                            id="marginCost2{{ $i }}"
+                                                                                                            class="text-success">₹0.00</span>
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="d-flex">
+                                                                                                <div>Max:</div>
+                                                                                                <div id="maxPrice2{{ $i }}"
+                                                                                                    class=" px-1">
+                                                                                                    ₹{{ $user->real_wallet }}
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                </div>
 
-                                                                                <!-- Cost and Max Info -->
-                                                                                <div
-                                                                                    class="d-flex justify-content-between flex-wrap">
-                                                                                    {{-- <div class="d-flex">
-                                                                                        <div>Cost:</div>
-                                                                                        <div id="costPrice2{{ $i }}"
-                                                                                            class="px-1">₹0.00</div>
-                                                                                    </div> --}}
-                                                                                    <div
-                                                                                        class="d-flex justify-content-between flex-wrap align-items-center">
-                                                                                        <!-- Displaying Cost and Margin Price -->
-                                                                                        <div class="d-flex flex-column">
-                                                                                            <span>
-                                                                                                Cost: <s
-                                                                                                    id="costPrice2{{ $i }}"
-                                                                                                    name="costPrice2{{ $i }}"
-                                                                                                    class="px-1">₹0.00</s>
-                                                                                            </span>
-                                                                                            <span>
-                                                                                                After Margin: <span
-                                                                                                    id="marginCost2{{ $i }}"
-                                                                                                    class="text-success">₹0.00</span>
-                                                                                            </span>
+                                                                                        <div>
+                                                                                            <p id="error-fund2{{ $i }}"
+                                                                                                style="display: none;color:red">
+                                                                                                Insuffient Fund</p>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="d-flex">
-                                                                                        <div>Max:</div>
-                                                                                        <div id="maxPrice2{{ $i }}"
-                                                                                            class=" px-1">
-                                                                                            ₹{{ $user->real_wallet }}
+
+                                                                                        <!-- Buy/Sell Buttons -->
+                                                                                        <div
+                                                                                            class="mt-3 d-flex justify-content-between">
+
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-danger btn-sm light text-uppercase btn-block">SELL</button>
                                                                                         </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div>
-                                                                                    <p id="error-fund2{{ $i }}"
-                                                                                        style="display: none;color:red">
-                                                                                        Insuffient Fund</p>
-                                                                                </div>
-
-                                                                                <!-- Buy/Sell Buttons -->
-                                                                                <div
-                                                                                    class="mt-3 d-flex justify-content-between">
-
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-sm light text-uppercase btn-block">SELL</button>
-                                                                                </div>
-                                                                </form>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    </form>
+
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
-                                </div>
-                            </div>
 
 
                         </div>
@@ -1063,42 +1064,86 @@ $user = Auth::user();
                 // id:formData.id,
             }
 
-            $.ajax({
-                url: url,
-                type: type,
-                data: data,
-                success: function(response) {
-                    response = JSON.parse(response);
-                    console.log(response);
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.message || 'An error occurred.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
-                    }
+            if(formData[`lotSize1${id}`] < 1){
+                Toastify({
+                    text: "Lot size must be greater than 0.",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#FF5733",
+                }).showToast();
+                return;
+            }
+
+            const loadingToast = Toastify({
+    text: "Processing your order...",
+    duration: -1, // Keep it visible until manually closed
+    gravity: "top",
+    offset: {
+                    y: "90px" // Moves it 60px down from the top
                 },
-                error: function(xhr) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON?.message ||
-                            'An error occurred while placing the order.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    });
-                    console.error(xhr.responseJSON);
-                }
+    position: "center",
+    backgroundColor: "#3498db", // Blue for loading
+}).showToast();
+
+$.ajax({
+    url: url,
+    type: type,
+    data: data,
+    success: function(response) {
+        loadingToast.hideToast(); // Hide loading toast
+        
+        response = JSON.parse(response);
+        console.log(response);
+
+        if (response.status === 'success') {
+            Toastify({
+                text: "✅ Order Placed ",
+                duration: 1500,
+                gravity: "top",
+                offset: {
+                    y: "90px" // Moves it 60px down from the top
+                },
+                position: "center",
+                backgroundColor: "#3ab67a",
+                callback: function() {
+                    let offcanvas = document.getElementById(`orderoffcanvasBottom${id}`); // Use ID to select offcanvas
+        let bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvas);
+        bsOffcanvas.hide(); // Close the offcanvas
+
+        // Remove the backdrop after hiding the offcanvas
+        setTimeout(() => {
+            document.querySelectorAll('.offcanvas-backdrop').forEach(backdrop => {
+                backdrop.remove();
             });
+        }, 300);
+    }
+            }).showToast();
+        } else {
+            Toastify({
+                text: "⚠️ An error occurred. Please try again.",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#FF5733",
+            }).showToast();
+        }
+    },
+    error: function(xhr) {
+        loadingToast.hideToast(); // Hide loading toast in case of error
+
+        Swal.fire({
+            title: 'Error',
+            text: xhr.responseJSON?.message || 
+                  'An error occurred while placing the order.',
+            icon: 'error',
+            confirmButtonText: 'Okay'
+        });
+
+        console.error(xhr.responseJSON);
+    }
+});
+
 
 
 
@@ -2004,6 +2049,7 @@ function showLoading() {
     <script src="js/dlabnav-init.js"></script>
     <script src="js/demo.js"></script>
     <script src="js/styleSwitcher.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 
 
