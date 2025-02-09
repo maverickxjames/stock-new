@@ -260,7 +260,7 @@ $user = Auth::user();
                                     $isin=$key->isIn;
                                     $id=$key->id;
                                     $instrumentType=$key->instrumentType;
-                                    $stock=DB::table('future_temp')->where('isin', $isin)->first();
+                                    $stock=DB::table('future_temp')->where('instrumentKey', $foisin)->first();
                                     $quantity=$stock->lotSize;
 
                                     ?>
@@ -805,7 +805,32 @@ $user = Auth::user();
                     <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
                         <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">Loading...
+                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
+                                    <?php 
+                                    $change = $stock->ltp - $stock->cp;
+                                    if($change > 0){
+                                        ?>
+                                        <span class="badge badge-success me-1">▲</span>
+                                        <span class="text-success" id="perc{{ $i }}"><?php echo number_format(($change/$stock->cp)*100,2) ?>% &nbsp;</span>
+                                        <span class="text-success" id="perc{{ $i }}">(<?php echo number_format(($change),2) ?> pts) </span>
+                                        
+                                       
+                                        <?php 
+                                    }elseif($change < 0){
+                                        ?>
+                                        <span class="badge badge-danger me-1">▼</span>
+                                        <span class="text-danger" id="perc{{ $i }}">{{ number_format(($change/$stock->cp)*100,2) }}% &nbsp;</span>
+                                        <span class="text-danger" id="perc{{ $i }}">(<?php echo number_format(($change),2) ?> pts) </span>
+                                       
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <span class="badge badge-warning me-1">-</span>
+                                        <span class="text-warning" id="perc{{ $i }}">0.00% &nbsp;</span>
+                                        <span class="text-warning" id="perc{{ $i }}">(0.00 pts) </span>
+                                        <?php 
+                                    }    
+                                    ?>
                                 </p>
 
                                 </p>
@@ -817,7 +842,7 @@ $user = Auth::user();
                                     <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
                                         LTP:
                                         <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
-                                            123.8</span>
+                                            {{ $stock->ltp }}</span>
                                     </p>
                                 </div>
                             </div>
@@ -829,11 +854,11 @@ $user = Auth::user();
                             <div class="d-flex justify-content-between mb-2">
                                 <div class="me-3">
                                     <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600"
-                                            id="bid{{ $i }}">123.8</span></p>
+                                            id="bid{{ $i }}">{{ $stock->bid }}</span></p>
                                 </div>
                                 <div class="me-3">
                                     <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600"
-                                            id="ask{{ $i }}">123.8</span></p>
+                                            id="ask{{ $i }}">{{ $stock->ask }}</span></p>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between" style="font-size: xx-small">
@@ -841,13 +866,13 @@ $user = Auth::user();
                                     <div class="me-3">
                                         <p class="mb-0">Open/Close</p>
                                         <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
-                                            123.8/123.8</p>
+                                            {{ $stock->open }}/{{ $stock->close }}</p>
                                     </div>
                                 </div>
                                 <div class="me-3">
                                     <p class="mb-0">High/Low</p>
                                     <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">
-                                        123.8/128.8</p>
+                                        {{ $stock->high }}/{{ $stock->low }}</p>
                                 </div>
                             </div>
                         </div>
@@ -1658,7 +1683,6 @@ function showLoading() {
             .listen('Watchlist', (event) => {
                 const feeds = event.watchlist.feeds;
                 console.log(feeds);
-
                 // Iterate through the received WebSocket data
                 for (const key in feeds) {
                     if (feeds.hasOwnProperty(key)) {
@@ -1691,10 +1715,7 @@ function showLoading() {
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
                             const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
 
-                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            const percentageIcon = percentageChange > 0 ?
-                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                           
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 

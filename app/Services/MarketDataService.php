@@ -72,7 +72,7 @@ class MarketDataService
 
         $nsefo = DB::table('watchlist')
             ->select('instrumentKey') // Select only the 'exchangeToken' column
-            ->distinct()              // Ensure the results are distinct
+            ->distinct()
             ->get();                  // Retrieve the data
 
         // Convert the collection to an array of 'exchangeToken' values
@@ -108,7 +108,64 @@ class MarketDataService
                 $apidata = $decodedData->serializeToJsonString();
 
                 $data2 = json_decode($apidata, true);
-                // var_dump($data2);
+
+            //     $instrumentKeys = $finalArray['instrumentKeys']; 
+
+
+            //     foreach ($instrumentKeys as $key) {
+            //         // print_r($data2['feeds'][$key]['ff']['marketFF']);
+            //         // continue;
+            //         // print_r($data2);
+                  
+            //         $ltp = isset($data2['feeds'][$key]['ff']['marketFF']['ltpc']['ltp']) 
+            //         ? $data2['feeds'][$key]['ff']['marketFF']['ltpc']['ltp'] : 0;
+             
+            //  $cp = isset($data2['feeds'][$key]['ff']['marketFF']['ltpc']['cp']) 
+            //        ? $data2['feeds'][$key]['ff']['marketFF']['ltpc']['cp'] : 0;
+             
+            //  $open = isset($data2['feeds'][$key]['ff']['marketFF']['marketOHLC']['ohlc'][0]['open']) 
+            //          ? $data2['feeds'][$key]['ff']['marketFF']['marketOHLC']['ohlc'][0]['open'] : 0;
+             
+            //  $close = isset($data2['feeds'][$key]['ff']['marketFF']['marketOHLC']['ohlc'][0]['close']) 
+            //           ? $data2['feeds'][$key]['ff']['marketFF']['marketOHLC']['ohlc'][0]['close'] : 0;
+             
+            //  $high = isset($data2['feeds'][$key]['ff']['marketFF']['marketOHLC']['ohlc'][0]['high']) 
+            //          ? $data2['feeds'][$key]['ff']['marketFF']['marketOHLC']['ohlc'][0]['high'] : 0;
+             
+            //  $low = isset($data2['feeds'][$key]['ff']['marketFF']['marketOHLC']['ohlc'][0]['low']) 
+            //         ? $data2['feeds'][$key]['ff']['marketFF']['marketOHLC']['ohlc'][0]['low'] : 0;
+             
+            //  $askQ = isset($data2['feeds'][$key]['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['askQ']) 
+            //          ? $data2['feeds'][$key]['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['askQ'] : 0;
+             
+            //  $bidQ = isset($data2['feeds'][$key]['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['bidQ']) 
+            //          ? $data2['feeds'][$key]['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['bidQ'] : 0;
+             
+                  
+            //         // $mm = $data2['feeds'][$key]['ff']['marketFF'];
+            //         echo $key."  = > ".  $ltp . "  " . $cp . "  " . $open . "  " . $close . "  " . $high . "  " . $low . "  " . $askQ . "  " . $bidQ . "\n";
+
+            //         DB::table('future_temp')
+            //             ->where('instrumentKey', $key)
+            //             ->update([
+            //                 'ltp' => $ltp,
+            //                 'cp' => $cp,
+            //                 'open' => $open,
+            //                 'close' => $close,
+            //                 'high' => $high,
+            //                 'low' => $low,
+            //                 'ask' => $askQ,
+            //                 'bid' => $bidQ,
+                          
+            //             ]);
+            //     }
+
+
+               
+            //    var_dump($data2);
+                
+
+
 
                 // Broadcast the processed data to the client
                 broadcast(new \App\Events\Watchlist($data2))->toOthers();

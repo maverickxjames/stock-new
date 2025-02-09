@@ -126,6 +126,7 @@ Route::middleware('auth')->group(function () {
     // Trade Route 
 
     Route::get('trade-details/{id}', [TradeController::class, 'tradeDetails'])->name('tradeDetails');
+    Route::post('update-feed', [TradeController::class, 'updatefeed'])->name('updatefeed');
 });
 
 
