@@ -1,5 +1,5 @@
 @php
-$user = Auth::user();
+    $user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -52,52 +52,52 @@ $user = Auth::user();
     <!-- Datatable -->
     <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
-   <style>
-     .trade-container {
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        /* Remove padding from container */
-        margin: 0;
-    }
+    <style>
+        .trade-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            /* Remove padding from container */
+            margin: 0;
+        }
 
-    .trade-item {
-        padding: 5px 10px;
-        /* Padding inside each trade item */
-        border-bottom: 1px solid #ddd;
-        /* Add a bottom border for separation */
-        font-size: 16px;
-        /* Adjust font size */
-        color: #333;
-        /* Set a nice text color */
-        background-color: #f9f9f9;
-        /* Optional: Add background color */
-        transition: background-color 0.3s;
-        /* Add a smooth transition effect */
-        display: flex;
-        justify-content: space-between;
-    }
+        .trade-item {
+            padding: 5px 10px;
+            /* Padding inside each trade item */
+            border-bottom: 1px solid #ddd;
+            /* Add a bottom border for separation */
+            font-size: 16px;
+            /* Adjust font size */
+            color: #333;
+            /* Set a nice text color */
+            background-color: #f9f9f9;
+            /* Optional: Add background color */
+            transition: background-color 0.3s;
+            /* Add a smooth transition effect */
+            display: flex;
+            justify-content: space-between;
+        }
 
-    .trade-item h2 {
-        margin: 0;
-        /* Remove margin for the heading */
-        /* color: #565656; */
-        font-family: serif;
-        font-weight: 600;
-    }
+        .trade-item h2 {
+            margin: 0;
+            /* Remove margin for the heading */
+            /* color: #565656; */
+            font-family: serif;
+            font-weight: 600;
+        }
 
-    .trade-item:last-child {
-        border-bottom: none;
-        /* Remove the border for the last item */
-    }
+        .trade-item:last-child {
+            border-bottom: none;
+            /* Remove the border for the last item */
+        }
 
-    .trade-item:hover {
-        background-color: #e9ecef;
-        /* Add hover effect for better interactivity */
-        cursor: pointer;
-        /* Pointer cursor for better UX */
-    }
-   </style>
+        .trade-item:hover {
+            background-color: #e9ecef;
+            /* Add hover effect for better interactivity */
+            cursor: pointer;
+            /* Pointer cursor for better UX */
+        }
+    </style>
 </head>
 
 <body>
@@ -199,14 +199,14 @@ $user = Auth::user();
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
                                         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all"
-                                            aria-selected="true">All</button>
+                                            data-bs-target="#nav-all" type="button" role="tab"
+                                            aria-controls="nav-all" aria-selected="true">All</button>
                                         <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-fut" type="button" role="tab" aria-controls="nav-fut"
-                                            aria-selected="false">Future</button>
+                                            data-bs-target="#nav-fut" type="button" role="tab"
+                                            aria-controls="nav-fut" aria-selected="false">Future</button>
                                         <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-opt" type="button" role="tab" aria-controls="nav-opt"
-                                            aria-selected="false">Option</button>
+                                            data-bs-target="#nav-opt" type="button" role="tab"
+                                            aria-controls="nav-opt" aria-selected="false">Option</button>
                                     </div>
                                 </nav>
                             </div>
@@ -272,84 +272,122 @@ $user = Auth::user();
 
                                                         ?>
 
-                                                          <!--Top up Modal start-->
-                                                        <div class="modal fade" id="exampleModalCenter1{{ $i }}">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <!--Top up Modal start-->
+                                                        <div class="modal fade"
+                                                            id="exampleModalCenter1{{ $i }}">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
                                                                 <div class="modal-content">
-                                                                    <div class="modal-header" style="padding-right: 1.875rem;padding-left: 10px;">
-                                                                        <h2 class="modal-title">{{ $stock->stock_name }} </h2>
-                                                                        <button type="button" data-bs-dismiss="modal" style="border: none">
+                                                                    <div class="modal-header"
+                                                                        style="padding-right: 1.875rem;padding-left: 10px;">
+                                                                        <h2 class="modal-title">
+                                                                            {{ $stock->stock_name }} </h2>
+                                                                        <button type="button" data-bs-dismiss="modal"
+                                                                            style="border: none">
                                                                             <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
                                                                                 width="20" alt="">
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body p-0">
                                                                         <div class="trade-container">
-                                                                            <div data-bs-dismiss="modal" 
+                                                                            <div data-bs-dismiss="modal"
                                                                                 class="trade-item">
                                                                                 <h2>Exit Position</h2>
-                                                                                <div class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)" id="add_script">
+                                                                                <div
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20" alt="">
+                                                                                            width="20"
+                                                                                            alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
-                                                                            
-                                                                            <div class="trade-item" data-bs-dismiss="modal">
+
+                                                                            <div class="trade-item"
+                                                                                data-bs-dismiss="modal">
                                                                                 <h2>Details</h2>
-                                                                                <div class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)" id="add_script">
+                                                                                <div
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20" alt="">
+                                                                                            width="20"
+                                                                                            alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="trade-item" 
+                                                                            <div class="trade-item"
                                                                                 data-bs-dismiss="modal">
                                                                                 <h2>Remove</h2>
-                                                                                <div class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)" id="add_script">
+                                                                                <div
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20" alt="">
+                                                                                            width="20"
+                                                                                            alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-danger light"
+                                                                        <button type="button"
+                                                                            class="btn btn-danger light"
                                                                             data-bs-dismiss="modal">Close</button>
-                                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-primary">Save
+                                                                            changes</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <!--Top up Modal end-->
                                                         <!-- column -->
-                                                        <p style="display: none" id="isin1{{ $i }}">{{ $foisin }}</p>
-                                                        <p style="display: none" id="invest1{{ $i }}">{{ $stock->total_cost
-                                                            }}</p>
-                                                        <p style="display: none" id="lotSize1{{ $i }}">{{
-                                                            $stock->lotSize }}</p>
-                                                        <p style="display: none" id="quantity1{{ $i }}">{{
-                                                            $stock->quantity }}</p>
-                                                        <p style="display: none" id="tradeType1{{ $i }}">{{
-                                                            $stock->tradeType }}</p>
+                                                        <p style="display: none" id="isin1{{ $i }}">
+                                                            {{ $foisin }}</p>
+                                                        <p style="display: none" id="invest1{{ $i }}">
+                                                            {{ $stock->total_cost }}</p>
+                                                        <p style="display: none" id="lotSize1{{ $i }}">
+                                                            {{ $stock->lotSize }}</p>
+                                                        <p style="display: none" id="quantity1{{ $i }}">
+                                                            {{ $stock->quantity }}</p>
+                                                        <p style="display: none" id="tradeType1{{ $i }}">
+                                                            {{ $stock->tradeType }}</p>
 
-                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModalCenter1{{ $i }}">
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModalCenter1{{ $i }}">
                                                             <div class="card pull-up"
                                                                 style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
                                                                 <div class="card-body align-items-center flex-wrap">
-                                                                    <div class="d-flex align-items-center mb-4">
+                                                                    <p
+                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                        @if ($stock->action == 'BUY')
+                                                                            <span class="badge badge-success me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @else
+                                                                            <span class="badge badge-danger me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @endif
+                                                                        @if ($stock->duration == 'delivery')
+                                                                            <span class="badge badge-light ml-2">
+                                                                                Delivery</span>
+                                                                        @else
+                                                                            <span class="badge badge-dark ml-1">
+                                                                                Intraday</span>
+                                                                        @endif
+                                                                    </p>
+                                                                    <div class="d-flex align-items-center mb-4 mt-2">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25 style="border-radius: 100%">
+                                                                            alt="" width=25
+                                                                            style="border-radius: 100%">
                                                                         <div class="ms-1">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
-                                                                                    style="font-size:1rem">
+                                                                                    style="font-size:1rem; font-weight:900">
                                                                                     {{ $stock->stock_name }}
 
 
@@ -359,15 +397,9 @@ $user = Auth::user();
                                                                             </a>
                                                                             <div class="text-end"
                                                                                 style="position: absolute;top: 10px;right: 14px;">
-                                                                                @if ($stock->action == 'BUY')
-                                                                                <span class="badge badge-success">
-                                                                                    {{ $stock->action }}</span>
-                                                                                @else
-                                                                                <span class="badge badge-danger">
-                                                                                    {{ $stock->action }}</span>
-                                                                                @endif
-                                                                                {{-- <p class="text-muted mb-1 fs-13">
-                                                                                    {{ $stock->action }}</p> --}}
+                                                                                <p class="text-muted mb-1 fs-13">
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                                </p>
                                                                             </div>
 
                                                                         </div>
@@ -388,7 +420,8 @@ $user = Auth::user();
                                                                                 class="mb-0 fs-14 text-success font-w600">
                                                                                 ₹ 65/10%</P> --}}
                                                                             <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                                id="change1{{ $i }}">Loading...
+                                                                                id="change1{{ $i }}">
+                                                                                Loading...
                                                                             </p>
                                                                             <span class="fs-12">Qty :
                                                                                 {{ $stock->lotSize }}
@@ -436,11 +469,12 @@ $user = Auth::user();
 
                                                         ?>
                                                         <!-- column -->
-                                                        <p style="display: none" id="isin2{{ $i }}">{{ $foisin }}</p>
-                                                        <p style="display: none" id="invest2{{ $i }}">{{ $stock->price
-                                                            }}</p>
-                                                        <p style="display: none" id="quantity2{{ $i }}">{{
-                                                            $stock->lotSize }}</p>
+                                                        <p style="display: none" id="isin2{{ $i }}">
+                                                            {{ $foisin }}</p>
+                                                        <p style="display: none" id="invest2{{ $i }}">
+                                                            {{ $stock->price }}</p>
+                                                        <p style="display: none" id="quantity2{{ $i }}">
+                                                            {{ $stock->lotSize }}</p>
                                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                                             <div class="card pull-up"
                                                                 style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
@@ -448,7 +482,8 @@ $user = Auth::user();
                                                                     <div class="d-flex align-items-center mb-4">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25 style="border-radius: 100%">
+                                                                            alt="" width=25
+                                                                            style="border-radius: 100%">
                                                                         <div class="ms-1">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
@@ -462,11 +497,11 @@ $user = Auth::user();
                                                                             <div class="text-end"
                                                                                 style="position: absolute;top: 10px;right: 14px;">
                                                                                 @if ($stock->action == 'BUY')
-                                                                                <span class="badge badge-success">
-                                                                                    {{ $stock->action }}</span>
+                                                                                    <span class="badge badge-success">
+                                                                                        {{ $stock->action }}</span>
                                                                                 @else
-                                                                                <span class="badge badge-danger">
-                                                                                    {{ $stock->action }}</span>
+                                                                                    <span class="badge badge-danger">
+                                                                                        {{ $stock->action }}</span>
                                                                                 @endif
                                                                                 {{-- <p class="text-muted mb-1 fs-13">
                                                                                     {{ $stock->action }}</p> --}}
@@ -490,7 +525,8 @@ $user = Auth::user();
                                                                                 class="mb-0 fs-14 text-success font-w600">
                                                                                 ₹ 65/10%</P> --}}
                                                                             <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                                id="change2{{ $i }}">Loading...
+                                                                                id="change2{{ $i }}">
+                                                                                Loading...
                                                                             </p>
                                                                             <span class="fs-12">Qty :
                                                                                 {{ $stock->lotSize }}
@@ -539,11 +575,12 @@ $user = Auth::user();
 
                                                         ?>
                                                         <!-- column -->
-                                                        <p style="display: none" id="isin3{{ $i }}">{{ $foisin }}</p>
-                                                        <p style="display: none" id="invest3{{ $i }}">{{ $stock->price
-                                                            }}</p>
-                                                        <p style="display: none" id="quantity3{{ $i }}">{{
-                                                            $stock->lotSize }}</p>
+                                                        <p style="display: none" id="isin3{{ $i }}">
+                                                            {{ $foisin }}</p>
+                                                        <p style="display: none" id="invest3{{ $i }}">
+                                                            {{ $stock->price }}</p>
+                                                        <p style="display: none" id="quantity3{{ $i }}">
+                                                            {{ $stock->lotSize }}</p>
                                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                                             <div class="card pull-up"
                                                                 style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
@@ -551,7 +588,8 @@ $user = Auth::user();
                                                                     <div class="d-flex align-items-center mb-4">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25 style="border-radius: 100%">
+                                                                            alt="" width=25
+                                                                            style="border-radius: 100%">
                                                                         <div class="ms-1">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
@@ -565,11 +603,11 @@ $user = Auth::user();
                                                                             <div class="text-end"
                                                                                 style="position: absolute;top: 10px;right: 14px;">
                                                                                 @if ($stock->action == 'BUY')
-                                                                                <span class="badge badge-success">
-                                                                                    {{ $stock->action }}</span>
+                                                                                    <span class="badge badge-success">
+                                                                                        {{ $stock->action }}</span>
                                                                                 @else
-                                                                                <span class="badge badge-danger">
-                                                                                    {{ $stock->action }}</span>
+                                                                                    <span class="badge badge-danger">
+                                                                                        {{ $stock->action }}</span>
                                                                                 @endif
                                                                                 {{-- <p class="text-muted mb-1 fs-13">
                                                                                     {{ $stock->action }}</p> --}}
@@ -593,7 +631,8 @@ $user = Auth::user();
                                                                                 class="mb-0 fs-14 text-success font-w600">
                                                                                 ₹ 65/10%</P> --}}
                                                                             <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                                id="change3{{ $i }}">Loading...
+                                                                                id="change3{{ $i }}">
+                                                                                Loading...
                                                                             </p>
                                                                             <span class="fs-12">Qty :
                                                                                 {{ $stock->lotSize }}
@@ -671,7 +710,7 @@ $user = Auth::user();
                 const feeds = event.trade.feeds;
 
                 console.log(feeds);
-                
+
 
                 // Iterate through the received WebSocket data
                 for (const key in feeds) {
@@ -679,55 +718,58 @@ $user = Auth::user();
                         const feedData = feeds[key].ff.marketFF; // Data from WebSocket
                         const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
 
-                        console.log("receivedIsin",receivedIsin);
-                        
+                        console.log("receivedIsin", receivedIsin);
+
 
                         // console.log(feedData);
                         // console.log(document.querySelectorAll("p[id^='isin1']"));
 
                         // Find the <p> tag containing the matching ISIN
-                        const allElement = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el.textContent.trim() === receivedIsin.trim());
-                  
+                        const allElement = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el
+                            .textContent.trim() === receivedIsin.trim());
 
-                            console.log("allElement",allElement);
+
+                        console.log("allElement", allElement);
                         const futureElement = Array.from(document.querySelectorAll("p[id^='isin2']")).find(el => el
                             .textContent === receivedIsin);
-                            console.log("futureElement",futureElement); 
-                            
-                            const optionElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el => 
-                                                el.textContent.trim() === receivedIsin.trim()
-                                            );
-                            console.log("optionElement",optionElement);
-                        
+                        console.log("futureElement", futureElement);
+
+                        const optionElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el =>
+                            el.textContent.trim() === receivedIsin.trim()
+                        );
+                        console.log("optionElement", optionElement);
+
                         if (allElement) {
                             // console.log("allElement",allElement.id);
                             // Extract the numeric part from the id, e.g., "isin1" → "1"
-                            const rowId = allElement.id.replace('isin1','');
+                            const rowId = allElement.id.replace('isin1', '');
 
                             // console.log("rowId1",rowId);
 
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
-                            console.log("price",price);
-                            
+                            console.log("price", price);
+
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
 
-                            const invest = parseFloat(document.getElementById(`invest1${rowId}`).textContent) || 0; // Investment amount
+                            const invest = parseFloat(document.getElementById(`invest1${rowId}`).textContent) ||
+                                0; // Investment amount
                             // const lotSize = parseFloat(document.getElementById(`lotSize1${rowId}`).textContent) || 0; // Lot size
-                            const quantity = parseFloat(document.getElementById(`quantity1${rowId}`).textContent) || 0; // Quantity
+                            const quantity = parseFloat(document.getElementById(`quantity1${rowId}`).textContent) ||
+                                0; // Quantity
                             const tradeType = document.getElementById(`tradeType1${rowId}`).textContent; // Trade type
-                           
-                            
-                            let margin=0;
 
-                            if(tradeType=='FUT'){
-                            margin=500;
-                            }else if(tradeType=='CE' || tradeType=='PE'){
-                            margin=7;
-                            }else{
-                            margin=0;
+
+                            let margin = 0;
+
+                            if (tradeType == 'FUT') {
+                                margin = 500;
+                            } else if (tradeType == 'CE' || tradeType == 'PE') {
+                                margin = 7;
+                            } else {
+                                margin = 0;
                             }
 
-                            const currentValue = ((price  * quantity)/margin).toFixed(2); // Actual investment amount
+                            const currentValue = ((price * quantity) / margin).toFixed(2); // Actual investment amount
 
 
                             const profitAndLoss = (currentValue - invest).toFixed(2);
@@ -737,17 +779,17 @@ $user = Auth::user();
                             const pandloss = invest + parseFloat(profitAndLoss);
 
                             document.getElementById(`price1${rowId}`).textContent = `Current : ₹${pandloss || '0'}`;
-                         
+
                             const badgeValue = (price - cp).toFixed(2) || '0';
                             const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
 
-                           
+
 
                             const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
                             const percentageIcon = percentageChange > 0 ?
                                 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
                                 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                           
+
 
                             // class bage for profit an dloss
                             const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
@@ -756,37 +798,42 @@ $user = Auth::user();
                                 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
-                            document.getElementById(`stockChange1${rowId}`).innerHTML = `
+                            document.getElementById(`stockChange1${rowId}`).innerHTML =
+                                `
                                         ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
                                          ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
 
-                            document.getElementById(`change1${rowId}`).innerHTML = `
+                            document.getElementById(`change1${rowId}`).innerHTML =
+                                `
                             ${profitAndLoss > 0 
                                 ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
                                 : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
 
-                                console.log(`Investment: ₹${invest}, Current Value: ₹${currentValue}`);
-console.log(`Profit/Loss: ₹${profitAndLoss} (${profitAndLossPercentage}%)`);
+                            console.log(`Investment: ₹${invest}, Current Value: ₹${currentValue}`);
+                            console.log(`Profit/Loss: ₹${profitAndLoss} (${profitAndLossPercentage}%)`);
 
                         } else if (futureElement) {
 
-                            const rowId = futureElement.id.replace('isin2','');
+                            const rowId = futureElement.id.replace('isin2', '');
 
-                            console.log("rowId2",rowId);
+                            console.log("rowId2", rowId);
 
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
-                            const invest = parseFloat(document.getElementById(`invest2${rowId}`).textContent) || 0; // Investment amount
-                            const quantity = parseFloat(document.getElementById(`quantity2${rowId}`).textContent) || 0; // Quantity
+                            const invest = parseFloat(document.getElementById(`invest2${rowId}`).textContent) ||
+                                0; // Investment amount
+                            const quantity = parseFloat(document.getElementById(`quantity2${rowId}`).textContent) ||
+                                0; // Quantity
 
-                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc.ltp || '0');
+                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc
+                                .ltp || '0');
 
                             const badgeValue = (price - cp).toFixed(2) || '0';
                             const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
 
-                            const profitAndLoss = ((price - invest) * quantity).toFixed(2); 
+                            const profitAndLoss = ((price - invest) * quantity).toFixed(2);
                             const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
 
                             const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
@@ -802,42 +849,47 @@ console.log(`Profit/Loss: ₹${profitAndLoss} (${profitAndLossPercentage}%)`);
                                 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
-                                document.getElementById(`stockChange2${rowId}`).innerHTML = `
+                            document.getElementById(`stockChange2${rowId}`).innerHTML =
+                                `
                                         ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
                                          ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
 
-                            document.getElementById(`change2${rowId}`).innerHTML = `
+                            document.getElementById(`change2${rowId}`).innerHTML =
+                                `
                             ${profitAndLoss > 0 
                                 ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
                                 : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
-                            
 
-                           
+
+
                         } else if (optionElement) {
                             const rowId = optionElement.id.replace('isin3', '');
 
-                            console.log("rowId3",rowId);
-                            
+                            console.log("rowId3", rowId);
+
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
-                            const invest = parseFloat(document.getElementById(`invest3${rowId}`).textContent) || 0; // Investment amount
-                            const quantity = parseFloat(document.getElementById(`quantity3${rowId}`).textContent) || 0; // Quantity
+                            const invest = parseFloat(document.getElementById(`invest3${rowId}`).textContent) ||
+                                0; // Investment amount
+                            const quantity = parseFloat(document.getElementById(`quantity3${rowId}`).textContent) ||
+                                0; // Quantity
 
-                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc.ltp || '0');
-                         
+                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc
+                                .ltp || '0');
+
                             const badgeValue = (price - cp).toFixed(2) || '0';
                             const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
 
-                            const profitAndLoss = ((price - invest) * quantity).toFixed(2); 
+                            const profitAndLoss = ((price - invest) * quantity).toFixed(2);
                             const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
 
                             const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
                             const percentageIcon = percentageChange > 0 ?
                                 'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
                                 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-                           
+
 
                             // class bage for profit an dloss
                             const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
@@ -846,13 +898,15 @@ console.log(`Profit/Loss: ₹${profitAndLoss} (${profitAndLossPercentage}%)`);
                                 'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
-                            document.getElementById(`stockChange3${rowId}`).innerHTML = `
+                            document.getElementById(`stockChange3${rowId}`).innerHTML =
+                                `
                                         ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
                                          ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
 
-                            document.getElementById(`change3${rowId}`).innerHTML = `
+                            document.getElementById(`change3${rowId}`).innerHTML =
+                                `
                             ${profitAndLoss > 0 
                                 ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
                                 : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
