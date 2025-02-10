@@ -1124,7 +1124,7 @@ $user = Auth::user();
                             }).showToast();
                         } else {
                             Toastify({
-                                text: response.message || "An error occurred while placing the order.",
+                                text: response.message,
                                 duration: 3000,
                                 gravity: "top",
                                 position: "center",
@@ -1813,10 +1813,10 @@ function showLoading() {
                             document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high +
-                                '/' + feedData.marketOHLC.ohlc[0].low || '0' + '/' + '0';
+                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0' +
+                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
                             document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
-                                .open + '/' + feedData.marketOHLC.ohlc[0].close || '0' + '/' + '0';
+                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
                             const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
