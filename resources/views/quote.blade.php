@@ -804,86 +804,86 @@ $user = Auth::user();
 
 
 
-                <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
-                <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal"
-                    data-bs-target="#exampleModalCenter{{ $i }}">
-                    <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
-                        <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
-                                    <?php 
-                                    $change = $stock->ltp - $stock->cp;
-                                    if($change > 0){
-                                        ?>
-                                        <span class="badge badge-success me-1">▲</span>
-                                        <span class="text-success" id="perc{{ $i }}"><?php echo number_format(($change/$stock->cp)*100,2) ?>% &nbsp;</span>
-                                        <span class="text-success" id="perc{{ $i }}">(<?php echo number_format(($change),2) ?> pts) </span>
-                                        
-                                       
-                                        <?php 
-                                    }elseif($change < 0){
-                                        ?>
-                                        <span class="badge badge-danger me-1">▼</span>
-                                        <span class="text-danger" id="perc{{ $i }}">{{ number_format(($change/$stock->cp)*100,2) }}% &nbsp;</span>
-                                        <span class="text-danger" id="perc{{ $i }}">(<?php echo number_format(($change),2) ?> pts) </span>
-                                       
-                                        <?php
-                                    }else{
-                                        ?>
-                                        <span class="badge badge-warning me-1">-</span>
-                                        <span class="text-warning" id="perc{{ $i }}">0.00% &nbsp;</span>
-                                        <span class="text-warning" id="perc{{ $i }}">(0.00 pts) </span>
-                                        <?php 
-                                    }    
-                                    ?>
-                                </p>
+                                    <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
+                                    <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalCenter{{ $i }}">
+                                        <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
+                                            <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
+                                                        <?php 
+                                                        $change = $stock->ltp - $stock->cp;
+                                                        if($change > 0){
+                                                            ?>
+                                                            <span class="badge badge-success me-1">▲</span>
+                                                            <span class="text-success" id="perc{{ $i }}"><?php echo number_format(($change/$stock->cp)*100,2) ?>% &nbsp;</span>
+                                                            <span class="text-success" id="perc{{ $i }}">(<?php echo number_format(($change),2) ?> pts) </span>
+                                                            
+                                                        
+                                                            <?php 
+                                                        }elseif($change < 0){
+                                                            ?>
+                                                            <span class="badge badge-danger me-1">▼</span>
+                                                            <span class="text-danger" id="perc{{ $i }}">{{ number_format(($change/$stock->cp)*100,2) }}% &nbsp;</span>
+                                                            <span class="text-danger" id="perc{{ $i }}">(<?php echo number_format(($change),2) ?> pts) </span>
+                                                        
+                                                            <?php
+                                                        }else{
+                                                            ?>
+                                                            <span class="badge badge-warning me-1">-</span>
+                                                            <span class="text-warning" id="perc{{ $i }}">0.00% &nbsp;</span>
+                                                            <span class="text-warning" id="perc{{ $i }}">(0.00 pts) </span>
+                                                            <?php 
+                                                        }    
+                                                        ?>
+                                                    </p>
 
-                                </p>
-                                {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{
-                                    $key->instrumentType }} <span class="text-muted">({{ $key->expiry
-                                        }})</span></h4> --}}
-                                <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
-                                <div class="d-flex justify-content-between ">
-                                    <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
-                                        LTP:
-                                        <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
-                                            {{ $stock->ltp }}</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
-                                <p class="text-muted mb-1 fs-13">{{ $key->exchange }}</p>
-                            </div>
-                        </div>
-                        <div class="card-body ">
-                            <div class="d-flex justify-content-between mb-2">
-                                <div class="me-3">
-                                    <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600"
-                                            id="bid{{ $i }}">{{ $stock->bid }}</span></p>
-                                </div>
-                                <div class="me-3">
-                                    <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600"
-                                            id="ask{{ $i }}">{{ $stock->ask }}</span></p>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between" style="font-size: xx-small">
-                                <div class="d-flex align-items-center">
-                                    <div class="me-3">
-                                        <p class="mb-0">Open/Close</p>
-                                        <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
-                                            {{ $stock->open }}/{{ $stock->close }}</p>
+                                                    </p>
+                                                    {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{
+                                                        $key->instrumentType }} <span class="text-muted">({{ $key->expiry
+                                                            }})</span></h4> --}}
+                                                    <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
+                                                    <div class="d-flex justify-content-between ">
+                                                        <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
+                                                            LTP:
+                                                            <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
+                                                                {{ $stock->ltp }}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
+                                                    <p class="text-muted mb-1 fs-13">{{ $key->exchange }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-body ">
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <div class="me-3">
+                                                        <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600"
+                                                                id="bid{{ $i }}">{{ $stock->bid }}</span></p>
+                                                    </div>
+                                                    <div class="me-3">
+                                                        <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600"
+                                                                id="ask{{ $i }}">{{ $stock->ask }}</span></p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between" style="font-size: xx-small">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-3">
+                                                            <p class="mb-0">Open/Close</p>
+                                                            <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
+                                                                {{ $stock->open }}/{{ $stock->close }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="me-3">
+                                                        <p class="mb-0">High/Low</p>
+                                                        <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">
+                                                            {{ $stock->high }}/{{ $stock->low }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="me-3">
-                                    <p class="mb-0">High/Low</p>
-                                    <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">
-                                        {{ $stock->high }}/{{ $stock->low }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php
+                            <?php
                                     $i++;
                                 }
                                 ?>
@@ -1069,80 +1069,90 @@ $user = Auth::user();
                     text: "Lot size must be greater than 0.",
                     duration: 3000,
                     gravity: "top",
-                    position: "right",
+                    position: "center",
+                    offset: {
+                    y: "90px" // Moves it 60px down from the top
+                },
                     backgroundColor: "#FF5733",
                 }).showToast();
                 return;
             }
 
             const loadingToast = Toastify({
-    text: "Processing your order...",
-    duration: -1, // Keep it visible until manually closed
-    gravity: "top",
-    offset: {
-                    y: "90px" // Moves it 60px down from the top
-                },
-    position: "center",
-    backgroundColor: "#3498db", // Blue for loading
-}).showToast();
-
-$.ajax({
-    url: url,
-    type: type,
-    data: data,
-    success: function(response) {
-        loadingToast.hideToast(); // Hide loading toast
-        
-        response = JSON.parse(response);
-        console.log(response);
-
-        if (response.status === 'success') {
-            Toastify({
-                text: "✅ Order Placed ",
-                duration: 1500,
+                text: "Processing your order...",
+                duration: -1, // Keep it visible until manually closed
                 gravity: "top",
                 offset: {
-                    y: "90px" // Moves it 60px down from the top
-                },
+                                y: "90px" // Moves it 60px down from the top
+                            },
                 position: "center",
-                backgroundColor: "#3ab67a",
-                callback: function() {
-                    let offcanvas = document.getElementById(`orderoffcanvasBottom${id}`); // Use ID to select offcanvas
-        let bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvas);
-        bsOffcanvas.hide(); // Close the offcanvas
-
-        // Remove the backdrop after hiding the offcanvas
-        setTimeout(() => {
-            document.querySelectorAll('.offcanvas-backdrop').forEach(backdrop => {
-                backdrop.remove();
-            });
-        }, 300);
-    }
+                backgroundColor: "#3498db", // Blue for loading
             }).showToast();
-        } else {
-            Toastify({
-                text: "⚠️ An error occurred. Please try again.",
-                duration: 3000,
-                gravity: "top",
-                position: "right",
-                backgroundColor: "#FF5733",
-            }).showToast();
-        }
-    },
-    error: function(xhr) {
-        loadingToast.hideToast(); // Hide loading toast in case of error
 
-        Swal.fire({
-            title: 'Error',
-            text: xhr.responseJSON?.message || 
-                  'An error occurred while placing the order.',
-            icon: 'error',
-            confirmButtonText: 'Okay'
-        });
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: data,
+                    success: function(response) {
+                        loadingToast.hideToast(); // Hide loading toast
+                        
+                        response = JSON.parse(response);
+                     
 
-        console.error(xhr.responseJSON);
-    }
-});
+                        if (response.status === 'success') {
+                            Toastify({
+                                text: "✅ Order Placed ",
+                                duration: 1500,
+                                gravity: "top",
+                                offset: {
+                                    y: "90px" // Moves it 60px down from the top
+                                },
+                                position: "center",
+                                backgroundColor: "#3ab67a",
+                                callback: function() {
+                                    let offcanvas = document.getElementById(`orderoffcanvasBottom${id}`); // Use ID to select offcanvas
+                        let bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvas);
+                        bsOffcanvas.hide(); // Close the offcanvas
+
+                        // Remove the backdrop after hiding the offcanvas
+                        setTimeout(() => {
+                            document.querySelectorAll('.offcanvas-backdrop').forEach(backdrop => {
+                                backdrop.remove();
+                            });
+                        }, 300);
+                    }
+                            }).showToast();
+                        } else {
+                            Toastify({
+                                text: response.message || "An error occurred while placing the order.",
+                                duration: 3000,
+                                gravity: "top",
+                                position: "center",
+                                offset: {
+                                    y: "90px" // Moves it 60px down from the top
+                                },
+                                backgroundColor: "#FF5733",
+                            }).showToast();
+                        }
+                    },
+                    error: function(xhr) {
+                        loadingToast.hideToast(); // Hide loading toast in case of error
+
+                        Toastify({
+                                text: xhr.responseJSON?.message || 
+                                'An error occurred while placing the order.',
+                                duration: 3000,
+                                gravity: "top",
+                                position: "center",
+                                offset: {
+                                    y: "90px" // Moves it 60px down from the top
+                                },
+                                backgroundColor: "#FF5733",
+                            }).showToast();
+
+                      
+                    }
+                });
 
 
 
@@ -1178,7 +1188,30 @@ $.ajax({
                 // id:formData.id,
             }
 
-            console.log(data);
+            if(formData[`lotSize2${id}`] < 1){
+                Toastify({
+                    text: "Lot size must be greater than 0.",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    offset: {
+                    y: "90px" // Moves it 60px down from the top
+                },
+                    backgroundColor: "#FF5733",
+                }).showToast();
+                return;
+            }
+
+            const loadingToast = Toastify({
+                text: "Processing your order...",
+                duration: -1, // Keep it visible until manually closed
+                gravity: "top",
+                offset: {
+                                y: "90px" // Moves it 60px down from the top
+                            },
+                position: "center",
+                backgroundColor: "#3498db", // Blue for loading
+            }).showToast();
             
 
             $.ajax({
@@ -1186,35 +1219,59 @@ $.ajax({
                 type: type,
                 data: data,
                 success: function(response) {
+                    loadingToast.hideToast();
                     response = JSON.parse(response);
-                    console.log(response);
+                 
                     if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            location.reload();
-                        });
+                        Toastify({
+                                text: "✅ Order Placed ",
+                                duration: 1500,
+                                gravity: "top",
+                                offset: {
+                                    y: "90px" // Moves it 60px down from the top
+                                },
+                                position: "center",
+                                backgroundColor: "#3ab67a",
+                                callback: function() {
+                                    let offcanvas = document.getElementById(`orderoffcanvasBottom${id}`); // Use ID to select offcanvas
+                        let bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvas);
+                        bsOffcanvas.hide(); // Close the offcanvas
+
+                        // Remove the backdrop after hiding the offcanvas
+                        setTimeout(() => {
+                            document.querySelectorAll('.offcanvas-backdrop').forEach(backdrop => {
+                                backdrop.remove();
+                            });
+                        }, 300);
+                    }
+                            }).showToast();
                     } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.message || 'An error occurred.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
+                        Toastify({
+                                text: response.message || "An error occurred while placing the order.",
+                                duration: 3000,
+                                gravity: "top",
+                                position: "center",
+                                offset: {
+                                    y: "90px" // Moves it 60px down from the top
+                                },
+                                backgroundColor: "#FF5733",
+                            }).showToast();
                     }
                 },
                 error: function(xhr) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON?.message ||
+                    loadingToast.hideToast(); // Hide loading toast in case of error
+
+                    Toastify({
+                            text: xhr.responseJSON?.message || 
                             'An error occurred while placing the order.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    });
-                    console.error(xhr.responseJSON);
+                            duration: 3000,
+                            gravity: "top",
+                            position: "center",
+                            offset: {
+                                y: "90px" // Moves it 60px down from the top
+                            },
+                            backgroundColor: "#FF5733",
+                        }).showToast();
                 }
             });
 
@@ -1754,8 +1811,8 @@ function showLoading() {
                             document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high +
                                 '/' + feedData.marketOHLC.ohlc[0].low || '0' + '/' + '0';
                             document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
