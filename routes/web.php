@@ -127,6 +127,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('trade-details/{id}', [TradeController::class, 'tradeDetails'])->name('tradeDetails');
     Route::post('update-feed', [TradeController::class, 'updatefeed'])->name('updatefeed');
+
+    Route::get('limitOrder', [StockController::class, 'limitOrder'])->name('limitOrder');
 });
 
 

@@ -193,7 +193,7 @@ $user = auth()->user();
                                     <img src="https://cdn-icons-png.flaticon.com/512/2698/2698011.png" alt="">
                                     <span class="ms-2">Settings </span>
                                 </a>
-                                <a onclick="window.location.href='{{ route('logout') }}'" class="dropdown-item ai-icon"
+                                <a onclick="window.location.href='{{ route('logoutt') }}'" class="dropdown-item ai-icon"
                                     style="cursor: pointer;">
                                     <img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png"
                                         alt="">

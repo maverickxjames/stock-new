@@ -210,6 +210,10 @@ class StockController extends Controller
         return view('order');
     }
 
+    public function limitOrder(){
+        return view('limitorder');
+    }
+
     public function updateFuture()
     {
         // fetch symbol list from db

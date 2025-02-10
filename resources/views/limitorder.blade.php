@@ -205,20 +205,6 @@ use App\Models\Stockdata;
                                     </div>
                                 </nav>
                             </div>
-                            <?php 
-                            $count = DB::table('trades')->where('user_id', $user->id)->where('status', 'pending')->count();
-                            ?>
-                          
-                                <div style="margin: 0 14px" class="alert alert-warning alert-dismissible alert-alt solid fade show">
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-                                    </button>
-                                    <strong>! Warning</strong> You have <span class="badge badge-pill badge-danger">{{ $count }}</span> pending orders. <a href="{{ route('limitOrder') }}"
-                                        class="badge badge-dark">View</a>
-                                </div>
-                        
-
-                            
-                            
                             <div class="card-body">
                                 <div class="tab-content" id="nav-tabContent1">
                                     <div class="tab-pane fade show active" id="nav-all" role="tabpanel"
@@ -234,7 +220,7 @@ use App\Models\Stockdata;
                                                     <div class="row">
 
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->orderBy('id','DESC')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'pending')->orderBy('id','DESC')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                
@@ -351,7 +337,7 @@ use App\Models\Stockdata;
                                                     <!-- Row -->
                                                     <div class="row">
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','FUT')->where('status', 'processing')->orderBy('id','DESC')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','FUT')->where('status', 'pending')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                
@@ -456,7 +442,7 @@ use App\Models\Stockdata;
                                                     <!-- Row -->
                                                     <div class="row">
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','OPT')->where('status', 'processing')->orderBy('id','DESC')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','OPT')->where('status', 'pending')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                
@@ -556,7 +542,7 @@ use App\Models\Stockdata;
                         </div>
                     </div>
                 </div>
-              
+               
             </div>
         </div>
         <!--**********************************
