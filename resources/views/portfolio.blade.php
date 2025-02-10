@@ -666,7 +666,7 @@
                                                                                                             <div
                                                                                                                 class="mt-3 d-flex justify-content-between">
                                                                                                                 <button
-                                                                                                                    type="subit"
+                                                                                                                    type="submit"
                                                                                                                     class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
                                                                                                             </div>
                                                                                                         </div>
@@ -696,6 +696,8 @@
                                                             {{ $stock->quantity }}</p>
                                                         <p style="display: none" id="tradeType1{{ $i }}">
                                                             {{ $stock->tradeType }}</p>
+                                                        <p style="display: none" id="action1{{ $i }}">
+                                                            {{ $stock->action }}</p>
 
                                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
                                                             data-bs-toggle="modal"
@@ -1298,7 +1300,7 @@
                                                         <!--Top up Modal end-->
 
 
-                                                        <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                                                        {{-- <div class="offcanvas offcanvas-bottom" tabindex="-1"
                                                             id="orderoffcanvasBottom{{ $i }}"
                                                             aria-labelledby="offcanvasBottomLabel"
                                                             style="height: fit-content">
@@ -1318,7 +1320,6 @@
                                                                     <div class="col-xl-12">
                                                                         <div class="card">
                                                                             <div class="card-header flex-wrap">
-                                                                                <!-- <div class="d-flex"> -->
 
                                                                                 <nav class=""
                                                                                     style="width: 100%;">
@@ -1345,7 +1346,6 @@
 
                                                                                     </div>
                                                                                 </nav>
-                                                                                <!-- </div> -->
                                                                             </div>
                                                                             <div class="card-body pt-2">
                                                                                 <div class="tab-content"
@@ -1383,7 +1383,6 @@
                                                                                                         class="card">
                                                                                                         <div
                                                                                                             class="card-body pt-2">
-                                                                                                            <!-- Available Balance -->
                                                                                                             <div
                                                                                                                 class="d-flex align-items-center justify-content-between mt-3 mb-2">
                                                                                                                 <span
@@ -1392,7 +1391,6 @@
                                                                                                                 <span
                                                                                                                     class="text-dark">{{ $user->real_wallet }}</span>
                                                                                                             </div>
-                                                                                                            <!-- Order Type Selector -->
                                                                                                             <div
                                                                                                                 class="mb-3">
                                                                                                                 <label
@@ -1423,7 +1421,6 @@
                                                                                                                 </select>
                                                                                                             </div>
 
-                                                                                                            <!-- Price Input -->
                                                                                                             <div
                                                                                                                 class="input-group mb-3">
                                                                                                                 <span
@@ -1442,7 +1439,6 @@
                                                                                                                 <span
                                                                                                                     class="input-group-text">₹</span>
                                                                                                             </div>
-                                                                                                            <!-- Limit Input -->
                                                                                                             <div id="limitblock1{{ $i }}"
                                                                                                                 style="display: none"
                                                                                                                 class="input-group mb-3">
@@ -1502,14 +1498,12 @@
                                                                                                                 </div>
                                                                                                             </div>
 
-                                                                                                            <!-- Take Profit & Stop Loss -->
                                                                                                             <div
                                                                                                                 class="mb-3">
                                                                                                                 <label
                                                                                                                     class="form-label">Mode</label>
                                                                                                                 <div
                                                                                                                     class="d-flex align-items-center gap-3">
-                                                                                                                    <!-- Delivery Mode Radio Button -->
                                                                                                                     <div
                                                                                                                         class="form-check">
                                                                                                                         <input
@@ -1528,7 +1522,6 @@
                                                                                                                         </label>
                                                                                                                     </div>
 
-                                                                                                                    <!-- Intraday Mode Radio Button -->
                                                                                                                     <div
                                                                                                                         class="form-check">
                                                                                                                         <input
@@ -1550,17 +1543,11 @@
 
 
 
-                                                                                                            <!-- Cost and Max Info -->
                                                                                                             <div
                                                                                                                 class="d-flex justify-content-between flex-wrap">
-                                                                                                                {{-- <div class="d-flex">
-                                                                                                                        <div>Cost:</div>
-                                                                                                                        <div id="costPrice1{{ $i }}">
-                                                                                                                            ₹0.00</div>
-                                                                                                                    </div> --}}
+                                                                                                             
                                                                                                                 <div
                                                                                                                     class="d-flex justify-content-between flex-wrap align-items-center">
-                                                                                                                    <!-- Displaying Cost and Margin Price -->
                                                                                                                     <div
                                                                                                                         class="d-flex flex-column">
                                                                                                                         <span>
@@ -1601,7 +1588,6 @@
                                                                                                                 </p>
                                                                                                             </div>
 
-                                                                                                            <!-- Buy/Sell Buttons -->
                                                                                                             <div
                                                                                                                 class="mt-3 d-flex justify-content-between">
                                                                                                                 <button
@@ -1623,7 +1609,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                         <!-- column -->
                                                         <p style="display: none" id="isin3{{ $i }}">
                                                             {{ $foisin }}</p>
@@ -1864,7 +1850,7 @@
             .listen('Trade', (event) => {
                 const feeds = event.trade.feeds;
 
-                console.log(feeds);
+                // console.log(feeds);
 
 
                 // Iterate through the received WebSocket data
@@ -1895,27 +1881,17 @@
                         // console.log("optionElement", optionElement);
 
                         if (allElement) {
-                            // console.log("allElement",allElement.id);
-                            // Extract the numeric part from the id, e.g., "isin1" → "1"
                             const rowId = allElement.id.replace('isin1', '');
 
-                            // console.log("rowId1",rowId);
-
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
-                            // console.log("price", price);
-
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
 
-                            const invest = parseFloat(document.getElementById(`invest1${rowId}`).textContent) ||
-                                0; // Investment amount
-                            // const lotSize = parseFloat(document.getElementById(`lotSize1${rowId}`).textContent) || 0; // Lot size
-                            const quantity = parseFloat(document.getElementById(`quantity1${rowId}`).textContent) ||
-                                0; // Quantity
-                            const tradeType = document.getElementById(`tradeType1${rowId}`).textContent; // Trade type
+                            const invest = parseFloat(document.getElementById(`invest1${rowId}`).textContent) ||0; // Investment amount
+                            const quantity = parseFloat(document.getElementById(`quantity1${rowId}`).textContent) ||0; // Quantity
+                            const tradeType = document.getElementById(`tradeType1${rowId}`).innerText.trim(); // Trade type
+                            const action = document.getElementById(`action1${rowId}`).innerText.trim(); // Trade type
 
-                            console.log("tradeType", tradeType);
-                            let margin = 0;
-
+                            let margin = 1;
                             if (tradeType == 'FUT') {
                                 margin = 500;
                             } else if (tradeType == 'CE' || tradeType == 'PE') {
@@ -1924,14 +1900,21 @@
                                 margin = 1;
                             }
 
-                            const currentValue = ((price * quantity) / margin).toFixed(2); // Actual investment amount
+                            const currentValue = ((price * parseFloat(quantity)) / margin); // Actual investment amount
+                            
+                            let profitAndLoss = (currentValue - invest).toFixed(2);
 
-
-                            const profitAndLoss = (currentValue - invest).toFixed(2);
+                            if(action=='SELL'){
+                                profitAndLoss*=-1;
+                            }
+                            
                             const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
 
-                            // Calculate total portfolio value (including P/L)
-                            const pandloss = invest + parseFloat(profitAndLoss);
+                          
+                            const pandloss = (parseFloat(invest) + parseFloat(profitAndLoss)).toFixed(2);
+
+                            // console.log(rowId,"->price", price,"invest", invest,"quanrity", quantity,"currentValue", currentValue,"tradeType", tradeType,"action", action,"profitAndLoss", profitAndLoss,"profitAndLossPercentage", profitAndLossPercentage,"pandloss", pandloss);
+
 
                             document.getElementById(`price1${rowId}`).textContent = `Current : ₹${pandloss || '0'}`;
 
@@ -1952,8 +1935,6 @@
                                 ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
                                 : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
 
-                            console.log(`Investment: ₹${invest}, Current Value: ₹${currentValue}`);
-                            console.log(`Profit/Loss: ₹${profitAndLoss} (${profitAndLossPercentage}%)`);
 
                         } else if (futureElement) {
 
