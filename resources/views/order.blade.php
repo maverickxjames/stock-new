@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <?php
@@ -188,17 +188,17 @@ use App\Models\Stockdata;
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
                                         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab"
-                                            aria-controls="nav-all" aria-selected="true">All</button>
+                                            data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all"
+                                            aria-selected="true">All</button>
                                         <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-fut" type="button" role="tab"
-                                            aria-controls="nav-fut" aria-selected="false">Future</button>
+                                            data-bs-target="#nav-fut" type="button" role="tab" aria-controls="nav-fut"
+                                            aria-selected="false">Future</button>
                                         <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-opt" type="button" role="tab"
-                                            aria-controls="nav-opt" aria-selected="false">Option</button>
+                                            data-bs-target="#nav-opt" type="button" role="tab" aria-controls="nav-opt"
+                                            aria-selected="false">Option</button>
                                         <button class="nav-link" id="nav-mcx-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-mcx" type="button" role="tab"
-                                            aria-controls="nav-mcx" aria-selected="false">MCX</button>
+                                            data-bs-target="#nav-mcx" type="button" role="tab" aria-controls="nav-mcx"
+                                            aria-selected="false">MCX</button>
                                         <button class="nav-link" id="nav-indices-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-indices" type="button" role="tab"
                                             aria-controls="nav-indices" aria-selected="false">Indices</button>
@@ -208,17 +208,19 @@ use App\Models\Stockdata;
                             <?php 
                             $count = DB::table('trades')->where('user_id', $user->id)->where('status', 'pending')->count();
                             ?>
-                          
-                                <div style="margin: 0 14px" class="alert alert-warning alert-dismissible alert-alt solid fade show">
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-                                    </button>
-                                    <strong>! Warning</strong> You have <span class="badge badge-pill badge-danger">{{ $count }}</span> pending orders. <a href="{{ route('limitOrder') }}"
-                                        class="badge badge-dark">View</a>
-                                </div>
-                        
 
-                            
-                            
+                            <div style="margin: 0 14px"
+                                class="alert alert-warning alert-dismissible alert-alt solid fade show">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                </button>
+                                <strong>! Warning</strong> You have <span class="badge badge-pill badge-danger">{{
+                                    $count }}</span> pending orders. <a href="{{ route('limitOrder') }}"
+                                    class="badge badge-dark">View</a>
+                            </div>
+
+
+
+
                             <div class="card-body">
                                 <div class="tab-content" id="nav-tabContent1">
                                     <div class="tab-pane fade show active" id="nav-all" role="tabpanel"
@@ -234,7 +236,8 @@ use App\Models\Stockdata;
                                                     <div class="row">
 
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->orderBy('id','DESC')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->orderBy('id','DESC')->get();
+                                                        // $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->orderBy('id','DESC')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                
@@ -254,26 +257,25 @@ use App\Models\Stockdata;
                                                                     <p
                                                                         class="mb-0 fs-5 font-w500 d-flex align-items-center">
                                                                         @if ($stock->action == 'BUY')
-                                                                            <span class="badge badge-success me-2">
-                                                                                {{ $stock->action }}</span>
+                                                                        <span class="badge badge-success me-2">
+                                                                            {{ $stock->action }}</span>
                                                                         @else
-                                                                            <span class="badge badge-danger me-2">
-                                                                                {{ $stock->action }}</span>
+                                                                        <span class="badge badge-danger me-2">
+                                                                            {{ $stock->action }}</span>
                                                                         @endif
                                                                         @if ($stock->duration == 'delivery')
-                                                                            <span class="badge badge-light ml-2">
-                                                                                Delivery</span>
+                                                                        <span class="badge badge-light ml-2">
+                                                                            Delivery</span>
                                                                         @else
-                                                                            <span class="badge badge-dark ml-1">
-                                                                                Intraday</span>
+                                                                        <span class="badge badge-dark ml-1">
+                                                                            Intraday</span>
                                                                         @endif
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
-                                                                        <div class="ms-1">
+                                                                            alt="" width=30 style="border-radius: 100%">
+                                                                        <div class="ms-2">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
                                                                                     style="font-size:1rem; font-weight: 800">
@@ -281,13 +283,31 @@ use App\Models\Stockdata;
 
 
                                                                                 </h4>
-                                                                                <span>{{ $stock->order_type }}</span>
+                                                                                <span>{{ ucfirst($stock->order_type) }}
+                                                                                    Order</span>
                                                                             </a>
                                                                             <div class="text-end"
                                                                                 style="position: absolute;top: 10px;right: 14px;">
 
                                                                                 <p class="text-muted mb-1 fs-13">
-                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                                    {{
+                                                                                    \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                                    }}</br>
+
+                                                                                    <?php
+                                                                                    if($stock->duration=='intraday'){
+                                                                                        ?>
+                                                                                    Valid Till : {{
+                                                                                    \Carbon\Carbon::parse($stock->created_at)->addDays(1)->format('d
+                                                                                    M, Y') }}
+                                                                                    <?php
+                                                                                    }else{
+                                                                                        ?>
+                                                                                    Valid Till : {{ $stock->expiry }}
+                                                                                    <?php
+                                                                                    }
+                                                                                    
+                                                                                    ?>
                                                                                 </p>
                                                                             </div>
 
@@ -296,28 +316,77 @@ use App\Models\Stockdata;
                                                                     <div
                                                                         class="d-flex align-items-center justify-content-between">
                                                                         <div>
+                                                                            <?php if ($stock->status === 'completed' || $stock->status === 'expired') : ?>
                                                                             <p class="mb-0 fs-14 text-dark font-w600">
-                                                                                Exit Price : ₹ 659</P>
-                                                                            <span class="fs-12">Trade Price : ₹ ₹ 659
+                                                                                Profit/Loss Price :
+                                                                                <span
+                                                                                    class="<?= $profitAndLoss > 0 ? 'text-success' : 'text-danger' ?>"
+                                                                                    id="perc<?= $rowId ?>">
+                                                                                    <?= $profitAndLoss > 0 ? '+ ₹' . $profitAndLoss : '- ₹' . abs($profitAndLoss) ?>
+                                                                                    (
+                                                                                    <?= abs($profitAndLossPercentage) ?>%)
+                                                                                </span>
+                                                                            </p>
+                                                                            <span class="fs-12">Invest Price : ₹
+                                                                                <?= $stock->total_cost ?>
                                                                             </span>
-                                                                            {{-- <span class="fs-12">Delivery</span>
-                                                                            --}}
-                                                                        </div>
-                                                                        <div>
+
+                                                                            <?php elseif ($stock->status === 'pending') : ?>
                                                                             {{-- <p
-                                                                                class="mb-0 fs-14 text-success font-w600">
-                                                                                ₹ 65/10%</P> --}}
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Executing Price : ₹
+                                                                                <?= $stock->stop_loss ?? $stock->limit_order ?>
+                                                                            </p> --}}
+
+                                                                            <?php elseif ($stock->status === 'processing') : ?>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                Invest Amount : ₹
+                                                                                <?= $stock->total_cost ?>
+                                                                            </p>
+
+                                                                            <?php elseif ($stock->status === 'cancelled' || $stock->status === 'rejected') : ?>
+                                                                            <!-- Do not show anything -->
+
+                                                                            <?php endif; ?>
+                                                                        </div>
+
+                                                                        <?php
+                                                                        if($stock->status=='completed' || $stock->status=='expired'){
+                                                                           ?>
+
+
+                                                                        <?php
+
+                                                                        }
+                                                                        
+                                                                        ?>
+
+                                                                        <?php
+                                                                            $status = $stock->status;
+                                                                            $profitLossDisplay = '';
+
+                                                                            if ($status === 'completed' || $status === 'expired') {
+                                                                                $profitLossDisplay = ($profitAndLoss > 0)
+                                                                                    ? "<span class='text-success' id='perc$rowId'>+ ₹$profitAndLoss ($profitAndLossPercentage%)</span>"
+                                                                                    : "<span class='text-danger' id='perc$rowId'>- ₹" . abs($profitAndLoss) . " (" . abs($profitAndLossPercentage) . "%)</span>";
+                                                                            } elseif ($status === 'processing') {
+                                                                                $profitLossDisplay = "<span class='text-info'>Processing</span>";
+                                                                            } elseif ($status === 'pending') {
+                                                                                $profitLossDisplay = "<span class='text-warning'>Pending</span>";
+                                                                            
+                                                                            } elseif ($status === 'cancelled') {
+                                                                                $profitLossDisplay = "<span class='text-danger'>Cancelled</span>";
+                                                                            }
+                                                                            ?>
+
+                                                                        <div>
                                                                             <p
                                                                                 class="mb-0 fs-5 font-w500 d-flex align-items-center">
-                                                                                {{-- ${profitAndLoss > 0 
-                                                                                    ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
-                                                                                    : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`; --}}
-
-                                                                                <span class="text-success">₹
-                                                                                    1.2(2%)</span>
+                                                                                <?= $profitLossDisplay; ?>
                                                                             </p>
-                                                                            <span class="fs-12">Qty :
-                                                                                {{ $stock->lotSize }}({{ $stock->quantity }})
+                                                                            <span class="fs-12">Qty:
+                                                                                <?= $stock->lotSize; ?> (
+                                                                                <?= $stock->quantity; ?>)
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -328,7 +397,7 @@ use App\Models\Stockdata;
                                                         <?php 
                                                             $i++; 
                                                         }
-                                                            
+                                                        
                                                             ?>
 
 
@@ -351,7 +420,8 @@ use App\Models\Stockdata;
                                                     <!-- Row -->
                                                     <div class="row">
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','FUT')->where('status', 'processing')->orderBy('id','DESC')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','FUT')->orderBy('id','DESC')->get();
+                                                        // $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','FUT')->where('status', 'processing')->orderBy('id','DESC')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                
@@ -361,43 +431,66 @@ use App\Models\Stockdata;
 
 
                                                         ?>
-                                                        <!-- column -->
-                                                        <p style="display: none" id="isin2{{ $i }}">
-                                                            {{ $foisin }}</p>
-                                                        <p style="display: none" id="invest2{{ $i }}">
-                                                            {{ $stock->price }}</p>
-                                                        <p style="display: none" id="quantity2{{ $i }}">
-                                                            {{ $stock->lotSize }}</p>
+                                                         
                                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                                             <div class="card pull-up"
                                                                 style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
                                                                 <div class="card-body align-items-center flex-wrap">
-                                                                    <div class="d-flex align-items-center mb-4">
+                                                                    <p
+                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                        @if ($stock->action == 'BUY')
+                                                                        <span class="badge badge-success me-2">
+                                                                            {{ $stock->action }}</span>
+                                                                        @else
+                                                                        <span class="badge badge-danger me-2">
+                                                                            {{ $stock->action }}</span>
+                                                                        @endif
+                                                                        @if ($stock->duration == 'delivery')
+                                                                        <span class="badge badge-light ml-2">
+                                                                            Delivery</span>
+                                                                        @else
+                                                                        <span class="badge badge-dark ml-1">
+                                                                            Intraday</span>
+                                                                        @endif
+                                                                    </p>
+                                                                    <div class="d-flex align-items-center mb-4 mt-2">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
-                                                                        <div class="ms-1">
+                                                                            alt="" width=30 style="border-radius: 100%">
+                                                                        <div class="ms-2">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
-                                                                                    style="font-size:1rem">
+                                                                                    style="font-size:1rem; font-weight: 800">
                                                                                     {{ $stock->stock_name }}
-                                                                                    <span
-                                                                                        id="stockChange2{{ $i }}">Finance</span>
+
 
                                                                                 </h4>
+                                                                                <span>{{ ucfirst($stock->order_type) }}
+                                                                                    Order</span>
                                                                             </a>
                                                                             <div class="text-end"
                                                                                 style="position: absolute;top: 10px;right: 14px;">
-                                                                                @if ($stock->action == 'BUY')
-                                                                                    <span class="badge badge-success">
-                                                                                        {{ $stock->action }}</span>
-                                                                                @else
-                                                                                    <span class="badge badge-danger">
-                                                                                        {{ $stock->action }}</span>
-                                                                                @endif
-                                                                                {{-- <p class="text-muted mb-1 fs-13">
-                                                                                    {{ $stock->action }}</p> --}}
+
+                                                                                <p class="text-muted mb-1 fs-13">
+                                                                                    {{
+                                                                                    \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                                    }}</br>
+
+                                                                                    <?php
+                                                                                    if($stock->duration=='intraday'){
+                                                                                        ?>
+                                                                                    Valid Till : {{
+                                                                                    \Carbon\Carbon::parse($stock->created_at)->addDays(1)->format('d
+                                                                                    M, Y') }}
+                                                                                    <?php
+                                                                                    }else{
+                                                                                        ?>
+                                                                                    Valid Till : {{ $stock->expiry }}
+                                                                                    <?php
+                                                                                    }
+                                                                                    
+                                                                                    ?>
+                                                                                </p>
                                                                             </div>
 
                                                                         </div>
@@ -405,31 +498,83 @@ use App\Models\Stockdata;
                                                                     <div
                                                                         class="d-flex align-items-center justify-content-between">
                                                                         <div>
-                                                                            <p id="price2{{ $i }}"
-                                                                                class="mb-0 fs-14 text-dark font-w600">
-                                                                                Current : ₹ 65,123</P>
-                                                                            <span class="fs-12">Invest : ₹
-                                                                                {{ $stock->total_cost }}</span>
-                                                                            {{-- <span class="fs-12">Delivery</span>
-                                                                            --}}
-                                                                        </div>
-                                                                        <div>
-                                                                            {{-- <p
-                                                                                class="mb-0 fs-14 text-success font-w600">
-                                                                                ₹ 65/10%</P> --}}
-                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                                id="change2{{ $i }}">
-                                                                                Loading...
+                                                                            <?php if ($stock->status === 'completed' || $stock->status === 'expired') : ?>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                Profit/Loss Price :
+                                                                                <span
+                                                                                    class="<?= $profitAndLoss > 0 ? 'text-success' : 'text-danger' ?>"
+                                                                                    id="perc<?= $rowId ?>">
+                                                                                    <?= $profitAndLoss > 0 ? '+ ₹' . $profitAndLoss : '- ₹' . abs($profitAndLoss) ?>
+                                                                                    (
+                                                                                    <?= abs($profitAndLossPercentage) ?>%)
+                                                                                </span>
                                                                             </p>
-                                                                            <span class="fs-12">Qty :
-                                                                                {{ $stock->lotSize }}
+                                                                            <span class="fs-12">Invest Price : ₹
+                                                                                <?= $stock->total_cost ?>
+                                                                            </span>
+
+                                                                            <?php elseif ($stock->status === 'pending') : ?>
+                                                                            {{-- <p
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Executing Price : ₹
+                                                                                <?= $stock->stop_loss ?? $stock->limit_order ?>
+                                                                            </p> --}}
+
+                                                                            <?php elseif ($stock->status === 'processing') : ?>
+                                                                            <p class="mb-0 fs-14 text-dark font-w600">
+                                                                                Invest Amount : ₹
+                                                                                <?= $stock->total_cost ?>
+                                                                            </p>
+
+                                                                            <?php elseif ($stock->status === 'cancelled' || $stock->status === 'rejected') : ?>
+                                                                            <!-- Do not show anything -->
+
+                                                                            <?php endif; ?>
+                                                                        </div>
+
+                                                                        <?php
+                                                                        if($stock->status=='completed' || $stock->status=='expired'){
+                                                                           ?>
+
+
+                                                                        <?php
+
+                                                                        }
+                                                                        
+                                                                        ?>
+
+                                                                        <?php
+                                                                            $status = $stock->status;
+                                                                            $profitLossDisplay = '';
+
+                                                                            if ($status === 'completed' || $status === 'expired') {
+                                                                                $profitLossDisplay = ($profitAndLoss > 0)
+                                                                                    ? "<span class='text-success' id='perc$rowId'>+ ₹$profitAndLoss ($profitAndLossPercentage%)</span>"
+                                                                                    : "<span class='text-danger' id='perc$rowId'>- ₹" . abs($profitAndLoss) . " (" . abs($profitAndLossPercentage) . "%)</span>";
+                                                                            } elseif ($status === 'processing') {
+                                                                                $profitLossDisplay = "<span class='text-info'>Processing</span>";
+                                                                            } elseif ($status === 'pending') {
+                                                                                $profitLossDisplay = "<span class='text-warning'>Pending</span>";
+                                                                            
+                                                                            } elseif ($status === 'cancelled') {
+                                                                                $profitLossDisplay = "<span class='text-danger'>Cancelled</span>";
+                                                                            }
+                                                                            ?>
+
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                                <?= $profitLossDisplay; ?>
+                                                                            </p>
+                                                                            <span class="fs-12">Qty:
+                                                                                <?= $stock->lotSize; ?> (
+                                                                                <?= $stock->quantity; ?>)
                                                                             </span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- /column -->
                                                         <?php 
                                                             $i++; 
                                                         }
@@ -456,7 +601,7 @@ use App\Models\Stockdata;
                                                     <!-- Row -->
                                                     <div class="row">
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','OPT')->where('status', 'processing')->orderBy('id','DESC')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('tradeType','CE')->orwhere('tradeType','PE')->orderBy('id','DESC')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                
@@ -467,74 +612,150 @@ use App\Models\Stockdata;
 
 
                                                         ?>
-                                                        <!-- column -->
-                                                        <p style="display: none" id="isin3{{ $i }}">
-                                                            {{ $foisin }}</p>
-                                                        <p style="display: none" id="invest3{{ $i }}">
-                                                            {{ $stock->price }}</p>
-                                                        <p style="display: none" id="quantity3{{ $i }}">
-                                                            {{ $stock->lotSize }}</p>
-                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                                            <div class="card pull-up"
-                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                                <div class="card-body align-items-center flex-wrap">
-                                                                    <div class="d-flex align-items-center mb-4">
+                                                       
+                                                       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                        <div class="card pull-up"
+                                                            style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                            <div class="card-body align-items-center flex-wrap">
+                                                                <p
+                                                                    class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                    @if ($stock->action == 'BUY')
+                                                                    <span class="badge badge-success me-2">
+                                                                        {{ $stock->action }}</span>
+                                                                    @else
+                                                                    <span class="badge badge-danger me-2">
+                                                                        {{ $stock->action }}</span>
+                                                                    @endif
+                                                                    @if ($stock->duration == 'delivery')
+                                                                    <span class="badge badge-light ml-2">
+                                                                        Delivery</span>
+                                                                    @else
+                                                                    <span class="badge badge-dark ml-1">
+                                                                        Intraday</span>
+                                                                    @endif
+                                                                </p>
+                                                                <div class="d-flex align-items-center mb-4 mt-2">
 
-                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
-                                                                        <div class="ms-1">
-                                                                            <a href="javascript:void(0)">
-                                                                                <h4 class="card-title mb-0"
-                                                                                    style="font-size:1rem">
-                                                                                    {{ $stock->stock_name }}
-                                                                                    <span
-                                                                                        id="stockChange3{{ $i }}">Finance</span>
+                                                                    <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                        alt="" width=30 style="border-radius: 100%">
+                                                                    <div class="ms-2">
+                                                                        <a href="javascript:void(0)">
+                                                                            <h4 class="card-title mb-0"
+                                                                                style="font-size:1rem; font-weight: 800">
+                                                                                {{ $stock->stock_name }}
 
-                                                                                </h4>
-                                                                            </a>
-                                                                            <div class="text-end"
-                                                                                style="position: absolute;top: 10px;right: 14px;">
-                                                                                @if ($stock->action == 'BUY')
-                                                                                    <span class="badge badge-success">
-                                                                                        {{ $stock->action }}</span>
-                                                                                @else
-                                                                                    <span class="badge badge-danger">
-                                                                                        {{ $stock->action }}</span>
-                                                                                @endif
-                                                                                {{-- <p class="text-muted mb-1 fs-13">
-                                                                                    {{ $stock->action }}</p> --}}
-                                                                            </div>
 
-                                                                        </div>
-                                                                    </div>
-                                                                    <div
-                                                                        class="d-flex align-items-center justify-content-between">
-                                                                        <div>
-                                                                            <p id="price3{{ $i }}"
-                                                                                class="mb-0 fs-14 text-dark font-w600">
-                                                                                Current : ₹ 65,123</P>
-                                                                            <span class="fs-12">Invest : ₹
-                                                                                {{ $stock->total_cost }}</span>
-                                                                            {{-- <span class="fs-12">Delivery</span>
-                                                                            --}}
-                                                                        </div>
-                                                                        <div>
-                                                                            {{-- <p
-                                                                                class="mb-0 fs-14 text-success font-w600">
-                                                                                ₹ 65/10%</P> --}}
-                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                                id="change3{{ $i }}">
-                                                                                Loading...
+                                                                            </h4>
+                                                                            <span>{{ ucfirst($stock->order_type) }}
+                                                                                Order</span>
+                                                                        </a>
+                                                                        <div class="text-end"
+                                                                            style="position: absolute;top: 10px;right: 14px;">
+
+                                                                            <p class="text-muted mb-1 fs-13">
+                                                                                {{
+                                                                                \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                                }}</br>
+
+                                                                                <?php
+                                                                                if($stock->duration=='intraday'){
+                                                                                    ?>
+                                                                                Valid Till : {{
+                                                                                \Carbon\Carbon::parse($stock->created_at)->addDays(1)->format('d
+                                                                                M, Y') }}
+                                                                                <?php
+                                                                                }else{
+                                                                                    ?>
+                                                                                Valid Till : {{ $stock->expiry }}
+                                                                                <?php
+                                                                                }
+                                                                                
+                                                                                ?>
                                                                             </p>
-                                                                            <span class="fs-12">Qty :
-                                                                                {{ $stock->lotSize }}
-                                                                            </span>
                                                                         </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-between">
+                                                                    <div>
+                                                                        <?php if ($stock->status === 'completed' || $stock->status === 'expired') : ?>
+                                                                        <p class="mb-0 fs-14 text-dark font-w600">
+                                                                            Profit/Loss Price :
+                                                                            <span
+                                                                                class="<?= $profitAndLoss > 0 ? 'text-success' : 'text-danger' ?>"
+                                                                                id="perc<?= $rowId ?>">
+                                                                                <?= $profitAndLoss > 0 ? '+ ₹' . $profitAndLoss : '- ₹' . abs($profitAndLoss) ?>
+                                                                                (
+                                                                                <?= abs($profitAndLossPercentage) ?>%)
+                                                                            </span>
+                                                                        </p>
+                                                                        <span class="fs-12">Invest Price : ₹
+                                                                            <?= $stock->total_cost ?>
+                                                                        </span>
+
+                                                                        <?php elseif ($stock->status === 'pending') : ?>
+                                                                        {{-- <p
+                                                                            class="mb-0 fs-14 text-dark font-w600">
+                                                                            Executing Price : ₹
+                                                                            <?= $stock->stop_loss ?? $stock->limit_order ?>
+                                                                        </p> --}}
+
+                                                                        <?php elseif ($stock->status === 'processing') : ?>
+                                                                        <p class="mb-0 fs-14 text-dark font-w600">
+                                                                            Invest Amount : ₹
+                                                                            <?= $stock->total_cost ?>
+                                                                        </p>
+
+                                                                        <?php elseif ($stock->status === 'cancelled' || $stock->status === 'rejected') : ?>
+                                                                        <!-- Do not show anything -->
+
+                                                                        <?php endif; ?>
+                                                                    </div>
+
+                                                                    <?php
+                                                                    if($stock->status=='completed' || $stock->status=='expired'){
+                                                                       ?>
+
+
+                                                                    <?php
+
+                                                                    }
+                                                                    
+                                                                    ?>
+
+                                                                    <?php
+                                                                        $status = $stock->status;
+                                                                        $profitLossDisplay = '';
+
+                                                                        if ($status === 'completed' || $status === 'expired') {
+                                                                            $profitLossDisplay = ($profitAndLoss > 0)
+                                                                                ? "<span class='text-success' id='perc$rowId'>+ ₹$profitAndLoss ($profitAndLossPercentage%)</span>"
+                                                                                : "<span class='text-danger' id='perc$rowId'>- ₹" . abs($profitAndLoss) . " (" . abs($profitAndLossPercentage) . "%)</span>";
+                                                                        } elseif ($status === 'processing') {
+                                                                            $profitLossDisplay = "<span class='text-info'>Processing</span>";
+                                                                        } elseif ($status === 'pending') {
+                                                                            $profitLossDisplay = "<span class='text-warning'>Pending</span>";
+                                                                        
+                                                                        } elseif ($status === 'cancelled') {
+                                                                            $profitLossDisplay = "<span class='text-danger'>Cancelled</span>";
+                                                                        }
+                                                                        ?>
+
+                                                                    <div>
+                                                                        <p
+                                                                            class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                            <?= $profitLossDisplay; ?>
+                                                                        </p>
+                                                                        <span class="fs-12">Qty:
+                                                                            <?= $stock->lotSize; ?> (
+                                                                            <?= $stock->quantity; ?>)
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
                                                         <!-- /column -->
                                                         <?php 
                                                             $i++; 
@@ -556,7 +777,7 @@ use App\Models\Stockdata;
                         </div>
                     </div>
                 </div>
-              
+
             </div>
         </div>
         <!--**********************************
@@ -568,7 +789,7 @@ use App\Models\Stockdata;
         <!--**********************************
             Footer start
         ***********************************-->
-        
+
         <!--**********************************
             Footer end
         ***********************************-->

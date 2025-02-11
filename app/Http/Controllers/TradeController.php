@@ -386,8 +386,8 @@ class TradeController extends Controller
                 $end_time = strtotime('15:30:00');
                 $current_time = strtotime(date('H:i:s'));
 
-                if (false) {
-                    // if($current_time < $start_time || $current_time > $end_time){
+                // if (false) {
+                    if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                     exit;
                 } else {
