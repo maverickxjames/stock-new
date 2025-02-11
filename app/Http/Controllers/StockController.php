@@ -6,9 +6,13 @@ use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 // db facades 
 use Illuminate\Support\Facades\DB;
+
+
+
 
 
 
@@ -398,9 +402,11 @@ class StockController extends Controller
 
 
     public function quotes(){
-        $quote = DB::table('quotes')->get();
+       
+      
+       
 
-        return view('quote', ['quote' => $quote]);
+        return view('quote');
     }
 
     public function scripts(){

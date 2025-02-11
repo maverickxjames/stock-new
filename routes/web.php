@@ -129,6 +129,10 @@ Route::middleware('auth')->group(function () {
     Route::post('update-feed', [TradeController::class, 'updatefeed'])->name('updatefeed');
 
     Route::get('limitOrder', [StockController::class, 'limitOrder'])->name('limitOrder');
+
+    Route::get('ww', function(){
+        return view('wallet');
+    });
 });
 
 

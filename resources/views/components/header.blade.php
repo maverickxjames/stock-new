@@ -173,29 +173,29 @@ $user = auth()->user();
                                             <span class="d-block text-end">{{ $user['email'] }}</span>
                                         </div>
                                     </div>
-                                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png" alt="">
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end header-profile3 " style="">
                                 <a onclick="window.location.href='{{ route('profile') }}'"
                                     class="dropdown-item ai-icon " style="cursor: pointer;">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/1077/1077012.png" alt="">
                                     <span class="ms-2">Profile </span>
                                 </a>
                                 <a onclick="window.location.href='{{ route('portfolio') }}'"
                                     class="dropdown-item ai-icon " style="cursor: pointer;">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/943/943026.png" alt="">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/943/943026.png" alt="">
                                     <span class="ms-2">Portfolio </span>
                                 </a>
 
                                 <a onclick="window.location.href='{{ route('profile') }}'"
                                     class="dropdown-item ai-icon " style="cursor: pointer;">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/2698/2698011.png" alt="">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/2698/2698011.png" alt="">
                                     <span class="ms-2">Settings </span>
                                 </a>
                                 <a onclick="window.location.href='{{ route('logoutt') }}'" class="dropdown-item ai-icon"
                                     style="cursor: pointer;">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/15181/15181112.png"
+                                    <img src="https://cdn-icons-png.flaticon.com/128/12795/12795397.png"
                                         alt="">
                                     <span class="ms-2 text-danger">Logout </span>
                                 </a>

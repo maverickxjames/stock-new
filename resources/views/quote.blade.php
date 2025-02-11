@@ -205,7 +205,7 @@ $user = Auth::user();
 
 
     <!--Main wrapper start-->
-    <div id="main-wrapper">
+    <div id="main-wrapper" class="show">
 
         <!--Nav header start-->
         <x-nav-header />
@@ -254,545 +254,545 @@ $user = Auth::user();
                     <div class="col-xl-12">
                         <div class="row">
                             <?php
-                                $fetch = DB::table('watchlist')->where('userid', $user->id)->get();
-                                $i = 1;
-                                foreach($fetch as $key){
-                                    $foisin = $key->instrumentKey;
-                                    $isin=$key->isIn;
-                                    $id=$key->id;
-                                    $instrumentType=$key->instrumentType;
-                                    $stock=DB::table('future_temp')->where('instrumentKey', $foisin)->first();
-                                    $quantity=$stock->lotSize;
+                                        $fetch = DB::table('watchlist')->where('userid', Auth::user()->id  )->get();
+                                        $i = 1;
+                                        foreach($fetch as $key){
+                                            $foisin = $key->instrumentKey;
+                                            $isin=$key->isIn;
+                                            $id=$key->id;
+                                            $instrumentType=$key->instrumentType;
+                                            $stock=DB::table('future_temp')->where('instrumentKey', $foisin)->first();
+                                            $quantity=$stock->lotSize;
 
-                                    ?>
+                                            ?>
 
-                                    <!--Top up Modal start-->
-                                    <div class="modal fade" id="exampleModalCenter{{ $i }}">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header" style="padding-right: 1.875rem;padding-left: 10px;">
-                                                    <h2 class="modal-title">{{ $key->tradingSymbol }} </h2>
-                                                    <button type="button" data-bs-dismiss="modal" style="border: none">
-                                                        <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
-                                                            width="20" alt="">
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body p-0">
-                                                    <div class="trade-container">
-                                                        <div data-bs-dismiss="modal" onclick="showOrderForm({{ $i }})"
-                                                            class="trade-item">
-                                                            <h2>Trade</h2>
-                                                            <div class="icon-box icon-box-sm bgl-primary">
-                                                                <a href="javascript:void(0)" id="add_script">
-                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                        width="20" alt="">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="trade-item"
-                                                            onclick="fetchData('{{ $foisin }}','exampleModalCenter{{ $i }}');"
-                                                            data-bs-dismiss="modal">
-                                                            <h2 data-bs-dismiss="modal">Chart</h2>
-                                                            <div class="icon-box icon-box-sm bgl-primary">
-                                                                <a href="javascript:void(0)" id="add_script"
-                                                                    data-bs-dismiss="modal">
-                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                        width="20" alt="">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="trade-item" data-bs-dismiss="modal">
-                                                            <h2>Details</h2>
-                                                            <div class="icon-box icon-box-sm bgl-primary">
-                                                                <a href="javascript:void(0)" id="add_script">
-                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                        width="20" alt="">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="trade-item" onclick="removeWatchlist({{ $id }})"
-                                                            data-bs-dismiss="modal">
-                                                            <h2>Remove</h2>
-                                                            <div class="icon-box icon-box-sm bgl-primary">
-                                                                <a href="javascript:void(0)" id="add_script">
-                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                        width="20" alt="">
-                                                                </a>
-                                                            </div>
-                                                        </div>
+                            <!--Top up Modal start-->
+                            <div class="modal fade" id="exampleModalCenter{{ $i }}">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="padding-right: 1.875rem;padding-left: 10px;">
+                                            <h2 class="modal-title">{{ $key->tradingSymbol }} </h2>
+                                            <button type="button" data-bs-dismiss="modal" style="border: none">
+                                                <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                    width="20" alt="">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body p-0">
+                                            <div class="trade-container">
+                                                <div data-bs-dismiss="modal" onclick="showOrderForm({{ $i }})"
+                                                    class="trade-item">
+                                                    <h2>Trade</h2>
+                                                    <div class="icon-box icon-box-sm bgl-primary">
+                                                        <a href="javascript:void(0)" id="add_script">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                width="20" alt="">
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger light"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                <div class="trade-item"
+                                                    onclick="fetchData('{{ $foisin }}','exampleModalCenter{{ $i }}');"
+                                                    data-bs-dismiss="modal">
+                                                    <h2 data-bs-dismiss="modal">Chart</h2>
+                                                    <div class="icon-box icon-box-sm bgl-primary">
+                                                        <a href="javascript:void(0)" id="add_script"
+                                                            data-bs-dismiss="modal">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                width="20" alt="">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="trade-item" data-bs-dismiss="modal">
+                                                    <h2>Details</h2>
+                                                    <div class="icon-box icon-box-sm bgl-primary">
+                                                        <a href="javascript:void(0)" id="add_script">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                width="20" alt="">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="trade-item" onclick="removeWatchlist({{ $id }})"
+                                                    data-bs-dismiss="modal">
+                                                    <h2>Remove</h2>
+                                                    <div class="icon-box icon-box-sm bgl-primary">
+                                                        <a href="javascript:void(0)" id="add_script">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                width="20" alt="">
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!--Top up Modal end-->
-
-
-                                    <!-- Trade offcanvas model -->
-
-                                    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
-                                        aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
-                                        <div class="offcanvas-header">
-                                            <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
-                                                bottom
-                                            </h5>
-                                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                                aria-label="Close"></button>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Top up Modal end-->
 
-                                        <div class="offcanvas-body small">
-                                            <div class="row">
-                                                <div class="col-xl-12">
-                                                    <div class="card">
-                                                        <div class="card-header flex-wrap">
-                                                            <!-- <div class="d-flex"> -->
 
-                                                            <nav class="" style="width: 100%;">
-                                                                <div class="nav nav-pills light " id="nav-tab" role="tablist">
-                                                                    <button class="nav-link active " style="width: 50%;"
-                                                                        id="nav-order-tab" data-bs-toggle="tab"
-                                                                        data-bs-target="#nav-order{{ $i }}" type="button"
-                                                                        role="tab" aria-selected="true">Buy</button>
-                                                                    <button class="nav-link" style="width: 50%"
-                                                                        id="nav-histroy-tab" data-bs-toggle="tab"
-                                                                        data-bs-target="#nav-history{{ $i }}" type="button"
-                                                                        role="tab" aria-selected="false">Sell
-                                                                    </button>
+                            <!-- Trade offcanvas model -->
 
-                                                                </div>
-                                                            </nav>
-                                                            <!-- </div> -->
+                            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
+                                aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
+                                        bottom
+                                    </h5>
+                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <div class="offcanvas-body small">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="card">
+                                                <div class="card-header flex-wrap">
+                                                    <!-- <div class="d-flex"> -->
+
+                                                    <nav class="" style="width: 100%;">
+                                                        <div class="nav nav-pills light " id="nav-tab" role="tablist">
+                                                            <button class="nav-link active " style="width: 50%;"
+                                                                id="nav-order-tab" data-bs-toggle="tab"
+                                                                data-bs-target="#nav-order{{ $i }}" type="button"
+                                                                role="tab" aria-selected="true">Buy</button>
+                                                            <button class="nav-link" style="width: 50%"
+                                                                id="nav-histroy-tab" data-bs-toggle="tab"
+                                                                data-bs-target="#nav-history{{ $i }}" type="button"
+                                                                role="tab" aria-selected="false">Sell
+                                                            </button>
+
                                                         </div>
-                                                        <div class="card-body pt-2">
-                                                            <div class="tab-content" id="nav-tabContent">
-                                                                <div class="tab-pane fade show active" id="nav-order{{ $i }}"
-                                                                    role="tabpanel" aria-labelledby="nav-order-tab">
-                                                                    <div class="table-responsive dataTabletrade">
-                                                                        <form id="buyform{{ $i }}" name="buyform{{ $i }}"
-                                                                            method="POST" action="{{ route('placeBuyOrder') }}">
-                                                                            @csrf
-                                                                            <input type="text" name="id" value="{{ $i }}"
-                                                                                id="id" hidden>
-                                                                            <input type="text" name="instrumentKey1{{ $i }}"
-                                                                                value="{{ $foisin }}"
-                                                                                id="instrumentKey1{{ $i }}" hidden>
-                                                                            <input type="text" name="instrumentType{{ $i }}"
-                                                                                value="{{ $instrumentType }}"
-                                                                                id="instrumentType{{ $i }}" hidden>
-                                                                            <div class="col-xl-4" style="width: 100%;">
-                                                                                <div class="card">
-                                                                                    <div class="card-body pt-2">
-                                                                                        <!-- Available Balance -->
-                                                                                        <div
-                                                                                            class="d-flex align-items-center justify-content-between mt-3 mb-2">
-                                                                                            <span
-                                                                                                class="small text-muted">Available
-                                                                                                Balance</span>
-                                                                                            <span class="text-dark">{{
-                                                                                                $user->real_wallet }}</span>
-                                                                                        </div>
-                                                                                        <!-- Order Type Selector -->
-                                                                                        <div class="mb-3">
-                                                                                            <label class="form-label">Order
-                                                                                                Type</label>
-                                                                                            <select id="orderType1{{ $i }}"
-                                                                                                name="orderType1{{ $i }}"
-                                                                                                onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
-                                                                                                class="form-select">
-                                                                                                <option value="market"
-                                                                                                    selected=""> Market
-                                                                                                    Order</option>
-                                                                                                <option value="limit">Limit
-                                                                                                    Order</option>
-                                                                                                <option value="stoploss">Stop
-                                                                                                    Loss Order</option>
-                                                                                            </select>
-                                                                                        </div>
+                                                    </nav>
+                                                    <!-- </div> -->
+                                                </div>
+                                                <div class="card-body pt-2">
+                                                    <div class="tab-content" id="nav-tabContent">
+                                                        <div class="tab-pane fade show active" id="nav-order{{ $i }}"
+                                                            role="tabpanel" aria-labelledby="nav-order-tab">
+                                                            <div class="table-responsive dataTabletrade">
+                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}"
+                                                                    method="POST" action="{{ route('placeBuyOrder') }}">
+                                                                    @csrf
+                                                                    <input type="text" name="id" value="{{ $i }}"
+                                                                        id="id" hidden>
+                                                                    <input type="text" name="instrumentKey1{{ $i }}"
+                                                                        value="{{ $foisin }}"
+                                                                        id="instrumentKey1{{ $i }}" hidden>
+                                                                    <input type="text" name="instrumentType{{ $i }}"
+                                                                        value="{{ $instrumentType }}"
+                                                                        id="instrumentType{{ $i }}" hidden>
+                                                                    <div class="col-xl-4" style="width: 100%;">
+                                                                        <div class="card">
+                                                                            <div class="card-body pt-2">
+                                                                                <!-- Available Balance -->
+                                                                                <div
+                                                                                    class="d-flex align-items-center justify-content-between mt-3 mb-2">
+                                                                                    <span
+                                                                                        class="small text-muted">Available
+                                                                                        Balance</span>
+                                                                                    <span class="text-dark">{{
+                                                                                        $user->real_wallet }}</span>
+                                                                                </div>
+                                                                                <!-- Order Type Selector -->
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Order
+                                                                                        Type</label>
+                                                                                    <select id="orderType1{{ $i }}"
+                                                                                        name="orderType1{{ $i }}"
+                                                                                        onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
+                                                                                        class="form-select">
+                                                                                        <option value="market"
+                                                                                            selected=""> Market
+                                                                                            Order</option>
+                                                                                        <option value="limit">Limit
+                                                                                            Order</option>
+                                                                                        <option value="stoploss">Stop
+                                                                                            Loss Order</option>
+                                                                                    </select>
+                                                                                </div>
 
-                                                                                        <!-- Price Input -->
-                                                                                        <div class="input-group mb-3">
-                                                                                            <span
-                                                                                                class="input-group-text">Market
-                                                                                                Price</span>
-                                                                                            <input id="realprice1{{ $i }}"
-                                                                                                name="realprice1{{ $i }}"
-                                                                                                readonly type="text"
-                                                                                                class="form-control"
-                                                                                                placeholder="Enter price"
-                                                                                                value="{{ $stock->ltp }}">
-                                                                                                >
+                                                                                <!-- Price Input -->
+                                                                                <div class="input-group mb-3">
+                                                                                    <span
+                                                                                        class="input-group-text">Market
+                                                                                        Price</span>
+                                                                                    <input id="realprice1{{ $i }}"
+                                                                                        name="realprice1{{ $i }}"
+                                                                                        readonly type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Enter price"
+                                                                                        value="{{ $stock->ltp }}">
+                                                                                    >
 
-                                                                                            <span
-                                                                                                class="input-group-text">₹</span>
-                                                                                        </div>
-                                                                                        <!-- Limit Input -->
-                                                                                        <div id="limitblock1{{ $i }}"
-                                                                                            style="display: none"
-                                                                                            class="input-group mb-3">
-                                                                                            <span class="input-group-text">Limit
-                                                                                                Price</span>
-                                                                                            <input id="limitprice1{{ $i }}"
-                                                                                                name="limitprice1{{ $i }}"
-                                                                                                disabled type="hidden"
-                                                                                                class="form-control"
-                                                                                                placeholder="Enter price"
-                                                                                                value="0.00">
+                                                                                    <span
+                                                                                        class="input-group-text">₹</span>
+                                                                                </div>
+                                                                                <!-- Limit Input -->
+                                                                                <div id="limitblock1{{ $i }}"
+                                                                                    style="display: none"
+                                                                                    class="input-group mb-3">
+                                                                                    <span class="input-group-text">Limit
+                                                                                        Price</span>
+                                                                                    <input id="limitprice1{{ $i }}"
+                                                                                        name="limitprice1{{ $i }}"
+                                                                                        disabled type="hidden"
+                                                                                        class="form-control"
+                                                                                        placeholder="Enter price"
+                                                                                        value="0.00">
 
-                                                                                            <span
-                                                                                                class="input-group-text">₹</span>
-                                                                                        </div>
+                                                                                    <span
+                                                                                        class="input-group-text">₹</span>
+                                                                                </div>
 
-                                                                                        <div class=""
-                                                                                            style="display: flex; justify-content:space-between; gap:20px;">
-                                                                                            <div class="input-group mb-3">
-                                                                                                <span
-                                                                                                    class="input-group-text">Lot</span>
-                                                                                                <button
-                                                                                                    onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy')"
-                                                                                                    class="btn btn-outline-secondary"
-                                                                                                    type="button"
-                                                                                                    id="decrement">-</button>
-                                                                                                <input type="text"
-                                                                                                    class="form-control text-center"
-                                                                                                    placeholder="Enter size"
-                                                                                                    id="lotSize1{{ $i }}"
-                                                                                                    name="lotSize1{{ $i }}"
-                                                                                                    value="0" readonly>
-                                                                                                <button
-                                                                                                    onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
-                                                                                                    class="btn btn-outline-secondary"
-                                                                                                    type="button"
-                                                                                                    id="increment">+</button>
-                                                                                            </div>
-                                                                                            <div class="input-group mb-3">
-                                                                                                <span
-                                                                                                    class="input-group-text">Quantity</span>
-                                                                                                <input type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Enter size"
-                                                                                                    id="quantity1{{ $i }}"
-                                                                                                    name="quantity1{{ $i }}"
-                                                                                                    value={{ $quantity }}
-                                                                                                    readonly>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                <div class=""
+                                                                                    style="display: flex; justify-content:space-between; gap:20px;">
+                                                                                    <div class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Lot</span>
+                                                                                        <button
+                                                                                            onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy')"
+                                                                                            class="btn btn-outline-secondary"
+                                                                                            type="button"
+                                                                                            id="decrement">-</button>
+                                                                                        <input type="text"
+                                                                                            class="form-control text-center"
+                                                                                            placeholder="Enter size"
+                                                                                            id="lotSize1{{ $i }}"
+                                                                                            name="lotSize1{{ $i }}"
+                                                                                            value="0" readonly>
+                                                                                        <button
+                                                                                            onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
+                                                                                            class="btn btn-outline-secondary"
+                                                                                            type="button"
+                                                                                            id="increment">+</button>
+                                                                                    </div>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Quantity</span>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter size"
+                                                                                            id="quantity1{{ $i }}"
+                                                                                            name="quantity1{{ $i }}"
+                                                                                            value={{ $quantity }}
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                </div>
 
-                                                                                        <!-- Take Profit & Stop Loss -->
-                                                                                        <div class="mb-3">
+                                                                                <!-- Take Profit & Stop Loss -->
+                                                                                <div class="mb-3">
+                                                                                    <label
+                                                                                        class="form-label">Mode</label>
+                                                                                    <div
+                                                                                        class="d-flex align-items-center gap-3">
+                                                                                        <!-- Delivery Mode Radio Button -->
+                                                                                        <div class="form-check">
+                                                                                            <input
+                                                                                                class="form-check-input"
+                                                                                                type="radio"
+                                                                                                name="tradeMode1{{ $i }}"
+                                                                                                id="deliveryMode1{{ $i }}"
+                                                                                                value="delivery"
+                                                                                                onchange="handleTradeModeChange({{ $i }}, 'delivery')"
+                                                                                                checked>
                                                                                             <label
-                                                                                                class="form-label">Mode</label>
-                                                                                            <div
-                                                                                                class="d-flex align-items-center gap-3">
-                                                                                                <!-- Delivery Mode Radio Button -->
-                                                                                                <div class="form-check">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="tradeMode1{{ $i }}"
-                                                                                                        id="deliveryMode1{{ $i }}"
-                                                                                                        value="delivery"
-                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery')"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="deliveryMode1{{ $i }}">
-                                                                                                        Delivery Mode
-                                                                                                    </label>
-                                                                                                </div>
-
-                                                                                                <!-- Intraday Mode Radio Button -->
-                                                                                                <div class="form-check">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="tradeMode1{{ $i }}"
-                                                                                                        id="intradayMode1{{ $i }}"
-                                                                                                        value="intraday"
-                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')">
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="intradayMode1{{ $i }}">
-                                                                                                        Intraday Mode
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                                class="form-check-label"
+                                                                                                for="deliveryMode1{{ $i }}">
+                                                                                                Delivery Mode
+                                                                                            </label>
                                                                                         </div>
 
-
-
-                                                                                        <!-- Cost and Max Info -->
-                                                                                        <div
-                                                                                            class="d-flex justify-content-between flex-wrap">
-                                                                                            {{-- <div class="d-flex">
-                                                                                                <div>Cost:</div>
-                                                                                                <div id="costPrice1{{ $i }}">
-                                                                                                    ₹0.00</div>
-                                                                                            </div> --}}
-                                                                                            <div
-                                                                                                class="d-flex justify-content-between flex-wrap align-items-center">
-                                                                                                <!-- Displaying Cost and Margin Price -->
-                                                                                                <div class="d-flex flex-column">
-                                                                                                    <span>
-                                                                                                        Cost: <s
-                                                                                                            id="costPrice1{{ $i }}"
-                                                                                                            name="costPrice1{{ $i }}"
-                                                                                                            class="px-1">₹0.00</s>
-                                                                                                    </span>
-                                                                                                    <span>
-                                                                                                        After Margin: <span
-                                                                                                            id="marginCost1{{ $i }}"
-                                                                                                            class="text-success">₹0.00</span>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="d-flex">
-                                                                                                <div>Max:</div>
-                                                                                                <div id="maxPrice1{{ $i }}"
-                                                                                                    name="maxPrice1{{ $i }}"
-                                                                                                    class=" px-1">
-                                                                                                    ₹{{ $user->real_wallet }}
-                                                                                                </div>
-
-
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                        <div>
-                                                                                            <p id="error-fund1{{ $i }}"
-                                                                                                style="display: none;color:red">
-                                                                                                Insuffient Fund</p>
-                                                                                        </div>
-
-                                                                                        <!-- Buy/Sell Buttons -->
-                                                                                        <div
-                                                                                            class="mt-3 d-flex justify-content-between">
-                                                                                            <button type="subit"
-                                                                                                class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
+                                                                                        <!-- Intraday Mode Radio Button -->
+                                                                                        <div class="form-check">
+                                                                                            <input
+                                                                                                class="form-check-input"
+                                                                                                type="radio"
+                                                                                                name="tradeMode1{{ $i }}"
+                                                                                                id="intradayMode1{{ $i }}"
+                                                                                                value="intraday"
+                                                                                                onchange="handleTradeModeChange({{ $i }}, 'intraday')">
+                                                                                            <label
+                                                                                                class="form-check-label"
+                                                                                                for="intradayMode1{{ $i }}">
+                                                                                                Intraday Mode
+                                                                                            </label>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+
+
+
+                                                                                <!-- Cost and Max Info -->
+                                                                                <div
+                                                                                    class="d-flex justify-content-between flex-wrap">
+                                                                                    {{-- <div class="d-flex">
+                                                                                        <div>Cost:</div>
+                                                                                        <div id="costPrice1{{ $i }}">
+                                                                                            ₹0.00</div>
+                                                                                    </div> --}}
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between flex-wrap align-items-center">
+                                                                                        <!-- Displaying Cost and Margin Price -->
+                                                                                        <div class="d-flex flex-column">
+                                                                                            <span>
+                                                                                                Cost: <s
+                                                                                                    id="costPrice1{{ $i }}"
+                                                                                                    name="costPrice1{{ $i }}"
+                                                                                                    class="px-1">₹0.00</s>
+                                                                                            </span>
+                                                                                            <span>
+                                                                                                After Margin: <span
+                                                                                                    id="marginCost1{{ $i }}"
+                                                                                                    class="text-success">₹0.00</span>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="d-flex">
+                                                                                        <div>Max:</div>
+                                                                                        <div id="maxPrice1{{ $i }}"
+                                                                                            name="maxPrice1{{ $i }}"
+                                                                                            class=" px-1">
+                                                                                            ₹{{ $user->real_wallet }}
+                                                                                        </div>
+
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div>
+                                                                                    <p id="error-fund1{{ $i }}"
+                                                                                        style="display: none;color:red">
+                                                                                        Insuffient Fund</p>
+                                                                                </div>
+
+                                                                                <!-- Buy/Sell Buttons -->
+                                                                                <div
+                                                                                    class="mt-3 d-flex justify-content-between">
+                                                                                    <button type="subit"
+                                                                                        class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
+                                                                                </div>
                                                                             </div>
-                                                                        </form>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="nav-history{{ $i }}"
-                                                                    role="tabpanel">
-                                                                    <div class="table-responsive dataTabletrade">
-                                                                        <form id="sellform" name="sellform{{ $i }}"
-                                                                            method="POST"
-                                                                            action="{{ route('placeSellOrder') }}">
-                                                                            @csrf
-                                                                            <input type="text" name="id2" value="{{ $i }}"
-                                                                                id="id" hidden>
-                                                                            <input type="text" name="instrumentKey2{{ $i }}"
-                                                                                value="{{ $foisin }}"
-                                                                                id="instrumentKey2{{ $i }}" hidden>
-                                                                            <div class="col-xl-4" style="width: 100%;">
-                                                                                <div class="card">
-                                                                                    <div class="card-body pt-2">
-                                                                                        <!-- Available Balance -->
-                                                                                        <!-- Available Balance -->
-                                                                                        <div
-                                                                                            class="d-flex align-items-center justify-content-between mt-3 mb-2">
-                                                                                            <span
-                                                                                                class="small text-muted">Available
-                                                                                                Balance</span>
-                                                                                            <span class="text-dark">{{
-                                                                                                $user->real_wallet }}</span>
-                                                                                        </div>
-
-                                                                                        <!-- Order Type Selector -->
-                                                                                        <div class="mb-3">
-                                                                                            <label class="form-label">Order
-                                                                                                Type</label>
-                                                                                            <select id="orderType2{{ $i }}"
-                                                                                                name="orderType2{{ $i }}"
-                                                                                                onchange="handleOrderTypeChange({{ $i }}, this.value,'sell')"
-                                                                                                class="form-select">
-                                                                                                <option value="market"
-                                                                                                    selected=""> Market
-                                                                                                    Order</option>
-                                                                                                <option value="limit">Limit
-                                                                                                    Order</option>
-                                                                                                <option value="stoploss">Stop
-                                                                                                    Loss Order</option>
-                                                                                            </select>
-                                                                                        </div>
-
-                                                                                        <!-- Price Input -->
-                                                                                        <div class="input-group mb-3">
-                                                                                            <span
-                                                                                                class="input-group-text">Market
-                                                                                                Price</span>
-                                                                                            <input id="realprice2{{ $i }}"
-                                                                                                name="realprice2{{ $i }}"
-                                                                                                readonly type="text"
-                                                                                                class="form-control"
-                                                                                                placeholder="Enter price"
-                                                                                                value="{{ $stock->ltp }}">
-                                                                                                >
-
-                                                                                            <span
-                                                                                                class="input-group-text">₹</span>
-                                                                                        </div>
-
-                                                                                        <!-- Limit Input -->
-                                                                                        <div id="limitblock2{{ $i }}"
-                                                                                            style="display: none"
-                                                                                            class="input-group mb-3">
-                                                                                            <span class="input-group-text">Limit
-                                                                                                Price</span>
-                                                                                            <input id="limitprice2{{ $i }}"
-                                                                                                name="limitprice2{{ $i }}"
-                                                                                                disabled type="hidden"
-                                                                                                class="form-control"
-                                                                                                placeholder="Enter price"
-                                                                                                value="0.00">
-
-                                                                                            <span
-                                                                                                class="input-group-text">₹</span>
-                                                                                        </div>
-
-                                                                                        <div class=""
-                                                                                            style="display: flex; justify-content:space-between; gap:20px;">
-                                                                                            <div class="input-group mb-3">
-                                                                                                <span
-                                                                                                    class="input-group-text">Lot</span>
-                                                                                                <button
-                                                                                                    onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell')"
-                                                                                                    class="btn btn-outline-secondary"
-                                                                                                    type="button"
-                                                                                                    id="decrement">-</button>
-                                                                                                <input type="text"
-                                                                                                    class="form-control text-center"
-                                                                                                    placeholder="Enter size"
-                                                                                                    id="lotSize2{{ $i }}"
-                                                                                                    name="lotSize2{{ $i }}"
-                                                                                                    value="0" readonly>
-                                                                                                <button
-                                                                                                    onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell')"
-                                                                                                    class="btn btn-outline-secondary"
-                                                                                                    type="button"
-                                                                                                    id="increment">+</button>
-                                                                                            </div>
-                                                                                            <div class="input-group mb-3">
-                                                                                                <span
-                                                                                                    class="input-group-text">Quantity</span>
-                                                                                                <input type="text"
-                                                                                                    class="form-control"
-                                                                                                    placeholder="Enter size"
-                                                                                                    id="quantity2{{ $i }}"
-                                                                                                    name="quantity2{{ $i }}"
-                                                                                                    value={{ $quantity }}
-                                                                                                    readonly>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <!-- Take Profit & Stop Loss -->
-                                                                                        <div class="mb-3">
-                                                                                            <label
-                                                                                                class="form-label">Mode</label>
-                                                                                            <div
-                                                                                                class="d-flex align-items-center gap-3">
-                                                                                                <!-- Delivery Mode Radio Button -->
-                                                                                                <div class="form-check">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="tradeMode2{{ $i }}"
-                                                                                                        id="deliveryMode2{{ $i }}"
-                                                                                                        value="delivery"
-                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery')"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="deliveryMode2{{ $i }}">
-                                                                                                        Delivery Mode
-                                                                                                    </label>
-                                                                                                </div>
-
-                                                                                                <!-- Intraday Mode Radio Button -->
-                                                                                                <div class="form-check">
-                                                                                                    <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        name="tradeMode2{{ $i }}"
-                                                                                                        id="intradayMode2{{ $i }}"
-                                                                                                        value="intraday"
-                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')">
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="intradayMode2{{ $i }}">
-                                                                                                        Intraday Mode
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <!-- Cost and Max Info -->
-                                                                                        <div
-                                                                                            class="d-flex justify-content-between flex-wrap">
-                                                                                            {{-- <div class="d-flex">
-                                                                                                <div>Cost:</div>
-                                                                                                <div id="costPrice2{{ $i }}"
-                                                                                                    class="px-1">₹0.00</div>
-                                                                                            </div> --}}
-                                                                                            <div
-                                                                                                class="d-flex justify-content-between flex-wrap align-items-center">
-                                                                                                <!-- Displaying Cost and Margin Price -->
-                                                                                                <div class="d-flex flex-column">
-                                                                                                    <span>
-                                                                                                        Cost: <s
-                                                                                                            id="costPrice2{{ $i }}"
-                                                                                                            name="costPrice2{{ $i }}"
-                                                                                                            class="px-1">₹0.00</s>
-                                                                                                    </span>
-                                                                                                    <span>
-                                                                                                        After Margin: <span
-                                                                                                            id="marginCost2{{ $i }}"
-                                                                                                            class="text-success">₹0.00</span>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="d-flex">
-                                                                                                <div>Max:</div>
-                                                                                                <div id="maxPrice2{{ $i }}"
-                                                                                                    class=" px-1">
-                                                                                                    ₹{{ $user->real_wallet }}
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div>
-                                                                                            <p id="error-fund2{{ $i }}"
-                                                                                                style="display: none;color:red">
-                                                                                                Insuffient Fund</p>
-                                                                                        </div>
-
-                                                                                        <!-- Buy/Sell Buttons -->
-                                                                                        <div
-                                                                                            class="mt-3 d-flex justify-content-between">
-
-                                                                                            <button type="submit"
-                                                                                                class="btn btn-danger btn-sm light text-uppercase btn-block">SELL</button>
-                                                                                        </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
+                                                                </form>
                                                             </div>
-                                                            </form>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="nav-history{{ $i }}"
+                                                            role="tabpanel">
+                                                            <div class="table-responsive dataTabletrade">
+                                                                <form id="sellform" name="sellform{{ $i }}"
+                                                                    method="POST"
+                                                                    action="{{ route('placeSellOrder') }}">
+                                                                    @csrf
+                                                                    <input type="text" name="id2" value="{{ $i }}"
+                                                                        id="id" hidden>
+                                                                    <input type="text" name="instrumentKey2{{ $i }}"
+                                                                        value="{{ $foisin }}"
+                                                                        id="instrumentKey2{{ $i }}" hidden>
+                                                                    <div class="col-xl-4" style="width: 100%;">
+                                                                        <div class="card">
+                                                                            <div class="card-body pt-2">
+                                                                                <!-- Available Balance -->
+                                                                                <!-- Available Balance -->
+                                                                                <div
+                                                                                    class="d-flex align-items-center justify-content-between mt-3 mb-2">
+                                                                                    <span
+                                                                                        class="small text-muted">Available
+                                                                                        Balance</span>
+                                                                                    <span class="text-dark">{{
+                                                                                        $user->real_wallet }}</span>
+                                                                                </div>
+
+                                                                                <!-- Order Type Selector -->
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label">Order
+                                                                                        Type</label>
+                                                                                    <select id="orderType2{{ $i }}"
+                                                                                        name="orderType2{{ $i }}"
+                                                                                        onchange="handleOrderTypeChange({{ $i }}, this.value,'sell')"
+                                                                                        class="form-select">
+                                                                                        <option value="market"
+                                                                                            selected=""> Market
+                                                                                            Order</option>
+                                                                                        <option value="limit">Limit
+                                                                                            Order</option>
+                                                                                        <option value="stoploss">Stop
+                                                                                            Loss Order</option>
+                                                                                    </select>
+                                                                                </div>
+
+                                                                                <!-- Price Input -->
+                                                                                <div class="input-group mb-3">
+                                                                                    <span
+                                                                                        class="input-group-text">Market
+                                                                                        Price</span>
+                                                                                    <input id="realprice2{{ $i }}"
+                                                                                        name="realprice2{{ $i }}"
+                                                                                        readonly type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="Enter price"
+                                                                                        value="{{ $stock->ltp }}">
+                                                                                    >
+
+                                                                                    <span
+                                                                                        class="input-group-text">₹</span>
+                                                                                </div>
+
+                                                                                <!-- Limit Input -->
+                                                                                <div id="limitblock2{{ $i }}"
+                                                                                    style="display: none"
+                                                                                    class="input-group mb-3">
+                                                                                    <span class="input-group-text">Limit
+                                                                                        Price</span>
+                                                                                    <input id="limitprice2{{ $i }}"
+                                                                                        name="limitprice2{{ $i }}"
+                                                                                        disabled type="hidden"
+                                                                                        class="form-control"
+                                                                                        placeholder="Enter price"
+                                                                                        value="0.00">
+
+                                                                                    <span
+                                                                                        class="input-group-text">₹</span>
+                                                                                </div>
+
+                                                                                <div class=""
+                                                                                    style="display: flex; justify-content:space-between; gap:20px;">
+                                                                                    <div class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Lot</span>
+                                                                                        <button
+                                                                                            onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell')"
+                                                                                            class="btn btn-outline-secondary"
+                                                                                            type="button"
+                                                                                            id="decrement">-</button>
+                                                                                        <input type="text"
+                                                                                            class="form-control text-center"
+                                                                                            placeholder="Enter size"
+                                                                                            id="lotSize2{{ $i }}"
+                                                                                            name="lotSize2{{ $i }}"
+                                                                                            value="0" readonly>
+                                                                                        <button
+                                                                                            onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell')"
+                                                                                            class="btn btn-outline-secondary"
+                                                                                            type="button"
+                                                                                            id="increment">+</button>
+                                                                                    </div>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <span
+                                                                                            class="input-group-text">Quantity</span>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="Enter size"
+                                                                                            id="quantity2{{ $i }}"
+                                                                                            name="quantity2{{ $i }}"
+                                                                                            value={{ $quantity }}
+                                                                                            readonly>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <!-- Take Profit & Stop Loss -->
+                                                                                <div class="mb-3">
+                                                                                    <label
+                                                                                        class="form-label">Mode</label>
+                                                                                    <div
+                                                                                        class="d-flex align-items-center gap-3">
+                                                                                        <!-- Delivery Mode Radio Button -->
+                                                                                        <div class="form-check">
+                                                                                            <input
+                                                                                                class="form-check-input"
+                                                                                                type="radio"
+                                                                                                name="tradeMode2{{ $i }}"
+                                                                                                id="deliveryMode2{{ $i }}"
+                                                                                                value="delivery"
+                                                                                                onchange="handleTradeModeChange({{ $i }}, 'delivery')"
+                                                                                                checked>
+                                                                                            <label
+                                                                                                class="form-check-label"
+                                                                                                for="deliveryMode2{{ $i }}">
+                                                                                                Delivery Mode
+                                                                                            </label>
+                                                                                        </div>
+
+                                                                                        <!-- Intraday Mode Radio Button -->
+                                                                                        <div class="form-check">
+                                                                                            <input
+                                                                                                class="form-check-input"
+                                                                                                type="radio"
+                                                                                                name="tradeMode2{{ $i }}"
+                                                                                                id="intradayMode2{{ $i }}"
+                                                                                                value="intraday"
+                                                                                                onchange="handleTradeModeChange({{ $i }}, 'intraday')">
+                                                                                            <label
+                                                                                                class="form-check-label"
+                                                                                                for="intradayMode2{{ $i }}">
+                                                                                                Intraday Mode
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <!-- Cost and Max Info -->
+                                                                                <div
+                                                                                    class="d-flex justify-content-between flex-wrap">
+                                                                                    {{-- <div class="d-flex">
+                                                                                        <div>Cost:</div>
+                                                                                        <div id="costPrice2{{ $i }}"
+                                                                                            class="px-1">₹0.00</div>
+                                                                                    </div> --}}
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between flex-wrap align-items-center">
+                                                                                        <!-- Displaying Cost and Margin Price -->
+                                                                                        <div class="d-flex flex-column">
+                                                                                            <span>
+                                                                                                Cost: <s
+                                                                                                    id="costPrice2{{ $i }}"
+                                                                                                    name="costPrice2{{ $i }}"
+                                                                                                    class="px-1">₹0.00</s>
+                                                                                            </span>
+                                                                                            <span>
+                                                                                                After Margin: <span
+                                                                                                    id="marginCost2{{ $i }}"
+                                                                                                    class="text-success">₹0.00</span>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="d-flex">
+                                                                                        <div>Max:</div>
+                                                                                        <div id="maxPrice2{{ $i }}"
+                                                                                            class=" px-1">
+                                                                                            ₹{{ $user->real_wallet }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div>
+                                                                                    <p id="error-fund2{{ $i }}"
+                                                                                        style="display: none;color:red">
+                                                                                        Insuffient Fund</p>
+                                                                                </div>
+
+                                                                                <!-- Buy/Sell Buttons -->
+                                                                                <div
+                                                                                    class="mt-3 d-flex justify-content-between">
+
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-danger btn-sm light text-uppercase btn-block">SELL</button>
+                                                                                </div>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
-
+                                                    </form>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
+                                </div>
+                            </div>
 
 
                         </div>
@@ -804,89 +804,96 @@ $user = Auth::user();
 
 
 
-                                    <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
-                                    <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModalCenter{{ $i }}">
-                                        <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
-                                            <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
-                                                        <?php 
-                                                        $change = $stock->ltp - $stock->cp;
-                                                        if($change > 0){
-                                                            ?>
-                                                            <span class="badge badge-success me-1">▲</span>
-                                                            <span class="text-success" id="perc{{ $i }}"><?php echo number_format(($change/$stock->cp)*100,2) ?>% &nbsp;</span>
-                                                            <span class="text-success" id="perc{{ $i }}">(<?php echo number_format(($change),2) ?> pts) </span>
-                                                            
-                                                        
-                                                            <?php 
-                                                        }elseif($change < 0){
-                                                            ?>
-                                                            <span class="badge badge-danger me-1">▼</span>
-                                                            <span class="text-danger" id="perc{{ $i }}">{{ number_format(($change/$stock->cp)*100,2) }}% &nbsp;</span>
-                                                            <span class="text-danger" id="perc{{ $i }}">(<?php echo number_format(($change),2) ?> pts) </span>
-                                                        
-                                                            <?php
-                                                        }else{
-                                                            ?>
-                                                            <span class="badge badge-warning me-1">-</span>
-                                                            <span class="text-warning" id="perc{{ $i }}">0.00% &nbsp;</span>
-                                                            <span class="text-warning" id="perc{{ $i }}">(0.00 pts) </span>
-                                                            <?php 
-                                                        }    
-                                                        ?>
-                                                    </p>
+                <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
+                <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalCenter{{ $i }}">
+                    <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
+                        <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
+                                    <?php 
+                                                                $change = $stock->ltp - $stock->cp;
+                                                                if($change > 0){
+                                                                    ?>
+                                    <span class="badge badge-success me-1">▲</span>
+                                    <span class="text-success" id="perc{{ $i }}">
+                                        <?php echo number_format(($change/$stock->cp)*100,2) ?>% &nbsp;
+                                    </span>
+                                    <span class="text-success" id="perc{{ $i }}">(
+                                        <?php echo number_format(($change),2) ?> pts)
+                                    </span>
 
-                                                    </p>
-                                                    {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{
-                                                        $key->instrumentType }} <span class="text-muted">({{ $key->expiry
-                                                            }})</span></h4> --}}
-                                                    <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
-                                                    <div class="d-flex justify-content-between ">
-                                                        <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
-                                                            LTP:
-                                                            <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
-                                                                {{ $stock->ltp }}</span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
-                                                    <p class="text-muted mb-1 fs-13">{{ $key->exchange }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="card-body ">
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <div class="me-3">
-                                                        <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600"
-                                                                id="bid{{ $i }}">{{ $stock->bid }}</span></p>
-                                                    </div>
-                                                    <div class="me-3">
-                                                        <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600"
-                                                                id="ask{{ $i }}">{{ $stock->ask }}</span></p>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-between" style="font-size: xx-small">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="me-3">
-                                                            <p class="mb-0">Open/Close</p>
-                                                            <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
-                                                                {{ $stock->open }}/{{ $stock->close }}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="me-3">
-                                                        <p class="mb-0">High/Low</p>
-                                                        <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">
-                                                            {{ $stock->high }}/{{ $stock->low }}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                                    <?php 
+                                                                }elseif($change < 0){
+                                                                    ?>
+                                    <span class="badge badge-danger me-1">▼</span>
+                                    <span class="text-danger" id="perc{{ $i }}">{{
+                                        number_format(($change/$stock->cp)*100,2) }}% &nbsp;</span>
+                                    <span class="text-danger" id="perc{{ $i }}">(
+                                        <?php echo number_format(($change),2) ?> pts)
+                                    </span>
+
+                                    <?php
+                                                                }else{
+                                                                    ?>
+                                    <span class="badge badge-warning me-1">-</span>
+                                    <span class="text-warning" id="perc{{ $i }}">0.00% &nbsp;</span>
+                                    <span class="text-warning" id="perc{{ $i }}">(0.00 pts) </span>
+                                    <?php 
+                                                                }    
+                                                                ?>
+                                </p>
+
+                                </p>
+                                {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{
+                                    $key->instrumentType }} <span class="text-muted">({{ $key->expiry
+                                        }})</span></h4> --}}
+                                <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
+                                <div class="d-flex justify-content-between ">
+                                    <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
+                                        LTP:
+                                        <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
+                                            {{ $stock->ltp }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
+                                <p class="text-muted mb-1 fs-13">{{ $key->exchange }}</p>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="d-flex justify-content-between mb-2">
+                                <div class="me-3">
+                                    <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600" id="bid{{ $i }}">{{
+                                            $stock->bid }}</span></p>
+                                </div>
+                                <div class="me-3">
+                                    <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600" id="ask{{ $i }}">{{
+                                            $stock->ask }}</span></p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between" style="font-size: xx-small">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <p class="mb-0">Open/Close</p>
+                                        <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
+                                            {{ $stock->open }}/{{ $stock->close }}</p>
                                     </div>
-                            <?php
-                                    $i++;
-                                }
-                                ?>
+                                </div>
+                                <div class="me-3">
+                                    <p class="mb-0">High/Low</p>
+                                    <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">
+                                        {{ $stock->high }}/{{ $stock->low }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                                            $i++;
+                                        }
+                                        ?>
 
 
 
@@ -1004,25 +1011,6 @@ $user = Auth::user();
                                 <p id="msg" class="text-center">Enter at least 2 characters in the Search
                                     box above to see results here.</p>
 
-                                {{-- @foreach ($scripts as $script) --}}
-                                {{-- <div class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/14906/14906254.png" alt=""
-                                            class="avatar" id="avatar">
-                                        <div class="ms-3">
-                                            <h5 class="mb-1"><a href="" id="script_symbol">Loading...</a>
-                                            </h5>
-                                            <span class="fs-14 text-muted" id="script_description">Loading...</span>
-                                        </div>
-                                    </div>
-                                    <div class="icon-box icon-box-sm bgl-primary">
-                                        <a href="javascript:void(0)" id="add_script">
-                                            <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                width="24" alt="">
-                                        </a>
-                                    </div>
-                                </div> --}}
-                                {{-- @endforeach --}}
                             </div>
                         </div>
                     </div>
@@ -1032,7 +1020,7 @@ $user = Auth::user();
         </div>
     </div>
 
-
+    </div>
     <script>
         // Trade Start
             
@@ -1040,12 +1028,11 @@ $user = Auth::user();
             $(document).on('submit', '[id^="buyform"]', function (e) {
             e.preventDefault();
             var form = $(this);
-            console.log(form.serialize());
+           
             var url = form.attr('action');
             var type = form.attr('method');
 
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
-            console.log(formData);
 
             
             const id=formData.id;
@@ -1164,12 +1151,10 @@ $user = Auth::user();
         $(document).on('submit', '[id^="sellform"]', function (e) {
             e.preventDefault();
             var form = $(this);
-            console.log(form.serialize());
             var url = form.attr('action');
             var type = form.attr('method');
 
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
-            console.log(formData);
 
             
             const id=formData.id2;
@@ -1285,6 +1270,86 @@ $user = Auth::user();
 
 
     <script>
+
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    <script>
+        Echo.channel('watchlists')
+            .listen('Watchlist', (event) => {
+                const feeds = event.watchlist.feeds;
+                // console.log(feeds);
+                // Iterate through the received WebSocket data
+                for (const key in feeds) {
+                    if (feeds.hasOwnProperty(key)) {
+                        const feedData = feeds[key].ff.marketFF; // Data from WebSocket
+                        const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
+
+                        const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el
+                            .textContent === receivedIsin);
+
+                        // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
+                        if (isinElement) {
+                            const rowId = isinElement.id.replace('isin', '');
+                            // console.log(rowId);
+
+                            const ltp = feedData?.ltpc?.ltp || 1;
+                            const cp = feedData?.ltpc?.cp || 0;
+
+                            
+
+                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0' +
+                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+
+                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
+                            const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
+
+                           
+                            const badgeValue = (ltp - cp).toFixed(2) || '0';
+
+
+                            document.getElementById(`change${rowId}`).innerHTML = `
+                                        ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+
+
+                                `;
+
+
+
+
+                            // bid and ask
+                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .bidQ || '0';
+                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .askQ || '0';
+                        } else{
+                            // console.log('ISIN not found:', receivedIsin);
+                        }
+
+                    }
+                }
+            });
+
+
+    </script>
+
+
+
+
+    <script>
         let activeFilter = 'ALL';
         let activeFilterCP = 'ALL';
         let mode = 'delivery';
@@ -1311,16 +1376,10 @@ $user = Auth::user();
                 document.getElementById('Order-type').hidden = true;
             }
 
-            // if(getActiveFilter() === 'Future' || getActiveFilter() === 'Option' || getActiveFilter() === 'Indicies') {
-            //     const serachinput = document.getElementById('searchinp');
-            //     console.log(serachinput.value);
-
-            //     searchScript(serachinput);
-            // }
+        
 
             activeFilter = filterName;
 
-            // console.log('Active Filter:', activeFilter);
         }
 
         function setActiveFilterCP(selectedButton, filterName) {
@@ -1336,7 +1395,6 @@ $user = Auth::user();
 
             activeFilterCP = filterName;
 
-            // console.log('Active FilterCP:', activeFilterCP);
         }
 
 
@@ -1351,7 +1409,6 @@ $user = Auth::user();
 
         function handleTradeModeChange(id, tradeMode) {
             mode = tradeMode;
-            // console.log('Mode:', mode);
         }
 
         function getTradeMode() {
@@ -1360,9 +1417,6 @@ $user = Auth::user();
 
 
 
-        // console.log('Active Filter:', activeFilter);
-        // console.log('Active FilterCP:', activeFilterCP);
-        // console.log('Mode:', mode);
 
         function showOrderForm(index) {
             const offcanvasId = `orderoffcanvasBottom${index}`;
@@ -1371,9 +1425,8 @@ $user = Auth::user();
             offcanvas.show();
 
         }
-    </script>
-    <script>
-        //fetch all scripts from the server
+
+                //fetch all scripts from the server
 
 
         //implement search script using of $scripts variable thgen filter the scripts their we serach tradingSymbol
@@ -1441,8 +1494,7 @@ document.getElementById("scrollR").addEventListener("scroll", function () {
     }
 });
 
-
-        function updateContactsList(responseData) {
+function updateContactsList(responseData) {
             const container = document.getElementById("RecentActivityContent");
 
             // Clear existing content
@@ -1450,7 +1502,6 @@ document.getElementById("scrollR").addEventListener("scroll", function () {
 
             // Loop through API response and create new elements
             responseData.forEach((item) => {
-                // console.log(item);
 
                 const contentHTML = `
                         <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
@@ -1472,7 +1523,7 @@ document.getElementById("scrollR").addEventListener("scroll", function () {
             });
         }
 
-        function appendContactsList(responseData) {
+function appendContactsList(responseData) {
     const container = document.getElementById("RecentActivityContent");
     const loadingIndicator = document.getElementById("loadingIndicator");
 
@@ -1501,7 +1552,9 @@ document.getElementById("scrollR").addEventListener("scroll", function () {
     });
 }
 
-// Function to show loading indicator
+
+
+        // Function to show loading indicator
 function showLoading() {
     const container = document.getElementById("RecentActivityContent");
     let loadingIndicator = document.getElementById("loadingIndicator");
@@ -1516,469 +1569,300 @@ function showLoading() {
     loadingIndicator.style.display = "block";
 }
 
+        // Buy Sell Feature Start 
 
-
-        function updateScript(script) {
-            const scriptSymbol = document.getElementById('script_symbol');
-            const scriptDescription = document.getElementById('script_description');
-            const avatar = document.getElementById('avatar');
-            const addScript = document.getElementById('add_script');
-            let logo = `https://s3tv-symbol.dhan.co/symbols/${script.assetSymbol}.svg`;
-
-            scriptSymbol.innerText = script.tradingSymbol;
-            scriptDescription.innerText = script.expiry;
-            avatar.src = logo;
-
-        }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script src="{{ asset('js/app.js') }}"></script>
-
-    <script>
         function handleOrderTypeChange(id, orderType, tradeType) {
 
-            if (tradeType === 'sell') {
-                const priceInput = document.getElementById("realprice2" + id);
-                const limitprice = document.getElementById("limitprice2" + id);
-                const limitblock = document.getElementById("limitblock2" + id);
-                if (orderType === 'limit') {
-                    // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                    limitblock.style.display = 'flex';
-                    limitprice.setAttribute("type", "text");
-                    limitprice.value = priceInput.value; // Copy the value
-                    priceInput.disabled = false; // Enable input
-                    limitprice.disabled = false; // Enable input
-                } else if (orderType === 'market') {
-                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    priceInput.setAttribute("type", "text");
-                    limitprice.setAttribute("type", "hidden");
-                    limitblock.style.display = 'none';
-                    priceInput.disabled = true; // Disable input
-                    limitprice.disabled = true; // Disable input
-                } else if (orderType === 'stoploss') {
-                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    priceInput.setAttribute("type", "text");
-                    limitprice.setAttribute("type", "hidden");
-                    priceInput.disabled = false; // Enable input
-                    limitprice.disabled = true; // Disable input
-                }
-            } else {
-                const priceInput = document.getElementById("realprice1" + id);
-                const limitprice = document.getElementById("limitprice1" + id);
-                const limitblock = document.getElementById("limitblock1" + id);
-
-                if (orderType === 'limit') {
-                    // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                    // priceInput.setAttribute("type", "hidden");
-                    limitprice.setAttribute("type", "text");
-                    limitblock.style.display = 'flex';
-                    limitprice.value = priceInput.value; // Copy the value
-                    priceInput.disabled = false; // Enable input
-                    limitprice.disabled = false; // Enable input
-                } else if (orderType === 'market') {
-                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    // priceInput.setAttribute("type", "text");
-                    limitprice.setAttribute("type", "hidden");
-                    limitblock.style.display = 'none';
-                    priceInput.disabled = true; // Disable input
-                    limitprice.disabled = true; // Disable input
-                } else if (orderType === 'stoploss') {
-                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    // priceInput.setAttribute("type", "text");
-                    limitprice.setAttribute("type", "hidden");
-                    priceInput.disabled = false; // Enable input
-                    limitprice.disabled = true; // Disable input
-                }
-            }
-
-
-            // const priceInput = document.getElementById("realprice" + id);
-            // const limitprice = document.getElementById("limitprice" + id);
-            // if (orderType === 'limit') {
-            //     // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-            //     priceInput.setAttribute("type", "hidden");
-            //     limitprice.setAttribute("type", "text");
-            //     limitprice.value = priceInput.value; // Copy the value
-            //     priceInput.disabled = false; // Enable input
-            //     limitprice.disabled = false; // Enable input
-            // } else if (orderType === 'market') {
-            //     // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-            //     priceInput.setAttribute("type", "text");
-            //     limitprice.setAttribute("type", "hidden");
-            //     priceInput.disabled = true; // Disable input
-            //     limitprice.disabled = true; // Disable input
-            // } else if (orderType === 'stoploss') {
-            //     // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-            //     priceInput.setAttribute("type", "text");
-            //     limitprice.setAttribute("type", "hidden");
-            //     priceInput.disabled = false; // Enable input
-            //     limitprice.disabled = true; // Disable input
-            // }
-
-
-            // You can add additional logic for other segments (nseopt, mcxfut) here if needed
-        }
-
-
-
-        function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
-
-            const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-
-            const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
-
-            let margin=0;
-
-           if(instrumentType=='FUT'){
-            margin=500;
-           }else if(instrumentType=='CE' || instrumentType=='PE'){
-            margin=7;
-              }else{
-            margin=0;
-              }
-
-            
-
-            let currentValue = parseInt(lotInput.value) || 0;
-            let realPriceValue = parseFloat(realPrice.value) || 0;
-
-            // Increment the lot size
-            lotInput.value = currentValue + 1;
-
-            // Update quantity and cost price
-            quantity.value = lotInput.value * quantityPerLot;
-            let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-            let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
-            // console.log("cost Price",cp);
-            // console.log("margin cost",mcp);
-            
-            marginCost.innerHTML = "₹ " + mcp;
-
-            costPrice.innerHTML = " ₹ " + cp;
-
-            // Update color logic
-            if (wallet >= mcp) {
-                maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                // costPrice.style.color = 'green';
-                marginCost.style.color = 'green';
-                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
-            } else {
-                maxPrice.style.color = 'red';
-                // costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
-                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
-            }
-
-
-
-            // const lotInput = document.getElementById('lotSize' + uniqueId);
-            // const quantity = document.getElementById('quantity' + uniqueId);
-            // const costPrice = document.getElementById('costPrice' + uniqueId);
-            // const maxPrice = document.getElementById('maxPrice' + uniqueId);
-            // const realPrice = document.getElementById('realprice' + uniqueId);
-
-            // let currentValue = parseInt(lotInput.value) || 0;
-            // let realPriceValue = parseFloat(realPrice.value) || 0;
-
-            // lotInput.value = currentValue + 1;
-
-            // quantity.value = lotInput.value * quantityPerLot;
-
-            // let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-            // costPrice.innerHTML = "₹ " + cp;
-
-
-            // if (wallet > cp) {
-            //     maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-            //     costPrice.style.color = 'green';
-            // } else {
-            //     maxPrice.style.color = 'red';
-            //     costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-            // }
-
-        }
-
-        function decrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
-
-            const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-
-            const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
-
-                let margin=0;
-
-                if(instrumentType=='FUT'){
-                margin=500;
-                }else if(instrumentType=='CE' || instrumentType=='PE'){
-                margin=7;
-                }else{
-                margin=0;
-                }
-
-            let currentValue = parseInt(lotInput.value) || 0;
-            let realPriceValue = parseFloat(realPrice.value) || 0;
-
-            // Decrement the lot size only if it's greater than 1
-            if (currentValue > 1) {
-                lotInput.value = currentValue - 1;
-
-                // Update quantity and cost price
-                quantity.value = lotInput.value * quantityPerLot;
-                let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-                let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
-                // console.log(cp);
-                marginCost.innerHTML = "₹ " + mcp;
-
-                costPrice.innerHTML = "₹ " + cp;
-
-                // Update color logic
-                if (wallet >= mcp) {
-                    maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                    costPrice.style.color = 'green';
-                    document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
-                } else {
-                    maxPrice.style.color = 'red';
-                    costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                    document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
-                }
-            } else {
-                console.log("Lot size cannot be less than 1.");
-            }
-
-            // const lotInput = document.getElementById('lotSize' + uniqueId);
-            // const quantity = document.getElementById('quantity' + uniqueId);
-            // const costPrice = document.getElementById('costPrice' + uniqueId);
-            // const maxPrice = document.getElementById('maxPrice' + uniqueId);
-            // const realPrice = document.getElementById('realprice' + uniqueId);
-
-            // let currentValue = parseInt(lotInput.value) || 0;
-            // let realPriceValue = parseFloat(realPrice.value) || 0;
-
-            // if (currentValue > 1) {
-            //     lotInput.value = currentValue - 1;
-            //     quantity.value = lotInput.value * quantityPerLot;
-            //     let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-            //     costPrice.innerHTML = "₹ " + cp;
-            //     if (wallet > cp) {
-            //         maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-            //         costPrice.style.color = 'green';
-            //     } else {
-            //         maxPrice.style.color = 'red';
-            //         costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-            //     }
-            // }
-
-
-
-        }
-    </script>
-
-    <script>
-        Echo.channel('watchlists')
-            .listen('Watchlist', (event) => {
-                const feeds = event.watchlist.feeds;
-                console.log(feeds);
-                // Iterate through the received WebSocket data
-                for (const key in feeds) {
-                    if (feeds.hasOwnProperty(key)) {
-                        const feedData = feeds[key].ff.marketFF; // Data from WebSocket
-                        const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
-
-                        const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el
-                            .textContent === receivedIsin);
-
-                        // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
-                        if (isinElement) {
-                            const rowId = isinElement.id.replace('isin', '');
-                            // console.log(rowId);
-
-                            const ltp = feedData?.ltpc?.ltp || 1;
-                            const cp = feedData?.ltpc?.cp || 0;
-
-                            
-
-                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0' +
-                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
-                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
-
-                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-                            const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
-
-                           
-                            const badgeValue = (ltp - cp).toFixed(2) || '0';
-
-
-                            document.getElementById(`change${rowId}`).innerHTML = `
-                                        ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
-
-
-                                `;
-
-
-
-
-                            // bid and ask
-                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .bidQ || '0';
-                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .askQ || '0';
-                        } else{
-                            console.log('ISIN not found:', receivedIsin);
+                    if (tradeType === 'sell') {
+                        const priceInput = document.getElementById("realprice2" + id);
+                        const limitprice = document.getElementById("limitprice2" + id);
+                        const limitblock = document.getElementById("limitblock2" + id);
+                        if (orderType === 'limit') {
+                            // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+                            limitblock.style.display = 'flex';
+                            limitprice.setAttribute("type", "text");
+                            limitprice.value = priceInput.value; // Copy the value
+                            priceInput.disabled = false; // Enable input
+                            limitprice.disabled = false; // Enable input
+                        } else if (orderType === 'market') {
+                            // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                            priceInput.setAttribute("type", "text");
+                            limitprice.setAttribute("type", "hidden");
+                            limitblock.style.display = 'none';
+                            priceInput.disabled = true; // Disable input
+                            limitprice.disabled = true; // Disable input
+                        } else if (orderType === 'stoploss') {
+                            // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                            priceInput.setAttribute("type", "text");
+                            limitprice.setAttribute("type", "hidden");
+                            priceInput.disabled = false; // Enable input
+                            limitprice.disabled = true; // Disable input
                         }
+                    } else {
+                        const priceInput = document.getElementById("realprice1" + id);
+                        const limitprice = document.getElementById("limitprice1" + id);
+                        const limitblock = document.getElementById("limitblock1" + id);
+
+                        if (orderType === 'limit') {
+                            // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+                            // priceInput.setAttribute("type", "hidden");
+                            limitprice.setAttribute("type", "text");
+                            limitblock.style.display = 'flex';
+                            limitprice.value = priceInput.value; // Copy the value
+                            priceInput.disabled = false; // Enable input
+                            limitprice.disabled = false; // Enable input
+                        } else if (orderType === 'market') {
+                            // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                            // priceInput.setAttribute("type", "text");
+                            limitprice.setAttribute("type", "hidden");
+                            limitblock.style.display = 'none';
+                            priceInput.disabled = true; // Disable input
+                            limitprice.disabled = true; // Disable input
+                        } else if (orderType === 'stoploss') {
+                            // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                            // priceInput.setAttribute("type", "text");
+                            limitprice.setAttribute("type", "hidden");
+                            priceInput.disabled = false; // Enable input
+                            limitprice.disabled = true; // Disable input
+                        }
+                    }
+                    }
+
+
+
+                    function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
+
+                    const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+
+                    const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
+
+                    let margin=0;
+
+                    if(instrumentType=='FUT'){
+                    margin=500;
+                    }else if(instrumentType=='CE' || instrumentType=='PE'){
+                    margin=7;
+                    }else{
+                    margin=0;
+                    }
+
+
+
+                    let currentValue = parseInt(lotInput.value) || 0;
+                    let realPriceValue = parseFloat(realPrice.value) || 0;
+
+                    // Increment the lot size
+                    lotInput.value = currentValue + 1;
+
+                    // Update quantity and cost price
+                    quantity.value = lotInput.value * quantityPerLot;
+                    let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+                    let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
+                  
+
+                    marginCost.innerHTML = "₹ " + mcp;
+
+                    costPrice.innerHTML = " ₹ " + cp;
+
+                    // Update color logic
+                    if (wallet >= mcp) {
+                        maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                        // costPrice.style.color = 'green';
+                        marginCost.style.color = 'green';
+                        document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
+                    } else {
+                        maxPrice.style.color = 'red';
+                        // costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                        marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
+                        document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
+                    }
+
 
                     }
-                }
-            });
 
-        function closeModal() {
-            let modal = document.getElementById('exampleModalCenter{{ $i }}');
-            let bootstrapModal = bootstrap.Modal.getInstance(modal);
-            bootstrapModal.hide();
-        }
-    </script>
+                    function decrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
+
+                    const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                    const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+
+                    const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
+
+                        let margin=0;
+
+                        if(instrumentType=='FUT'){
+                        margin=500;
+                        }else if(instrumentType=='CE' || instrumentType=='PE'){
+                        margin=7;
+                        }else{
+                        margin=0;
+                        }
+
+                    let currentValue = parseInt(lotInput.value) || 0;
+                    let realPriceValue = parseFloat(realPrice.value) || 0;
+
+                    // Decrement the lot size only if it's greater than 1
+                    if (currentValue > 1) {
+                        lotInput.value = currentValue - 1;
+
+                        // Update quantity and cost price
+                        quantity.value = lotInput.value * quantityPerLot;
+                        let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+                        let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
+                        marginCost.innerHTML = "₹ " + mcp;
+
+                        costPrice.innerHTML = "₹ " + cp;
+
+                        // Update color logic
+                        if (wallet >= mcp) {
+                            maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                            costPrice.style.color = 'green';
+                            document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
+                        } else {
+                            maxPrice.style.color = 'red';
+                            costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                            document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
+                        }
+                    } else {
+                        console.log("Lot size cannot be less than 1.");
+                    }
 
 
-    <script>
+                    }
+
+
+        // Buy Sell Feature End 
+
+
+        // Add Watch List  Start
+
+
         function addWatchlist(item) {
-
-            console.log(item);
-
-
-
-
-
-            //use ajax and swel fire to add watchlist  using of post method
-            $.ajax({
-                url: "{{ route('add-watchlist') }}",
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-                },
-                data: item,
-                beforeSend: function() {
-                    Swal.fire({
-                        title: 'Adding Watchlist',
-                        html: 'Please wait...',
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                },
-                success: function(response) {
-                    Swal.close();
-                    if (response.success) {
+                //use ajax and swel fire to add watchlist  using of post method
+                $.ajax({
+                    url: "{{ route('add-watchlist') }}",
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                    },
+                    data: item,
+                    beforeSend: function() {
                         Swal.fire({
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
+                            title: 'Adding Watchlist',
+                            html: 'Please wait...',
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function(response) {
+                        Swal.close();
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
 
-                    } else {
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.message || 'An error occurred.',
+                                icon: 'error',
+                                confirmButtonText: 'Okay'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.close();
                         Swal.fire({
                             title: 'Error',
-                            text: response.message || 'An error occurred.',
+                            text: xhr.responseJSON?.message ||
+                                'An error occurred while adding the script.',
                             icon: 'error',
                             confirmButtonText: 'Okay'
                         });
+                        console.error(xhr.responseJSON);
                     }
-                },
-                error: function(xhr) {
-                    Swal.close();
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON?.message ||
-                            'An error occurred while adding the script.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    });
-                    console.error(xhr.responseJSON);
+                });
+
                 }
-            });
 
 
 
+                function removeWatchlist(id) {
+           
 
-
-
-        }
-
-        function removeWatchlist(id) {
-            console.log(id);
-
-            $.ajax({
-                url: "{{ route('remove-watchlist') }}",
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-                },
-                data: {
-                    id: id
-                },
-                beforeSend: function() {
-                    Swal.fire({
-                        title: 'Removing Watchlist',
-                        html: 'Please wait...',
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                },
-                success: function(response) {
-                    Swal.close();
-                    if (response.success) {
+                $.ajax({
+                    url: "{{ route('remove-watchlist') }}",
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                    },
+                    data: {
+                        id: id
+                    },
+                    beforeSend: function() {
                         Swal.fire({
-                            icon: 'success',
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            location.reload();
+                            title: 'Removing Watchlist',
+                            html: 'Please wait...',
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
                         });
-                    } else {
+                    },
+                    success: function(response) {
+                        Swal.close();
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.message || 'An error occurred.',
+                                icon: 'error',
+                                confirmButtonText: 'Okay'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.close();
                         Swal.fire({
                             title: 'Error',
-                            text: response.message || 'An error occurred.',
+                            text: xhr.responseJSON?.message ||
+                                'An error occurred while removing the script.',
                             icon: 'error',
                             confirmButtonText: 'Okay'
                         });
+                        console.error(xhr.responseJSON);
                     }
-                },
-                error: function(xhr) {
-                    Swal.close();
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON?.message ||
-                            'An error occurred while removing the script.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    });
-                    console.error(xhr.responseJSON);
+                });
                 }
-            });
-        }
-    </script>
 
-    <script>
+
+        // Remove Watchlist End
+
+
+
+
+
+
+
         // Initialize chart
     const chartContainer = document.getElementById("chart");
     const chart = LightweightCharts.createChart(chartContainer, {
@@ -2084,37 +1968,24 @@ function showLoading() {
 
     </script>
 
+
+
+
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 
-    <!-- Datatable -->
-    <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="js/plugins-init/datatables.init.js"></script>
 
-    {{-- <script src="{{ asset('js/dashboard/future.js') }}"></script> --}}
-
-
-
-
-    <!-- Dashboard 1 -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
 
 
     <script src="js/custom.min.js"></script>
     <script src="js/dlabnav-init.js"></script>
-    <script src="js/demo.js"></script>
-    <script src="js/styleSwitcher.js"></script>
+    {{-- <script src="js/demo.js"></script> --}}
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
-
-
-
-
 
 </body>
 
-<!-- Mirrored from jiade.dexignlab.com/xhtml/history.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:24 GMT -->
 
 </html>
