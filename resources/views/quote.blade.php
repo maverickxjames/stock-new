@@ -1,5 +1,5 @@
 @php
-$user = Auth::user();
+    $user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -78,14 +78,12 @@ $user = Auth::user();
 </head>
 
 <style>
-
-
-
     #preload {
         position: fixed;
         width: 100%;
         height: 100%;
-        background: black; /* Pure black background */
+        background: black;
+        /* Pure black background */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -212,7 +210,7 @@ $user = Auth::user();
     <div id="preload">
         <p style="color: white; font-size: 1.5rem;"></p>
     </div>
-    
+
     <!--Preloader end-->
 
 
@@ -235,30 +233,7 @@ $user = Auth::user();
         <!--Sidebar end-->
 
 
-        <!--chart offcanvas start -->
-        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
-            aria-labelledby="offcanvasBottomLabel" style="height: fit-content;">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
-                <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none"><img
-                        src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20" alt=""></button>
-            </div>
-            <div class="offcanvas-body small p-0">
-                <div class="card-body p-0 custome-tooltip">
-                    <div id="chart" class="revenueMap"></div>
-                </div>
-                <div class='d-flex justify-content-between p-3 items-center w-100'>
-                    <div class="p-2 w-50" style="background-color: red; color:#fff">Ask : 1265</div>
-                    <div class="p-3 w-50" style="background-color: green;color:#fff">Bid : 2938</div>
-                </div>
-                <div class=' text-center'>
-                    <button class="btn btn-primary w-80">Trade</button>
-                </div>
 
-
-            </div>
-        </div>
-        <!--chart offcanvas end -->
 
         <!--content body start-->
         <div class="content-body">
@@ -293,8 +268,8 @@ $user = Auth::user();
                                         </div>
                                         <div class="modal-body p-0">
                                             <div class="trade-container">
-                                                <div data-bs-dismiss="modal" onclick="showOrderForm({{ $i }})"
-                                                    class="trade-item">
+                                                <div data-bs-dismiss="modal"
+                                                    onclick="showOrderForm({{ $i }})" class="trade-item">
                                                     <h2>Trade</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
                                                         <a href="javascript:void(0)" id="add_script">
@@ -304,7 +279,7 @@ $user = Auth::user();
                                                     </div>
                                                 </div>
                                                 <div class="trade-item"
-                                                    onclick="fetchData('{{ $foisin }}','exampleModalCenter{{ $i }}');"
+                                                    onclick="handleChartClick('{{ $foisin }}', '{{ $i }}')"
                                                     data-bs-dismiss="modal">
                                                     <h2 data-bs-dismiss="modal">Chart</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
@@ -346,13 +321,84 @@ $user = Auth::user();
                             </div>
                             <!--Top up Modal end-->
 
+                            <!--chart offcanvas start -->
+                            <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                                id="offcanvasBottom{{ $i }}" aria-labelledby="offcanvasBottomLabel"
+                                style="height: fit-content;">
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
+                                    <button type="button" data-bs-dismiss="offcanvas" aria-label="Close"
+                                        style="border: none"><img
+                                            src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                            width="20" alt=""></button>
+                                </div>
+                                <div class="offcanvas-body small p-0">
+                                    <div class="card market-overview">
+                                        <div class="card-header border-0 flex-wrap pb-0">
+                                            <div class="d-flex align-items-center flex-wrap mb-3 mb-sm-0">
+                                                <h4 class="card-title mb-0 " style="font-size: 2rem;font-weight:900" >{{ $stock->tradingSymbol }}</h4>
+
+                                              
+                                            </div>
+
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between flex-wrap">
+                                                {{-- <div class="d-flex align-items-center">
+                                                    <h4 class="me-5 font-w600 mb-0"><span class="text-success me-2">BUY</span> $5,673
+                                                    </h4>
+                                                    <h4 class="font-w600 mb-0"><span class="text-danger me-2">SELL</span> $5,982</h4>
+                                                </div> --}}
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center  mt-md-0 mt-2">
+                                                    <ul class="nav nav-pills" id="myTab1" role="tablist">
+                                                        <li class="nav-item" role="presentation">
+                                                            <a class="nav-link active" id="Day-tab{{ $i }}"
+                                                                data-bs-toggle="tab" data-bs-target="#Day"
+                                                                href="#Day" role="tab"
+                                                                aria-selected="true">Day</a>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <a class="nav-link" id="Week-tab{{ $i }}"
+                                                                data-bs-toggle="tab" data-bs-target="#Week"
+                                                                href="#Week" role="tab"
+                                                                aria-selected="true">Week</a>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <a class="nav-link" id="Month-tab{{ $i }}" data-bs-toggle="tab"
+                                                                data-bs-target="#Month" href="#Month" role="tab"
+                                                                aria-selected="false">Month</a>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <a class="nav-link" id="Year-tab{{ $i }}" data-bs-toggle="tab"
+                                                                data-bs-target="#Year" href="#Year" role="tab"
+                                                                aria-selected="false">Year</a>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div id="marketOverview{{ $i }}" style="height: 300px"></div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--chart offcanvas end -->
+
 
                             <!-- Trade offcanvas model -->
 
-                            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
-                                aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
+                            <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                                id="orderoffcanvasBottom{{ $i }}" aria-labelledby="offcanvasBottomLabel"
+                                style="height: fit-content">
                                 <div class="offcanvas-header">
-                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">Offcanvas
+                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">
+                                        Offcanvas
                                         bottom
                                     </h5>
                                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
@@ -367,15 +413,18 @@ $user = Auth::user();
                                                     <!-- <div class="d-flex"> -->
 
                                                     <nav class="" style="width: 100%;">
-                                                        <div class="nav nav-pills light " id="nav-tab" role="tablist">
+                                                        <div class="nav nav-pills light " id="nav-tab"
+                                                            role="tablist">
                                                             <button class="nav-link active " style="width: 50%;"
                                                                 id="nav-order-tab" data-bs-toggle="tab"
-                                                                data-bs-target="#nav-order{{ $i }}" type="button"
-                                                                role="tab" aria-selected="true">Buy</button>
+                                                                data-bs-target="#nav-order{{ $i }}"
+                                                                type="button" role="tab"
+                                                                aria-selected="true">Buy</button>
                                                             <button class="nav-link" style="width: 50%"
                                                                 id="nav-histroy-tab" data-bs-toggle="tab"
-                                                                data-bs-target="#nav-history{{ $i }}" type="button"
-                                                                role="tab" aria-selected="false">Sell
+                                                                data-bs-target="#nav-history{{ $i }}"
+                                                                type="button" role="tab"
+                                                                aria-selected="false">Sell
                                                             </button>
 
                                                         </div>
@@ -384,18 +433,23 @@ $user = Auth::user();
                                                 </div>
                                                 <div class="card-body pt-2">
                                                     <div class="tab-content" id="nav-tabContent">
-                                                        <div class="tab-pane fade show active" id="nav-order{{ $i }}"
-                                                            role="tabpanel" aria-labelledby="nav-order-tab">
+                                                        <div class="tab-pane fade show active"
+                                                            id="nav-order{{ $i }}" role="tabpanel"
+                                                            aria-labelledby="nav-order-tab">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form id="buyform{{ $i }}" name="buyform{{ $i }}"
-                                                                    method="POST" action="{{ route('placeBuyOrder') }}">
+                                                                <form id="buyform{{ $i }}"
+                                                                    name="buyform{{ $i }}" method="POST"
+                                                                    action="{{ route('placeBuyOrder') }}">
                                                                     @csrf
-                                                                    <input type="text" name="id" value="{{ $i }}"
-                                                                        id="id" hidden>
-                                                                    <input type="text" name="instrumentKey1{{ $i }}"
+                                                                    <input type="text" name="id"
+                                                                        value="{{ $i }}" id="id"
+                                                                        hidden>
+                                                                    <input type="text"
+                                                                        name="instrumentKey1{{ $i }}"
                                                                         value="{{ $foisin }}"
                                                                         id="instrumentKey1{{ $i }}" hidden>
-                                                                    <input type="text" name="instrumentType{{ $i }}"
+                                                                    <input type="text"
+                                                                        name="instrumentType{{ $i }}"
                                                                         value="{{ $instrumentType }}"
                                                                         id="instrumentType{{ $i }}" hidden>
                                                                     <div class="col-xl-4" style="width: 100%;">
@@ -407,14 +461,15 @@ $user = Auth::user();
                                                                                     <span
                                                                                         class="small text-muted">Available
                                                                                         Balance</span>
-                                                                                    <span class="text-dark">{{
-                                                                                        $user->real_wallet }}</span>
+                                                                                    <span
+                                                                                        class="text-dark">{{ $user->real_wallet }}</span>
                                                                                 </div>
                                                                                 <!-- Order Type Selector -->
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">Order
                                                                                         Type</label>
-                                                                                    <select id="orderType1{{ $i }}"
+                                                                                    <select
+                                                                                        id="orderType1{{ $i }}"
                                                                                         name="orderType1{{ $i }}"
                                                                                         onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
                                                                                         class="form-select">
@@ -433,7 +488,8 @@ $user = Auth::user();
                                                                                     <span
                                                                                         class="input-group-text">Market
                                                                                         Price</span>
-                                                                                    <input id="realprice1{{ $i }}"
+                                                                                    <input
+                                                                                        id="realprice1{{ $i }}"
                                                                                         name="realprice1{{ $i }}"
                                                                                         readonly type="text"
                                                                                         class="form-control"
@@ -448,9 +504,11 @@ $user = Auth::user();
                                                                                 <div id="limitblock1{{ $i }}"
                                                                                     style="display: none"
                                                                                     class="input-group mb-3">
-                                                                                    <span class="input-group-text">Limit
+                                                                                    <span
+                                                                                        class="input-group-text">Limit
                                                                                         Price</span>
-                                                                                    <input id="limitprice1{{ $i }}"
+                                                                                    <input
+                                                                                        id="limitprice1{{ $i }}"
                                                                                         name="limitprice1{{ $i }}"
                                                                                         disabled type="hidden"
                                                                                         class="form-control"
@@ -550,7 +608,8 @@ $user = Auth::user();
                                                                                     <div
                                                                                         class="d-flex justify-content-between flex-wrap align-items-center">
                                                                                         <!-- Displaying Cost and Margin Price -->
-                                                                                        <div class="d-flex flex-column">
+                                                                                        <div
+                                                                                            class="d-flex flex-column">
                                                                                             <span>
                                                                                                 Cost: <s
                                                                                                     id="costPrice1{{ $i }}"
@@ -594,16 +653,18 @@ $user = Auth::user();
                                                                 </form>
                                                             </div>
                                                         </div>
-                                                        <div class="tab-pane fade" id="nav-history{{ $i }}"
-                                                            role="tabpanel">
+                                                        <div class="tab-pane fade"
+                                                            id="nav-history{{ $i }}" role="tabpanel">
                                                             <div class="table-responsive dataTabletrade">
-                                                                <form id="sellform" name="sellform{{ $i }}"
-                                                                    method="POST"
+                                                                <form id="sellform"
+                                                                    name="sellform{{ $i }}" method="POST"
                                                                     action="{{ route('placeSellOrder') }}">
                                                                     @csrf
-                                                                    <input type="text" name="id2" value="{{ $i }}"
-                                                                        id="id" hidden>
-                                                                    <input type="text" name="instrumentKey2{{ $i }}"
+                                                                    <input type="text" name="id2"
+                                                                        value="{{ $i }}" id="id"
+                                                                        hidden>
+                                                                    <input type="text"
+                                                                        name="instrumentKey2{{ $i }}"
                                                                         value="{{ $foisin }}"
                                                                         id="instrumentKey2{{ $i }}" hidden>
                                                                     <div class="col-xl-4" style="width: 100%;">
@@ -616,15 +677,16 @@ $user = Auth::user();
                                                                                     <span
                                                                                         class="small text-muted">Available
                                                                                         Balance</span>
-                                                                                    <span class="text-dark">{{
-                                                                                        $user->real_wallet }}</span>
+                                                                                    <span
+                                                                                        class="text-dark">{{ $user->real_wallet }}</span>
                                                                                 </div>
 
                                                                                 <!-- Order Type Selector -->
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">Order
                                                                                         Type</label>
-                                                                                    <select id="orderType2{{ $i }}"
+                                                                                    <select
+                                                                                        id="orderType2{{ $i }}"
                                                                                         name="orderType2{{ $i }}"
                                                                                         onchange="handleOrderTypeChange({{ $i }}, this.value,'sell')"
                                                                                         class="form-select">
@@ -643,7 +705,8 @@ $user = Auth::user();
                                                                                     <span
                                                                                         class="input-group-text">Market
                                                                                         Price</span>
-                                                                                    <input id="realprice2{{ $i }}"
+                                                                                    <input
+                                                                                        id="realprice2{{ $i }}"
                                                                                         name="realprice2{{ $i }}"
                                                                                         readonly type="text"
                                                                                         class="form-control"
@@ -659,9 +722,11 @@ $user = Auth::user();
                                                                                 <div id="limitblock2{{ $i }}"
                                                                                     style="display: none"
                                                                                     class="input-group mb-3">
-                                                                                    <span class="input-group-text">Limit
+                                                                                    <span
+                                                                                        class="input-group-text">Limit
                                                                                         Price</span>
-                                                                                    <input id="limitprice2{{ $i }}"
+                                                                                    <input
+                                                                                        id="limitprice2{{ $i }}"
                                                                                         name="limitprice2{{ $i }}"
                                                                                         disabled type="hidden"
                                                                                         class="form-control"
@@ -759,7 +824,8 @@ $user = Auth::user();
                                                                                     <div
                                                                                         class="d-flex justify-content-between flex-wrap align-items-center">
                                                                                         <!-- Displaying Cost and Margin Price -->
-                                                                                        <div class="d-flex flex-column">
+                                                                                        <div
+                                                                                            class="d-flex flex-column">
                                                                                             <span>
                                                                                                 Cost: <s
                                                                                                     id="costPrice2{{ $i }}"
@@ -824,17 +890,18 @@ $user = Auth::user();
                     <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
                         <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
+                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                    id="change{{ $i }}">
                                     <?php 
                                                                 $change = $stock->ltp - $stock->cp;
                                                                 if($change > 0){
                                                                     ?>
                                     <span class="badge badge-success me-1">▲</span>
                                     <span class="text-success" id="perc{{ $i }}">
-                                        <?php echo number_format(($change/$stock->cp)*100,2) ?>% &nbsp;
+                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>% &nbsp;
                                     </span>
                                     <span class="text-success" id="perc{{ $i }}">(
-                                        <?php echo number_format(($change),2) ?> pts)
+                                        <?php echo number_format($change, 2); ?> pts)
                                     </span>
 
 
@@ -842,10 +909,11 @@ $user = Auth::user();
                                                                 }elseif($change < 0){
                                                                     ?>
                                     <span class="badge badge-danger me-1">▼</span>
-                                    <span class="text-danger" id="perc{{ $i }}">{{
-                                        number_format(($change/$stock->cp)*100,2) }}% &nbsp;</span>
+                                    <span class="text-danger"
+                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
+                                        &nbsp;</span>
                                     <span class="text-danger" id="perc{{ $i }}">(
-                                        <?php echo number_format(($change),2) ?> pts)
+                                        <?php echo number_format($change, 2); ?> pts)
                                     </span>
 
                                     <?php
@@ -879,12 +947,12 @@ $user = Auth::user();
                         <div class="card-body ">
                             <div class="d-flex justify-content-between mb-2">
                                 <div class="me-3">
-                                    <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600" id="bid{{ $i }}">{{
-                                            $stock->bid }}</span></p>
+                                    <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600"
+                                            id="bid{{ $i }}">{{ $stock->bid }}</span></p>
                                 </div>
                                 <div class="me-3">
-                                    <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600" id="ask{{ $i }}">{{
-                                            $stock->ask }}</span></p>
+                                    <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600"
+                                            id="ask{{ $i }}">{{ $stock->ask }}</span></p>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between" style="font-size: xx-small">
@@ -958,8 +1026,8 @@ $user = Auth::user();
                         <div class="row align-items-center mb-3">
 
                             <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3">
-                                <input type="text" class="form-control" id="searchinp" placeholder="Search Script"
-                                    onkeyup="searchScript(this)">
+                                <input type="text" class="form-control" id="searchinp"
+                                    placeholder="Search Script" onkeyup="searchScript(this)">
 
                             </div>
 
@@ -1037,165 +1105,43 @@ $user = Auth::user();
     </div>
     <script>
         // Trade Start
-            
-            // buy form
-            $(document).on('submit', '[id^="buyform"]', function (e) {
+
+        // buy form
+        $(document).on('submit', '[id^="buyform"]', function(e) {
             e.preventDefault();
             var form = $(this);
-           
+
             var url = form.attr('action');
             var type = form.attr('method');
 
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
 
-            
-            const id=formData.id;
-         
 
-            let data={
-                instrumentKey:formData[`instrumentKey1${id}`],
-                 orderType:formData[`orderType1${id}`],
+            const id = formData.id;
+
+
+            let data = {
+                instrumentKey: formData[`instrumentKey1${id}`],
+                orderType: formData[`orderType1${id}`],
                 // quantity:formData[`quantity1${id}`],
-                price:formData[`realprice1${id}`],
-                limitPrice:formData[`limitprice1${id}`],
-                lotSize:formData[`lotSize1${id}`],
+                price: formData[`realprice1${id}`],
+                limitPrice: formData[`limitprice1${id}`],
+                lotSize: formData[`lotSize1${id}`],
                 // costPrice:document.getElementById(`costPrice1${id}`).textContent,
-                tradeType:formData[`tradeMode1${id}`],
-                _token:formData._token,
+                tradeType: formData[`tradeMode1${id}`],
+                _token: formData._token,
                 // id:formData.id,
             }
 
-            if(formData[`lotSize1${id}`] < 1){
+            if (formData[`lotSize1${id}`] < 1) {
                 Toastify({
                     text: "Lot size must be greater than 0.",
                     duration: 3000,
                     gravity: "top",
                     position: "center",
                     offset: {
-                    y: "90px" // Moves it 60px down from the top
-                },
-                    backgroundColor: "#FF5733",
-                }).showToast();
-                return;
-            }
-
-            const loadingToast = Toastify({
-                text: "Processing your order...",
-                duration: -1, // Keep it visible until manually closed
-                gravity: "top",
-                offset: {
-                                y: "90px" // Moves it 60px down from the top
-                            },
-                position: "center",
-                backgroundColor: "#3498db", // Blue for loading
-            }).showToast();
-
-                $.ajax({
-                    url: url,
-                    type: type,
-                    data: data,
-                    success: function(response) {
-                        loadingToast.hideToast(); // Hide loading toast
-                        
-                        response = JSON.parse(response);
-                     
-
-                        if (response.status === 'success') {
-                            Toastify({
-                                text: "✅ Order Placed ",
-                                duration: 1500,
-                                gravity: "top",
-                                offset: {
-                                    y: "90px" // Moves it 60px down from the top
-                                },
-                                position: "center",
-                                backgroundColor: "#3ab67a",
-                                callback: function() {
-                                    let offcanvas = document.getElementById(`orderoffcanvasBottom${id}`); // Use ID to select offcanvas
-                        let bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvas);
-                        bsOffcanvas.hide(); // Close the offcanvas
-
-                        // Remove the backdrop after hiding the offcanvas
-                        setTimeout(() => {
-                            document.querySelectorAll('.offcanvas-backdrop').forEach(backdrop => {
-                                backdrop.remove();
-                            });
-                        }, 300);
-                    }
-                            }).showToast();
-                        } else {
-                            Toastify({
-                                text: response.message,
-                                duration: 3000,
-                                gravity: "top",
-                                position: "center",
-                                offset: {
-                                    y: "90px" // Moves it 60px down from the top
-                                },
-                                backgroundColor: "#FF5733",
-                            }).showToast();
-                        }
+                        y: "90px" // Moves it 60px down from the top
                     },
-                    error: function(xhr) {
-                        loadingToast.hideToast(); // Hide loading toast in case of error
-
-                        Toastify({
-                                text: xhr.responseJSON?.message || 
-                                'An error occurred while placing the order.',
-                                duration: 3000,
-                                gravity: "top",
-                                position: "center",
-                                offset: {
-                                    y: "90px" // Moves it 60px down from the top
-                                },
-                                backgroundColor: "#FF5733",
-                            }).showToast();
-
-                      
-                    }
-                });
-
-
-
-
-        });
-
-
-        // sell form
-        $(document).on('submit', '[id^="sellform"]', function (e) {
-            e.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
-            var type = form.attr('method');
-
-            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
-
-            
-            const id=formData.id2;
-         
-
-            let data={
-                instrumentKey:formData[`instrumentKey2${id}`],
-                 orderType:formData[`orderType2${id}`],
-                // quantity:formData[`quantity1${id}`],
-                price:formData[`realprice2${id}`],
-                limitPrice:formData[`limitprice2${id}`],
-                lotSize:formData[`lotSize2${id}`],
-                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
-                tradeType:formData[`tradeMode2${id}`],
-                _token:formData._token,
-                // id:formData.id,
-            }
-
-            if(formData[`lotSize2${id}`] < 1){
-                Toastify({
-                    text: "Lot size must be greater than 0.",
-                    duration: 3000,
-                    gravity: "top",
-                    position: "center",
-                    offset: {
-                    y: "90px" // Moves it 60px down from the top
-                },
                     backgroundColor: "#FF5733",
                 }).showToast();
                 return;
@@ -1206,63 +1152,52 @@ $user = Auth::user();
                 duration: -1, // Keep it visible until manually closed
                 gravity: "top",
                 offset: {
-                                y: "90px" // Moves it 60px down from the top
-                            },
+                    y: "90px" // Moves it 60px down from the top
+                },
                 position: "center",
                 backgroundColor: "#3498db", // Blue for loading
             }).showToast();
-            
 
             $.ajax({
                 url: url,
                 type: type,
                 data: data,
                 success: function(response) {
-                    loadingToast.hideToast();
+                    loadingToast.hideToast(); // Hide loading toast
+
                     response = JSON.parse(response);
-                 
+
+
                     if (response.status === 'success') {
                         Toastify({
-                                text: "✅ Order Placed ",
-                                duration: 1500,
-                                gravity: "top",
-                                offset: {
-                                    y: "90px" // Moves it 60px down from the top
-                                },
-                                position: "center",
-                                backgroundColor: "#3ab67a",
-                                callback: function() {
-                                    let offcanvas = document.getElementById(`orderoffcanvasBottom${id}`); // Use ID to select offcanvas
-                        let bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvas);
-                        bsOffcanvas.hide(); // Close the offcanvas
+                            text: "✅ Order Placed ",
+                            duration: 1500,
+                            gravity: "top",
+                            offset: {
+                                y: "90px" // Moves it 60px down from the top
+                            },
+                            position: "center",
+                            backgroundColor: "#3ab67a",
+                            callback: function() {
+                                let offcanvas = document.getElementById(
+                                    `orderoffcanvasBottom${id}`
+                                ); // Use ID to select offcanvas
+                                let bsOffcanvas = bootstrap.Offcanvas.getInstance(
+                                    offcanvas);
+                                bsOffcanvas.hide(); // Close the offcanvas
 
-                        // Remove the backdrop after hiding the offcanvas
-                        setTimeout(() => {
-                            document.querySelectorAll('.offcanvas-backdrop').forEach(backdrop => {
-                                backdrop.remove();
-                            });
-                        }, 300);
-                    }
-                            }).showToast();
+                                // Remove the backdrop after hiding the offcanvas
+                                setTimeout(() => {
+                                    document.querySelectorAll('.offcanvas-backdrop')
+                                        .forEach(backdrop => {
+                                            backdrop.remove();
+                                        });
+                                }, 300);
+                            }
+                        }).showToast();
                     } else {
                         Toastify({
-                                text: response.message || "An error occurred while placing the order.",
-                                duration: 3000,
-                                gravity: "top",
-                                position: "center",
-                                offset: {
-                                    y: "90px" // Moves it 60px down from the top
-                                },
-                                backgroundColor: "#FF5733",
-                            }).showToast();
-                    }
-                },
-                error: function(xhr) {
-                    loadingToast.hideToast(); // Hide loading toast in case of error
-
-                    Toastify({
-                            text: xhr.responseJSON?.message || 
-                            'An error occurred while placing the order.',
+                            text: response.message,
                             duration: 3000,
                             gravity: "top",
                             position: "center",
@@ -1271,12 +1206,153 @@ $user = Auth::user();
                             },
                             backgroundColor: "#FF5733",
                         }).showToast();
+                    }
+                },
+                error: function(xhr) {
+                    loadingToast.hideToast(); // Hide loading toast in case of error
+
+                    Toastify({
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while placing the order.',
+                        duration: 3000,
+                        gravity: "top",
+                        position: "center",
+                        offset: {
+                            y: "90px" // Moves it 60px down from the top
+                        },
+                        backgroundColor: "#FF5733",
+                    }).showToast();
+
+
+                }
+            });
+
+
+
+
+        });
+
+
+        // sell form
+        $(document).on('submit', '[id^="sellform"]', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            var type = form.attr('method');
+
+            var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+
+
+            const id = formData.id2;
+
+
+            let data = {
+                instrumentKey: formData[`instrumentKey2${id}`],
+                orderType: formData[`orderType2${id}`],
+                // quantity:formData[`quantity1${id}`],
+                price: formData[`realprice2${id}`],
+                limitPrice: formData[`limitprice2${id}`],
+                lotSize: formData[`lotSize2${id}`],
+                // costPrice:document.getElementById(`costPrice1${id}`).textContent,
+                tradeType: formData[`tradeMode2${id}`],
+                _token: formData._token,
+                // id:formData.id,
+            }
+
+            if (formData[`lotSize2${id}`] < 1) {
+                Toastify({
+                    text: "Lot size must be greater than 0.",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    offset: {
+                        y: "90px" // Moves it 60px down from the top
+                    },
+                    backgroundColor: "#FF5733",
+                }).showToast();
+                return;
+            }
+
+            const loadingToast = Toastify({
+                text: "Processing your order...",
+                duration: -1, // Keep it visible until manually closed
+                gravity: "top",
+                offset: {
+                    y: "90px" // Moves it 60px down from the top
+                },
+                position: "center",
+                backgroundColor: "#3498db", // Blue for loading
+            }).showToast();
+
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                success: function(response) {
+                    loadingToast.hideToast();
+                    response = JSON.parse(response);
+
+                    if (response.status === 'success') {
+                        Toastify({
+                            text: "✅ Order Placed ",
+                            duration: 1500,
+                            gravity: "top",
+                            offset: {
+                                y: "90px" // Moves it 60px down from the top
+                            },
+                            position: "center",
+                            backgroundColor: "#3ab67a",
+                            callback: function() {
+                                let offcanvas = document.getElementById(
+                                    `orderoffcanvasBottom${id}`
+                                ); // Use ID to select offcanvas
+                                let bsOffcanvas = bootstrap.Offcanvas.getInstance(
+                                    offcanvas);
+                                bsOffcanvas.hide(); // Close the offcanvas
+
+                                // Remove the backdrop after hiding the offcanvas
+                                setTimeout(() => {
+                                    document.querySelectorAll('.offcanvas-backdrop')
+                                        .forEach(backdrop => {
+                                            backdrop.remove();
+                                        });
+                                }, 300);
+                            }
+                        }).showToast();
+                    } else {
+                        Toastify({
+                            text: response.message ||
+                                "An error occurred while placing the order.",
+                            duration: 3000,
+                            gravity: "top",
+                            position: "center",
+                            offset: {
+                                y: "90px" // Moves it 60px down from the top
+                            },
+                            backgroundColor: "#FF5733",
+                        }).showToast();
+                    }
+                },
+                error: function(xhr) {
+                    loadingToast.hideToast(); // Hide loading toast in case of error
+
+                    Toastify({
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while placing the order.',
+                        duration: 3000,
+                        gravity: "top",
+                        position: "center",
+                        offset: {
+                            y: "90px" // Moves it 60px down from the top
+                        },
+                        backgroundColor: "#FF5733",
+                    }).showToast();
                 }
             });
 
         });
         // Trade End 
-
     </script>
 
 
@@ -1284,6 +1360,10 @@ $user = Auth::user();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="vendor/apexchart/apexchart.js"></script>
+    <!-- Chart piety plugin files -->
+    <script src="vendor/peity/jquery.peity.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> --}}
 
     <script>
         Echo.channel('watchlists')
@@ -1307,14 +1387,15 @@ $user = Auth::user();
                             const ltp = feedData?.ltpc?.ltp || 1;
                             const cp = feedData?.ltpc?.cp || 0;
 
-                            
+
 
                             document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high || '0' +
+                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                                '0' +
                                 '/' + feedData.marketOHLC.ohlc[0].low || '0';
                             document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
                                 .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
@@ -1322,7 +1403,7 @@ $user = Auth::user();
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
                             const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
 
-                           
+
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 
@@ -1342,175 +1423,180 @@ $user = Auth::user();
                                 .bidQ || '0';
                             document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .askQ || '0';
-                        } else{
+                        } else {
                             // console.log('ISIN not found:', receivedIsin);
                         }
 
                     }
                 }
             });
-
-
     </script>
 
 
 
 
     <script>
-            let activeFilter = 'ALL';
-            let activeFilterCP = 'ALL';
-            let mode = 'delivery';
+        let activeFilter = 'ALL';
+        let activeFilterCP = 'ALL';
+        let mode = 'delivery';
 
-            function setActiveFilter(selectedButton, filterName) {
-                const buttons = document.querySelectorAll('.filter');
+        function setActiveFilter(selectedButton, filterName) {
+            const buttons = document.querySelectorAll('.filter');
 
-                buttons.forEach(button => {
-                    button.classList.remove('active-filter');
-                    button.classList.add('light');
-                });
-
-                selectedButton.classList.remove('light');
-                selectedButton.classList.add('active-filter');
-
-                if (filterName === 'Option') {
-                    document.getElementById('expiry-date').hidden = false;
-                    document.getElementById('Order-type').hidden = false;
-                } else if (filterName === 'Future') {
-                    document.getElementById('expiry-date').hidden = false;
-                    document.getElementById('Order-type').hidden = true;
-                } else {
-                    document.getElementById('expiry-date').hidden = true;
-                    document.getElementById('Order-type').hidden = true;
-                }
-
-            
-
-                activeFilter = filterName;
-
-            }
-
-            function setActiveFilterCP(selectedButton, filterName) {
-                const buttons = document.querySelectorAll('.filterCP');
-
-                buttons.forEach(button => {
-                    button.classList.remove('filterCP');
-                    button.classList.add('light');
-                });
-
-                selectedButton.classList.remove('light');
-                selectedButton.classList.add('filterCP');
-
-                activeFilterCP = filterName;
-
-            }
-
-
-
-            function getActiveFilter() {
-                return activeFilter;
-            }
-
-            function getActiveFilterCP() {
-                return activeFilterCP;
-            }
-
-            function handleTradeModeChange(id, tradeMode) {
-                mode = tradeMode;
-            }
-
-            function getTradeMode() {
-                return mode;
-            }
-
-
-
-
-            function showOrderForm(index) {
-                const offcanvasId = `orderoffcanvasBottom${index}`;
-                const offcanvasElement = document.getElementById(offcanvasId);
-                const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-                offcanvas.show();
-
-            }
-
-                    //fetch all scripts from the server
-
-
-            //implement search script using of $scripts variable thgen filter the scripts their we serach tradingSymbol
-            let searchTimeout;
-            let page = 1;
-            let isFetching = false;
-            let hasMoreData = true;
-            let searchValue = '';
-
-            function searchScript(input) {
-                clearTimeout(searchTimeout);
-
-                searchTimeout = setTimeout(() => {
-                    searchValue = input.value.toLowerCase().trim();
-                    if (!searchValue) return;
-
-                    page = 1; 
-                    hasMoreData = true;
-                    fetchResults(true);
-                }, 500);
-            }
-
-            function fetchResults(isNewSearch = false) {
-                if (isFetching || !hasMoreData) return;
-                isFetching = true;
-
-                let type;
-                switch (getActiveFilter()) {
-                    case 'Future': type = 'future'; break;
-                    case 'Option': type = 'option'; break;
-                    case 'Indicies': type = 'indices'; break;
-                    default: type = 'all';
-                }
-
-                showLoading();
-
-                let url = `searchScript?search=${encodeURIComponent(searchValue)}&type=${type}&page=${page}&limit=10`;
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (isNewSearch) {
-                            updateContactsList(data);
-                        } else {
-                            appendContactsList(data);
-                        }
-
-                        if (data.length < 10) {
-                            hasMoreData = false;
-                        } else {
-                            page++;
-                        }
-                    })
-                    .catch(error => console.error('Error:', error))
-                    .finally(() => {
-                        isFetching = false;
-                    });
-            }
-
-        // Detect scroll to bottom
-            document.getElementById("scrollR").addEventListener("scroll", function () {
-                let offcanvas = this;
-                if (offcanvas.scrollTop + offcanvas.clientHeight >= offcanvas.scrollHeight - 20) {
-                    fetchResults();
-                }
+            buttons.forEach(button => {
+                button.classList.remove('active-filter');
+                button.classList.add('light');
             });
 
-            function updateContactsList(responseData) {
-                        const container = document.getElementById("RecentActivityContent");
+            selectedButton.classList.remove('light');
+            selectedButton.classList.add('active-filter');
 
-                        // Clear existing content
-                        container.innerHTML = "";
+            if (filterName === 'Option') {
+                document.getElementById('expiry-date').hidden = false;
+                document.getElementById('Order-type').hidden = false;
+            } else if (filterName === 'Future') {
+                document.getElementById('expiry-date').hidden = false;
+                document.getElementById('Order-type').hidden = true;
+            } else {
+                document.getElementById('expiry-date').hidden = true;
+                document.getElementById('Order-type').hidden = true;
+            }
 
-                        // Loop through API response and create new elements
-                        responseData.forEach((item) => {
 
-                            const contentHTML = `
+
+            activeFilter = filterName;
+
+        }
+
+        function setActiveFilterCP(selectedButton, filterName) {
+            const buttons = document.querySelectorAll('.filterCP');
+
+            buttons.forEach(button => {
+                button.classList.remove('filterCP');
+                button.classList.add('light');
+            });
+
+            selectedButton.classList.remove('light');
+            selectedButton.classList.add('filterCP');
+
+            activeFilterCP = filterName;
+
+        }
+
+
+
+        function getActiveFilter() {
+            return activeFilter;
+        }
+
+        function getActiveFilterCP() {
+            return activeFilterCP;
+        }
+
+        function handleTradeModeChange(id, tradeMode) {
+            mode = tradeMode;
+        }
+
+        function getTradeMode() {
+            return mode;
+        }
+
+
+
+
+        function showOrderForm(index) {
+            const offcanvasId = `orderoffcanvasBottom${index}`;
+            const offcanvasElement = document.getElementById(offcanvasId);
+            const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+            offcanvas.show();
+
+        }
+
+        //fetch all scripts from the server
+
+
+        //implement search script using of $scripts variable thgen filter the scripts their we serach tradingSymbol
+        let searchTimeout;
+        let page = 1;
+        let isFetching = false;
+        let hasMoreData = true;
+        let searchValue = '';
+
+        function searchScript(input) {
+            clearTimeout(searchTimeout);
+
+            searchTimeout = setTimeout(() => {
+                searchValue = input.value.toLowerCase().trim();
+                if (!searchValue) return;
+
+                page = 1;
+                hasMoreData = true;
+                fetchResults(true);
+            }, 500);
+        }
+
+        function fetchResults(isNewSearch = false) {
+            if (isFetching || !hasMoreData) return;
+            isFetching = true;
+
+            let type;
+            switch (getActiveFilter()) {
+                case 'Future':
+                    type = 'future';
+                    break;
+                case 'Option':
+                    type = 'option';
+                    break;
+                case 'Indicies':
+                    type = 'indices';
+                    break;
+                default:
+                    type = 'all';
+            }
+
+            showLoading();
+
+            let url = `searchScript?search=${encodeURIComponent(searchValue)}&type=${type}&page=${page}&limit=10`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (isNewSearch) {
+                        updateContactsList(data);
+                    } else {
+                        appendContactsList(data);
+                    }
+
+                    if (data.length < 10) {
+                        hasMoreData = false;
+                    } else {
+                        page++;
+                    }
+                })
+                .catch(error => console.error('Error:', error))
+                .finally(() => {
+                    isFetching = false;
+                });
+        }
+
+        // Detect scroll to bottom
+        document.getElementById("scrollR").addEventListener("scroll", function() {
+            let offcanvas = this;
+            if (offcanvas.scrollTop + offcanvas.clientHeight >= offcanvas.scrollHeight - 20) {
+                fetchResults();
+            }
+        });
+
+        function updateContactsList(responseData) {
+            const container = document.getElementById("RecentActivityContent");
+
+            // Clear existing content
+            container.innerHTML = "";
+
+            // Loop through API response and create new elements
+            responseData.forEach((item) => {
+
+                const contentHTML = `
                                     <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
                                         <div class="d-flex align-items-center">
                                             <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
@@ -1526,22 +1612,22 @@ $user = Auth::user();
                                         </div>
                                     </div>
                                 `;
-                            container.insertAdjacentHTML("beforeend", contentHTML);
-                        });
-                }
+                container.insertAdjacentHTML("beforeend", contentHTML);
+            });
+        }
 
 
 
-                function appendContactsList(responseData) {
-                    const container = document.getElementById("RecentActivityContent");
-                    const loadingIndicator = document.getElementById("loadingIndicator");
+        function appendContactsList(responseData) {
+            const container = document.getElementById("RecentActivityContent");
+            const loadingIndicator = document.getElementById("loadingIndicator");
 
-                    // Hide loading indicator before adding new data
-                    loadingIndicator.style.display = "none";
+            // Hide loading indicator before adding new data
+            loadingIndicator.style.display = "none";
 
-                    // Loop through API response and create new elements
-                    responseData.forEach((item) => {
-                        const contentHTML = `
+            // Loop through API response and create new elements
+            responseData.forEach((item) => {
+                const contentHTML = `
                             <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
                                 <div class="d-flex align-items-center">
                                     <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
@@ -1557,424 +1643,423 @@ $user = Auth::user();
                                 </div>
                             </div>
                         `;
-                        container.insertAdjacentHTML("beforeend", contentHTML);
-                    });
-                }
+                container.insertAdjacentHTML("beforeend", contentHTML);
+            });
+        }
 
 
 
-                    // Function to show loading indicator
-            function showLoading() {
-                const container = document.getElementById("RecentActivityContent");
-                let loadingIndicator = document.getElementById("loadingIndicator");
+        // Function to show loading indicator
+        function showLoading() {
+            const container = document.getElementById("RecentActivityContent");
+            let loadingIndicator = document.getElementById("loadingIndicator");
 
-                if (!loadingIndicator) {
-                    loadingIndicator = document.createElement("div");
-                    loadingIndicator.id = "loadingIndicator";
-                    loadingIndicator.innerHTML = `<div class="text-center my-3"><span class="spinner-border text-primary"></span> Loading...</div>`;
-                    container.appendChild(loadingIndicator);
-                }
-
-                loadingIndicator.style.display = "block";
+            if (!loadingIndicator) {
+                loadingIndicator = document.createElement("div");
+                loadingIndicator.id = "loadingIndicator";
+                loadingIndicator.innerHTML =
+                    `<div class="text-center my-3"><span class="spinner-border text-primary"></span> Loading...</div>`;
+                container.appendChild(loadingIndicator);
             }
 
-            // Buy Sell Feature Start 
+            loadingIndicator.style.display = "block";
+        }
 
-            function handleOrderTypeChange(id, orderType, tradeType) {
+        // Buy Sell Feature Start 
 
-                        if (tradeType === 'sell') {
-                            const priceInput = document.getElementById("realprice2" + id);
-                            const limitprice = document.getElementById("limitprice2" + id);
-                            const limitblock = document.getElementById("limitblock2" + id);
-                            if (orderType === 'limit') {
-                                // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                                limitblock.style.display = 'flex';
-                                limitprice.setAttribute("type", "text");
-                                limitprice.value = priceInput.value; // Copy the value
-                                priceInput.disabled = false; // Enable input
-                                limitprice.disabled = false; // Enable input
-                            } else if (orderType === 'market') {
-                                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                                priceInput.setAttribute("type", "text");
-                                limitprice.setAttribute("type", "hidden");
-                                limitblock.style.display = 'none';
-                                priceInput.disabled = true; // Disable input
-                                limitprice.disabled = true; // Disable input
-                            } else if (orderType === 'stoploss') {
-                                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                                priceInput.setAttribute("type", "text");
-                                limitprice.setAttribute("type", "hidden");
-                                priceInput.disabled = false; // Enable input
-                                limitprice.disabled = true; // Disable input
-                            }
-                        } else {
-                            const priceInput = document.getElementById("realprice1" + id);
-                            const limitprice = document.getElementById("limitprice1" + id);
-                            const limitblock = document.getElementById("limitblock1" + id);
+        function handleOrderTypeChange(id, orderType, tradeType) {
 
-                            if (orderType === 'limit') {
-                                // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                                // priceInput.setAttribute("type", "hidden");
-                                limitprice.setAttribute("type", "text");
-                                limitblock.style.display = 'flex';
-                                limitprice.value = priceInput.value; // Copy the value
-                                priceInput.disabled = false; // Enable input
-                                limitprice.disabled = false; // Enable input
-                            } else if (orderType === 'market') {
-                                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                                // priceInput.setAttribute("type", "text");
-                                limitprice.setAttribute("type", "hidden");
-                                limitblock.style.display = 'none';
-                                priceInput.disabled = true; // Disable input
-                                limitprice.disabled = true; // Disable input
-                            } else if (orderType === 'stoploss') {
-                                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                                // priceInput.setAttribute("type", "text");
-                                limitprice.setAttribute("type", "hidden");
-                                priceInput.disabled = false; // Enable input
-                                limitprice.disabled = true; // Disable input
-                            }
-                        }
-                        }
+            if (tradeType === 'sell') {
+                const priceInput = document.getElementById("realprice2" + id);
+                const limitprice = document.getElementById("limitprice2" + id);
+                const limitblock = document.getElementById("limitblock2" + id);
+                if (orderType === 'limit') {
+                    // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+                    limitblock.style.display = 'flex';
+                    limitprice.setAttribute("type", "text");
+                    limitprice.value = priceInput.value; // Copy the value
+                    priceInput.disabled = false; // Enable input
+                    limitprice.disabled = false; // Enable input
+                } else if (orderType === 'market') {
+                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                    priceInput.setAttribute("type", "text");
+                    limitprice.setAttribute("type", "hidden");
+                    limitblock.style.display = 'none';
+                    priceInput.disabled = true; // Disable input
+                    limitprice.disabled = true; // Disable input
+                } else if (orderType === 'stoploss') {
+                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                    priceInput.setAttribute("type", "text");
+                    limitprice.setAttribute("type", "hidden");
+                    priceInput.disabled = false; // Enable input
+                    limitprice.disabled = true; // Disable input
+                }
+            } else {
+                const priceInput = document.getElementById("realprice1" + id);
+                const limitprice = document.getElementById("limitprice1" + id);
+                const limitblock = document.getElementById("limitblock1" + id);
 
-
-
-                        function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
-
-                        const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-
-                        const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
-
-                        let margin=0;
-
-                        if(instrumentType=='FUT'){
-                        margin=500;
-                        }else if(instrumentType=='CE' || instrumentType=='PE'){
-                        margin=7;
-                        }else{
-                        margin=0;
-                        }
+                if (orderType === 'limit') {
+                    // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+                    // priceInput.setAttribute("type", "hidden");
+                    limitprice.setAttribute("type", "text");
+                    limitblock.style.display = 'flex';
+                    limitprice.value = priceInput.value; // Copy the value
+                    priceInput.disabled = false; // Enable input
+                    limitprice.disabled = false; // Enable input
+                } else if (orderType === 'market') {
+                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                    // priceInput.setAttribute("type", "text");
+                    limitprice.setAttribute("type", "hidden");
+                    limitblock.style.display = 'none';
+                    priceInput.disabled = true; // Disable input
+                    limitprice.disabled = true; // Disable input
+                } else if (orderType === 'stoploss') {
+                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                    // priceInput.setAttribute("type", "text");
+                    limitprice.setAttribute("type", "hidden");
+                    priceInput.disabled = false; // Enable input
+                    limitprice.disabled = true; // Disable input
+                }
+            }
+        }
 
 
 
-                        let currentValue = parseInt(lotInput.value) || 0;
-                        let realPriceValue = parseFloat(realPrice.value) || 0;
+        function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
 
-                        // Increment the lot size
-                        lotInput.value = currentValue + 1;
+            const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
 
-                        // Update quantity and cost price
-                        quantity.value = lotInput.value * quantityPerLot;
-                        let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-                        let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
-                    
+            const instrumentType = document.getElementById('instrumentType' + uniqueId).value;
 
-                        marginCost.innerHTML = "₹ " + mcp;
+            let margin = 0;
 
-                        costPrice.innerHTML = " ₹ " + cp;
-
-                        // Update color logic
-                        if (wallet >= mcp) {
-                            maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                            // costPrice.style.color = 'green';
-                            marginCost.style.color = 'green';
-                            document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
-                        } else {
-                            maxPrice.style.color = 'red';
-                            // costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                            marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
-                            document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
-                        }
-
-
-                        }
-
-                        function decrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
-
-                        const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                        const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-
-                        const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
-
-                            let margin=0;
-
-                            if(instrumentType=='FUT'){
-                            margin=500;
-                            }else if(instrumentType=='CE' || instrumentType=='PE'){
-                            margin=7;
-                            }else{
-                            margin=0;
-                            }
-
-                        let currentValue = parseInt(lotInput.value) || 0;
-                        let realPriceValue = parseFloat(realPrice.value) || 0;
-
-                        // Decrement the lot size only if it's greater than 1
-                        if (currentValue > 1) {
-                            lotInput.value = currentValue - 1;
-
-                            // Update quantity and cost price
-                            quantity.value = lotInput.value * quantityPerLot;
-                            let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-                            let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
-                            marginCost.innerHTML = "₹ " + mcp;
-
-                            costPrice.innerHTML = "₹ " + cp;
-
-                            // Update color logic
-                            if (wallet >= mcp) {
-                                maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                                costPrice.style.color = 'green';
-                                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
-                            } else {
-                                maxPrice.style.color = 'red';
-                                costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
-                            }
-                        } else {
-                            console.log("Lot size cannot be less than 1.");
-                        }
-
-
-                        }
-
-
-            // Buy Sell Feature End 
-
-
-            // Add Watch List  Start
-
-
-            function addWatchlist(item) {
-                    //use ajax and swel fire to add watchlist  using of post method
-                    $.ajax({
-                        url: "{{ route('add-watchlist') }}",
-                        type: "POST",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-                        },
-                        data: item,
-                        beforeSend: function() {
-                            Swal.fire({
-                                title: 'Adding Watchlist',
-                                html: 'Please wait...',
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                }
-                            });
-                        },
-                        success: function(response) {
-                            Swal.close();
-                            if (response.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: response.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                })
-
-                            } else {
-                                Swal.fire({
-                                    title: 'Error',
-                                    text: response.message || 'An error occurred.',
-                                    icon: 'error',
-                                    confirmButtonText: 'Okay'
-                                });
-                            }
-                        },
-                        error: function(xhr) {
-                            Swal.close();
-                            Swal.fire({
-                                title: 'Error',
-                                text: xhr.responseJSON?.message ||
-                                    'An error occurred while adding the script.',
-                                icon: 'error',
-                                confirmButtonText: 'Okay'
-                            });
-                            console.error(xhr.responseJSON);
-                        }
-                    });
-
-                    }
-
-
-
-                    function removeWatchlist(id) {
-            
-
-                    $.ajax({
-                        url: "{{ route('remove-watchlist') }}",
-                        type: "POST",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-                        },
-                        data: {
-                            id: id
-                        },
-                        beforeSend: function() {
-                            Swal.fire({
-                                title: 'Removing Watchlist',
-                                html: 'Please wait...',
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                }
-                            });
-                        },
-                        success: function(response) {
-                            Swal.close();
-                            if (response.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    text: response.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    title: 'Error',
-                                    text: response.message || 'An error occurred.',
-                                    icon: 'error',
-                                    confirmButtonText: 'Okay'
-                                });
-                            }
-                        },
-                        error: function(xhr) {
-                            Swal.close();
-                            Swal.fire({
-                                title: 'Error',
-                                text: xhr.responseJSON?.message ||
-                                    'An error occurred while removing the script.',
-                                icon: 'error',
-                                confirmButtonText: 'Okay'
-                            });
-                            console.error(xhr.responseJSON);
-                        }
-                    });
+            if (instrumentType == 'FUT') {
+                margin = 500;
+            } else if (instrumentType == 'CE' || instrumentType == 'PE') {
+                margin = 7;
+            } else {
+                margin = 0;
             }
 
 
-            // Remove Watchlist End
+
+            let currentValue = parseInt(lotInput.value) || 0;
+            let realPriceValue = parseFloat(realPrice.value) || 0;
+
+            // Increment the lot size
+            lotInput.value = currentValue + 1;
+
+            // Update quantity and cost price
+            quantity.value = lotInput.value * quantityPerLot;
+            let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+            let mcp = ((realPriceValue * lotInput.value * quantityPerLot) / margin).toFixed(2);
 
 
+            marginCost.innerHTML = "₹ " + mcp;
+
+            costPrice.innerHTML = " ₹ " + cp;
+
+            // Update color logic
+            if (wallet >= mcp) {
+                maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                // costPrice.style.color = 'green';
+                marginCost.style.color = 'green';
+                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display =
+                    'none';
+            } else {
+                maxPrice.style.color = 'red';
+                // costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
+                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display =
+                    'block';
+            }
 
 
+        }
+
+        function decrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
+
+            const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+
+            const instrumentType = document.getElementById('instrumentType' + uniqueId).value;
+
+            let margin = 0;
+
+            if (instrumentType == 'FUT') {
+                margin = 500;
+            } else if (instrumentType == 'CE' || instrumentType == 'PE') {
+                margin = 7;
+            } else {
+                margin = 0;
+            }
+
+            let currentValue = parseInt(lotInput.value) || 0;
+            let realPriceValue = parseFloat(realPrice.value) || 0;
+
+            // Decrement the lot size only if it's greater than 1
+            if (currentValue > 1) {
+                lotInput.value = currentValue - 1;
+
+                // Update quantity and cost price
+                quantity.value = lotInput.value * quantityPerLot;
+                let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+                let mcp = ((realPriceValue * lotInput.value * quantityPerLot) / margin).toFixed(2);
+                marginCost.innerHTML = "₹ " + mcp;
+
+                costPrice.innerHTML = "₹ " + cp;
+
+                // Update color logic
+                if (wallet >= mcp) {
+                    maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                    costPrice.style.color = 'green';
+                    document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display =
+                        'none';
+                } else {
+                    maxPrice.style.color = 'red';
+                    costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                    document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display =
+                        'block';
+                }
+            } else {
+                console.log("Lot size cannot be less than 1.");
+            }
 
 
+        }
 
-            // Initialize chart
-            const chartContainer = document.getElementById("chart");
-            const chart = LightweightCharts.createChart(chartContainer, {
-                layout: {
-                    backgroundColor: "#ffffff",
-                    textColor: "#333"
+
+        // Buy Sell Feature End 
+
+
+        // Add Watch List  Start
+
+
+        function addWatchlist(item) {
+            //use ajax and swel fire to add watchlist  using of post method
+            $.ajax({
+                url: "{{ route('add-watchlist') }}",
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
                 },
-                grid: {
-                    vertLines: {
-                        color: "#e1e1e1"
-                    },
-                    horzLines: {
-                        color: "#e1e1e1"
+                data: item,
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Adding Watchlist',
+                        html: 'Please wait...',
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function(response) {
+                    Swal.close();
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'An error occurred.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
                     }
                 },
-                priceScale: {
-                    borderColor: "#cccccc"
-                },
-                timeScale: {
-                    borderColor: "#cccccc"
-                },
+                error: function(xhr) {
+                    Swal.close();
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while adding the script.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                    console.error(xhr.responseJSON);
+                }
             });
 
-        // Add candlestick series
-                const candleSeries = chart.addCandlestickSeries({
-                    upColor: "#4caf50",
-                    downColor: "#f44336",
-                    borderUpColor: "#4caf50",
-                    borderDownColor: "#f44336",
-                    wickUpColor: "#4caf50",
-                    wickDownColor: "#f44336",
-                });
+        }
 
 
 
-        // Format data function
-            function formatData(data) {
-                return data.map(([timestamp, open, high, low, close]) => ({
-                    time: Math.floor(timestamp / 1000),
-                    open,
-                    high,
-                    low,
-                    close,
-                }));
+        function removeWatchlist(id) {
+
+
+            $.ajax({
+                url: "{{ route('remove-watchlist') }}",
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                },
+                data: {
+                    id: id
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Removing Watchlist',
+                        html: 'Please wait...',
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function(response) {
+                    Swal.close();
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'An error occurred.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.close();
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message ||
+                            'An error occurred while removing the script.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                    console.error(xhr.responseJSON);
+                }
+            });
+        }
+
+
+
+        // Remove Watchlist End
+
+        function handleChartClick(foisin, modalId) {
+            console.log("Clicked on chart for:", foisin, modalId);
+
+            var offcanvas = new bootstrap.Offcanvas(document.getElementById(`offcanvasBottom${modalId}`));
+            offcanvas.show();
+            let chartContainer = document.getElementById(`marketOverview${modalId}`);
+if (!chartContainer) {
+    console.error("Chart container not found:", `marketOverview${modalId}`);
+    return;
+}
+            if (window.marketOverviewChart) {
+                window.marketOverviewChart.destroy();
             }
 
-        // Fetch data
-                async function fetchData(isin, model) {
+            async function fetchData(period = "day") {
+                try {
+                    let url = `/fetch-stock-data/${foisin}/${period}`;
+                    console.log("Fetching data from:", url);
 
-                    var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
-                    offcanvas.show();
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error("Network response was not ok");
 
-                    try {
+                    const rawData = await response.json();
+                    if (!rawData || rawData.length === 0) throw new Error("No valid data available");
 
-                        // Show a loading popup
-                        Swal.fire({
-                            title: 'Loading',
-                            text: 'Fetching stock data...',
-                            allowOutsideClick: false,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            },
-                        });
+                    const formattedData = rawData.map((item) => ({
+                        x: new Date(item[0]),
+                        y: [item[1], item[2], item[3], item[4]] // Open, High, Low, Close
+                    }));
 
-                        const response = await fetch("/fetch-stock-data/" + isin);
-                        if (!response.ok) throw new Error("Network response was not ok");
+                    console.log("Formatted Data:", formattedData);
 
-                        const rawData = await response.json();
-                        const formattedData = formatData(rawData);
+                    let options = {
+                        series: [{
+                            data: formattedData
+                        }],
+                        chart: {
+                            type: "candlestick",
+                            height: 350,
+                            toolbar: {
+                                show: true
+                            }
+                        },
+                        xaxis: {
+                            type: "datetime"
+                        },
+                        yaxis: {
+                            opposite: true,
+                            tooltip: {
+                                enabled: true
+                            }
+                        }
+                    };
 
-                        if (formattedData.length === 0) throw new Error("No valid data available");
+                    // if (window.marketOverviewChart) {
+                    //     window.marketOverviewChart.updateSeries([{
+                    //         data: formattedData
+                    //     }]);
+                    // } else {
+                    //     window.marketOverviewChart = new ApexCharts(chartContainer, options);
+                    //     window.marketOverviewChart.render();
+                    // }
 
-                        Swal.close();
+                    if (window.marketOverviewChart) {
+    try {
+        window.marketOverviewChart.updateSeries([{ data: formattedData }]);
+    } catch (error) {
+        console.warn("Chart update failed, reinitializing...", error);
+        window.marketOverviewChart = new ApexCharts(chartContainer, options);
+        window.marketOverviewChart.render();
+    }
+} else {
+    window.marketOverviewChart = new ApexCharts(chartContainer, options);
+    window.marketOverviewChart.render();
+}
 
+                } catch (error) {
+                    console.error("Error fetching or setting data:", error);
+                }
+            }
 
-                        candleSeries.setData(formattedData);
-                    } catch (error) {
+            fetchData("day");
 
-                        Swal.close();
+            document.querySelectorAll(".market-overview .nav-link").forEach(button => {
+                button.addEventListener("click", function(event) {
+                    event.preventDefault();
 
-                        // Show an error message
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: error.message || "Something went wrong!",
-                        });
-                        console.error("Error fetching or setting data:", error);
-                        // Fallback data
-                        candleSeries.setData(formatData([
-                            [1696155600000, 25788.45, 25907.6, 25788.05, 25861.3],
-                            [1696155660000, 25861.3, 25873, 25822.35, 25824.05],
-                            [1696155720000, 25824.6, 25831.8, 25743.45, 25759.35],
-                        ]));
+                    let period = "day"; // Default period
+                    if (this.id === `Week-tab${modalId}`) {
+                        period = "week";
+                    } else if (this.id === `Month-tab${modalId}`) {
+                        period = "month";
+                    } else if (this.id === `Year-tab${modalId}`) {
+                        period = "year";
                     }
-                }
-
-                function setTimeFrame(timeFrame) {
-                    fetchData(); // This function should ideally use `timeFrame` to adjust the API call
-                }
 
 
 
-
+                    fetchData(period);
+                });
+            });
+        }
     </script>
 
 
@@ -1983,6 +2068,8 @@ $user = Auth::user();
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <!-- Apex Chart -->
+
 
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}

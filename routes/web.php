@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/nifty50', [StockController::class, 'nifty'])->name('nifty');
     Route::get('/sensex', [StockController::class, 'sensex'])->name('sensex');
     Route::get('/stocks/{slug}/{id}', [StockController::class, 'niftyInner'])->name('nifty-inner');
-    Route::get('/fetch-stock-data/{id}', [StockController::class, 'fetchStockData']);
+    Route::get('/fetch-stock-data/{id}/{period}', [StockController::class, 'fetchStockData']);
     Route::get('/fetch-nifty50-stock-data', [StockController::class, 'fetchNifty50StockData']);
     Route::get('/fetch-sensex-stock-data', [StockController::class, 'fetchSensexStockData']);
     Route::get('orders', [StockController::class, 'orderHistory'])->name('order');
