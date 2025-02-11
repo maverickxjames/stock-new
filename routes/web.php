@@ -118,6 +118,7 @@ Route::middleware('auth')->group(function () {
     // Trade Route 
 
     Route::get('trade-details/{id}', [TradeController::class, 'tradeDetails'])->name('tradeDetails');
+    Route::get('stock-details/{id}', [StockController::class, 'stockDetails'])->name('stockDetail');
   
 
     Route::get('limitOrder', [StockController::class, 'limitOrder'])->name('limitOrder');

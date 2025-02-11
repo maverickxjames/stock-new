@@ -405,4 +405,10 @@ class StockController extends Controller
 
         return view('quote');
     }
+
+
+    public function stockDetails($id){
+        $stock = DB::table('future_temp')->where('instrumentKey', $id)->first();
+        return view('stockDetails', compact('stock'));
+    }
 }

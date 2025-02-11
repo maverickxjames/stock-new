@@ -290,7 +290,7 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="trade-item" data-bs-dismiss="modal">
+                                                <div class="trade-item" data-bs-dismiss="modal" onclick="window.location.href='{{ route('stockDetail', ['id' => $foisin]) }}'">                                                
                                                     <h2>Details</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
                                                         <a href="javascript:void(0)" id="add_script">
@@ -311,11 +311,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
+                                        {{-- <div class="modal-footer">
                                             <button type="button" class="btn btn-danger light"
                                                 data-bs-dismiss="modal">Close</button>
                                             <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
