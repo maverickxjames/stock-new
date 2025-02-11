@@ -17,12 +17,7 @@ $user=Auth::user();
     <div class="menu-scroll">
         <div class="dlabnav-scroll">
             <ul class="metismenu" id="menu">
-                <li>
-                    <a href="javascript:void(0);" onclick="window.location.href='{{ route('watchlist') }}'">
-                        <i class="material-symbols-outlined">visibility</i>
-                        <span class="nav-text">Watchlists</span>
-                    </a>
-                </li>
+                
                 <li>
                     <a href="javascript:void(0);" class="item" onclick="window.location.href='{{ route('quotes') }}'">
                         <i class="material-symbols-outlined">dashboard</i>

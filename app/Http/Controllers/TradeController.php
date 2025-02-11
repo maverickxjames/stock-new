@@ -11,10 +11,6 @@ use App\Models\trade;
 class TradeController extends Controller
 {
 
-    public function updatefeed(Request $r)
-    {
-        return $r;
-    }
 
     public function placeBuyOrder(Request $r)
     {

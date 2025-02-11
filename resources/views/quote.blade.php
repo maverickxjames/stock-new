@@ -78,6 +78,22 @@ $user = Auth::user();
 </head>
 
 <style>
+
+
+
+    #preload {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: black; /* Pure black background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+
+
     .blink {
         animation: blink-animation 1.5s infinite;
     }
@@ -193,12 +209,10 @@ $user = Auth::user();
 <body>
 
     <!--Preloader start-->
-    <div id="preloader">
-        <div class="lds-ripple">
-            <div></div>
-            <div></div>
-        </div>
+    <div id="preload">
+        <p style="color: white; font-size: 1.5rem;"></p>
     </div>
+    
     <!--Preloader end-->
 
 
@@ -1267,13 +1281,6 @@ $user = Auth::user();
 
 
 
-
-
-    <script>
-
-    </script>
-
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
@@ -1350,351 +1357,298 @@ $user = Auth::user();
 
 
     <script>
-        let activeFilter = 'ALL';
-        let activeFilterCP = 'ALL';
-        let mode = 'delivery';
+            let activeFilter = 'ALL';
+            let activeFilterCP = 'ALL';
+            let mode = 'delivery';
 
-        function setActiveFilter(selectedButton, filterName) {
-            const buttons = document.querySelectorAll('.filter');
+            function setActiveFilter(selectedButton, filterName) {
+                const buttons = document.querySelectorAll('.filter');
 
-            buttons.forEach(button => {
-                button.classList.remove('active-filter');
-                button.classList.add('light');
+                buttons.forEach(button => {
+                    button.classList.remove('active-filter');
+                    button.classList.add('light');
+                });
+
+                selectedButton.classList.remove('light');
+                selectedButton.classList.add('active-filter');
+
+                if (filterName === 'Option') {
+                    document.getElementById('expiry-date').hidden = false;
+                    document.getElementById('Order-type').hidden = false;
+                } else if (filterName === 'Future') {
+                    document.getElementById('expiry-date').hidden = false;
+                    document.getElementById('Order-type').hidden = true;
+                } else {
+                    document.getElementById('expiry-date').hidden = true;
+                    document.getElementById('Order-type').hidden = true;
+                }
+
+            
+
+                activeFilter = filterName;
+
+            }
+
+            function setActiveFilterCP(selectedButton, filterName) {
+                const buttons = document.querySelectorAll('.filterCP');
+
+                buttons.forEach(button => {
+                    button.classList.remove('filterCP');
+                    button.classList.add('light');
+                });
+
+                selectedButton.classList.remove('light');
+                selectedButton.classList.add('filterCP');
+
+                activeFilterCP = filterName;
+
+            }
+
+
+
+            function getActiveFilter() {
+                return activeFilter;
+            }
+
+            function getActiveFilterCP() {
+                return activeFilterCP;
+            }
+
+            function handleTradeModeChange(id, tradeMode) {
+                mode = tradeMode;
+            }
+
+            function getTradeMode() {
+                return mode;
+            }
+
+
+
+
+            function showOrderForm(index) {
+                const offcanvasId = `orderoffcanvasBottom${index}`;
+                const offcanvasElement = document.getElementById(offcanvasId);
+                const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                offcanvas.show();
+
+            }
+
+                    //fetch all scripts from the server
+
+
+            //implement search script using of $scripts variable thgen filter the scripts their we serach tradingSymbol
+            let searchTimeout;
+            let page = 1;
+            let isFetching = false;
+            let hasMoreData = true;
+            let searchValue = '';
+
+            function searchScript(input) {
+                clearTimeout(searchTimeout);
+
+                searchTimeout = setTimeout(() => {
+                    searchValue = input.value.toLowerCase().trim();
+                    if (!searchValue) return;
+
+                    page = 1; 
+                    hasMoreData = true;
+                    fetchResults(true);
+                }, 500);
+            }
+
+            function fetchResults(isNewSearch = false) {
+                if (isFetching || !hasMoreData) return;
+                isFetching = true;
+
+                let type;
+                switch (getActiveFilter()) {
+                    case 'Future': type = 'future'; break;
+                    case 'Option': type = 'option'; break;
+                    case 'Indicies': type = 'indices'; break;
+                    default: type = 'all';
+                }
+
+                showLoading();
+
+                let url = `searchScript?search=${encodeURIComponent(searchValue)}&type=${type}&page=${page}&limit=10`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (isNewSearch) {
+                            updateContactsList(data);
+                        } else {
+                            appendContactsList(data);
+                        }
+
+                        if (data.length < 10) {
+                            hasMoreData = false;
+                        } else {
+                            page++;
+                        }
+                    })
+                    .catch(error => console.error('Error:', error))
+                    .finally(() => {
+                        isFetching = false;
+                    });
+            }
+
+        // Detect scroll to bottom
+            document.getElementById("scrollR").addEventListener("scroll", function () {
+                let offcanvas = this;
+                if (offcanvas.scrollTop + offcanvas.clientHeight >= offcanvas.scrollHeight - 20) {
+                    fetchResults();
+                }
             });
 
-            selectedButton.classList.remove('light');
-            selectedButton.classList.add('active-filter');
+            function updateContactsList(responseData) {
+                        const container = document.getElementById("RecentActivityContent");
 
-            if (filterName === 'Option') {
-                document.getElementById('expiry-date').hidden = false;
-                document.getElementById('Order-type').hidden = false;
-            } else if (filterName === 'Future') {
-                document.getElementById('expiry-date').hidden = false;
-                document.getElementById('Order-type').hidden = true;
-            } else {
-                document.getElementById('expiry-date').hidden = true;
-                document.getElementById('Order-type').hidden = true;
-            }
+                        // Clear existing content
+                        container.innerHTML = "";
 
-        
+                        // Loop through API response and create new elements
+                        responseData.forEach((item) => {
 
-            activeFilter = filterName;
-
-        }
-
-        function setActiveFilterCP(selectedButton, filterName) {
-            const buttons = document.querySelectorAll('.filterCP');
-
-            buttons.forEach(button => {
-                button.classList.remove('filterCP');
-                button.classList.add('light');
-            });
-
-            selectedButton.classList.remove('light');
-            selectedButton.classList.add('filterCP');
-
-            activeFilterCP = filterName;
-
-        }
+                            const contentHTML = `
+                                    <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
+                                            <div class="ms-3">
+                                                <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
+                                                <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
+                                            </div>
+                                        </div>
+                                        <div class="icon-box icon-box-sm bgl-primary">
+                                            <a href="javascript:void(0)" id="add_script">
+                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                `;
+                            container.insertAdjacentHTML("beforeend", contentHTML);
+                        });
+                }
 
 
 
-        function getActiveFilter() {
-            return activeFilter;
-        }
+                function appendContactsList(responseData) {
+                    const container = document.getElementById("RecentActivityContent");
+                    const loadingIndicator = document.getElementById("loadingIndicator");
 
-        function getActiveFilterCP() {
-            return activeFilterCP;
-        }
+                    // Hide loading indicator before adding new data
+                    loadingIndicator.style.display = "none";
 
-        function handleTradeModeChange(id, tradeMode) {
-            mode = tradeMode;
-        }
-
-        function getTradeMode() {
-            return mode;
-        }
-
-
-
-
-        function showOrderForm(index) {
-            const offcanvasId = `orderoffcanvasBottom${index}`;
-            const offcanvasElement = document.getElementById(offcanvasId);
-            const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-            offcanvas.show();
-
-        }
-
-                //fetch all scripts from the server
-
-
-        //implement search script using of $scripts variable thgen filter the scripts their we serach tradingSymbol
-        let searchTimeout;
-let page = 1;
-let isFetching = false;
-let hasMoreData = true;
-let searchValue = '';
-
-function searchScript(input) {
-    clearTimeout(searchTimeout);
-
-    searchTimeout = setTimeout(() => {
-        searchValue = input.value.toLowerCase().trim();
-        if (!searchValue) return;
-
-        page = 1; 
-        hasMoreData = true;
-        fetchResults(true);
-    }, 500);
-}
-
-function fetchResults(isNewSearch = false) {
-    if (isFetching || !hasMoreData) return;
-    isFetching = true;
-
-    let type;
-    switch (getActiveFilter()) {
-        case 'Future': type = 'future'; break;
-        case 'Option': type = 'option'; break;
-        case 'Indicies': type = 'indices'; break;
-        default: type = 'all';
-    }
-
-    showLoading();
-
-    let url = `searchScript?search=${encodeURIComponent(searchValue)}&type=${type}&page=${page}&limit=10`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (isNewSearch) {
-                updateContactsList(data);
-            } else {
-                appendContactsList(data);
-            }
-
-            if (data.length < 10) {
-                hasMoreData = false;
-            } else {
-                page++;
-            }
-        })
-        .catch(error => console.error('Error:', error))
-        .finally(() => {
-            isFetching = false;
-        });
-}
-
-// Detect scroll to bottom
-document.getElementById("scrollR").addEventListener("scroll", function () {
-    let offcanvas = this;
-    if (offcanvas.scrollTop + offcanvas.clientHeight >= offcanvas.scrollHeight - 20) {
-        fetchResults();
-    }
-});
-
-function updateContactsList(responseData) {
-            const container = document.getElementById("RecentActivityContent");
-
-            // Clear existing content
-            container.innerHTML = "";
-
-            // Loop through API response and create new elements
-            responseData.forEach((item) => {
-
-                const contentHTML = `
-                        <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
-                            <div class="d-flex align-items-center">
-                                <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
-                                <div class="ms-3">
-                                    <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
-                                    <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
+                    // Loop through API response and create new elements
+                    responseData.forEach((item) => {
+                        const contentHTML = `
+                            <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
+                                    <div class="ms-3">
+                                        <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
+                                        <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
+                                    </div>
+                                </div>
+                                <div class="icon-box icon-box-sm bgl-primary">
+                                    <a href="javascript:void(0)" id="add_script">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
+                                    </a>
                                 </div>
                             </div>
-                            <div class="icon-box icon-box-sm bgl-primary">
-                                <a href="javascript:void(0)" id="add_script">
-                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                container.insertAdjacentHTML("beforeend", contentHTML);
-            });
-        }
-
-function appendContactsList(responseData) {
-    const container = document.getElementById("RecentActivityContent");
-    const loadingIndicator = document.getElementById("loadingIndicator");
-
-    // Hide loading indicator before adding new data
-    loadingIndicator.style.display = "none";
-
-    // Loop through API response and create new elements
-    responseData.forEach((item) => {
-        const contentHTML = `
-            <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
-                <div class="d-flex align-items-center">
-                    <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
-                    <div class="ms-3">
-                        <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
-                        <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
-                    </div>
-                </div>
-                <div class="icon-box icon-box-sm bgl-primary">
-                    <a href="javascript:void(0)" id="add_script">
-                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
-                    </a>
-                </div>
-            </div>
-        `;
-        container.insertAdjacentHTML("beforeend", contentHTML);
-    });
-}
+                        `;
+                        container.insertAdjacentHTML("beforeend", contentHTML);
+                    });
+                }
 
 
 
-        // Function to show loading indicator
-function showLoading() {
-    const container = document.getElementById("RecentActivityContent");
-    let loadingIndicator = document.getElementById("loadingIndicator");
+                    // Function to show loading indicator
+            function showLoading() {
+                const container = document.getElementById("RecentActivityContent");
+                let loadingIndicator = document.getElementById("loadingIndicator");
 
-    if (!loadingIndicator) {
-        loadingIndicator = document.createElement("div");
-        loadingIndicator.id = "loadingIndicator";
-        loadingIndicator.innerHTML = `<div class="text-center my-3"><span class="spinner-border text-primary"></span> Loading...</div>`;
-        container.appendChild(loadingIndicator);
-    }
+                if (!loadingIndicator) {
+                    loadingIndicator = document.createElement("div");
+                    loadingIndicator.id = "loadingIndicator";
+                    loadingIndicator.innerHTML = `<div class="text-center my-3"><span class="spinner-border text-primary"></span> Loading...</div>`;
+                    container.appendChild(loadingIndicator);
+                }
 
-    loadingIndicator.style.display = "block";
-}
+                loadingIndicator.style.display = "block";
+            }
 
-        // Buy Sell Feature Start 
+            // Buy Sell Feature Start 
 
-        function handleOrderTypeChange(id, orderType, tradeType) {
+            function handleOrderTypeChange(id, orderType, tradeType) {
 
-                    if (tradeType === 'sell') {
-                        const priceInput = document.getElementById("realprice2" + id);
-                        const limitprice = document.getElementById("limitprice2" + id);
-                        const limitblock = document.getElementById("limitblock2" + id);
-                        if (orderType === 'limit') {
-                            // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                            limitblock.style.display = 'flex';
-                            limitprice.setAttribute("type", "text");
-                            limitprice.value = priceInput.value; // Copy the value
-                            priceInput.disabled = false; // Enable input
-                            limitprice.disabled = false; // Enable input
-                        } else if (orderType === 'market') {
-                            // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                            priceInput.setAttribute("type", "text");
-                            limitprice.setAttribute("type", "hidden");
-                            limitblock.style.display = 'none';
-                            priceInput.disabled = true; // Disable input
-                            limitprice.disabled = true; // Disable input
-                        } else if (orderType === 'stoploss') {
-                            // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                            priceInput.setAttribute("type", "text");
-                            limitprice.setAttribute("type", "hidden");
-                            priceInput.disabled = false; // Enable input
-                            limitprice.disabled = true; // Disable input
+                        if (tradeType === 'sell') {
+                            const priceInput = document.getElementById("realprice2" + id);
+                            const limitprice = document.getElementById("limitprice2" + id);
+                            const limitblock = document.getElementById("limitblock2" + id);
+                            if (orderType === 'limit') {
+                                // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+                                limitblock.style.display = 'flex';
+                                limitprice.setAttribute("type", "text");
+                                limitprice.value = priceInput.value; // Copy the value
+                                priceInput.disabled = false; // Enable input
+                                limitprice.disabled = false; // Enable input
+                            } else if (orderType === 'market') {
+                                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                                priceInput.setAttribute("type", "text");
+                                limitprice.setAttribute("type", "hidden");
+                                limitblock.style.display = 'none';
+                                priceInput.disabled = true; // Disable input
+                                limitprice.disabled = true; // Disable input
+                            } else if (orderType === 'stoploss') {
+                                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                                priceInput.setAttribute("type", "text");
+                                limitprice.setAttribute("type", "hidden");
+                                priceInput.disabled = false; // Enable input
+                                limitprice.disabled = true; // Disable input
+                            }
+                        } else {
+                            const priceInput = document.getElementById("realprice1" + id);
+                            const limitprice = document.getElementById("limitprice1" + id);
+                            const limitblock = document.getElementById("limitblock1" + id);
+
+                            if (orderType === 'limit') {
+                                // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+                                // priceInput.setAttribute("type", "hidden");
+                                limitprice.setAttribute("type", "text");
+                                limitblock.style.display = 'flex';
+                                limitprice.value = priceInput.value; // Copy the value
+                                priceInput.disabled = false; // Enable input
+                                limitprice.disabled = false; // Enable input
+                            } else if (orderType === 'market') {
+                                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                                // priceInput.setAttribute("type", "text");
+                                limitprice.setAttribute("type", "hidden");
+                                limitblock.style.display = 'none';
+                                priceInput.disabled = true; // Disable input
+                                limitprice.disabled = true; // Disable input
+                            } else if (orderType === 'stoploss') {
+                                // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+                                // priceInput.setAttribute("type", "text");
+                                limitprice.setAttribute("type", "hidden");
+                                priceInput.disabled = false; // Enable input
+                                limitprice.disabled = true; // Disable input
+                            }
                         }
-                    } else {
-                        const priceInput = document.getElementById("realprice1" + id);
-                        const limitprice = document.getElementById("limitprice1" + id);
-                        const limitblock = document.getElementById("limitblock1" + id);
-
-                        if (orderType === 'limit') {
-                            // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                            // priceInput.setAttribute("type", "hidden");
-                            limitprice.setAttribute("type", "text");
-                            limitblock.style.display = 'flex';
-                            limitprice.value = priceInput.value; // Copy the value
-                            priceInput.disabled = false; // Enable input
-                            limitprice.disabled = false; // Enable input
-                        } else if (orderType === 'market') {
-                            // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                            // priceInput.setAttribute("type", "text");
-                            limitprice.setAttribute("type", "hidden");
-                            limitblock.style.display = 'none';
-                            priceInput.disabled = true; // Disable input
-                            limitprice.disabled = true; // Disable input
-                        } else if (orderType === 'stoploss') {
-                            // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                            // priceInput.setAttribute("type", "text");
-                            limitprice.setAttribute("type", "hidden");
-                            priceInput.disabled = false; // Enable input
-                            limitprice.disabled = true; // Disable input
                         }
-                    }
-                    }
 
 
 
-                    function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
+                        function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
 
-                    const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
 
-                    const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
-
-                    let margin=0;
-
-                    if(instrumentType=='FUT'){
-                    margin=500;
-                    }else if(instrumentType=='CE' || instrumentType=='PE'){
-                    margin=7;
-                    }else{
-                    margin=0;
-                    }
-
-
-
-                    let currentValue = parseInt(lotInput.value) || 0;
-                    let realPriceValue = parseFloat(realPrice.value) || 0;
-
-                    // Increment the lot size
-                    lotInput.value = currentValue + 1;
-
-                    // Update quantity and cost price
-                    quantity.value = lotInput.value * quantityPerLot;
-                    let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
-                    let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
-                  
-
-                    marginCost.innerHTML = "₹ " + mcp;
-
-                    costPrice.innerHTML = " ₹ " + cp;
-
-                    // Update color logic
-                    if (wallet >= mcp) {
-                        maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                        // costPrice.style.color = 'green';
-                        marginCost.style.color = 'green';
-                        document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
-                    } else {
-                        maxPrice.style.color = 'red';
-                        // costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                        marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
-                        document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
-                    }
-
-
-                    }
-
-                    function decrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
-
-                    const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-                    const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-
-                    const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
+                        const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
 
                         let margin=0;
 
@@ -1706,262 +1660,317 @@ function showLoading() {
                         margin=0;
                         }
 
-                    let currentValue = parseInt(lotInput.value) || 0;
-                    let realPriceValue = parseFloat(realPrice.value) || 0;
 
-                    // Decrement the lot size only if it's greater than 1
-                    if (currentValue > 1) {
-                        lotInput.value = currentValue - 1;
+
+                        let currentValue = parseInt(lotInput.value) || 0;
+                        let realPriceValue = parseFloat(realPrice.value) || 0;
+
+                        // Increment the lot size
+                        lotInput.value = currentValue + 1;
 
                         // Update quantity and cost price
                         quantity.value = lotInput.value * quantityPerLot;
                         let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
                         let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
+                    
+
                         marginCost.innerHTML = "₹ " + mcp;
 
-                        costPrice.innerHTML = "₹ " + cp;
+                        costPrice.innerHTML = " ₹ " + cp;
 
                         // Update color logic
                         if (wallet >= mcp) {
                             maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
-                            costPrice.style.color = 'green';
+                            // costPrice.style.color = 'green';
+                            marginCost.style.color = 'green';
                             document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
                         } else {
                             maxPrice.style.color = 'red';
-                            costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                            // costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                            marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
                             document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
                         }
-                    } else {
-                        console.log("Lot size cannot be less than 1.");
-                    }
 
 
-                    }
+                        }
 
+                        function decrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
 
-        // Buy Sell Feature End 
+                        const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+                        const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
 
+                        const instrumentType =document.getElementById('instrumentType'+uniqueId).value;
 
-        // Add Watch List  Start
+                            let margin=0;
 
-
-        function addWatchlist(item) {
-                //use ajax and swel fire to add watchlist  using of post method
-                $.ajax({
-                    url: "{{ route('add-watchlist') }}",
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-                    },
-                    data: item,
-                    beforeSend: function() {
-                        Swal.fire({
-                            title: 'Adding Watchlist',
-                            html: 'Please wait...',
-                            didOpen: () => {
-                                Swal.showLoading();
+                            if(instrumentType=='FUT'){
+                            margin=500;
+                            }else if(instrumentType=='CE' || instrumentType=='PE'){
+                            margin=7;
+                            }else{
+                            margin=0;
                             }
-                        });
-                    },
-                    success: function(response) {
-                        Swal.close();
-                        if (response.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: response.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
 
+                        let currentValue = parseInt(lotInput.value) || 0;
+                        let realPriceValue = parseFloat(realPrice.value) || 0;
+
+                        // Decrement the lot size only if it's greater than 1
+                        if (currentValue > 1) {
+                            lotInput.value = currentValue - 1;
+
+                            // Update quantity and cost price
+                            quantity.value = lotInput.value * quantityPerLot;
+                            let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+                            let mcp=((realPriceValue * lotInput.value * quantityPerLot)/margin).toFixed(2);
+                            marginCost.innerHTML = "₹ " + mcp;
+
+                            costPrice.innerHTML = "₹ " + cp;
+
+                            // Update color logic
+                            if (wallet >= mcp) {
+                                maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                                costPrice.style.color = 'green';
+                                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'none';
+                            } else {
+                                maxPrice.style.color = 'red';
+                                costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display = 'block';
+                            }
                         } else {
+                            console.log("Lot size cannot be less than 1.");
+                        }
+
+
+                        }
+
+
+            // Buy Sell Feature End 
+
+
+            // Add Watch List  Start
+
+
+            function addWatchlist(item) {
+                    //use ajax and swel fire to add watchlist  using of post method
+                    $.ajax({
+                        url: "{{ route('add-watchlist') }}",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                        },
+                        data: item,
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: 'Adding Watchlist',
+                                html: 'Please wait...',
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+                        },
+                        success: function(response) {
+                            Swal.close();
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: response.message || 'An error occurred.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Okay'
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            Swal.close();
                             Swal.fire({
                                 title: 'Error',
-                                text: response.message || 'An error occurred.',
+                                text: xhr.responseJSON?.message ||
+                                    'An error occurred while adding the script.',
                                 icon: 'error',
                                 confirmButtonText: 'Okay'
                             });
+                            console.error(xhr.responseJSON);
                         }
-                    },
-                    error: function(xhr) {
-                        Swal.close();
-                        Swal.fire({
-                            title: 'Error',
-                            text: xhr.responseJSON?.message ||
-                                'An error occurred while adding the script.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
-                        console.error(xhr.responseJSON);
+                    });
+
                     }
-                });
-
-                }
 
 
 
-                function removeWatchlist(id) {
-           
+                    function removeWatchlist(id) {
+            
 
-                $.ajax({
-                    url: "{{ route('remove-watchlist') }}",
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-                    },
-                    data: {
-                        id: id
-                    },
-                    beforeSend: function() {
-                        Swal.fire({
-                            title: 'Removing Watchlist',
-                            html: 'Please wait...',
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
-                        });
-                    },
-                    success: function(response) {
-                        Swal.close();
-                        if (response.success) {
+                    $.ajax({
+                        url: "{{ route('remove-watchlist') }}",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                        },
+                        data: {
+                            id: id
+                        },
+                        beforeSend: function() {
                             Swal.fire({
-                                icon: 'success',
-                                text: response.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            }).then(() => {
-                                location.reload();
+                                title: 'Removing Watchlist',
+                                html: 'Please wait...',
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
                             });
-                        } else {
+                        },
+                        success: function(response) {
+                            Swal.close();
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: response.message || 'An error occurred.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Okay'
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            Swal.close();
                             Swal.fire({
                                 title: 'Error',
-                                text: response.message || 'An error occurred.',
+                                text: xhr.responseJSON?.message ||
+                                    'An error occurred while removing the script.',
                                 icon: 'error',
                                 confirmButtonText: 'Okay'
                             });
+                            console.error(xhr.responseJSON);
                         }
-                    },
-                    error: function(xhr) {
-                        Swal.close();
-                        Swal.fire({
-                            title: 'Error',
-                            text: xhr.responseJSON?.message ||
-                                'An error occurred while removing the script.',
-                            icon: 'error',
-                            confirmButtonText: 'Okay'
-                        });
-                        console.error(xhr.responseJSON);
-                    }
-                });
-                }
-
-
-        // Remove Watchlist End
-
-
-
-
-
-
-
-        // Initialize chart
-    const chartContainer = document.getElementById("chart");
-    const chart = LightweightCharts.createChart(chartContainer, {
-        layout: {
-            backgroundColor: "#ffffff",
-            textColor: "#333"
-        },
-        grid: {
-            vertLines: {
-                color: "#e1e1e1"
-            },
-            horzLines: {
-                color: "#e1e1e1"
+                    });
             }
-        },
-        priceScale: {
-            borderColor: "#cccccc"
-        },
-        timeScale: {
-            borderColor: "#cccccc"
-        },
-    });
 
-    // Add candlestick series
-    const candleSeries = chart.addCandlestickSeries({
-        upColor: "#4caf50",
-        downColor: "#f44336",
-        borderUpColor: "#4caf50",
-        borderDownColor: "#f44336",
-        wickUpColor: "#4caf50",
-        wickDownColor: "#f44336",
-    });
+
+            // Remove Watchlist End
 
 
 
-    // Format data function
-    function formatData(data) {
-        return data.map(([timestamp, open, high, low, close]) => ({
-            time: Math.floor(timestamp / 1000),
-            open,
-            high,
-            low,
-            close,
-        }));
-    }
 
-    // Fetch data
-    async function fetchData(isin, model) {
 
-        var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
-        offcanvas.show();
 
-        try {
 
-            // Show a loading popup
-            Swal.fire({
-                title: 'Loading',
-                text: 'Fetching stock data...',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
+            // Initialize chart
+            const chartContainer = document.getElementById("chart");
+            const chart = LightweightCharts.createChart(chartContainer, {
+                layout: {
+                    backgroundColor: "#ffffff",
+                    textColor: "#333"
+                },
+                grid: {
+                    vertLines: {
+                        color: "#e1e1e1"
+                    },
+                    horzLines: {
+                        color: "#e1e1e1"
+                    }
+                },
+                priceScale: {
+                    borderColor: "#cccccc"
+                },
+                timeScale: {
+                    borderColor: "#cccccc"
                 },
             });
 
-            const response = await fetch("/fetch-stock-data/" + isin);
-            if (!response.ok) throw new Error("Network response was not ok");
+        // Add candlestick series
+                const candleSeries = chart.addCandlestickSeries({
+                    upColor: "#4caf50",
+                    downColor: "#f44336",
+                    borderUpColor: "#4caf50",
+                    borderDownColor: "#f44336",
+                    wickUpColor: "#4caf50",
+                    wickDownColor: "#f44336",
+                });
 
-            const rawData = await response.json();
-            const formattedData = formatData(rawData);
-
-            if (formattedData.length === 0) throw new Error("No valid data available");
-
-            Swal.close();
 
 
-            candleSeries.setData(formattedData);
-        } catch (error) {
+        // Format data function
+            function formatData(data) {
+                return data.map(([timestamp, open, high, low, close]) => ({
+                    time: Math.floor(timestamp / 1000),
+                    open,
+                    high,
+                    low,
+                    close,
+                }));
+            }
 
-            Swal.close();
+        // Fetch data
+                async function fetchData(isin, model) {
 
-            // Show an error message
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error.message || "Something went wrong!",
-            });
-            console.error("Error fetching or setting data:", error);
-            // Fallback data
-            candleSeries.setData(formatData([
-                [1696155600000, 25788.45, 25907.6, 25788.05, 25861.3],
-                [1696155660000, 25861.3, 25873, 25822.35, 25824.05],
-                [1696155720000, 25824.6, 25831.8, 25743.45, 25759.35],
-            ]));
-        }
-    }
+                    var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasBottom'));
+                    offcanvas.show();
 
-    function setTimeFrame(timeFrame) {
-        fetchData(); // This function should ideally use `timeFrame` to adjust the API call
-    }
+                    try {
+
+                        // Show a loading popup
+                        Swal.fire({
+                            title: 'Loading',
+                            text: 'Fetching stock data...',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                        });
+
+                        const response = await fetch("/fetch-stock-data/" + isin);
+                        if (!response.ok) throw new Error("Network response was not ok");
+
+                        const rawData = await response.json();
+                        const formattedData = formatData(rawData);
+
+                        if (formattedData.length === 0) throw new Error("No valid data available");
+
+                        Swal.close();
+
+
+                        candleSeries.setData(formattedData);
+                    } catch (error) {
+
+                        Swal.close();
+
+                        // Show an error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error.message || "Something went wrong!",
+                        });
+                        console.error("Error fetching or setting data:", error);
+                        // Fallback data
+                        candleSeries.setData(formatData([
+                            [1696155600000, 25788.45, 25907.6, 25788.05, 25861.3],
+                            [1696155660000, 25861.3, 25873, 25822.35, 25824.05],
+                            [1696155720000, 25824.6, 25831.8, 25743.45, 25759.35],
+                        ]));
+                    }
+                }
+
+                function setTimeFrame(timeFrame) {
+                    fetchData(); // This function should ideally use `timeFrame` to adjust the API call
+                }
 
 
 

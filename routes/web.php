@@ -13,28 +13,25 @@ use App\Http\Controllers\MarketDataController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TradeController;
 
-Route::get('/', function () {
-    return view('login');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return view('login');
+    });
 });
+
 
 Route::get('future', [ScriptController::class, 'future']);
 Route::get('test', [ScriptController::class, 'test']);
 
-Route::get('fetchequities', [CronController::class, 'fetequities']);
-
 Route::get('/fetch-market-updates', [MarketDataController::class, 'fetchUpdates']);
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
 
-    Route::group(['prefix' => 'api'], function () {
-        Route::get('fetch-stock-data/{id}', [ApiController::class, 'fetchStockData']);
-        Route::get('fetchstockinfo/{stocktype}', [ApiController::class, 'fetchstockinfo'])->name('fetchstockinfo');
-    });
+
 
 
     Route::get('wallet', [ProfileController::class, 'wallet']);
@@ -55,8 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/fetch-nifty50-stock-data', [StockController::class, 'fetchNifty50StockData']);
     Route::get('/fetch-sensex-stock-data', [StockController::class, 'fetchSensexStockData']);
     Route::get('orders', [StockController::class, 'orderHistory'])->name('order');
-    Route::get('watchlist', [WatchlistController::class, 'watchlist'])->name('watchlist');
-    Route::get('fetch-watchlist', [WatchlistController::class, 'fetchWatchlist'])->name('fetch-watchlist');
+   
 
     Route::post('add-watchlist', [WatchlistController::class, 'addWatchlist'])->name('add-watchlist');
     Route::post('remove-watchlist', [WatchlistController::class, 'removeWatchlist'])->name('remove-watchlist');
@@ -108,14 +104,10 @@ Route::middleware('auth')->group(function () {
     Route::post('bank-update', [PaymentController::class, 'updateBankDetails'])->name('update-bank-details');
     Route::get('history', [PaymentController::class, 'history'])->name('history');
     Route::get('updateFuture', [StockController::class, 'updateFuture'])->name('updateFuture');
-    Route::get('/get-expiry/future/{id}', [StockController::class, 'futureGetExpiry'])->name('futureGetExpiry');
-    Route::get('/get-stock/future/{id}', [StockController::class, 'futureGetStock'])->name('futureGetStock');
-    Route::get('/get-expiry/mcx/{id}', [StockController::class, 'mcxGetExpiry'])->name('mcxGetExpiry');
-    Route::get('/get-stock/mcx/{id}', [StockController::class, 'mcxGetStock'])->name('mcxGetStock');
+
 
     Route::get('quotes', [StockController::class, 'quotes'])->name('quotes');
-    Route::get('scripts', [StockController::class, 'scripts'])->name('scripts');
-    Route::get('segment/{id}', [StockController::class, 'segment'])->name('segment');
+ 
     Route::get('add-script', [StockController::class, 'addScript'])->name('add-script');
     Route::get('searchScript', [StockController::class, 'searchScript'])->name('searchScript');
 
@@ -126,7 +118,7 @@ Route::middleware('auth')->group(function () {
     // Trade Route 
 
     Route::get('trade-details/{id}', [TradeController::class, 'tradeDetails'])->name('tradeDetails');
-    Route::post('update-feed', [TradeController::class, 'updatefeed'])->name('updatefeed');
+  
 
     Route::get('limitOrder', [StockController::class, 'limitOrder'])->name('limitOrder');
 

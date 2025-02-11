@@ -6,9 +6,17 @@ import { Loading } from 'notiflix/build/notiflix-loading-aio';
 Loading.init({
     backgroundColor: 'rgba(0, 0, 0, 1)' // Pure black background
 });
-// Example Usage of Notiflix Loading
-Loading.dots(); // Show loading spinner
-setTimeout(() => Loading.remove(), 1000); // Remove after 2 seconds
+
+Loading.dots();
+
+// Hide Notiflix Loader & Remove Preloader when page is ready
+window.addEventListener('load', () => {
+    Loading.remove(); // Hide Notiflix Loader
+    document.getElementById('preload').style.display = 'none'; // Hide Preloader
+});
+
+
+
 window.Alpine = Alpine;
 
 Alpine.start();

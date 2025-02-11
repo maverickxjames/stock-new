@@ -3440,11 +3440,13 @@ __webpack_require__.r(__webpack_exports__);
 notiflix_build_notiflix_loading_aio__WEBPACK_IMPORTED_MODULE_2__.Loading.init({
   backgroundColor: 'rgba(0, 0, 0, 1)' // Pure black background
 });
-// Example Usage of Notiflix Loading
-notiflix_build_notiflix_loading_aio__WEBPACK_IMPORTED_MODULE_2__.Loading.dots(); // Show loading spinner
-setTimeout(function () {
-  return notiflix_build_notiflix_loading_aio__WEBPACK_IMPORTED_MODULE_2__.Loading.remove();
-}, 1000); // Remove after 2 seconds
+notiflix_build_notiflix_loading_aio__WEBPACK_IMPORTED_MODULE_2__.Loading.dots();
+
+// Hide Notiflix Loader & Remove Preloader when page is ready
+window.addEventListener('load', function () {
+  notiflix_build_notiflix_loading_aio__WEBPACK_IMPORTED_MODULE_2__.Loading.remove(); // Hide Notiflix Loader
+  document.getElementById('preload').style.display = 'none'; // Hide Preloader
+});
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
 // Initialize Notiflix with a black background

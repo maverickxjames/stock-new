@@ -112,6 +112,8 @@ class StockController extends Controller
             return response()->json(['error' => 'Unable to  data'], 500);
         }
     }
+
+    
     public function fetchNifty50StockData()
     {
         $today = Carbon::now();
@@ -297,75 +299,6 @@ class StockController extends Controller
         }
     }
 
-    public function futureGetExpiry($id)
-    {
-        $scriptid = $id;
-        $symbol = DB::table('equities')->where('id', $scriptid)->first();
-        $fetchExpiry = DB::table('future_temp')->where('segment','NSE_FO')->where('instrumentType','FUT')->where('assetSymbol', $symbol->symbol)->get();
-        return response()->json($fetchExpiry);
-    }
-
-    public function futureGetStock($id)
-    {
-        if($id == 1){
-            $data = DB::table('equities')
-            ->where('exchange', 'NSE')
-            ->orderBy('symbol', 'asc')
-            ->get();
-
-            return response()->json($data);
-        }elseif($id == 2){
-            $data = DB::table('equities')
-            ->where('exchange', 'NSE')
-            ->orderBy('symbol', 'asc')
-            ->get();
-
-            return response()->json($data);
-        }elseif($id == 3){
-        $data = DB::table('equities')
-            ->where('exchange', 'MCX')
-            ->orderBy('symbol', 'asc')
-            ->get();
-
-            return response()->json($data);
-        }
-
-    }
-    public function mcxGetExpiry($id)
-    {
-        $scriptid = $id;
-        $symbol = DB::table('equities')->where('id', $scriptid)->first();
-        $fetchExpiry = DB::table('future_temp')->where('assetSymbol', $symbol->symbol)->where('segment','MCX_FO')->where('instrumentType','FUT')->get();
-        return response()->json($fetchExpiry);
-    }
-
-    public function mcxGetStock($id)
-    {
-        if($id == 1){
-            $data = DB::table('equities')
-            ->where('exchange', 'NSE')
-            ->orderBy('symbol', 'asc')
-            ->get();
-
-            return response()->json($data);
-        }elseif($id == 2){
-            $data = DB::table('equities')
-            ->where('exchange', 'NSE')
-            ->orderBy('symbol', 'asc')
-            ->get();
-
-            return response()->json($data);
-        }elseif($id == 3){
-        $data = DB::table('equities')
-            ->where('exchange', 'MCX')
-            ->orderBy('symbol', 'asc')
-            ->get();
-
-            return response()->json($data);
-        }
-
-    }
-
     public function updatelotsize(){
         // fetch data from https://service.upstox.com/instrument/v1/instruments?instrumentKeys=NSE_FO|42523&pageNo=1&pageSize=1
         $getSymbol = DB::table('future_temp')->where('lotSize',null)->where('exchange','NSE')->where('assetType','EQUITY')->where('instrumentType','FUT')->get('instrumentKey');
@@ -409,85 +342,6 @@ class StockController extends Controller
         return view('quote');
     }
 
-    public function scripts(){
-        // $scripts = DB::table('scripts')->get();
-        $scripts = DB::table('future_temp')->get();
-        return view('script', ['scripts' => $scripts]);
-    }
 
-    public function segment($id){
 
-        if ($id == 1) {
-            $data = DB::table('future_temp')
-                ->where('segment', 'NSE_FO')
-                ->where('instrumentType', 'FUT')
-                ->distinct()
-                ->pluck('assetSymbol');
-            
-            $allData = DB::table('future_temp')
-                ->where('segment', 'NSE_FO')
-                ->where('instrumentType', 'FUT')
-                ->get()
-                ->groupBy('assetSymbol');
-            
-        } elseif ($id == 2) {
-            $data = DB::table('future_temp')
-                ->where('segment', 'NSE_FO')
-                ->where(function ($query) {
-                    $query->where('instrumentType', 'PE')
-                          ->orWhere('instrumentType', 'CE');
-                })
-                ->distinct()
-                ->pluck('assetSymbol');
-            
-            $allData = DB::table('future_temp')
-                ->where('segment', 'NSE_FO')
-                ->where(function ($query) {
-                    $query->where('instrumentType', 'PE')
-                          ->orWhere('instrumentType', 'CE');
-                })
-                ->get()
-                ->groupBy('assetSymbol');
-            
-        } elseif ($id == 3) {
-            $data = DB::table('future_temp')
-                ->where('segment', 'MCX_FO')
-                ->where('instrumentType', 'FUT')
-                ->distinct()
-                ->pluck('assetSymbol');
-            
-            $allData = DB::table('future_temp')
-                ->where('segment', 'MCX_FO')
-                ->where('instrumentType', 'FUT')
-                ->get()
-                ->groupBy('assetSymbol');
-            
-        } elseif ($id == 4) {
-            $data = DB::table('future_temp')
-                ->where('segment', 'INDICES')
-                ->where('instrumentType', 'FUT')
-                ->distinct()
-                ->pluck('assetSymbol');
-            
-            $allData = DB::table('future_temp')
-                ->where('segment', 'INDICES')
-                ->where('instrumentType', 'FUT')
-                ->get()
-                ->groupBy('assetSymbol');
-        }
-    
-        return view('segment', ['data' => $data, 'allData' => $allData]);
-    }
-
-    public function addquote(Request $request){
-        $quote = $request->quote;
-        $insert = DB::table('quotes')->insert([
-            'quote' => $quote
-        ]);
-        if($insert){
-            return redirect()->back()->with('success', 'Quote Added Successfully');
-        }else{
-            return redirect()->back()->with('error', 'Quote Not Added');
-        }
-    }
 }

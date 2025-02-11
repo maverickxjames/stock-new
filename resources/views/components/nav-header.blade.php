@@ -1,5 +1,5 @@
 <div class="nav-header" style="z-index: 1000;">
-    <div onclick="window.location.href='{{ route('watchlist') }}'" class="brand-logo cursor-pointer px-3 px-lg-2">
+    <div class="brand-logo cursor-pointer px-3 px-lg-2">
         <img src="images/logo-white.png" alt="" width="80" style="cursor:pointer;">
 
         {{-- <div class="brand-title"> --}}
