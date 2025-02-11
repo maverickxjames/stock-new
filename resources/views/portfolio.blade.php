@@ -1837,22 +1837,26 @@
                         // console.log(document.querySelectorAll("p[id^='isin1']"));
 
                         // Find the <p> tag containing the matching ISIN
-                        const allElement = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el
+                        const allElement = Array.from(document.querySelectorAll("p[id^='isin1']")).filter(el => el
                             .textContent.trim() === receivedIsin.trim());
+
+                         
 
 
                         // console.log("allElement", allElement);
-                        const futureElement = Array.from(document.querySelectorAll("p[id^='isin2']")).find(el => el
+                        const futureElement = Array.from(document.querySelectorAll("p[id^='isin2']")).filter(el => el
                             .textContent === receivedIsin);
                         // console.log("futureElement", futureElement);
 
-                        const optionElement = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el =>
+                        const optionElement = Array.from(document.querySelectorAll("p[id^='isin3']")).filter(el =>
                             el.textContent.trim() === receivedIsin.trim()
                         );
                         // console.log("optionElement", optionElement);
 
                         if (allElement) {
-                            const rowId = allElement.id.replace('isin1', '');
+
+                            allElement.forEach(el => {
+                                const rowId = el.id.replace('isin1', '');
 
                             const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
                             const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
@@ -1905,104 +1909,117 @@
                             ${profitAndLoss > 0 
                                 ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
                                 : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
+                            });
+
+
+                            
 
 
                         } else if (futureElement) {
 
-                            const rowId = futureElement.id.replace('isin2', '');
+                            futureElement.forEach(el => {
+                                const rowId = futureElement.id.replace('isin2', '');
 
-                            // console.log("rowId2", rowId);
+                                // console.log("rowId2", rowId);
 
-                            const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
-                            const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
-                            const invest = parseFloat(document.getElementById(`invest2${rowId}`).textContent) ||
-                                0; // Investment amount
-                            const quantity = parseFloat(document.getElementById(`quantity2${rowId}`).textContent) ||
-                                0; // Quantity
+                                const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
+                                const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
+                                const invest = parseFloat(document.getElementById(`invest2${rowId}`).textContent) ||
+                                    0; // Investment amount
+                                const quantity = parseFloat(document.getElementById(`quantity2${rowId}`).textContent) ||
+                                    0; // Quantity
 
-                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc
-                                .ltp || '0');
+                                document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc
+                                    .ltp || '0');
 
-                            const badgeValue = (price - cp).toFixed(2) || '0';
-                            const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
+                                const badgeValue = (price - cp).toFixed(2) || '0';
+                                const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
 
-                            const profitAndLoss = ((price - invest) * quantity).toFixed(2);
-                            const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
+                                const profitAndLoss = ((price - invest) * quantity).toFixed(2);
+                                const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
 
-                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            const percentageIcon = percentageChange > 0 ?
-                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
-
-
-                            // class bage for profit an dloss
-                            const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
-                            const profitAndLossIcon = profitAndLoss > 0 ?
-                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                                const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
+                                const percentageIcon = percentageChange > 0 ?
+                                    'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                    'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
-                            document.getElementById(`stockChange2${rowId}`).innerHTML =
-                                `
-                                        ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
+                                // class bage for profit an dloss
+                                const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
+                                const profitAndLossIcon = profitAndLoss > 0 ?
+                                    'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                    'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
-                            document.getElementById(`change2${rowId}`).innerHTML =
-                                `
-                            ${profitAndLoss > 0 
-                                ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
-                                : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
+                                document.getElementById(`stockChange2${rowId}`).innerHTML =
+                                    `
+                                            ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
+                                            ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                            ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
+
+
+                                document.getElementById(`change2${rowId}`).innerHTML =
+                                    `
+                                ${profitAndLoss > 0 
+                                    ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
+                                    : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
+                            });
+
+ 
 
 
 
                         } else if (optionElement) {
-                            const rowId = optionElement.id.replace('isin3', '');
 
-                            // console.log("rowId3", rowId);
+                            optionElement.forEach(el => {
+                                const rowId = optionElement.id.replace('isin3', '');
 
-                            const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
-                            const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
-                            const invest = parseFloat(document.getElementById(`invest3${rowId}`).textContent) ||
-                                0; // Investment amount
-                            const quantity = parseFloat(document.getElementById(`quantity3${rowId}`).textContent) ||
-                                0; // Quantity
+                                // console.log("rowId3", rowId);
 
-                            document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc
-                                .ltp || '0');
+                                const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
+                                const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
+                                const invest = parseFloat(document.getElementById(`invest3${rowId}`).textContent) ||
+                                    0; // Investment amount
+                                const quantity = parseFloat(document.getElementById(`quantity3${rowId}`).textContent) ||
+                                    0; // Quantity
 
-                            const badgeValue = (price - cp).toFixed(2) || '0';
-                            const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
+                                document.getElementById(`price1${rowId}`).textContent = "Current : ₹" + (feedData.ltpc
+                                    .ltp || '0');
 
-                            const profitAndLoss = ((price - invest) * quantity).toFixed(2);
-                            const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
+                                const badgeValue = (price - cp).toFixed(2) || '0';
+                                const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) : '0';
 
-                            const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
-                            const percentageIcon = percentageChange > 0 ?
-                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                                const profitAndLoss = ((price - invest) * quantity).toFixed(2);
+                                const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100).toFixed(2) : '0';
 
-
-                            // class bage for profit an dloss
-                            const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
-                            const profitAndLossIcon = profitAndLoss > 0 ?
-                                'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
-                                'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
+                                const percentageClass = percentageChange > 0 ? 'badge-success' : 'badge-danger';
+                                const percentageIcon = percentageChange > 0 ?
+                                    'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                    'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
-                            document.getElementById(`stockChange3${rowId}`).innerHTML =
-                                `
-                                        ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
+                                // class bage for profit an dloss
+                                const profitAndLossClass = profitAndLoss > 0 ? 'badge-success' : 'badge-danger';
+                                const profitAndLossIcon = profitAndLoss > 0 ?
+                                    'https://cdn-icons-png.flaticon.com/128/9035/9035722.png' :
+                                    'https://cdn-icons-png.flaticon.com/128/5548/5548156.png';
 
 
-                            document.getElementById(`change3${rowId}`).innerHTML =
-                                `
-                            ${profitAndLoss > 0 
-                                ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
-                                : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
+                                document.getElementById(`stockChange3${rowId}`).innerHTML =
+                                    `
+                                            ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
+                                            ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                            ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
+
+
+                                document.getElementById(`change3${rowId}`).innerHTML =
+                                    `
+                                ${profitAndLoss > 0 
+                                    ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
+                                    : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
+                            });
+
+
                         }
                     }
                 }
