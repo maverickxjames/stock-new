@@ -243,7 +243,7 @@
                     <div class="col-xl-12">
                         <div class="row">
                             <?php
-                                        $fetch = DB::table('watchlist')->where('userid', Auth::user()->id  )->get();
+                                        
                                         $i = 1;
                                         foreach($fetch as $key){
                                             $foisin = $key->instrumentKey;

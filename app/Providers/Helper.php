@@ -7,6 +7,7 @@ use App\Models\Equity;
 use App\Models\watchlist;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
 class   Helper
@@ -144,5 +145,10 @@ class   Helper
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public static function forgetCache($userid,$type){
+        $key = 'user_'.$userid.'_'.$type;
+        Cache::forget($key);
     }
 }

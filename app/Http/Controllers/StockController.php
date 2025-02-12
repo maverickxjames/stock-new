@@ -7,9 +7,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 // db facades 
 use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -399,12 +403,23 @@ class StockController extends Controller
 
     public function quotes()
     {
+        $userId = Auth::id();
+        $cacheKey = "user_{$userId}_watchlist";
+    
+        if (Cache::has($cacheKey)) {
+            Log::info("Data loaded from Redis for user: " . $userId);
+            $fetch = Cache::get($cacheKey);
+            // return response()->json(['source' => 'Redis', 'data' => $fetch]);
+        } else {
+            Log::info("Fetching data from database for user: " . $userId);
+            $fetch = DB::table('watchlist')->where('userid', $userId)->get()->toArray();
+            Cache::put($cacheKey, $fetch, now()->addMinutes(10));
+            // return response()->json(['source' => 'Database', 'data' => $fetch]);
+        }
 
-
-
-
-        return view('quote');
+        return view('quote', compact('fetch'));
     }
+    
 
 
     public function stockDetails($id){

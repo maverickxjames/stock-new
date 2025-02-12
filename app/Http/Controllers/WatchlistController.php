@@ -13,7 +13,10 @@ use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\JsonResponse;
+// Helper 
+use App\Providers\Helper;
 // db facades
 use Illuminate\Support\Facades\DB;
 // import model wathclist
@@ -26,10 +29,13 @@ class WatchlistController extends Controller
         return view('watchlist');
     }
 
+
+
  
 
     public function addWatchlist(Request $request)
     {
+        Helper::forgetCache(auth()->id(),'watchlist');
         $isExists = Watchlist::where('userid', auth()->id())
             ->where('instrumentKey', $request->instrumentKey)
             ->exists();
@@ -76,6 +82,7 @@ class WatchlistController extends Controller
 
     public function removeWatchlist(Request $request)
     {
+        Helper::forgetCache(auth()->id(),'watchlist');
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer', // ID is required and must be an integer

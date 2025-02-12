@@ -6,16 +6,17 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "amphp/websocket-client": "^2.0",
         "beyondcode/laravel-websockets": "*",
         "fruitcake/laravel-cors": "^2.0",
+        "google/protobuf": "^4.29",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "predis/predis": "2.2",
         "pusher/pusher-php-server": "^7.2",
-        "upstox/upstox-php-sdk": "*",
-        "amphp/websocket-client": "^2.0",
-        "google/protobuf": "^4.29"
+        "upstox/upstox-php-sdk": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
