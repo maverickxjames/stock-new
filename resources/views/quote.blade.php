@@ -256,7 +256,7 @@
                                             ?>
 
                             <!--Top up Modal start-->
-                            <div class="modal fade" id="exampleModalCenter{{ $i }}">
+                            {{-- <div class="modal fade" id="exampleModalCenter{{ $i }}">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header" style="padding-right: 1.875rem;padding-left: 10px;">
@@ -290,7 +290,8 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="trade-item" data-bs-dismiss="modal" onclick="window.location.href='{{ route('stockDetail', ['id' => $foisin]) }}'">                                                
+                                                <div class="trade-item" data-bs-dismiss="modal"
+                                                    onclick="window.location.href='{{ route('stockDetail', ['id' => $foisin]) }}'">
                                                     <h2>Details</h2>
                                                     <div class="icon-box icon-box-sm bgl-primary">
                                                         <a href="javascript:void(0)" id="add_script">
@@ -311,15 +312,68 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="modal-footer">
+                                       
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <!--Top up Modal end--> {{-- <div class="modal-footer">
                                             <button type="button" class="btn btn-danger light"
                                                 data-bs-dismiss="modal">Close</button>
                                             <button type="button" class="btn btn-primary">Save changes</button>
                                         </div> --}}
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Top up Modal end-->
+
+                            <!-- Top-up Modal Start -->
+                               <!-- Top-up Modal Start -->
+<div class="modal fade" id="exampleModalCenter{{ $i }}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-lg shadow-lg" style="--bs-bg-opacity: 1;background: rgb(21,76,160);
+background: linear-gradient(90deg, rgba(21,76,160,1) 52%, rgba(0,212,255,1) 100%);">
+            <!-- Modal Header -->
+            <div class="modal-header px-3 py-2 d-flex align-items-center justify-content-between border-0 bg-transparent">
+                <div class="d-flex align-items-center gap-2">
+                    <span><img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->assetSymbol; ?>.svg"
+                        alt="" style="border-radius: 100%;width:2rem;height:2rem"></span>
+                    <h5 class="modal-title fw-bold fs-2" style="color: #000">{{ $key->tradingSymbol }}</h5>
+                </div>
+                {{-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                <button type="button" data-bs-dismiss="modal" style="border: none;border-radius:100%">
+                    <img src="https://cdn-icons-png.flaticon.com/128/9974/9974058.png"
+                        width="30" alt="">
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body p-3">
+                <div class="d-flex flex-column gap-3">
+                    <div class="trade-item d-flex align-items-center p-2 rounded border shadow-sm"
+                        onclick="showOrderForm({{ $i }})" data-bs-dismiss="modal">
+                        <img src="https://cdn-icons-png.flaticon.com/128/15342/15342293.png" width="30" class="me-2" alt="Trade Logo">
+                        <h6 class="mb-0 flex-grow-1 fs-2">Trade</h6>
+                    </div>
+                    
+                    <div class="trade-item d-flex align-items-center p-2 rounded border shadow-sm"
+                        onclick="handleChartClick('{{ $foisin }}', '{{ $i }}')" data-bs-dismiss="modal">
+                        <img src="https://cdn-icons-png.flaticon.com/128/2285/2285559.png" width="30" class="me-2" alt="Chart Logo">
+                        <h6 class="mb-0 flex-grow-1 fs-2">Chart</h6>
+                    </div>
+                    
+                    <div class="trade-item d-flex align-items-center p-2 rounded border shadow-sm"
+                        onclick="window.location.href='{{ route('stockDetail', ['id' => $foisin]) }}'" data-bs-dismiss="modal">
+                        <img src="https://cdn-icons-png.flaticon.com/128/4519/4519615.png" width="30" class="me-2" alt="Details Logo">
+                        <h6 class="mb-0 flex-grow-1 fs-2">Details</h6>
+                    </div>
+                    
+                    <div class="trade-item d-flex align-items-center p-2 rounded border shadow-sm text-danger"
+                        onclick="removeWatchlist({{ $id }})" data-bs-dismiss="modal">
+                        <img src="https://cdn-icons-png.flaticon.com/128/1450/1450571.png" width="30" class="me-2" alt="Remove Logo">
+                        <h6 class="mb-0 flex-grow-1 fs-2">Remove</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top-up Modal End -->
 
                             <!--chart offcanvas start -->
                             <div class="offcanvas offcanvas-bottom" tabindex="-1"
@@ -331,14 +385,16 @@
                                         style="border: none"><img
                                             src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
                                             width="20" alt=""></button>
+                                           
                                 </div>
                                 <div class="offcanvas-body small p-0">
                                     <div class="card market-overview">
                                         <div class="card-header border-0 flex-wrap pb-0">
                                             <div class="d-flex align-items-center flex-wrap mb-3 mb-sm-0">
-                                                <h4 class="card-title mb-0 " style="font-size: 2rem;font-weight:900" >{{ $stock->tradingSymbol }}</h4>
+                                                <h4 class="card-title mb-0 " style="font-size: 2rem;font-weight:900">
+                                                    {{ $stock->tradingSymbol }}</h4>
 
-                                              
+
                                             </div>
 
                                         </div>
@@ -353,9 +409,9 @@
                                                     class="d-flex justify-content-between align-items-center  mt-md-0 mt-2">
                                                     <ul class="nav nav-pills" id="myTab1" role="tablist">
                                                         <li class="nav-item" role="presentation">
-                                                            <a class="nav-link active" id="Day-tab{{ $i }}"
-                                                                data-bs-toggle="tab" data-bs-target="#Day"
-                                                                href="#Day" role="tab"
+                                                            <a class="nav-link active"
+                                                                id="Day-tab{{ $i }}" data-bs-toggle="tab"
+                                                                data-bs-target="#Day" href="#Day" role="tab"
                                                                 aria-selected="true">Day</a>
                                                         </li>
                                                         <li class="nav-item" role="presentation">
@@ -365,13 +421,15 @@
                                                                 aria-selected="true">Week</a>
                                                         </li>
                                                         <li class="nav-item" role="presentation">
-                                                            <a class="nav-link" id="Month-tab{{ $i }}" data-bs-toggle="tab"
-                                                                data-bs-target="#Month" href="#Month" role="tab"
+                                                            <a class="nav-link" id="Month-tab{{ $i }}"
+                                                                data-bs-toggle="tab" data-bs-target="#Month"
+                                                                href="#Month" role="tab"
                                                                 aria-selected="false">Month</a>
                                                         </li>
                                                         <li class="nav-item" role="presentation">
-                                                            <a class="nav-link" id="Year-tab{{ $i }}" data-bs-toggle="tab"
-                                                                data-bs-target="#Year" href="#Year" role="tab"
+                                                            <a class="nav-link" id="Year-tab{{ $i }}"
+                                                                data-bs-toggle="tab" data-bs-target="#Year"
+                                                                href="#Year" role="tab"
                                                                 aria-selected="false">Year</a>
                                                         </li>
                                                     </ul>
@@ -397,12 +455,16 @@
                                 id="orderoffcanvasBottom{{ $i }}" aria-labelledby="offcanvasBottomLabel"
                                 style="height: fit-content">
                                 <div class="offcanvas-header">
-                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">
-                                        Offcanvas
-                                        bottom
+                                    <h5 class="offcanvas-title fs-2" id="offcanvasBottomLabel{{ $i }}">
+                                        Trade
                                     </h5>
-                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                        aria-label="Close"></button>
+                                    {{-- <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button> --}}
+
+                                        <button type="button" data-bs-dismiss="offcanvas" aria-label="Close"
+                                        style="border: none"><img
+                                            src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                            width="20" alt=""></button>
                                 </div>
 
                                 <div class="offcanvas-body small">
@@ -645,7 +707,7 @@
                                                                                 <div
                                                                                     class="mt-3 d-flex justify-content-between">
                                                                                     <button type="subit"
-                                                                                        class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
+                                                                                        class="btn btn-success btn-sm  text-uppercase me-3 btn-block">BUY</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -859,7 +921,7 @@
                                                                                     class="mt-3 d-flex justify-content-between">
 
                                                                                     <button type="submit"
-                                                                                        class="btn btn-danger btn-sm light text-uppercase btn-block">SELL</button>
+                                                                                        class="btn btn-danger btn-sm text-uppercase btn-block">SELL</button>
                                                                                 </div>
                                                                 </form>
                                                             </div>
@@ -931,7 +993,12 @@
                                 {{-- <h4 class="text-dark mb-0 font-w600">{{ $key->assetSymbol }} {{
                                     $key->instrumentType }} <span class="text-muted">({{ $key->expiry
                                         }})</span></h4> --}}
-                                <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <span><img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->assetSymbol; ?>.svg"
+                                            alt="" style="border-radius: 100%;width:2rem;height:2rem"></span>
+                                    <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
+                                </div>
                                 <div class="d-flex justify-content-between ">
                                     <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
                                         LTP:
@@ -1964,10 +2031,10 @@
             var offcanvas = new bootstrap.Offcanvas(document.getElementById(`offcanvasBottom${modalId}`));
             offcanvas.show();
             let chartContainer = document.getElementById(`marketOverview${modalId}`);
-if (!chartContainer) {
-    console.error("Chart container not found:", `marketOverview${modalId}`);
-    return;
-}
+            if (!chartContainer) {
+                console.error("Chart container not found:", `marketOverview${modalId}`);
+                return;
+            }
             if (window.marketOverviewChart) {
                 window.marketOverviewChart.destroy();
             }
@@ -2022,17 +2089,19 @@ if (!chartContainer) {
                     // }
 
                     if (window.marketOverviewChart) {
-    try {
-        window.marketOverviewChart.updateSeries([{ data: formattedData }]);
-    } catch (error) {
-        console.warn("Chart update failed, reinitializing...", error);
-        window.marketOverviewChart = new ApexCharts(chartContainer, options);
-        window.marketOverviewChart.render();
-    }
-} else {
-    window.marketOverviewChart = new ApexCharts(chartContainer, options);
-    window.marketOverviewChart.render();
-}
+                        try {
+                            window.marketOverviewChart.updateSeries([{
+                                data: formattedData
+                            }]);
+                        } catch (error) {
+                            console.warn("Chart update failed, reinitializing...", error);
+                            window.marketOverviewChart = new ApexCharts(chartContainer, options);
+                            window.marketOverviewChart.render();
+                        }
+                    } else {
+                        window.marketOverviewChart = new ApexCharts(chartContainer, options);
+                        window.marketOverviewChart.render();
+                    }
 
                 } catch (error) {
                     console.error("Error fetching or setting data:", error);
