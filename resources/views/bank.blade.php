@@ -307,7 +307,8 @@
         <div class="custom-container">
             <div class="header-panel">
                 <div>
-                    <a href="dashboard">
+                    {{-- <a href="{{ route('profile') }}"> --}}
+                    <a onclick="window.history.back()">
                         <img src="https://cdn-icons-png.flaticon.com/512/2985/2985162.png" alt="" width="20"
                             height="auto">
                     </a>
@@ -320,9 +321,9 @@
     </header>
 
 
-    <section class="section-b-space pt-0">
+    <section class="section-b-space pt-0 px-2 px-lg-5">
         <div class="auth-content-bg">
-            <div class="custom-container">
+            <div class="custom-container ">
                 <form id="bank-form" class="auth-formm mt-0 ">
                     @csrf
                     <div class="form-group mt-0">
@@ -356,7 +357,7 @@
                             value="{{ $bankDetails->upi ?? '' }}" placeholder="Enter UPI ID">
                     </div>
                     <div class="fixed-btn">
-                        <div class="custom-container">
+                        <div class="">
                             <button type="button" onclick="bankUpdate()"
                                 class="btnn theme-btn w-100 mt-0 auth-btn">Update</button>
                         </div>

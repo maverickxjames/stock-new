@@ -1,7 +1,7 @@
 @php
-$user = Auth::user();
-use App\Models\withdraw_mode;
-use App\Models\setting;
+    $user = Auth::user();
+    use App\Models\withdraw_mode;
+    use App\Models\setting;
 @endphp
 
 
@@ -268,10 +268,11 @@ use App\Models\setting;
             <div class="container-fluid">
                 <div class="container mt-5">
                     @php
-                    $settings = setting::where('id', 1)->first();
+                        $settings = setting::where('id', 1)->first();
                     @endphp
                     <!-- Withdraw Notice Alert Box -->
-                    <div class="alert alert-info" role="alert" style="
+                    <div class="alert alert-info" role="alert"
+                        style="
                     
                     cursor: not-allowed;">
                         <h4 class="alert-heading">Notice</h4>
@@ -280,7 +281,8 @@ use App\Models\setting;
                     </div>
                 </div>
 
-                <div class="custom-container" style="
+                <div class="custom-container"
+                    style="
                 padding: 20px;
                 background-color: #f9f9f9;
                 border-radius: 8px;
@@ -360,7 +362,7 @@ use App\Models\setting;
                     <span class="current-year">2024</span>
                 </p>
             </div>
-        </div >
+        </div>
 
 
 
@@ -446,7 +448,7 @@ use App\Models\setting;
                 return;
             }
 
-           
+
             if (amount < minWithdraw) {
                 Swal.fire({
                     icon: 'error',
@@ -492,11 +494,22 @@ use App\Models\setting;
                             window.location.reload();
                         });
                     } else {
-                        Swal.fire({
-                            icon: response.icon,
-                            title: response.title,
-                            text: response.message,
-                        });
+                        if (response.icon == 'info') {
+                            Swal.fire({
+                                icon: response.icon,
+                                title: response.title,
+                                text: response.message,
+                            }).then(() => {
+                                window.location.href('/bank-details');
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: response.icon,
+                                title: response.title,
+                                text: response.message,
+                            });
+                        }
+
                     }
                 },
                 error: function(xhr) {

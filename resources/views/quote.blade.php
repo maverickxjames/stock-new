@@ -333,7 +333,7 @@ background: linear-gradient(90deg, rgba(21,76,160,1) 52%, rgba(0,212,255,1) 100%
                 <div class="d-flex align-items-center gap-2">
                     <span><img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->assetSymbol; ?>.svg"
                         alt="" style="border-radius: 100%;width:2rem;height:2rem"></span>
-                    <h5 class="modal-title fw-bold fs-2" style="color: #000">{{ $key->tradingSymbol }}</h5>
+                    <h5 class="modal-title fw-bold fs-2" style="color: #fff">{{ $key->tradingSymbol }}</h5>
                 </div>
                 {{-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 <button type="button" data-bs-dismiss="modal" style="border: none;border-radius:100%">

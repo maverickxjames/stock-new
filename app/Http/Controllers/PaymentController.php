@@ -294,7 +294,7 @@ class PaymentController extends Controller
 
         $bankDetails = bankDetail::where('userid', $user_id)->first();
         if (!$bankDetails) {
-            return response()->json(['icon' => 'error', 'title' => 'Error', 'message' => 'Bank details not found. Please update your bank details.']);
+            return response()->json(['icon' => 'info', 'title' => 'Error', 'message' => 'Bank details not found. Please update your bank details.']);
         }
 
         $request->validate([

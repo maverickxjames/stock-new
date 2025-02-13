@@ -210,10 +210,10 @@ $user = Auth::user();
                                         <div class="col-sm-9 col-7"><span>{{ $user->user_id }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 gap-4 d-flex flex align-items-start">
-                                        <button class="btn btn-primary" onclick="changePassword()">Change
+                                    <div class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                        <button class="btn btn-primary w-50 fs-5" onclick="changePassword()">Change
                                             Password</button>
-                                        <button class="btn btn-success" onclick="updateProfile()">Update
+                                        <button class="btn btn-success w-50 fs-5" onclick="updateProfile()">Update
                                             Profile</button>
                                     </div>
                                    
@@ -275,10 +275,10 @@ $user = Auth::user();
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 gap-4 d-flex flex align-items-start">
-                                        <button class="btn btn-secondary" onclick="window.location.href='{{ route('deposit') }}'">
+                                    <div class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                        <button class="btn btn-secondary w-50 fs-4" onclick="window.location.href='{{ route('deposit') }}'">
                                             Deposit Fund</button>
-                                        <button class="btn btn-info" onclick="window.location.href='{{ route('withdraw') }}'">
+                                        <button class="btn btn-info w-50 fs-4" onclick="window.location.href='{{ route('withdraw') }}'">
                                             Withdraw</button>
                                     </div>   
 
@@ -286,6 +286,86 @@ $user = Auth::user();
                                    
                                 </div>
                               
+                                <hr>
+
+                                @php
+                                $user = Auth::user();
+                                $bank=DB::table('bankDetails')->where('userid',$user->id)->first();
+                                @endphp
+
+                                {{-- if bank data found --}}
+                                @if($bank)
+                                <div class="bank-info mt-4">
+                                    <h4 class="text-primary mb-4 fs-2">Bank Info</h4>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Bank Name <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Bank Account <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_acc }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Bank IFSC Code <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_ifsc }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Bank Holder <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_holder }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Bank Branch <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_branch }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">UPI <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $bank->upi }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                        <button class="btn btn-dark w-100 fs-4" onclick="window.location.href='{{ route('bank-details') }}'">
+                                            Update Bank Details</button>
+                                        
+                                    </div>   
+
+                                 
+                                   
+                                </div>
+                                @else
+                                <div class="bank-info mt-4">
+                                    <h4 class="text-primary mb-4 fs-2">Bank Info</h4>
+                                    <div class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                        <button class="btn btn-dark w-100 fs-4" onclick="window.location.href='{{ route('bank-details') }}'">
+                                            Add Bank Details</button>
+                                        
+                                    </div>   
+
+                                 
+                                   
+                                </div>
+                                @endif
+
+                               
 
 
                               
