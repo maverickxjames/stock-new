@@ -315,7 +315,7 @@
                 </div>
 
 
-                <h3 class="fw-semibold title-color">Add Funds</h3>
+                <h3 class="fw-semibold title-color">Add Bank</h3>
             </div>
         </div>
     </header>
@@ -367,29 +367,6 @@
             </div>
         </div>
     </section>
-    <!-- bank details section end -->
-
-    <!-- panel-space start -->
-    <section class="panel-space"></section>
-
-
-
-    <!-- iconsax js -->
-    <script src="../assets/js/iconsax.js"></script>
-
-    <!-- sticky-header js -->
-    <script src="../assets/js/sticky-header.js"></script>
-
-    <!-- bootstrap js -->
-    <script src="../assets/js/bootstrap.bundle.min.js"></script>
-
-    <!-- template-setting js -->
-    <script src="../assets/js/template-setting.js"></script>
-
-    <!-- script js -->
-    <script src="../assets/js/script.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         function bankUpdate() {
@@ -473,9 +450,8 @@
         }
     </script>
 
-    <script>
-        <!-- JavaScript 
-        -->
+    
+        
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

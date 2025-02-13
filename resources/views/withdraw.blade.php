@@ -500,7 +500,7 @@
                                 title: response.title,
                                 text: response.message,
                             }).then(() => {
-                                window.location.href('/bank-details');
+                                window.location.href = '/bank-details';
                             });
                         } else {
                             Swal.fire({
