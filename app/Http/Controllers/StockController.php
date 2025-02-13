@@ -36,6 +36,11 @@ class StockController extends Controller
         return view('stockview', ['id' => $id]);
     }
 
+    public function closeOrder(Request $request){
+        $id = $request->id;
+        return $id;
+    }
+
 
 
     function searchScript(Request $request)

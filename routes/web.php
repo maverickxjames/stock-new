@@ -122,6 +122,7 @@ Route::middleware('auth')->group(function () {
   
 
     Route::get('limitOrder', [StockController::class, 'limitOrder'])->name('limitOrder');
+    Route::post('closeOrder', [StockController::class, 'closeOrder'])->name('closeOrder');
 
     Route::get('ww', function(){
         return view('wallet');

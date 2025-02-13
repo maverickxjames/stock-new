@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -24,14 +24,17 @@
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-    {{-- <link href="vendor/bootstrap-datepicker-master/css/bootstrap-datepicker.min.css" rel="stylesheet"> --}}
+    {{--
+    <link href="vendor/bootstrap-datepicker-master/css/bootstrap-datepicker.min.css" rel="stylesheet"> --}}
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
     <!-- Style css -->
-    {{-- <link class="main-css" href="css/style.css" rel="stylesheet"> --}}
+    {{--
+    <link class="main-css" href="css/style.css" rel="stylesheet"> --}}
     <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <!-- Datatable -->
-    {{-- <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
+    {{--
+    <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
 
     <style>
         .trade-container {
@@ -132,9 +135,6 @@
             Content body start
         ***********************************-->
 
-
-
-
         <div class="content-body">
             <!-- row -->
             <div class="container-fluid">
@@ -173,35 +173,7 @@
 
                         </div>
                     </div>
-                    {{-- <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header border-0">
-                                <nav>
-                                    <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
-                                        <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab"
-                                            aria-controls="nav-all" aria-selected="true">All</button>
-                                        <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-fut" type="button" role="tab"
-                                            aria-controls="nav-fut" aria-selected="false">Future</button>
-                                        <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-opt" type="button" role="tab"
-                                            aria-controls="nav-opt" aria-selected="false">Option</button>
-                                    </div>
-                                </nav>
-                            </div>
-                            <div class="card-body pt-0">
-                                <div class="d-flex flex-wrap">
-                                    <div class="input-group width-300 mb-2">
-                                        <input type="text" class="form-control amount"
-                                            placeholder="Search for a company" aria-label="Username"
-                                            aria-describedby="basic-addon1">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+
 
                     <div class="col-xl-12">
                         <div class="card">
@@ -210,14 +182,14 @@
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
                                         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab"
-                                            aria-controls="nav-all" aria-selected="true">All</button>
+                                            data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all"
+                                            aria-selected="true">All</button>
                                         <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-fut" type="button" role="tab"
-                                            aria-controls="nav-fut" aria-selected="false">Future</button>
+                                            data-bs-target="#nav-fut" type="button" role="tab" aria-controls="nav-fut"
+                                            aria-selected="false">Future</button>
                                         <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-opt" type="button" role="tab"
-                                            aria-controls="nav-opt" aria-selected="false">Option</button>
+                                            data-bs-target="#nav-opt" type="button" role="tab" aria-controls="nav-opt"
+                                            aria-selected="false">Option</button>
                                     </div>
                                 </nav>
                             </div>
@@ -234,7 +206,6 @@
                                                 <div class="col-xl-12">
                                                     <!-- Row -->
                                                     <div class="row">
-
                                                         <?php
                                                        $trades = DB::table('trades')
                                                         ->where('trades.user_id', $user->id)
@@ -258,99 +229,13 @@
                                                         ')
                                                         ->groupBy('trades.instrumentKey', 'trades.duration')
                                                         ->get();
-
-
-
                                                         // print_r($trades);
                                                         $i = 1;
                                                
 
                                                         foreach ($trades as $stock){
                                                             $foisin = $stock->instrumentKey;
-
-                                                         
-                                                            
-
                                                         ?>
-
-                                                        <!--Top up Modal start-->
-                                                        <div class="modal fade"
-                                                            id="exampleModalCenter1{{ $i }}">
-                                                            <div class="modal-dialog modal-dialog-centered"
-                                                                role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header"
-                                                                        style="padding-right: 1.875rem;padding-left: 10px;">
-                                                                        <h2 class="modal-title">
-                                                                            {{ $stock->stock_name }} </h2>
-                                                                        <button type="button" data-bs-dismiss="modal"
-                                                                            style="border: none">
-                                                                            <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
-                                                                                width="20" alt="">
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body p-0">
-                                                                        <div class="trade-container">
-                                                                            <div data-bs-dismiss="modal"
-                                                                                onclick="showOrderForm({{ $i }})"
-                                                                                class="trade-item">
-                                                                                <h2>Exit Position</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="trade-item"
-                                                                                data-bs-dismiss="modal">
-                                                                                <h2>Details</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="trade-item"
-                                                                                data-bs-dismiss="modal">
-                                                                                <h2>Remove</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn btn-danger light"
-                                                                            data-bs-dismiss="modal">Close</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-primary">Save
-                                                                            changes</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <!--Top up Modal end-->
-
-
-
                                                         <div class="offcanvas offcanvas-bottom" tabindex="-1"
                                                             id="orderoffcanvasBottom{{ $i }}"
                                                             aria-labelledby="offcanvasBottomLabel"
@@ -372,43 +257,35 @@
                                                                         <div class="card">
                                                                             <div class="card-header flex-wrap">
                                                                                 <!-- <div class="d-flex"> -->
-
-                                                                                <nav class=""
-                                                                                    style="width: 100%;">
+                                                                               
+                                                                                <nav class="" style="width: 100%;">
                                                                                     <div class="nav nav-pills light "
                                                                                         id="nav-tab" role="tablist">
-                                                                                        <button
-                                                                                            class="nav-link active "
+                                                                                        <button class="nav-link active "
                                                                                             style="width: 100%;"
                                                                                             id="nav-order-tab"
                                                                                             data-bs-toggle="tab"
-                                                                                            data-bs-target="#nav-order{{ $i }}"
-                                                                                            type="button"
-                                                                                            role="tab"
-                                                                                            aria-selected="true">Buy</button>
-                                                                                       
-
+                                                                                            data-bs-target="#nav-order"
+                                                                                            type="button" role="tab"
+                                                                                            aria-selected="true">Close Order</button>
                                                                                     </div>
                                                                                 </nav>
                                                                                 <!-- </div> -->
                                                                             </div>
                                                                             <div class="card-body pt-2">
-                                                                                <div class="tab-content"
+                                                                                {{-- <div class="tab-content"
                                                                                     id="nav-tabContent">
                                                                                     <div class="tab-pane fade show active"
                                                                                         id="nav-order{{ $i }}"
                                                                                         role="tabpanel"
-                                                                                        aria-labelledby="nav-order-tab">
+                                                                                        aria-labelledby="nav-order-tab"> --}}
                                                                                         <div
                                                                                             class="table-responsive dataTabletrade">
-                                                                                            <form
-                                                                                               >
-                                                                                                @csrf
+                                                                                           
                                                                                                 <input type="text"
                                                                                                     name="id"
                                                                                                     value="{{ $i }}"
-                                                                                                    id="id"
-                                                                                                    hidden>
+                                                                                                    id="id" hidden>
                                                                                                 <input type="text"
                                                                                                     name="instrumentKey1{{ $i }}"
                                                                                                     value="{{ $foisin }}"
@@ -421,8 +298,7 @@
                                                                                                     hidden> --}}
                                                                                                 <div class="col-xl-4"
                                                                                                     style="width: 100%;">
-                                                                                                    <div
-                                                                                                        class="card">
+                                                                                                    <div class="card">
                                                                                                         <div
                                                                                                             class="card-body pt-2">
                                                                                                             <!-- Available Balance -->
@@ -432,7 +308,9 @@
                                                                                                                     class="small text-muted">Available
                                                                                                                     Balance</span>
                                                                                                                 <span
-                                                                                                                    class="text-dark">{{ $user->real_wallet }}</span>
+                                                                                                                    class="text-dark">{{
+                                                                                                                    $user->real_wallet
+                                                                                                                    }}</span>
                                                                                                             </div>
                                                                                                             <!-- Order Type Selector -->
                                                                                                             {{-- <div
@@ -485,7 +363,8 @@
                                                                                                                     class="input-group-text">₹</span>
                                                                                                             </div> --}}
                                                                                                             <!-- Limit Input -->
-                                                                                                            {{-- <div id="limitblock1{{ $i }}"
+                                                                                                            {{-- <div
+                                                                                                                id="limitblock1{{ $i }}"
                                                                                                                 style="display: none"
                                                                                                                 class="input-group mb-3">
                                                                                                                 <span
@@ -504,7 +383,8 @@
                                                                                                                     class="input-group-text">₹</span>
                                                                                                             </div> --}}
 
-                                                                                                            {{-- <div class=""
+                                                                                                            {{-- <div
+                                                                                                                class=""
                                                                                                                 style="display: flex; justify-content:space-between; gap:20px;">
                                                                                                                 <div
                                                                                                                     class="input-group mb-3">
@@ -539,7 +419,9 @@
                                                                                                                         placeholder="Enter size"
                                                                                                                         id="quantity1{{ $i }}"
                                                                                                                         name="quantity1{{ $i }}"
-                                                                                                                        value={{ $quantity }}
+                                                                                                                        value={{
+                                                                                                                        $quantity
+                                                                                                                        }}
                                                                                                                         readonly>
                                                                                                                 </div>
                                                                                                             </div> --}}
@@ -595,11 +477,18 @@
                                                                                                             <!-- Cost and Max Info -->
                                                                                                             <div
                                                                                                                 class="d-flex justify-content-between flex-wrap">
-                                                                                                                {{-- <div class="d-flex">
-                                                                                                                        <div>Cost:</div>
-                                                                                                                        <div id="costPrice1{{ $i }}">
-                                                                                                                            ₹0.00</div>
-                                                                                                                    </div> --}}
+                                                                                                                {{--
+                                                                                                                <div
+                                                                                                                    class="d-flex">
+                                                                                                                    <div>
+                                                                                                                        Cost:
+                                                                                                                    </div>
+                                                                                                                    <div
+                                                                                                                        id="costPrice1{{ $i }}">
+                                                                                                                        ₹0.00
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                --}}
                                                                                                                 <div
                                                                                                                     class="d-flex justify-content-between flex-wrap align-items-center">
                                                                                                                     <!-- Displaying Cost and Margin Price -->
@@ -628,7 +517,9 @@
                                                                                                                     <div id="maxPrice1{{ $i }}"
                                                                                                                         name="maxPrice1{{ $i }}"
                                                                                                                         class=" px-1">
-                                                                                                                        ₹{{ $user->real_wallet }}
+                                                                                                                        ₹{{
+                                                                                                                        $user->real_wallet
+                                                                                                                        }}
                                                                                                                     </div>
 
 
@@ -646,19 +537,17 @@
                                                                                                             <!-- Buy/Sell Buttons -->
                                                                                                             <div
                                                                                                                 class="mt-3 d-flex justify-content-between">
-                                                                                                                <button
+                                                                                                                <button onclick="closeOrder({{ $i }})"
                                                                                                                     type="submit"
-                                                                                                                    class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
+                                                                                                                    class="btn btn-primary btn-sm text-uppercase btn-block">CLOSE</button>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </form>
+                                                                                          
                                                                                         </div>
-                                                                                    </div>
-
-                                                                                </div>
-                                                                                </form>
+                                                                                    {{-- </div>
+                                                                                </div> --}}
                                                                             </div>
                                                                         </div>
 
@@ -681,33 +570,31 @@
                                                             {{ $stock->action }}</p>
 
                                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModalCenter1{{ $i }}">
+                                                            data-bs-toggle="modal" onclick="showOrderForm({{ $i }})">
                                                             <div class="card pull-up"
                                                                 style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
                                                                 <div class="card-body align-items-center flex-wrap">
                                                                     <p
                                                                         class="mb-0 fs-5 font-w500 d-flex align-items-center">
                                                                         @if ($stock->action == 'BUY')
-                                                                            <span class="badge badge-success me-2">
-                                                                                {{ $stock->action }}</span>
+                                                                        <span class="badge badge-success me-2">
+                                                                            {{ $stock->action }}</span>
                                                                         @else
-                                                                            <span class="badge badge-danger me-2">
-                                                                                {{ $stock->action }}</span>
+                                                                        <span class="badge badge-danger me-2">
+                                                                            {{ $stock->action }}</span>
                                                                         @endif
                                                                         @if ($stock->duration == 'delivery')
-                                                                            <span class="badge badge-light ml-2">
-                                                                                Delivery</span>
+                                                                        <span class="badge badge-light ml-2">
+                                                                            Delivery</span>
                                                                         @else
-                                                                            <span class="badge badge-dark ml-1">
-                                                                                Intraday</span>
+                                                                        <span class="badge badge-dark ml-1">
+                                                                            Intraday</span>
                                                                         @endif
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
+                                                                            alt="" width=25 style="border-radius: 100%">
                                                                         <div class="ms-1">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
@@ -716,19 +603,23 @@
 
 
                                                                                 </h4>
-                                                                                <span
-                                                                                    id="stockChange1{{ $i }}"><?php 
+                                                                                <span id="stockChange1{{ $i }}">
+                                                                                    <?php 
                                                                                     $change = $stock->ltp - $stock->cp;
                                                                                     if($change > 0){
                                                                                         ?>
                                                                                     <span
                                                                                         class="text-success me-1">▲</span>
                                                                                     <span class="text-success"
-                                                                                        id="perc{{ $i }}"><?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
-                                                                                        &nbsp;</span>
+                                                                                        id="perc{{ $i }}">
+                                                                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
+                                                                                        &nbsp;
+                                                                                    </span>
                                                                                     <span class="text-success"
-                                                                                        id="perc{{ $i }}">(<?php echo number_format($change, 2); ?>
-                                                                                        pts) </span>
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
 
 
                                                                                     <?php 
@@ -737,11 +628,15 @@
                                                                                     <span
                                                                                         class="text-danger me-1">▼</span>
                                                                                     <span class="text-danger"
-                                                                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
+                                                                                        id="perc{{ $i }}">{{
+                                                                                        number_format(($change /
+                                                                                        $stock->cp) * 100, 2) }}%
                                                                                         &nbsp;</span>
                                                                                     <span class="text-danger"
-                                                                                        id="perc{{ $i }}">(<?php echo number_format($change, 2); ?>
-                                                                                        pts) </span>
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
 
                                                                                     <?php
                                                                                     }else{
@@ -756,12 +651,15 @@
                                                                                         pts) </span>
                                                                                     <?php 
                                                                                     }    
-                                                                                    ?></span>
+                                                                                    ?>
+                                                                                </span>
                                                                             </a>
                                                                             <div class="text-end"
                                                                                 style="position: absolute;top: 10px;right: 14px;">
                                                                                 <p class="text-muted mb-1 fs-13">
-                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                                    {{
+                                                                                    \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                                    }}
                                                                                 </p>
                                                                             </div>
 
@@ -815,15 +713,19 @@
                                                                                 <?php if ($change >= 0) { ?>
                                                                                 <span class="text-success">+ ₹
                                                                                     {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                    ({{ number_format($changePercentage,
+                                                                                    2) }}%)</span>
                                                                                 <?php } elseif ($change < 0) { ?>
                                                                                 <span class="text-danger">- ₹
                                                                                     {{ number_format(abs($change), 2) }}
-                                                                                    ({{ number_format(abs($changePercentage), 2) }}%)</span>
+                                                                                    ({{
+                                                                                    number_format(abs($changePercentage),
+                                                                                    2) }}%)</span>
                                                                                 <?php } else { ?>
                                                                                 <span class="text-warning"> ₹
                                                                                     {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                    ({{ number_format($changePercentage,
+                                                                                    2) }}%)</span>
                                                                                 <?php } ?>
                                                                             </p>
                                                                             <span class="fs-12">Lot :
@@ -903,8 +805,7 @@
                                                         ?>
 
                                                         <!--Top up Modal start-->
-                                                        <div class="modal fade"
-                                                            id="exampleModalCenter2{{ $i }}">
+                                                        <div class="modal fade" id="exampleModalCenter2{{ $i }}">
                                                             <div class="modal-dialog modal-dialog-centered"
                                                                 role="document">
                                                                 <div class="modal-content">
@@ -928,8 +829,7 @@
                                                                                     <a href="javascript:void(0)"
                                                                                         id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
+                                                                                            width="20" alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -942,8 +842,7 @@
                                                                                     <a href="javascript:void(0)"
                                                                                         id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
+                                                                                            width="20" alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -955,8 +854,7 @@
                                                                                     <a href="javascript:void(0)"
                                                                                         id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
+                                                                                            width="20" alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -995,25 +893,24 @@
                                                                     <p
                                                                         class="mb-0 fs-5 font-w500 d-flex align-items-center">
                                                                         @if ($stock->action == 'BUY')
-                                                                            <span class="badge badge-success me-2">
-                                                                                {{ $stock->action }}</span>
+                                                                        <span class="badge badge-success me-2">
+                                                                            {{ $stock->action }}</span>
                                                                         @else
-                                                                            <span class="badge badge-danger me-2">
-                                                                                {{ $stock->action }}</span>
+                                                                        <span class="badge badge-danger me-2">
+                                                                            {{ $stock->action }}</span>
                                                                         @endif
                                                                         @if ($stock->duration == 'delivery')
-                                                                            <span class="badge badge-light ml-2">
-                                                                                Delivery</span>
+                                                                        <span class="badge badge-light ml-2">
+                                                                            Delivery</span>
                                                                         @else
-                                                                            <span class="badge badge-dark ml-1">
-                                                                                Intraday</span>
+                                                                        <span class="badge badge-dark ml-1">
+                                                                            Intraday</span>
                                                                         @endif
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
+                                                                            alt="" width=25 style="border-radius: 100%">
                                                                         <div class="ms-1">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
@@ -1022,19 +919,23 @@
 
 
                                                                                 </h4>
-                                                                                <span
-                                                                                    id="stockChange2{{ $i }}"><?php 
+                                                                                <span id="stockChange2{{ $i }}">
+                                                                                    <?php 
                                                                                     $change = $stock->ltp - $stock->cp;
                                                                                     if($change > 0){
                                                                                         ?>
                                                                                     <span
                                                                                         class="text-success me-1">▲</span>
                                                                                     <span class="text-success"
-                                                                                        id="perc{{ $i }}"><?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
-                                                                                        &nbsp;</span>
+                                                                                        id="perc{{ $i }}">
+                                                                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
+                                                                                        &nbsp;
+                                                                                    </span>
                                                                                     <span class="text-success"
-                                                                                        id="perc{{ $i }}">(<?php echo number_format($change, 2); ?>
-                                                                                        pts) </span>
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
 
 
                                                                                     <?php 
@@ -1043,11 +944,15 @@
                                                                                     <span
                                                                                         class="text-danger me-1">▼</span>
                                                                                     <span class="text-danger"
-                                                                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
+                                                                                        id="perc{{ $i }}">{{
+                                                                                        number_format(($change /
+                                                                                        $stock->cp) * 100, 2) }}%
                                                                                         &nbsp;</span>
                                                                                     <span class="text-danger"
-                                                                                        id="perc{{ $i }}">(<?php echo number_format($change, 2); ?>
-                                                                                        pts) </span>
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
 
                                                                                     <?php
                                                                                     }else{
@@ -1062,12 +967,15 @@
                                                                                         pts) </span>
                                                                                     <?php 
                                                                                     }    
-                                                                                    ?></span>
+                                                                                    ?>
+                                                                                </span>
                                                                             </a>
                                                                             <div class="text-end"
                                                                                 style="position: absolute;top: 10px;right: 14px;">
                                                                                 <p class="text-muted mb-1 fs-13">
-                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                                    {{
+                                                                                    \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                                    }}
                                                                                 </p>
                                                                             </div>
 
@@ -1119,15 +1027,19 @@
                                                                                 <?php if ($change >= 0) { ?>
                                                                                 <span class="text-success">+ ₹
                                                                                     {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                    ({{ number_format($changePercentage,
+                                                                                    2) }}%)</span>
                                                                                 <?php } elseif ($change < 0) { ?>
                                                                                 <span class="text-danger">- ₹
                                                                                     {{ number_format(abs($change), 2) }}
-                                                                                    ({{ number_format(abs($changePercentage), 2) }}%)</span>
+                                                                                    ({{
+                                                                                    number_format(abs($changePercentage),
+                                                                                    2) }}%)</span>
                                                                                 <?php } else { ?>
                                                                                 <span class="text-warning"> ₹
                                                                                     {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                    ({{ number_format($changePercentage,
+                                                                                    2) }}%)</span>
                                                                                 <?php } ?>
                                                                             </p>
                                                                             <span class="fs-12">Lot :
@@ -1207,8 +1119,7 @@
                                                         ?>
 
                                                         <!--Top up Modal start-->
-                                                        <div class="modal fade"
-                                                            id="exampleModalCenter3{{ $i }}">
+                                                        <div class="modal fade" id="exampleModalCenter3{{ $i }}">
                                                             <div class="modal-dialog modal-dialog-centered"
                                                                 role="document">
                                                                 <div class="modal-content">
@@ -1233,8 +1144,7 @@
                                                                                     <a href="javascript:void(0)"
                                                                                         id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
+                                                                                            width="20" alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -1247,8 +1157,7 @@
                                                                                     <a href="javascript:void(0)"
                                                                                         id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
+                                                                                            width="20" alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -1260,8 +1169,7 @@
                                                                                     <a href="javascript:void(0)"
                                                                                         id="add_script">
                                                                                         <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
+                                                                                            width="20" alt="">
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
@@ -1304,26 +1212,22 @@
                                                                         <div class="card">
                                                                             <div class="card-header flex-wrap">
 
-                                                                                <nav class=""
-                                                                                    style="width: 100%;">
+                                                                                <nav class="" style="width: 100%;">
                                                                                     <div class="nav nav-pills light "
                                                                                         id="nav-tab" role="tablist">
-                                                                                        <button
-                                                                                            class="nav-link active "
+                                                                                        <button class="nav-link active "
                                                                                             style="width: 50%;"
                                                                                             id="nav-order-tab"
                                                                                             data-bs-toggle="tab"
                                                                                             data-bs-target="#nav-order{{ $i }}"
-                                                                                            type="button"
-                                                                                            role="tab"
+                                                                                            type="button" role="tab"
                                                                                             aria-selected="true">Buy</button>
                                                                                         <button class="nav-link"
                                                                                             style="width: 50%"
                                                                                             id="nav-histroy-tab"
                                                                                             data-bs-toggle="tab"
                                                                                             data-bs-target="#nav-history{{ $i }}"
-                                                                                            type="button"
-                                                                                            role="tab"
+                                                                                            type="button" role="tab"
                                                                                             aria-selected="false">Sell
                                                                                         </button>
 
@@ -1339,8 +1243,7 @@
                                                                                         aria-labelledby="nav-order-tab">
                                                                                         <div
                                                                                             class="table-responsive dataTabletrade">
-                                                                                            <form
-                                                                                                id="buyform{{ $i }}"
+                                                                                            <form id="buyform{{ $i }}"
                                                                                                 name="buyform{{ $i }}"
                                                                                                 method="POST"
                                                                                                 action="{{ route('placeBuyOrder') }}">
@@ -1348,8 +1251,7 @@
                                                                                                 <input type="text"
                                                                                                     name="id"
                                                                                                     value="{{ $i }}"
-                                                                                                    id="id"
-                                                                                                    hidden>
+                                                                                                    id="id" hidden>
                                                                                                 <input type="text"
                                                                                                     name="instrumentKey1{{ $i }}"
                                                                                                     value="{{ $foisin }}"
@@ -1362,8 +1264,7 @@
                                                                                                     hidden>
                                                                                                 <div class="col-xl-4"
                                                                                                     style="width: 100%;">
-                                                                                                    <div
-                                                                                                        class="card">
+                                                                                                    <div class="card">
                                                                                                         <div
                                                                                                             class="card-body pt-2">
                                                                                                             <div
@@ -1372,7 +1273,9 @@
                                                                                                                     class="small text-muted">Available
                                                                                                                     Balance</span>
                                                                                                                 <span
-                                                                                                                    class="text-dark">{{ $user->real_wallet }}</span>
+                                                                                                                    class="text-dark">{{
+                                                                                                                    $user->real_wallet
+                                                                                                                    }}</span>
                                                                                                             </div>
                                                                                                             <div
                                                                                                                 class="mb-3">
@@ -1476,7 +1379,9 @@
                                                                                                                         placeholder="Enter size"
                                                                                                                         id="quantity1{{ $i }}"
                                                                                                                         name="quantity1{{ $i }}"
-                                                                                                                        value={{ $quantity }}
+                                                                                                                        value={{
+                                                                                                                        $quantity
+                                                                                                                        }}
                                                                                                                         readonly>
                                                                                                                 </div>
                                                                                                             </div>
@@ -1528,7 +1433,7 @@
 
                                                                                                             <div
                                                                                                                 class="d-flex justify-content-between flex-wrap">
-                                                                                                             
+
                                                                                                                 <div
                                                                                                                     class="d-flex justify-content-between flex-wrap align-items-center">
                                                                                                                     <div
@@ -1556,7 +1461,9 @@
                                                                                                                     <div id="maxPrice1{{ $i }}"
                                                                                                                         name="maxPrice1{{ $i }}"
                                                                                                                         class=" px-1">
-                                                                                                                        ₹{{ $user->real_wallet }}
+                                                                                                                        ₹{{
+                                                                                                                        $user->real_wallet
+                                                                                                                        }}
                                                                                                                     </div>
 
 
@@ -1614,25 +1521,24 @@
                                                                     <p
                                                                         class="mb-0 fs-5 font-w500 d-flex align-items-center">
                                                                         @if ($stock->action == 'BUY')
-                                                                            <span class="badge badge-success me-2">
-                                                                                {{ $stock->action }}</span>
+                                                                        <span class="badge badge-success me-2">
+                                                                            {{ $stock->action }}</span>
                                                                         @else
-                                                                            <span class="badge badge-danger me-2">
-                                                                                {{ $stock->action }}</span>
+                                                                        <span class="badge badge-danger me-2">
+                                                                            {{ $stock->action }}</span>
                                                                         @endif
                                                                         @if ($stock->duration == 'delivery')
-                                                                            <span class="badge badge-light ml-2">
-                                                                                Delivery</span>
+                                                                        <span class="badge badge-light ml-2">
+                                                                            Delivery</span>
                                                                         @else
-                                                                            <span class="badge badge-dark ml-1">
-                                                                                Intraday</span>
+                                                                        <span class="badge badge-dark ml-1">
+                                                                            Intraday</span>
                                                                         @endif
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
+                                                                            alt="" width=25 style="border-radius: 100%">
                                                                         <div class="ms-1">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
@@ -1641,19 +1547,23 @@
 
 
                                                                                 </h4>
-                                                                                <span
-                                                                                    id="stockChange3{{ $i }}"><?php 
+                                                                                <span id="stockChange3{{ $i }}">
+                                                                                    <?php 
                                                                                     $change = $stock->ltp - $stock->cp;
                                                                                     if($change > 0){
                                                                                         ?>
                                                                                     <span
                                                                                         class="text-success me-1">▲</span>
                                                                                     <span class="text-success"
-                                                                                        id="perc{{ $i }}"><?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
-                                                                                        &nbsp;</span>
+                                                                                        id="perc{{ $i }}">
+                                                                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
+                                                                                        &nbsp;
+                                                                                    </span>
                                                                                     <span class="text-success"
-                                                                                        id="perc{{ $i }}">(<?php echo number_format($change, 2); ?>
-                                                                                        pts) </span>
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
 
 
                                                                                     <?php 
@@ -1662,11 +1572,15 @@
                                                                                     <span
                                                                                         class="text-danger me-1">▼</span>
                                                                                     <span class="text-danger"
-                                                                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
+                                                                                        id="perc{{ $i }}">{{
+                                                                                        number_format(($change /
+                                                                                        $stock->cp) * 100, 2) }}%
                                                                                         &nbsp;</span>
                                                                                     <span class="text-danger"
-                                                                                        id="perc{{ $i }}">(<?php echo number_format($change, 2); ?>
-                                                                                        pts) </span>
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
 
                                                                                     <?php
                                                                                     }else{
@@ -1681,12 +1595,15 @@
                                                                                         pts) </span>
                                                                                     <?php 
                                                                                     }    
-                                                                                    ?></span>
+                                                                                    ?>
+                                                                                </span>
                                                                             </a>
                                                                             <div class="text-end"
                                                                                 style="position: absolute;top: 10px;right: 14px;">
                                                                                 <p class="text-muted mb-1 fs-13">
-                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                                    {{
+                                                                                    \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                                    }}
                                                                                 </p>
                                                                             </div>
 
@@ -1738,15 +1655,19 @@
                                                                                 <?php if ($change >= 0) { ?>
                                                                                 <span class="text-success">+ ₹
                                                                                     {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                    ({{ number_format($changePercentage,
+                                                                                    2) }}%)</span>
                                                                                 <?php } elseif ($change < 0) { ?>
                                                                                 <span class="text-danger">- ₹
                                                                                     {{ number_format(abs($change), 2) }}
-                                                                                    ({{ number_format(abs($changePercentage), 2) }}%)</span>
+                                                                                    ({{
+                                                                                    number_format(abs($changePercentage),
+                                                                                    2) }}%)</span>
                                                                                 <?php } else { ?>
                                                                                 <span class="text-warning"> ₹
                                                                                     {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                    ({{ number_format($changePercentage,
+                                                                                    2) }}%)</span>
                                                                                 <?php } ?>
                                                                             </p>
                                                                             <span class="fs-12">Lot :
@@ -2026,7 +1947,7 @@
             });
 
             function showOrderForm(index) {
-            console.log("hi");
+            // console.log("hi");
 
             const offcanvasId = `orderoffcanvasBottom${index}`;
             const offcanvasElement = document.getElementById(offcanvasId);
@@ -2062,6 +1983,22 @@
     <script src="js/dlabnav-init.js"></script>
     {{-- <script src="js/demo.js"></script> --}}
 
+    <script>
+        function closeOrder(id){
+            // close using ajax 
+            $.ajax({
+                url: "{{ route('closeOrder') }}",
+                type: "POST",
+                data: {
+                    id: id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+        }
+    </script>
 
 
 </body>
