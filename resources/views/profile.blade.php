@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -135,7 +135,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-       <x-nav-header />
+        <x-nav-header />
         <!--**********************************
             Nav header end
         ***********************************-->
@@ -144,7 +144,7 @@
         <!--**********************************
             Header start
         ***********************************-->
-       <x-header />
+        <x-header />
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -164,7 +164,7 @@
 
         {{-- fetch login user detail --}}
         @php
-            $user = Auth::user();
+        $user = Auth::user();
         @endphp
 
 
@@ -172,73 +172,140 @@
 
         <div class="content-body">
             <div class="container-fluid">
+               
                 <div class="row">
-                    <div class="col-xxl-12">
-                        <div class="profile-card">
-                            <div class="card-header text-center">
-                                <h2 class="profile-title">User Profile</h2>
-                            </div>
+                    <div class="col-xl-12">
+                        <div class="card h-auto">
                             <div class="card-body">
-                                <div class="row profile-info">
-                                    <div class="col-md-6 mb-4">
-                                        <h5 class="section-title">Basic Information</h5>
-                                        <p>Name: <span class="badge bg-secondary">{{ $user['name'] }}</span></p>
-                                        <p>Username: <span class="badge bg-secondary">{{ $user['username'] }}</span>
-                                        </p>
-                                        <p>Email: <span class="badge bg-secondary">{{ $user['email'] }}</span></p>
-                                        <p>Account ID: <span class="badge bg-secondary">{{ $user['user_id'] }}</span>
-                                        </p>
+                                <div class="profile-personal-info">
+                                    <h4 class="text-primary mb-4 fs-2">Personal Information</h4>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Name <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $user->name }}</span>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 mb-4">
-                                        <h5 class="section-title">Account Status</h5>
-                                        <p>Account Created: <span
-                                                class="badge bg-secondary">{{ \Carbon\Carbon::parse($user['created_at'])->format('Y-m-d') }}</span>
-                                        </p>
-                                        <p>Last Updated: <span
-                                                class="badge bg-secondary">{{ \Carbon\Carbon::parse($user['updated_at'])->format('Y-m-d') }}</span>
-                                        </p>
-                                        <p>Account Type: <span
-                                                class="badge bg-secondary">{{ $user['is_dummy'] ? 'Demo' : 'Real' }}</span>
-                                        </p>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Email <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $user->email }}</span>
+                                        </div>
                                     </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Username <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $user->username }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Account ID <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $user->user_id }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 gap-4 d-flex flex align-items-start">
+                                        <button class="btn btn-primary" onclick="changePassword()">Change
+                                            Password</button>
+                                        <button class="btn btn-success" onclick="updateProfile()">Update
+                                            Profile</button>
+                                    </div>
+                                   
                                 </div>
                                 <hr>
-                                <div class="row profile-info">
-                                    <div class="col-md-6 mb-4">
-                                        <h5 class="section-title">Wallet Balances</h5>
-                                        <p>Demo Wallet Balance: <span class="badge bg-success">₹
-                                                {{ $user['demo_wallet'] }}</span></p>
-                                        <p>Real Wallet Balance: <span class="badge bg-success">₹
-                                                {{ $user['real_wallet'] }}</span></p>
-                                        <p>Withdrawable Balance: <span class="badge bg-success">₹
-                                                {{ $user['withdraw_wallet'] }}</span></p>
-                                    </div>
-                                    <div class="col-md-6 d-flex flex-column align-items-start">
-                                        <h5 class="section-title">Security & Update Status</h5>
-                                        <div class="col-md-12 gap-4 d-flex flex align-items-start">
-                                            <button class="btn btn-primary" onclick="changePassword()">Change
-                                                Password</button>
-                                            <button class="btn btn-success" onclick="updateProfile()">Update
-                                                Profile</button>
-                                        </div>
 
+                                <div class="account-status-info mt-4">
+                                    <h4 class="text-primary mb-4 fs-2">Account Status</h4>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Account Type <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $user->is_dummy ? "DEMO" : "REAL" }}</span>
+                                        </div>
                                     </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Account Created <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Last Updated <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ \Carbon\Carbon::parse($user->updated_at)->format('Y-m-d') }}</span>
+                                        </div>
+                                    </div>
+                                   
                                 </div>
+                                <hr>
+
+                                <div class="wallet-info mt-4">
+                                    <h4 class="text-primary mb-4 fs-2">Wallet Info</h4>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Demo Wallet <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>₹ {{ $user->demo_wallet }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Real Wallet <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>₹ {{ $user->real_wallet }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Withraw Wallet <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>₹ {{ $user->withdraw_wallet }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 gap-4 d-flex flex align-items-start">
+                                        <button class="btn btn-secondary" onclick="window.location.href='{{ route('deposit') }}'">
+                                            Deposit Fund</button>
+                                        <button class="btn btn-info" onclick="window.location.href='{{ route('withdraw') }}'">
+                                            Withdraw</button>
+                                    </div>   
+
+                                 
+                                   
+                                </div>
+                              
+
+
+                              
                             </div>
+
                         </div>
                     </div>
                 </div>
+              
             </div>
         </div>
         <!--**********************************
             Content body end
         ***********************************-->
-        {{-- laravel flash message  --}}
+        {{-- laravel flash message --}}
 
         @if (session('success'))
-            <script>
-                Swal.fire('Success', '{{ session('success') }}', 'success');
-            </script>
+        <script>
+            Swal.fire('Success', '{{ session('success') }}', 'success');
+        </script>
         @endif
 
 
@@ -404,7 +471,7 @@
     <!-- Chart piety plugin files -->
     <script src="vendor/peity/jquery.peity.min.js"></script>
     <script src="js/dashboard/trading-market.js"></script>
-    
+
 </body>
 
 <!-- Mirrored from jiade.dexignlab.com/xhtml/history.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:24 GMT -->

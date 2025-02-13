@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <?php
@@ -148,7 +148,7 @@ use App\Models\Stockdata;
         <!--**********************************
             Nav header start
         ***********************************-->
-       <x-nav-header />
+        <x-nav-header />
 
         <!--**********************************
             Nav header end
@@ -192,9 +192,9 @@ use App\Models\Stockdata;
                                         <button class="nav-link" id="nav-histroy-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-history" type="button" role="tab"
                                             aria-selected="false">Withdraw</button>
-                                        <button class="nav-link" id="nav-trade-tab" data-bs-toggle="tab"
+                                        {{-- <button class="nav-link" id="nav-trade-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-trade" type="button" role="tab"
-                                            aria-selected="false">Trade Histroy</button>
+                                            aria-selected="false">Trade Histroy</button> --}}
                                     </div>
                                 </nav>
 
@@ -203,100 +203,141 @@ use App\Models\Stockdata;
                                 <div class="tab-content" id="nav-tabContent">
                                     <div class="tab-pane fade show active" id="nav-order" role="tabpanel"
                                         aria-labelledby="nav-order-tab">
-                                        <div class="table-responsive dataTabletrade">
+                                        <div class="row">
                                             {{-- make a simpel card their we show some detail like order_id(tranaction
                                             id),amount ,status,remark,utr,created-at --}}
-                                            <?php
-                                            if($deposits == null){
-                                            ?>
-                                                <div class="alert alert-danger" role="alert">
-                                                    No Deposit Found
+                                            @if(empty($deposits))
+                                            <div class="alert alert-danger" role="alert">
+                                                No Deposit Found
+                                            </div>
+                                            @else
+                                            @foreach ($deposits as $deposit)
+                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                <div class="card pull-up"
+                                                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                    <div class="card-body align-items-center flex-wrap">
+                                                        <p class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                            @if ($deposit->status == 1)
+                                                            <span class="badge badge-success me-2">Success</span>
+                                                            @elseif($deposit->status == 0)
+                                                            <span class="badge badge-warning me-2">Pending</span>
+                                                            @else
+                                                            <span class="badge badge-danger me-2">Failed</span>
+                                                            @endif
+                                                        </p>
+                                                        <div class="d-flex align-items-center mb-4 mt-2">
+                                                            <p>#{{ $loop->iteration }}</p>
+                                                            <div class="ms-2">
+                                                                <a href="javascript:void(0)">
+                                                                    <h4 class="card-title mb-0"
+                                                                        style="font-size:1rem; ">
+                                                                        {{ $deposit->order_id }}
+                                                                    </h4>
+                                                                    <span>UTR: {{ ucfirst($deposit->utr) }}</span>
+                                                                </a>
+                                                                <div class="text-end"
+                                                                    style="position: absolute; top: 10px; right: 14px;">
+                                                                    <p class="text-muted mb-1 fs-13">
+                                                                        {{
+                                                                        \Carbon\Carbon::parse($deposit->created_at)->diffForHumans()
+                                                                        }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <div>
+                                                                <p
+                                                                    class="mb-0 fs-8 font-w500 d-flex align-items-center">
+                                                                    Amount : ₹{{ $deposit->amount }}
+                                                                </p>
+                                                                <p
+                                                                    class="mb-0 fs-8 font-w500 d-flex align-items-center">
+                                                                    Remark : {{ $deposit->remark }}
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            <?php
-                                            }else{
-                                            ?>
-                                            <table
-                                                class="example1 table table-responsive table-responsive-lg table-responsive-md table-responsive-sm table-responsive-xl table-center mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>S.N</th>
-                                                        <th>Order ID</th>
-                                                        <th>Amount</th>
-                                                        <th>UTR</th>
-                                                        <th>Remark</th>
-                                                        <th>Status</th>
-                                                        <th>Created At</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($deposits as $deposit)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $deposit->order_id }}</td>
-                                                            <td>{{ $deposit->amount }}</td>
-                                                            <td>{{ $deposit->utr }}</td>
-                                                            <td>{{ $deposit->remark }}</td>
-                                                            <td>
-                                                                @if ($deposit->status == 0)
-                                                                    <span class="badge badge-warning">Pending</span>
-                                                                @elseif($deposit->status == 1)
-                                                                    <span class="badge badge-success">Success</span>
-                                                                @else
-                                                                    <span class="badge badge-danger">Failed</span>
-                                                                @endif
-                                                            </td>
-                                                            <td>{{ $deposit->created_at }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                            <?php
-                                            }
-                                            ?>
+                                            </div>
+                                            @endforeach
+                                            @endif
 
 
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="nav-history" role="tabpanel">
-                                        <div class="table-responsive dataTabletrade">
-                                            {{-- --}}
+                                        <div class="row">
+                                            {{-- make a simpel card their we show some detail like order_id(tranaction
+                                            id),amount ,status,remark,utr,created-at --}}
+                                            @if(empty($withdraws))
+                                            <div class="alert alert-danger" role="alert">
+                                                No Deposit Found
+                                            </div>
+                                            @else
+                                            @foreach ($withdraws as $withdraw)
+                                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                <div class="card pull-up"
+                                                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                    <div class="card-body align-items-center flex-wrap">
+                                                        <p class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                            @if ($withdraw->status == 1)
+                                                            <span class="badge badge-success me-2">Success</span>
+                                                            @elseif($withdraw->status == 0)
+                                                            <span class="badge badge-warning me-2">Pending</span>
+                                                            @else
+                                                            <span class="badge badge-danger me-2">Failed</span>
+                                                            @endif
+                                                            @if ($withdraw->type == 'upi')
+                                                            <span class="badge badge-primary me-2">UPI</span>
+                                                            @elseif($withdraw->status == 'bank')
+                                                            <span class="badge badge-secondary me-2">BANK</span>
+                                                            @endif
+                                                         
 
-                                            <table
-                                                class="example1 table table-responsive table-responsive-lg table-responsive-md table-responsive-sm table-responsive-xl table-center mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>S.N</th>
-                                                        <th>Order ID</th>
-                                                        <th>Amount</th>
-                                                        <th>Type</th>
-                                                        <th>Remark</th>
-                                                        <th>Status</th>
-                                                        <th>Created At</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($withdraws as $withdraw)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $withdraw->txnid }}</td>
-                                                            <td>{{ $withdraw->amount }}</td>
-                                                            <td>{{ $withdraw->type }}</td>
-                                                            <td>{{ $withdraw->remark }}</td>
+                                                            
+                                                        </p>
+                                                        <div class="d-flex align-items-center mb-4 mt-2">
+                                                            <p class="mb-0">#{{ $loop->iteration }}</p>
+                                                            <div class="ms-2">
+                                                            
+                                                                    <h4 class="card-title mb-0"
+                                                                        style="font-size:1rem; ">
+                                                                        {{ $withdraw->txnid }}
+                                                                    </h4>
+                                                                    <span></span>
+                                                
+                                                                <div class="text-end"
+                                                                    style="position: absolute; top: 10px; right: 14px;">
+                                                                    <p class="text-muted mb-1 fs-13">
+                                                                        {{
+                                                                        \Carbon\Carbon::parse($withdraw->created_at)->diffForHumans()
+                                                                        }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <div>
+                                                                <p
+                                                                    class="mb-0 fs-8 font-w500 d-flex align-items-center">
+                                                                    Amount : ₹{{ $withdraw->amount }}
+                                                                </p>
+                                                                <p
+                                                                    class="mb-0 fs-8 font-w500 d-flex align-items-center">
+                                                                    Remark : {{ $withdraw->remark }}
+                                                                </p>
+                                                            </div>
 
-                                                            <td>
-                                                                @if ($withdraw->status == 0)
-                                                                    <span class="badge badge-warning">Processing</span>
-                                                                @elseif($withdraw->status == 1)
-                                                                    <span class="badge badge-success">Completed</span>
-                                                                @else
-                                                                    <span class="badge badge-danger">Failed</span>
-                                                                @endif
-                                                            </td>
-                                                            <td>{{ $withdraw->created_at }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                            @endif
+
+
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="nav-trade" role="tabpanel"
@@ -304,7 +345,8 @@ use App\Models\Stockdata;
                                         <div class="table-responsive dataTabletrade">
                                             {{-- --}}
 
-                                            {{-- <table class="table table-responsive table-responsive-lg table-responsive-md table-responsive-sm table-responsive-xl table-center mb-0">
+                                            {{-- <table
+                                                class="table table-responsive table-responsive-lg table-responsive-md table-responsive-sm table-responsive-xl table-center mb-0">
                                                 <thead>
                                                     <tr>
                                                         <th>Order ID</th>
@@ -317,14 +359,14 @@ use App\Models\Stockdata;
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($trades as $trade)
-                                                        <tr>
-                                                            <td>{{ $trade->order_id }}</td>
-                                                            <td>{{ $trade->amount }}</td>
-                                                            <td>{{ $trade->status }}</td>
-                                                            <td>{{ $trade->remark }}</td>
-                                                            <td>{{ $trade->utr }}</td>
-                                                            <td>{{ $trade->created_at }}</td>
-                                                        </tr>
+                                                    <tr>
+                                                        <td>{{ $trade->order_id }}</td>
+                                                        <td>{{ $trade->amount }}</td>
+                                                        <td>{{ $trade->status }}</td>
+                                                        <td>{{ $trade->remark }}</td>
+                                                        <td>{{ $trade->utr }}</td>
+                                                        <td>{{ $trade->created_at }}</td>
+                                                    </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table> --}}
