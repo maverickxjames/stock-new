@@ -1,5 +1,5 @@
 @php
-    $user = Auth::user();
+$user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -28,6 +28,8 @@
     <link href="vendor/bootstrap-datepicker-master/css/bootstrap-datepicker.min.css" rel="stylesheet"> --}}
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <!-- Style css -->
     {{--
     <link class="main-css" href="css/style.css" rel="stylesheet"> --}}
@@ -37,6 +39,31 @@
     <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
 
     <style>
+        #preload {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            /* Pure black background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+
+
+        .blink {
+            animation: blink-animation 1.5s infinite;
+        }
+
+        @keyframes blink-animation {
+            50% {
+                opacity: 0;
+            }
+        }
+
+
         .swal2-actions {
             gap: 10px;
         }
@@ -93,11 +120,8 @@
     <!--*******************
         Preloader start
     ********************-->
-    <div id="preloader">
-        <div class="lds-ripple">
-            <div></div>
-            <div></div>
-        </div>
+    <div id="preload">
+        <p style="color: white; font-size: 1.5rem;"></p>
     </div>
     <!--*******************
         Preloader end
@@ -186,14 +210,14 @@
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
                                         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab"
-                                            aria-controls="nav-all" aria-selected="true">All</button>
+                                            data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all"
+                                            aria-selected="true">All</button>
                                         <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-fut" type="button" role="tab"
-                                            aria-controls="nav-fut" aria-selected="false">Future</button>
+                                            data-bs-target="#nav-fut" type="button" role="tab" aria-controls="nav-fut"
+                                            aria-selected="false">Future</button>
                                         <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-opt" type="button" role="tab"
-                                            aria-controls="nav-opt" aria-selected="false">Option</button>
+                                            data-bs-target="#nav-opt" type="button" role="tab" aria-controls="nav-opt"
+                                            aria-selected="false">Option</button>
                                     </div>
                                 </nav>
                             </div>
@@ -219,20 +243,20 @@
                                                             trades.instrumentKey,
                                                             SUM(trades.quantity) as quantity,
                                                             AVG(trades.price) as avg_price,
-                                                            ANY_VALUE(trades.stock_name) as stock_name,
-                                                            ANY_VALUE(trades.stock_symbol) as stock_symbol,
-                                                            ANY_VALUE(trades.action) as action,
-                                                            ANY_VALUE(trades.tradeType) as tradeType,
-                                                            ANY_VALUE(trades.duration) as duration,
+                                                            MIN(trades.stock_name) as stock_name,
+                                                            MIN(trades.stock_symbol) as stock_symbol,
+                                                            MIN(trades.action) as action,
+                                                            MIN(trades.tradeType) as tradeType,
+                                                            MIN(trades.duration) as duration,
                                                             SUM(trades.total_cost) as total_cost,
                                                             SUM(trades.cost) as cost,
                                                             SUM(trades.lotSize) as lotSize,
-                                                            ANY_VALUE(trades.created_at) as created_at,
-                                                            ANY_VALUE(trades.tradeType) as tradeType,
-                                                            ANY_VALUE(future_temp.ltp) as ltp,
-                                                            ANY_VALUE(future_temp.cp) as cp,
-                                                            ANY_VALUE(trades.margin) as margin,
-                                                            ANY_VALUE(trades.price) as price
+                                                            MIN(trades.created_at) as created_at,
+                                                            MIN(trades.tradeType) as tradeType,
+                                                            MIN(future_temp.ltp) as ltp,
+                                                            MIN(future_temp.cp) as cp,
+                                                            MIN(trades.margin) as margin,
+                                                            MIN(trades.price) as price
 
                                                         ')
                                                         ->groupBy('trades.instrumentKey', 'trades.duration')
@@ -276,10 +300,11 @@
                                                                             $icon = '-';
                                                                         }
                                                                         ?>
-                                                                        <span
-                                                                            class="badge {{ $badgeClass }} me-1">{{ $icon }}</span>
+                                                                        <span class="badge {{ $badgeClass }} me-1">{{
+                                                                            $icon }}</span>
                                                                         <span class="{{ $textClass }}"
-                                                                            id="perc{{ $i }}">{{ $formattedPercentage }}%
+                                                                            id="perc{{ $i }}">{{ $formattedPercentage
+                                                                            }}%
                                                                             &nbsp;</span>
                                                                         <span class="{{ $textClass }}"
                                                                             id="perc{{ $i }}">({{ $formattedChange }}
@@ -298,20 +323,16 @@
                                                                     <div class="col-xl-12">
                                                                         <div class="card">
                                                                             <div class="card-header flex-wrap">
-                                                                                <!-- <div class="d-flex"> -->
 
-                                                                                <nav class=""
-                                                                                    style="width: 100%;">
+                                                                                <nav class="" style="width: 100%;">
                                                                                     <div class="nav nav-pills light "
                                                                                         id="nav-tab" role="tablist">
-                                                                                        <button
-                                                                                            class="nav-link active "
+                                                                                        <button class="nav-link active "
                                                                                             style="width: 100%;"
                                                                                             id="nav-order-tab"
                                                                                             data-bs-toggle="tab"
                                                                                             data-bs-target="#nav-order"
-                                                                                            type="button"
-                                                                                            role="tab"
+                                                                                            type="button" role="tab"
                                                                                             aria-selected="true">Close
                                                                                             Order</button>
                                                                                     </div>
@@ -321,10 +342,8 @@
                                                                             <div class="card-body pt-2">
                                                                                 <div
                                                                                     class="table-responsive dataTabletrade">
-                                                                                    <input type="text"
-                                                                                        name="id"
-                                                                                        value="{{ $i }}"
-                                                                                        id="id" hidden>
+                                                                                    <input type="text" name="id"
+                                                                                        value="{{ $i }}" id="id" hidden>
                                                                                     <input type="text"
                                                                                         name="instrumentKey1{{ $i }}"
                                                                                         value="{{ $foisin }}"
@@ -333,8 +352,7 @@
                                                                                     <div class="col-xl-4"
                                                                                         style="width: 100%;">
                                                                                         <div class="card">
-                                                                                            <div
-                                                                                                class="card-body pt-2">
+                                                                                            <div class="card-body pt-2">
                                                                                                 <?php
                                                                                                 // Determine margin based on trade type
                                                                                                 $margin = match ($stock->tradeType) {
@@ -380,12 +398,14 @@
                                                                                                 <div
                                                                                                     class="d-flex align-items-center mt-3 mb-2">
                                                                                                     <span
-                                                                                                        class="badge {{ $badgeClass }} me-2">{{ $icon }}</span>
+                                                                                                        class="badge {{ $badgeClass }} me-2">{{
+                                                                                                        $icon }}</span>
                                                                                                     <div
                                                                                                         class="d-flex flex-column">
                                                                                                         <h4 class="card-title mb-0"
                                                                                                             style="font-size:1rem; font-weight:900">
-                                                                                                            {{ $content }}
+                                                                                                            {{ $content
+                                                                                                            }}
                                                                                                         </h4>
                                                                                                         <div
                                                                                                             class="d-flex">
@@ -393,20 +413,35 @@
                                                                                                             <span
                                                                                                                 class="text-success">+
                                                                                                                 ₹
-                                                                                                                {{ number_format($change, 2) }}
-                                                                                                                ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                                                {{
+                                                                                                                number_format($change,
+                                                                                                                2) }}
+                                                                                                                ({{
+                                                                                                                number_format($changePercentage,
+                                                                                                                2)
+                                                                                                                }}%)</span>
                                                                                                             <?php } elseif ($change < 0) { ?>
                                                                                                             <span
                                                                                                                 class="text-danger">-
                                                                                                                 ₹
-                                                                                                                {{ number_format(abs($change), 2) }}
-                                                                                                                ({{ number_format(abs($changePercentage), 2) }}%)</span>
+                                                                                                                {{
+                                                                                                                number_format(abs($change),
+                                                                                                                2) }}
+                                                                                                                ({{
+                                                                                                                number_format(abs($changePercentage),
+                                                                                                                2)
+                                                                                                                }}%)</span>
                                                                                                             <?php } else { ?>
                                                                                                             <span
                                                                                                                 class="text-warning">
                                                                                                                 ₹
-                                                                                                                {{ number_format($change, 2) }}
-                                                                                                                ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                                                {{
+                                                                                                                number_format($change,
+                                                                                                                2) }}
+                                                                                                                ({{
+                                                                                                                number_format($changePercentage,
+                                                                                                                2)
+                                                                                                                }}%)</span>
                                                                                                             <?php } ?>
                                                                                                         </div>
                                                                                                     </div>
@@ -416,17 +451,43 @@
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-3 align-items-center justify-content-between">
 
+
+
                                                                                                     <p
-                                                                                                        class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
-                                                                                                        Current : ₹
-                                                                                                        {{ number_format($profitAmount, 2) }}
+                                                                                                        class="mb-0 w-100 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
+                                                                                                        Stock Cost : ₹
+                                                                                                        {{ $stock->cost
+                                                                                                        }}
                                                                                                     </p>
 
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+
 
                                                                                                     <p
-                                                                                                        class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
-                                                                                                        Invest : ₹
-                                                                                                        {{ $stock->total_cost }}
+                                                                                                        class="mb-0 w-100 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
+                                                                                                        Margin Used Cost
+                                                                                                        : ₹
+                                                                                                        {{
+                                                                                                        $stock->cost-$stock->total_cost
+                                                                                                        }}
+                                                                                                    </p>
+
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+
+
+
+
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
+                                                                                                        With Margin Cost
+                                                                                                        : ₹
+                                                                                                        {{
+                                                                                                        $stock->total_cost
+                                                                                                        }}
                                                                                                     </p>
 
                                                                                                 </div>
@@ -436,48 +497,40 @@
                                                                                                     <p
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
                                                                                                         Lot :
-                                                                                                        {{ $stock->lotSize }}
+                                                                                                        {{
+                                                                                                        $stock->lotSize
+                                                                                                        }}
                                                                                                     </p>
 
 
                                                                                                     <p
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
                                                                                                         Qty :
-                                                                                                        {{ $stock->quantity }}
+                                                                                                        {{
+                                                                                                        $stock->quantity
+                                                                                                        }}
                                                                                                     </p>
 
                                                                                                 </div>
-                                                                                                <div
-                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
 
-                                                                                                    <p
-                                                                                                        class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
-                                                                                                        Cost :
-                                                                                                        {{ $stock->total_cost }}
-                                                                                                    </p>
-
-
-                                                                                                    <p
-                                                                                                        class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
-                                                                                                        Real Cost :
-                                                                                                        {{ $stock->cost }}
-                                                                                                    </p>
-
-                                                                                                </div>
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-3 align-items-center justify-content-between">
 
                                                                                                     <p
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
                                                                                                         Margin Used:
-                                                                                                        {{ $stock->margin }}
+                                                                                                        {{
+                                                                                                        $stock->margin
+                                                                                                        }}
                                                                                                     </p>
 
 
                                                                                                     <p
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
                                                                                                         Qty :
-                                                                                                        {{ $stock->quantity }}
+                                                                                                        {{
+                                                                                                        $stock->quantity
+                                                                                                        }}
                                                                                                     </p>
 
                                                                                                 </div>
@@ -486,15 +539,17 @@
 
                                                                                                     <p
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
-                                                                                                        Executed At :
-                                                                                                        {{ $stock->price }}
+                                                                                                        Executed LTP :
+                                                                                                        {{ $stock->price
+                                                                                                        }}
                                                                                                     </p>
 
 
                                                                                                     <p
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
-                                                                                                        Qty :
-                                                                                                        {{ $stock->quantity }}
+                                                                                                        Current LTP :
+                                                                                                        {{ $stock->ltp
+                                                                                                        }}
                                                                                                     </p>
 
                                                                                                 </div>
@@ -504,15 +559,39 @@
                                                                                                     class="d-flex flex-column">
                                                                                                     <p
                                                                                                         class="mb-0 fs-14 text-dark font-w600">
-                                                                                                        Your Profit : ₹
-                                                                                                        {{ number_format($change, 2) }}
+                                                                                                        @if ($change >
+                                                                                                        0)
+                                                                                                        <span
+                                                                                                            class="text-success">+
+                                                                                                            Your Profit
+                                                                                                            : ₹
+                                                                                                            {{
+                                                                                                            number_format($change,
+                                                                                                            2) }}</span>
+                                                                                                        @elseif ($change
+                                                                                                        < 0) <span
+                                                                                                            class="text-danger">
+                                                                                                            - Your Loss
+                                                                                                            : ₹
+                                                                                                            {{
+                                                                                                            number_format($change,
+                                                                                                            2) }}</span>
+                                                                                                            @else
+                                                                                                            <span
+                                                                                                                class="text-warning">-</span>
+                                                                                                            @endif
+
                                                                                                     </p>
                                                                                                     <span
                                                                                                         class="fs-12">Lot
                                                                                                         :
-                                                                                                        {{ $stock->lotSize }}
+                                                                                                        {{
+                                                                                                        $stock->lotSize
+                                                                                                        }}
                                                                                                         [ Qty
-                                                                                                        {{ $stock->quantity }}]
+                                                                                                        {{
+                                                                                                        $stock->quantity
+                                                                                                        }}]
                                                                                                     </span>
 
                                                                                                 </div>
@@ -522,7 +601,7 @@
                                                                                                 <div
                                                                                                     class="mt-3 d-flex justify-content-between">
                                                                                                     <button
-                                                                                                        onclick="closeOrder('{{ $foisin }}', '{{ $stock->duration }}', '{{ $stock->action }}')"
+                                                                                                        onclick="closeOrder('{{ $foisin }}', '{{ $stock->duration }}', '{{ $stock->action }}',{{ $i }})"
                                                                                                         type="submit"
                                                                                                         class="btn btn-primary btn-sm text-uppercase btn-block">CLOSE</button>
                                                                                                 </div>
@@ -531,126 +610,123 @@
                                                                                     </div>
 
                                                                                 </div>
-                                                                                {{--
+                                                                                
                                                                             </div>
-                                                                        </div> --}}
-                                                                            </div>
-                                                                        </div>
-
+                                                                        {{-- </div> --}}
                                                                     </div>
                                                                 </div>
+
                                                             </div>
                                                         </div>
-                                                        <!-- column -->
-                                                        <p style="display: none" id="isin1{{ $i }}">
-                                                            {{ $foisin }}</p>
-                                                        <p style="display: none" id="invest1{{ $i }}">
-                                                            {{ $stock->total_cost }}</p>
-                                                        <p style="display: none" id="lotSize1{{ $i }}">
-                                                            {{ $stock->lotSize }}</p>
-                                                        <p style="display: none" id="quantity1{{ $i }}">
-                                                            {{ $stock->quantity }}</p>
-                                                        <p style="display: none" id="tradeType1{{ $i }}">
-                                                            {{ $stock->tradeType }}</p>
-                                                        <p style="display: none" id="action1{{ $i }}">
-                                                            {{ $stock->action }}</p>
+                                                    </div>
+                                                </div>
+                                                <!-- column -->
+                                                <p style="display: none" id="isin1{{ $i }}">
+                                                    {{ $foisin }}</p>
+                                                <p style="display: none" id="invest1{{ $i }}">
+                                                    {{ $stock->total_cost }}</p>
+                                                <p style="display: none" id="lotSize1{{ $i }}">
+                                                    {{ $stock->lotSize }}</p>
+                                                <p style="display: none" id="quantity1{{ $i }}">
+                                                    {{ $stock->quantity }}</p>
+                                                <p style="display: none" id="tradeType1{{ $i }}">
+                                                    {{ $stock->tradeType }}</p>
+                                                <p style="display: none" id="action1{{ $i }}">
+                                                    {{ $stock->action }}</p>
 
-                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
-                                                            data-bs-toggle="modal"
-                                                            onclick="showOrderForm({{ $i }})">
-                                                            <div class="card pull-up"
-                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                                <div class="card-body align-items-center flex-wrap">
-                                                                    <p
-                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
-                                                                        @if ($stock->action == 'BUY')
-                                                                            <span class="badge badge-success me-2">
-                                                                                {{ $stock->action }}</span>
-                                                                        @else
-                                                                            <span class="badge badge-danger me-2">
-                                                                                {{ $stock->action }}</span>
-                                                                        @endif
-                                                                        @if ($stock->duration == 'delivery')
-                                                                            <span class="badge badge-light ml-2">
-                                                                                Delivery</span>
-                                                                        @else
-                                                                            <span class="badge badge-dark ml-1">
-                                                                                Intraday</span>
-                                                                        @endif
-                                                                    </p>
-                                                                    <div class="d-flex align-items-center mb-4 mt-2">
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-bs-toggle="modal"
+                                                    onclick="showOrderForm({{ $i }})">
+                                                    <div class="card pull-up"
+                                                        style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                        <div class="card-body align-items-center flex-wrap">
+                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                @if ($stock->action == 'BUY')
+                                                                <span class="badge badge-success me-2">
+                                                                    {{ $stock->action }}</span>
+                                                                @else
+                                                                <span class="badge badge-danger me-2">
+                                                                    {{ $stock->action }}</span>
+                                                                @endif
+                                                                @if ($stock->duration == 'delivery')
+                                                                <span class="badge badge-light ml-2">
+                                                                    Delivery</span>
+                                                                @else
+                                                                <span class="badge badge-dark ml-1">
+                                                                    Intraday</span>
+                                                                @endif
+                                                            </p>
+                                                            <div class="d-flex align-items-center mb-4 mt-2">
 
-                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
-                                                                        <div class="ms-1">
-                                                                            <a href="javascript:void(0)">
-                                                                                <h4 class="card-title mb-0"
-                                                                                    style="font-size:1rem; font-weight:900">
-                                                                                    {{ $stock->stock_name }}
+                                                                <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                    alt="" width=25 style="border-radius: 100%">
+                                                                <div class="ms-1">
+                                                                    <a href="javascript:void(0)">
+                                                                        <h4 class="card-title mb-0"
+                                                                            style="font-size:1rem; font-weight:900">
+                                                                            {{ $stock->stock_name }}
 
 
-                                                                                </h4>
-                                                                                <span
-                                                                                    id="stockChange1{{ $i }}">
-                                                                                    <?php 
+                                                                        </h4>
+                                                                        <span id="stockChange1{{ $i }}">
+                                                                            <?php 
                                                                                     $change = $stock->ltp - $stock->cp;
                                                                                     if($change > 0){
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-success me-1">▲</span>
-                                                                                    <span class="text-success"
-                                                                                        id="perc{{ $i }}">
-                                                                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
-                                                                                        &nbsp;
-                                                                                    </span>
-                                                                                    <span class="text-success"
-                                                                                        id="perc{{ $i }}">(
-                                                                                        <?php echo number_format($change, 2); ?>
-                                                                                        pts)
-                                                                                    </span>
+                                                                            <span class="text-success me-1">▲</span>
+                                                                            <span class="text-success"
+                                                                                id="perc{{ $i }}">
+                                                                                <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
+                                                                                &nbsp;
+                                                                            </span>
+                                                                            <span class="text-success"
+                                                                                id="perc{{ $i }}">(
+                                                                                <?php echo number_format($change, 2); ?>
+                                                                                pts)
+                                                                            </span>
 
 
-                                                                                    <?php 
+                                                                            <?php 
                                                                                     }elseif($change < 0){
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-danger me-1">▼</span>
-                                                                                    <span class="text-danger"
-                                                                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
-                                                                                        &nbsp;</span>
-                                                                                    <span class="text-danger"
-                                                                                        id="perc{{ $i }}">(
-                                                                                        <?php echo number_format($change, 2); ?>
-                                                                                        pts)
-                                                                                    </span>
+                                                                            <span class="text-danger me-1">▼</span>
+                                                                            <span class="text-danger"
+                                                                                id="perc{{ $i }}">{{
+                                                                                number_format(($change / $stock->cp) *
+                                                                                100, 2) }}%
+                                                                                &nbsp;</span>
+                                                                            <span class="text-danger"
+                                                                                id="perc{{ $i }}">(
+                                                                                <?php echo number_format($change, 2); ?>
+                                                                                pts)
+                                                                            </span>
 
-                                                                                    <?php
+                                                                            <?php
                                                                                     }else{
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-warning me-1">-</span>
-                                                                                    <span class="text-warning"
-                                                                                        id="perc{{ $i }}">0.00%
-                                                                                        &nbsp;</span>
-                                                                                    <span class="text-warning"
-                                                                                        id="perc{{ $i }}">(0.00
-                                                                                        pts) </span>
-                                                                                    <?php 
+                                                                            <span class="text-warning me-1">-</span>
+                                                                            <span class="text-warning"
+                                                                                id="perc{{ $i }}">0.00%
+                                                                                &nbsp;</span>
+                                                                            <span class="text-warning"
+                                                                                id="perc{{ $i }}">(0.00
+                                                                                pts) </span>
+                                                                            <?php 
                                                                                     }    
                                                                                     ?>
-                                                                                </span>
-                                                                            </a>
-                                                                            <div class="text-end"
-                                                                                style="position: absolute;top: 10px;right: 14px;">
-                                                                                <p class="text-muted mb-1 fs-13">
-                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
+                                                                        </span>
+                                                                    </a>
+                                                                    <div class="text-end"
+                                                                        style="position: absolute;top: 10px;right: 14px;">
+                                                                        <p class="text-muted mb-1 fs-13">
+                                                                            {{
+                                                                            \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                            }}
+                                                                        </p>
                                                                     </div>
-                                                                    <?php
+
+                                                                </div>
+                                                            </div>
+                                                            <?php
                                                                     $margin = 1;
                                                                     if ($stock->tradeType == 'FUT') {
                                                                         $margin = 500;
@@ -660,9 +736,11 @@
                                                                         $margin = 1;
                                                                     }
                                                                     
-                                                                    $currentValue = ($stock->ltp * $stock->quantity) / $margin;
+                                                                    $currentValue = ($stock->ltp * $stock->quantity) ;
+                                                                    // $currentValue = ($stock->ltp * $stock->quantity) / $margin;
                                                                     
-                                                                    $investedValue = $stock->total_cost;
+                                                                    $investedValue = $stock->cost;
+                                                                    // $investedValue = $stock->total_cost;
                                                                     $change = $currentValue - $investedValue;
                                                                     
                                                                     if ($stock->action == 'SELL') {
@@ -674,49 +752,52 @@
                                                                     $profitAmount = $investedValue + $change;
                                                                     
                                                                     ?>
-                                                                    <div
-                                                                        class="d-flex align-items-center justify-content-between">
-                                                                        <div>
-                                                                            <p id="price1{{ $i }}"
-                                                                                class="mb-0 fs-14 text-dark font-w600">
-                                                                                Current : ₹
-                                                                                {{ number_format($profitAmount, 2) }}
-                                                                            </p>
-                                                                            <span class="fs-12">Invest : ₹
-                                                                                {{ $stock->total_cost }}</span>
-                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-between">
+                                                                <div>
+                                                                    <p id="price1{{ $i }}"
+                                                                        class="mb-0 fs-14 text-dark font-w600">
+                                                                        Current : ₹
+                                                                        {{ number_format($profitAmount, 2) }}
+                                                                    </p>
+                                                                    <span class="fs-12">Invest : ₹
+                                                                        {{ number_format($investedValue, 2) }}</span>
+                                                                    {{-- <span class="fs-12">Delivery</span>
                                                                     --}}
-                                                                        </div>
-                                                                        <div>
-                                                                            {{-- <p class="mb-0 fs-14 text-success font-w600">
+                                                                </div>
+                                                                <div>
+                                                                    {{-- <p class="mb-0 fs-14 text-success font-w600">
                                                                         ₹ 65/10%</P> --}}
-                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                                id="change1{{ $i }}">
-                                                                                <?php if ($change >= 0) { ?>
-                                                                                <span class="text-success">+ ₹
-                                                                                    {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                                <?php } elseif ($change < 0) { ?>
-                                                                                <span class="text-danger">- ₹
-                                                                                    {{ number_format(abs($change), 2) }}
-                                                                                    ({{ number_format(abs($changePercentage), 2) }}%)</span>
-                                                                                <?php } else { ?>
-                                                                                <span class="text-warning"> ₹
-                                                                                    {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                                <?php } ?>
-                                                                            </p>
-                                                                            <span class="fs-12">Lot :
-                                                                                {{ $stock->lotSize }} [ Qty
-                                                                                {{ $stock->quantity }}]
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
+                                                                    <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                        id="change1{{ $i }}">
+                                                                        <?php if ($change >= 0) { ?>
+                                                                        <span class="text-success">+ ₹
+                                                                            {{ number_format($change, 2) }}
+                                                                            ({{ number_format($changePercentage, 2)
+                                                                            }}%)</span>
+                                                                        <?php } elseif ($change < 0) { ?>
+                                                                        <span class="text-danger">- ₹
+                                                                            {{ number_format(abs($change), 2) }}
+                                                                            ({{ number_format(abs($changePercentage), 2)
+                                                                            }}%)</span>
+                                                                        <?php } else { ?>
+                                                                        <span class="text-warning"> ₹
+                                                                            {{ number_format($change, 2) }}
+                                                                            ({{ number_format($changePercentage, 2)
+                                                                            }}%)</span>
+                                                                        <?php } ?>
+                                                                    </p>
+                                                                    <span class="fs-12">Lot :
+                                                                        {{ $stock->lotSize }} [ Qty
+                                                                        {{ $stock->quantity }}]
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- /column -->
-                                                        <?php 
+                                                    </div>
+                                                </div>
+                                                <!-- /column -->
+                                                <?php 
                                                             $i++; 
                                                         }
                                                             
@@ -724,26 +805,25 @@
 
 
 
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade show" id="nav-fut" role="tabpanel"
-                                        aria-labelledby="nav-fut-tab">
-                                        <div class="tab-content" id="nav-tabContent3">
-                                            <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
-                                                <div class="d-flex align-items-center justify-content-between"
-                                                    style="margin-bottom: 20px">
-                                                    <h4 class="card-title">Stocks : Future</h4>
-                                                </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="nav-fut" role="tabpanel" aria-labelledby="nav-fut-tab">
+                                <div class="tab-content" id="nav-tabContent3">
+                                    <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
+                                        <div class="d-flex align-items-center justify-content-between"
+                                            style="margin-bottom: 20px">
+                                            <h4 class="card-title">Stocks : Future</h4>
+                                        </div>
 
 
-                                                <div class="col-xl-12">
-                                                    <!-- Row -->
-                                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <!-- Row -->
+                                            <div class="row">
 
-                                                        <?php
+                                                <?php
                                                        $trades = DB::table('trades')
                                                         ->where('trades.user_id', $user->id)
                                                         ->where('tradeType','FUT')
@@ -753,17 +833,17 @@
                                                             trades.instrumentKey,
                                                             SUM(trades.quantity) as quantity,
                                                             AVG(trades.price) as avg_price,
-                                                            ANY_VALUE(trades.stock_name) as stock_name,
-                                                            ANY_VALUE(trades.stock_symbol) as stock_symbol,
-                                                            ANY_VALUE(trades.action) as action,
-                                                            ANY_VALUE(trades.tradeType) as tradeType,
-                                                            ANY_VALUE(trades.duration) as duration,
+                                                            MIN(trades.stock_name) as stock_name,
+                                                            MIN(trades.stock_symbol) as stock_symbol,
+                                                            MIN(trades.action) as action,
+                                                            MIN(trades.tradeType) as tradeType,
+                                                            MIN(trades.duration) as duration,
                                                             SUM(trades.total_cost) as total_cost,
                                                             SUM(trades.lotSize) as lotSize,
-                                                            ANY_VALUE(trades.created_at) as created_at,
-                                                            ANY_VALUE(trades.tradeType) as tradeType,
-                                                            ANY_VALUE(future_temp.ltp) as ltp,
-                                                            ANY_VALUE(future_temp.cp) as cp
+                                                            MIN(trades.created_at) as created_at,
+                                                            MIN(trades.tradeType) as tradeType,
+                                                            MIN(future_temp.ltp) as ltp,
+                                                            MIN(future_temp.cp) as cp
                                                         ')
                                                         ->groupBy('trades.instrumentKey','trades.duration')
                                                         ->get();
@@ -782,186 +862,170 @@
 
                                                         ?>
 
-                                                        <!--Top up Modal start-->
-                                                        <div class="modal fade"
-                                                            id="exampleModalCenter2{{ $i }}">
-                                                            <div class="modal-dialog modal-dialog-centered"
-                                                                role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header"
-                                                                        style="padding-right: 1.875rem;padding-left: 10px;">
-                                                                        <h2 class="modal-title">
-                                                                            {{ $stock->stock_name }} </h2>
-                                                                        <button type="button" data-bs-dismiss="modal"
-                                                                            style="border: none">
-                                                                            <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
-                                                                                width="20" alt="">
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body p-0">
-                                                                        <div class="trade-container">
-                                                                            <div data-bs-dismiss="modal"
-                                                                                class="trade-item">
-                                                                                <h2>Exit Position</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="trade-item"
-                                                                                data-bs-dismiss="modal">
-                                                                                <h2>Details</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="trade-item"
-                                                                                data-bs-dismiss="modal">
-                                                                                <h2>Remove</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
+                                                <!--Top up Modal start-->
+                                                <div class="modal fade" id="exampleModalCenter2{{ $i }}">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header"
+                                                                style="padding-right: 1.875rem;padding-left: 10px;">
+                                                                <h2 class="modal-title">
+                                                                    {{ $stock->stock_name }} </h2>
+                                                                <button type="button" data-bs-dismiss="modal"
+                                                                    style="border: none">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                                        width="20" alt="">
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body p-0">
+                                                                <div class="trade-container">
+                                                                    <div data-bs-dismiss="modal" class="trade-item">
+                                                                        <h2>Exit Position</h2>
+                                                                        <div class="icon-box icon-box-sm bgl-primary">
+                                                                            <a href="javascript:void(0)"
+                                                                                id="add_script">
+                                                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                    width="20" alt="">
+                                                                            </a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn btn-danger light"
-                                                                            data-bs-dismiss="modal">Close</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-primary">Save
-                                                                            changes</button>
+
+                                                                    <div class="trade-item" data-bs-dismiss="modal">
+                                                                        <h2>Details</h2>
+                                                                        <div class="icon-box icon-box-sm bgl-primary">
+                                                                            <a href="javascript:void(0)"
+                                                                                id="add_script">
+                                                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                    width="20" alt="">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="trade-item" data-bs-dismiss="modal">
+                                                                        <h2>Remove</h2>
+                                                                        <div class="icon-box icon-box-sm bgl-primary">
+                                                                            <a href="javascript:void(0)"
+                                                                                id="add_script">
+                                                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                    width="20" alt="">
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger light"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save
+                                                                    changes</button>
+                                                            </div>
                                                         </div>
-                                                        <!--Top up Modal end-->
-                                                        <!-- column -->
-                                                        <p style="display: none" id="isin2{{ $i }}">
-                                                            {{ $foisin }}</p>
-                                                        <p style="display: none" id="invest2{{ $i }}">
-                                                            {{ $stock->total_cost }}</p>
-                                                        <p style="display: none" id="lotSize2{{ $i }}">
-                                                            {{ $stock->lotSize }}</p>
-                                                        <p style="display: none" id="quantity2{{ $i }}">
-                                                            {{ $stock->quantity }}</p>
-                                                        <p style="display: none" id="tradeType2{{ $i }}">
-                                                            {{ $stock->tradeType }}</p>
+                                                    </div>
+                                                </div>
+                                                <!--Top up Modal end-->
+                                                <!-- column -->
+                                                <p style="display: none" id="isin2{{ $i }}">
+                                                    {{ $foisin }}</p>
+                                                <p style="display: none" id="invest2{{ $i }}">
+                                                    {{ $stock->total_cost }}</p>
+                                                <p style="display: none" id="lotSize2{{ $i }}">
+                                                    {{ $stock->lotSize }}</p>
+                                                <p style="display: none" id="quantity2{{ $i }}">
+                                                    {{ $stock->quantity }}</p>
+                                                <p style="display: none" id="tradeType2{{ $i }}">
+                                                    {{ $stock->tradeType }}</p>
 
-                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModalCenter2{{ $i }}">
-                                                            <div class="card pull-up"
-                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                                <div class="card-body align-items-center flex-wrap">
-                                                                    <p
-                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
-                                                                        @if ($stock->action == 'BUY')
-                                                                            <span class="badge badge-success me-2">
-                                                                                {{ $stock->action }}</span>
-                                                                        @else
-                                                                            <span class="badge badge-danger me-2">
-                                                                                {{ $stock->action }}</span>
-                                                                        @endif
-                                                                        @if ($stock->duration == 'delivery')
-                                                                            <span class="badge badge-light ml-2">
-                                                                                Delivery</span>
-                                                                        @else
-                                                                            <span class="badge badge-dark ml-1">
-                                                                                Intraday</span>
-                                                                        @endif
-                                                                    </p>
-                                                                    <div class="d-flex align-items-center mb-4 mt-2">
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModalCenter2{{ $i }}">
+                                                    <div class="card pull-up"
+                                                        style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                        <div class="card-body align-items-center flex-wrap">
+                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                @if ($stock->action == 'BUY')
+                                                                <span class="badge badge-success me-2">
+                                                                    {{ $stock->action }}</span>
+                                                                @else
+                                                                <span class="badge badge-danger me-2">
+                                                                    {{ $stock->action }}</span>
+                                                                @endif
+                                                                @if ($stock->duration == 'delivery')
+                                                                <span class="badge badge-light ml-2">
+                                                                    Delivery</span>
+                                                                @else
+                                                                <span class="badge badge-dark ml-1">
+                                                                    Intraday</span>
+                                                                @endif
+                                                            </p>
+                                                            <div class="d-flex align-items-center mb-4 mt-2">
 
-                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
-                                                                        <div class="ms-1">
-                                                                            <a href="javascript:void(0)">
-                                                                                <h4 class="card-title mb-0"
-                                                                                    style="font-size:1rem; font-weight:900">
-                                                                                    {{ $stock->stock_name }}
+                                                                <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                    alt="" width=25 style="border-radius: 100%">
+                                                                <div class="ms-1">
+                                                                    <a href="javascript:void(0)">
+                                                                        <h4 class="card-title mb-0"
+                                                                            style="font-size:1rem; font-weight:900">
+                                                                            {{ $stock->stock_name }}
 
 
-                                                                                </h4>
-                                                                                <span
-                                                                                    id="stockChange2{{ $i }}">
-                                                                                    <?php 
+                                                                        </h4>
+                                                                        <span id="stockChange2{{ $i }}">
+                                                                            <?php 
                                                                                     $change = $stock->ltp - $stock->cp;
                                                                                     if($change > 0){
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-success me-1">▲</span>
-                                                                                    <span class="text-success"
-                                                                                        id="perc{{ $i }}">
-                                                                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
-                                                                                        &nbsp;
-                                                                                    </span>
-                                                                                    <span class="text-success"
-                                                                                        id="perc{{ $i }}">(
-                                                                                        <?php echo number_format($change, 2); ?>
-                                                                                        pts)
-                                                                                    </span>
+                                                                            <span class="text-success me-1">▲</span>
+                                                                            <span class="text-success"
+                                                                                id="perc{{ $i }}">
+                                                                                <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
+                                                                                &nbsp;
+                                                                            </span>
+                                                                            <span class="text-success"
+                                                                                id="perc{{ $i }}">(
+                                                                                <?php echo number_format($change, 2); ?>
+                                                                                pts)
+                                                                            </span>
 
 
-                                                                                    <?php 
+                                                                            <?php 
                                                                                     }elseif($change < 0){
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-danger me-1">▼</span>
-                                                                                    <span class="text-danger"
-                                                                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
-                                                                                        &nbsp;</span>
-                                                                                    <span class="text-danger"
-                                                                                        id="perc{{ $i }}">(
-                                                                                        <?php echo number_format($change, 2); ?>
-                                                                                        pts)
-                                                                                    </span>
+                                                                            <span class="text-danger me-1">▼</span>
+                                                                            <span class="text-danger"
+                                                                                id="perc{{ $i }}">{{
+                                                                                number_format(($change / $stock->cp) *
+                                                                                100, 2) }}%
+                                                                                &nbsp;</span>
+                                                                            <span class="text-danger"
+                                                                                id="perc{{ $i }}">(
+                                                                                <?php echo number_format($change, 2); ?>
+                                                                                pts)
+                                                                            </span>
 
-                                                                                    <?php
+                                                                            <?php
                                                                                     }else{
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-warning me-1">-</span>
-                                                                                    <span class="text-warning"
-                                                                                        id="perc{{ $i }}">0.00%
-                                                                                        &nbsp;</span>
-                                                                                    <span class="text-warning"
-                                                                                        id="perc{{ $i }}">(0.00
-                                                                                        pts) </span>
-                                                                                    <?php 
+                                                                            <span class="text-warning me-1">-</span>
+                                                                            <span class="text-warning"
+                                                                                id="perc{{ $i }}">0.00%
+                                                                                &nbsp;</span>
+                                                                            <span class="text-warning"
+                                                                                id="perc{{ $i }}">(0.00
+                                                                                pts) </span>
+                                                                            <?php 
                                                                                     }    
                                                                                     ?>
-                                                                                </span>
-                                                                            </a>
-                                                                            <div class="text-end"
-                                                                                style="position: absolute;top: 10px;right: 14px;">
-                                                                                <p class="text-muted mb-1 fs-13">
-                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
+                                                                        </span>
+                                                                    </a>
+                                                                    <div class="text-end"
+                                                                        style="position: absolute;top: 10px;right: 14px;">
+                                                                        <p class="text-muted mb-1 fs-13">
+                                                                            {{
+                                                                            \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                            }}
+                                                                        </p>
                                                                     </div>
-                                                                    <?php
+
+                                                                </div>
+                                                            </div>
+                                                            <?php
                                                                     $margin = 0;
                                                                     if ($stock->tradeType == 'FUT') {
                                                                         $margin = 500;
@@ -985,49 +1049,52 @@
                                                                     $profitAmount = $investedValue + $change;
                                                                     
                                                                     ?>
-                                                                    <div
-                                                                        class="d-flex align-items-center justify-content-between">
-                                                                        <div>
-                                                                            <p id="price2{{ $i }}"
-                                                                                class="mb-0 fs-14 text-dark font-w600">
-                                                                                Current : ₹
-                                                                                {{ number_format($profitAmount, 2) }}
-                                                                            </p>
-                                                                            <span class="fs-12">Invest : ₹
-                                                                                {{ $stock->total_cost }}</span>
-                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-between">
+                                                                <div>
+                                                                    <p id="price2{{ $i }}"
+                                                                        class="mb-0 fs-14 text-dark font-w600">
+                                                                        Current : ₹
+                                                                        {{ number_format($profitAmount, 2) }}
+                                                                    </p>
+                                                                    <span class="fs-12">Invest : ₹
+                                                                        {{ $stock->total_cost }}</span>
+                                                                    {{-- <span class="fs-12">Delivery</span>
                                                                     --}}
-                                                                        </div>
-                                                                        <div>
-                                                                            {{-- <p class="mb-0 fs-14 text-success font-w600">
+                                                                </div>
+                                                                <div>
+                                                                    {{-- <p class="mb-0 fs-14 text-success font-w600">
                                                                         ₹ 65/10%</P> --}}
-                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                                id="change2{{ $i }}">
-                                                                                <?php if ($change >= 0) { ?>
-                                                                                <span class="text-success">+ ₹
-                                                                                    {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                                <?php } elseif ($change < 0) { ?>
-                                                                                <span class="text-danger">- ₹
-                                                                                    {{ number_format(abs($change), 2) }}
-                                                                                    ({{ number_format(abs($changePercentage), 2) }}%)</span>
-                                                                                <?php } else { ?>
-                                                                                <span class="text-warning"> ₹
-                                                                                    {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                                <?php } ?>
-                                                                            </p>
-                                                                            <span class="fs-12">Lot :
-                                                                                {{ $stock->lotSize }} [ Qty
-                                                                                {{ $stock->quantity }}]
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
+                                                                    <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                        id="change2{{ $i }}">
+                                                                        <?php if ($change >= 0) { ?>
+                                                                        <span class="text-success">+ ₹
+                                                                            {{ number_format($change, 2) }}
+                                                                            ({{ number_format($changePercentage, 2)
+                                                                            }}%)</span>
+                                                                        <?php } elseif ($change < 0) { ?>
+                                                                        <span class="text-danger">- ₹
+                                                                            {{ number_format(abs($change), 2) }}
+                                                                            ({{ number_format(abs($changePercentage), 2)
+                                                                            }}%)</span>
+                                                                        <?php } else { ?>
+                                                                        <span class="text-warning"> ₹
+                                                                            {{ number_format($change, 2) }}
+                                                                            ({{ number_format($changePercentage, 2)
+                                                                            }}%)</span>
+                                                                        <?php } ?>
+                                                                    </p>
+                                                                    <span class="fs-12">Lot :
+                                                                        {{ $stock->lotSize }} [ Qty
+                                                                        {{ $stock->quantity }}]
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- /column -->
-                                                        <?php 
+                                                    </div>
+                                                </div>
+                                                <!-- /column -->
+                                                <?php 
                                                             $i++; 
                                                         }
                                                             
@@ -1035,25 +1102,24 @@
 
 
 
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade show" id="nav-opt" role="tabpanel"
-                                        aria-labelledby="nav-opt-tab">
-                                        <div class="tab-content" id="nav-tabContent3">
-                                            <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
-                                                <div class="d-flex align-items-center justify-content-between"
-                                                    style="margin-bottom: 20px">
-                                                    <h4 class="card-title">Stocks : Option</h4>
-                                                </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="nav-opt" role="tabpanel" aria-labelledby="nav-opt-tab">
+                                <div class="tab-content" id="nav-tabContent3">
+                                    <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
+                                        <div class="d-flex align-items-center justify-content-between"
+                                            style="margin-bottom: 20px">
+                                            <h4 class="card-title">Stocks : Option</h4>
+                                        </div>
 
-                                                <div class="col-xl-12">
-                                                    <!-- Row -->
-                                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <!-- Row -->
+                                            <div class="row">
 
-                                                        <?php
+                                                <?php
                                                        $trades = DB::table('trades')
                                                         ->where('trades.user_id', $user->id)
                                                         ->where('tradeType','CE')
@@ -1064,17 +1130,17 @@
                                                             trades.instrumentKey,
                                                             SUM(trades.quantity) as quantity,
                                                             AVG(trades.price) as avg_price,
-                                                            ANY_VALUE(trades.stock_name) as stock_name,
-                                                            ANY_VALUE(trades.stock_symbol) as stock_symbol,
-                                                            ANY_VALUE(trades.action) as action,
-                                                            ANY_VALUE(trades.tradeType) as tradeType,
-                                                            ANY_VALUE(trades.duration) as duration,
+                                                            MIN(trades.stock_name) as stock_name,
+                                                            MIN(trades.stock_symbol) as stock_symbol,
+                                                            MIN(trades.action) as action,
+                                                            MIN(trades.tradeType) as tradeType,
+                                                            MIN(trades.duration) as duration,
                                                             SUM(trades.total_cost) as total_cost,
                                                             SUM(trades.lotSize) as lotSize,
-                                                            ANY_VALUE(trades.created_at) as created_at,
-                                                            ANY_VALUE(trades.tradeType) as tradeType,
-                                                            ANY_VALUE(future_temp.ltp) as ltp,
-                                                            ANY_VALUE(future_temp.cp) as cp
+                                                            MIN(trades.created_at) as created_at,
+                                                            MIN(trades.tradeType) as tradeType,
+                                                            MIN(future_temp.ltp) as ltp,
+                                                            MIN(future_temp.cp) as cp
                                                         ')
                                                         ->groupBy('trades.instrumentKey','trades.duration')
                                                         ->get();
@@ -1093,84 +1159,72 @@
 
                                                         ?>
 
-                                                        <!--Top up Modal start-->
-                                                        <div class="modal fade"
-                                                            id="exampleModalCenter3{{ $i }}">
-                                                            <div class="modal-dialog modal-dialog-centered"
-                                                                role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header"
-                                                                        style="padding-right: 1.875rem;padding-left: 10px;">
-                                                                        <h2 class="modal-title">
-                                                                            {{ $stock->stock_name }} </h2>
-                                                                        <button type="button" data-bs-dismiss="modal"
-                                                                            style="border: none">
-                                                                            <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
-                                                                                width="20" alt="">
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body p-0">
-                                                                        <div class="trade-container">
-                                                                            <div data-bs-dismiss="modal"
-                                                                                onclick="showOrderForm({{ $i }})"
-                                                                                class="trade-item">
-                                                                                <h2>Exit Position</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="trade-item"
-                                                                                data-bs-dismiss="modal">
-                                                                                <h2>Details</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="trade-item"
-                                                                                data-bs-dismiss="modal">
-                                                                                <h2>Remove</h2>
-                                                                                <div
-                                                                                    class="icon-box icon-box-sm bgl-primary">
-                                                                                    <a href="javascript:void(0)"
-                                                                                        id="add_script">
-                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                            width="20"
-                                                                                            alt="">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
+                                                <!--Top up Modal start-->
+                                                <div class="modal fade" id="exampleModalCenter3{{ $i }}">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header"
+                                                                style="padding-right: 1.875rem;padding-left: 10px;">
+                                                                <h2 class="modal-title">
+                                                                    {{ $stock->stock_name }} </h2>
+                                                                <button type="button" data-bs-dismiss="modal"
+                                                                    style="border: none">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                                        width="20" alt="">
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body p-0">
+                                                                <div class="trade-container">
+                                                                    <div data-bs-dismiss="modal"
+                                                                        onclick="showOrderForm({{ $i }})"
+                                                                        class="trade-item">
+                                                                        <h2>Exit Position</h2>
+                                                                        <div class="icon-box icon-box-sm bgl-primary">
+                                                                            <a href="javascript:void(0)"
+                                                                                id="add_script">
+                                                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                    width="20" alt="">
+                                                                            </a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn btn-danger light"
-                                                                            data-bs-dismiss="modal">Close</button>
-                                                                        <button type="button"
-                                                                            class="btn btn-primary">Save
-                                                                            changes</button>
+
+                                                                    <div class="trade-item" data-bs-dismiss="modal">
+                                                                        <h2>Details</h2>
+                                                                        <div class="icon-box icon-box-sm bgl-primary">
+                                                                            <a href="javascript:void(0)"
+                                                                                id="add_script">
+                                                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                    width="20" alt="">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="trade-item" data-bs-dismiss="modal">
+                                                                        <h2>Remove</h2>
+                                                                        <div class="icon-box icon-box-sm bgl-primary">
+                                                                            <a href="javascript:void(0)"
+                                                                                id="add_script">
+                                                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                    width="20" alt="">
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger light"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save
+                                                                    changes</button>
+                                                            </div>
                                                         </div>
+                                                    </div>
+                                                </div>
 
 
-                                                        <!--Top up Modal end-->
+                                                <!--Top up Modal end-->
 
 
-                                                        {{-- <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                                                {{-- <div class="offcanvas offcanvas-bottom" tabindex="-1"
                                                     id="orderoffcanvasBottom{{ $i }}"
                                                     aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
                                                     <div class="offcanvas-header">
@@ -1471,114 +1525,111 @@
                                                         </div>
                                                     </div>
                                                 </div> --}}
-                                                        <!-- column -->
-                                                        <p style="display: none" id="isin3{{ $i }}">
-                                                            {{ $foisin }}</p>
-                                                        <p style="display: none" id="invest3{{ $i }}">
-                                                            {{ $stock->total_cost }}</p>
-                                                        <p style="display: none" id="lotSize3{{ $i }}">
-                                                            {{ $stock->lotSize }}</p>
-                                                        <p style="display: none" id="quantity3{{ $i }}">
-                                                            {{ $stock->quantity }}</p>
-                                                        <p style="display: none" id="tradeType3{{ $i }}">
-                                                            {{ $stock->tradeType }}</p>
+                                                <!-- column -->
+                                                <p style="display: none" id="isin3{{ $i }}">
+                                                    {{ $foisin }}</p>
+                                                <p style="display: none" id="invest3{{ $i }}">
+                                                    {{ $stock->total_cost }}</p>
+                                                <p style="display: none" id="lotSize3{{ $i }}">
+                                                    {{ $stock->lotSize }}</p>
+                                                <p style="display: none" id="quantity3{{ $i }}">
+                                                    {{ $stock->quantity }}</p>
+                                                <p style="display: none" id="tradeType3{{ $i }}">
+                                                    {{ $stock->tradeType }}</p>
 
-                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModalCenter3{{ $i }}">
-                                                            <div class="card pull-up"
-                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                                <div class="card-body align-items-center flex-wrap">
-                                                                    <p
-                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
-                                                                        @if ($stock->action == 'BUY')
-                                                                            <span class="badge badge-success me-2">
-                                                                                {{ $stock->action }}</span>
-                                                                        @else
-                                                                            <span class="badge badge-danger me-2">
-                                                                                {{ $stock->action }}</span>
-                                                                        @endif
-                                                                        @if ($stock->duration == 'delivery')
-                                                                            <span class="badge badge-light ml-2">
-                                                                                Delivery</span>
-                                                                        @else
-                                                                            <span class="badge badge-dark ml-1">
-                                                                                Intraday</span>
-                                                                        @endif
-                                                                    </p>
-                                                                    <div class="d-flex align-items-center mb-4 mt-2">
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModalCenter3{{ $i }}">
+                                                    <div class="card pull-up"
+                                                        style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                        <div class="card-body align-items-center flex-wrap">
+                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                @if ($stock->action == 'BUY')
+                                                                <span class="badge badge-success me-2">
+                                                                    {{ $stock->action }}</span>
+                                                                @else
+                                                                <span class="badge badge-danger me-2">
+                                                                    {{ $stock->action }}</span>
+                                                                @endif
+                                                                @if ($stock->duration == 'delivery')
+                                                                <span class="badge badge-light ml-2">
+                                                                    Delivery</span>
+                                                                @else
+                                                                <span class="badge badge-dark ml-1">
+                                                                    Intraday</span>
+                                                                @endif
+                                                            </p>
+                                                            <div class="d-flex align-items-center mb-4 mt-2">
 
-                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=25
-                                                                            style="border-radius: 100%">
-                                                                        <div class="ms-1">
-                                                                            <a href="javascript:void(0)">
-                                                                                <h4 class="card-title mb-0"
-                                                                                    style="font-size:1rem; font-weight:900">
-                                                                                    {{ $stock->stock_name }}
+                                                                <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                    alt="" width=25 style="border-radius: 100%">
+                                                                <div class="ms-1">
+                                                                    <a href="javascript:void(0)">
+                                                                        <h4 class="card-title mb-0"
+                                                                            style="font-size:1rem; font-weight:900">
+                                                                            {{ $stock->stock_name }}
 
 
-                                                                                </h4>
-                                                                                <span
-                                                                                    id="stockChange3{{ $i }}">
-                                                                                    <?php 
+                                                                        </h4>
+                                                                        <span id="stockChange3{{ $i }}">
+                                                                            <?php 
                                                                                     $change = $stock->ltp - $stock->cp;
                                                                                     if($change > 0){
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-success me-1">▲</span>
-                                                                                    <span class="text-success"
-                                                                                        id="perc{{ $i }}">
-                                                                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
-                                                                                        &nbsp;
-                                                                                    </span>
-                                                                                    <span class="text-success"
-                                                                                        id="perc{{ $i }}">(
-                                                                                        <?php echo number_format($change, 2); ?>
-                                                                                        pts)
-                                                                                    </span>
+                                                                            <span class="text-success me-1">▲</span>
+                                                                            <span class="text-success"
+                                                                                id="perc{{ $i }}">
+                                                                                <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
+                                                                                &nbsp;
+                                                                            </span>
+                                                                            <span class="text-success"
+                                                                                id="perc{{ $i }}">(
+                                                                                <?php echo number_format($change, 2); ?>
+                                                                                pts)
+                                                                            </span>
 
 
-                                                                                    <?php 
+                                                                            <?php 
                                                                                     }elseif($change < 0){
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-danger me-1">▼</span>
-                                                                                    <span class="text-danger"
-                                                                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
-                                                                                        &nbsp;</span>
-                                                                                    <span class="text-danger"
-                                                                                        id="perc{{ $i }}">(
-                                                                                        <?php echo number_format($change, 2); ?>
-                                                                                        pts)
-                                                                                    </span>
+                                                                            <span class="text-danger me-1">▼</span>
+                                                                            <span class="text-danger"
+                                                                                id="perc{{ $i }}">{{
+                                                                                number_format(($change / $stock->cp) *
+                                                                                100, 2) }}%
+                                                                                &nbsp;</span>
+                                                                            <span class="text-danger"
+                                                                                id="perc{{ $i }}">(
+                                                                                <?php echo number_format($change, 2); ?>
+                                                                                pts)
+                                                                            </span>
 
-                                                                                    <?php
+                                                                            <?php
                                                                                     }else{
                                                                                         ?>
-                                                                                    <span
-                                                                                        class="text-warning me-1">-</span>
-                                                                                    <span class="text-warning"
-                                                                                        id="perc{{ $i }}">0.00%
-                                                                                        &nbsp;</span>
-                                                                                    <span class="text-warning"
-                                                                                        id="perc{{ $i }}">(0.00
-                                                                                        pts) </span>
-                                                                                    <?php 
+                                                                            <span class="text-warning me-1">-</span>
+                                                                            <span class="text-warning"
+                                                                                id="perc{{ $i }}">0.00%
+                                                                                &nbsp;</span>
+                                                                            <span class="text-warning"
+                                                                                id="perc{{ $i }}">(0.00
+                                                                                pts) </span>
+                                                                            <?php 
                                                                                     }    
                                                                                     ?>
-                                                                                </span>
-                                                                            </a>
-                                                                            <div class="text-end"
-                                                                                style="position: absolute;top: 10px;right: 14px;">
-                                                                                <p class="text-muted mb-1 fs-13">
-                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
-                                                                                </p>
-                                                                            </div>
-
-                                                                        </div>
+                                                                        </span>
+                                                                    </a>
+                                                                    <div class="text-end"
+                                                                        style="position: absolute;top: 10px;right: 14px;">
+                                                                        <p class="text-muted mb-1 fs-13">
+                                                                            {{
+                                                                            \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
+                                                                            }}
+                                                                        </p>
                                                                     </div>
-                                                                    <?php
+
+                                                                </div>
+                                                            </div>
+                                                            <?php
                                                                     $margin = 0;
                                                                     if ($stock->tradeType == 'FUT') {
                                                                         $margin = 500;
@@ -1602,49 +1653,52 @@
                                                                     $profitAmount = $investedValue + $change;
                                                                     
                                                                     ?>
-                                                                    <div
-                                                                        class="d-flex align-items-center justify-content-between">
-                                                                        <div>
-                                                                            <p id="price3{{ $i }}"
-                                                                                class="mb-0 fs-14 text-dark font-w600">
-                                                                                Current : ₹
-                                                                                {{ number_format($profitAmount, 2) }}
-                                                                            </p>
-                                                                            <span class="fs-12">Invest : ₹
-                                                                                {{ $stock->total_cost }}</span>
-                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-between">
+                                                                <div>
+                                                                    <p id="price3{{ $i }}"
+                                                                        class="mb-0 fs-14 text-dark font-w600">
+                                                                        Current : ₹
+                                                                        {{ number_format($profitAmount, 2) }}
+                                                                    </p>
+                                                                    <span class="fs-12">Invest : ₹
+                                                                        {{ $stock->total_cost }}</span>
+                                                                    {{-- <span class="fs-12">Delivery</span>
                                                                     --}}
-                                                                        </div>
-                                                                        <div>
-                                                                            {{-- <p class="mb-0 fs-14 text-success font-w600">
+                                                                </div>
+                                                                <div>
+                                                                    {{-- <p class="mb-0 fs-14 text-success font-w600">
                                                                         ₹ 65/10%</P> --}}
-                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                                id="change2{{ $i }}">
-                                                                                <?php if ($change >= 0) { ?>
-                                                                                <span class="text-success">+ ₹
-                                                                                    {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                                <?php } elseif ($change < 0) { ?>
-                                                                                <span class="text-danger">- ₹
-                                                                                    {{ number_format(abs($change), 2) }}
-                                                                                    ({{ number_format(abs($changePercentage), 2) }}%)</span>
-                                                                                <?php } else { ?>
-                                                                                <span class="text-warning"> ₹
-                                                                                    {{ number_format($change, 2) }}
-                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                                <?php } ?>
-                                                                            </p>
-                                                                            <span class="fs-12">Lot :
-                                                                                {{ $stock->lotSize }} [ Qty
-                                                                                {{ $stock->quantity }}]
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
+                                                                    <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                        id="change2{{ $i }}">
+                                                                        <?php if ($change >= 0) { ?>
+                                                                        <span class="text-success">+ ₹
+                                                                            {{ number_format($change, 2) }}
+                                                                            ({{ number_format($changePercentage, 2)
+                                                                            }}%)</span>
+                                                                        <?php } elseif ($change < 0) { ?>
+                                                                        <span class="text-danger">- ₹
+                                                                            {{ number_format(abs($change), 2) }}
+                                                                            ({{ number_format(abs($changePercentage), 2)
+                                                                            }}%)</span>
+                                                                        <?php } else { ?>
+                                                                        <span class="text-warning"> ₹
+                                                                            {{ number_format($change, 2) }}
+                                                                            ({{ number_format($changePercentage, 2)
+                                                                            }}%)</span>
+                                                                        <?php } ?>
+                                                                    </p>
+                                                                    <span class="fs-12">Lot :
+                                                                        {{ $stock->lotSize }} [ Qty
+                                                                        {{ $stock->quantity }}]
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- /column -->
-                                                        <?php 
+                                                    </div>
+                                                </div>
+                                                <!-- /column -->
+                                                <?php 
                                                             $i++; 
                                                         }
                                                             
@@ -1652,8 +1706,6 @@
 
 
 
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1664,32 +1716,33 @@
                 </div>
             </div>
         </div>
-        <!--**********************************
+    </div>
+    </div>
+    <!--**********************************
             Content body end
         ***********************************-->
 
 
 
-        <!--**********************************
+    <!--**********************************
             Footer start
         ***********************************-->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/"
-                        target="_blank">DexignLab</a>
-                    <span class="current-year">2024</span>
-                </p>
-            </div>
+    <div class="footer">
+        <div class="copyright">
+            <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a>
+                <span class="current-year">2024</span>
+            </p>
         </div>
-        <!--**********************************
+    </div>
+    <!--**********************************
             Footer end
         ***********************************-->
 
-        <!--**********************************
+    <!--**********************************
            Support ticket button start
         ***********************************-->
 
-        <!--**********************************
+    <!--**********************************
            Support ticket button end
         ***********************************-->
 
@@ -1966,11 +2019,11 @@
     <script src="js/dlabnav-init.js"></script>
     {{-- <script src="js/demo.js"></script> --}}
 
-    {{-- swal fire cdn  --}}
+    {{-- swal fire cdn --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        function closeOrder(instrumentKey, duration, tradeType) {
+        function closeOrder(instrumentKey, duration, tradeType, id) {
 
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
@@ -1989,6 +2042,19 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
+
+                    const loadingToast = Toastify({
+                        text: "Processing your order...",
+                        duration: -1, // Keep it visible until manually closed
+                        gravity: "top",
+                        offset: {
+                            y: "90px" // Moves it 60px down from the top
+                        },
+                        position: "center",
+                        backgroundColor: "#3498db", // Blue for loading
+                    }).showToast();
+
+
                     $.ajax({
                         url: "{{ route('closeOrder') }}",
                         type: "POST",
@@ -1999,7 +2065,39 @@
                             _token: "{{ csrf_token() }}"
                         },
                         success: function(response) {
-                            console.log(response);
+                            loadingToast.hideToast();
+                            // response = JSON.parse(response);
+
+                            if(response.status == 'success'){
+                                Toastify({
+                                    text: "✅ Order Closed ",
+                                    duration: 1500,
+                                    gravity: "top",
+                                    offset: {
+                                        y: "90px" // Moves it 60px down from the top
+                                    },
+                                    position: "center",
+                                    backgroundColor: "#3ab67a",
+                                    callback: function() {
+                                        let offcanvas = document.getElementById(
+                                            `orderoffcanvasBottom${id}`
+                                        ); // Use ID to select offcanvas
+                                        let bsOffcanvas = bootstrap.Offcanvas.getInstance(
+                                            offcanvas);
+                                        bsOffcanvas.hide(); // Close the offcanvas
+
+                                        // Remove the backdrop after hiding the offcanvas
+                                        setTimeout(() => {
+                                            document.querySelectorAll('.offcanvas-backdrop')
+                                                .forEach(backdrop => {
+                                                    backdrop.remove();
+                                                });
+                                        }, 300);
+                                    }
+                                }).showToast();
+                            }
+                            
+
                         }
                     });
 
@@ -2013,7 +2111,7 @@
         }
     </script>
 
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
 
 <!-- Mirrored from jiade.dexignlab.com/xhtml/portofolio.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:17 GMT -->

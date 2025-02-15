@@ -37,91 +37,146 @@ class StockController extends Controller
         return view('stockview', ['id' => $id]);
     }
 
-    public function closeOrder(Request $request){
-       $instrumentKey = $request->instrumentKey;
-       $action = $request->tradeType;
-      
-       $duration = $request->duration;
-
-       $action = strtoupper($action);
-
-       $query = DB::table('trades')
-       ->where('instrumentKey', $instrumentKey)
-       ->where('action', $action) // Filtering using $tradeType variable
-       ->where('duration', $duration)
-       ->select(
-           'tradeType', // Database column name
-           'expiry',
-           'stock_symbol',
-           DB::raw("SUM(quantity) as total_quantity"),
-           DB::raw("SUM(quantity * price) as total_amount")
-       )
-       ->groupBy('tradeType','expiry','stock_symbol') // Grouping by tradeType column
-       ->get();
-       
-       $stock_symbol = $query[0]->stock_symbol;
-       $expiry = $query[0]->expiry;
-       $tradeType = $query[0]->tradeType;
-
-        $expiryParts = explode(' ', $expiry);
-        $formattedExpiry = $expiryParts[2] . strtoupper(substr($expiryParts[1], 0, 3));
-
-        // Concatenate symbol and formatted expiry
-        $formattedString = $stock_symbol . $formattedExpiry;
-
-
-        $parts = explode('|', $instrumentKey);
-        $segment = $parts[0]; // "NSE_FO"
-
-        $arrayAccess = $segment . ':' . $formattedString. '' . $tradeType;
+    public function closeOrder(Request $request) {
+        DB::beginTransaction();
+        try {
+            $instrumentKey = $request->instrumentKey;
+            $action = strtoupper($request->tradeType);
+            $duration = $request->duration;
     
-
-    //    get current ltp of the stock using upstock 
-
-    $url = "https://api.upstox.com/v2/market-quote/quotes?instrument_key=" . $instrumentKey;
-    $token = DB::table('upstocks')->where('id', 1)->first();
-    $token = $token->token;
-
-    // use $token as bearear token 
-
-    $response = Http::withHeaders([
-        'Authorization' => 'Bearer ' . $token,
-    ])->get($url);
-
-    $data = $response->json();
-
-    $ltp = $data['data'][$arrayAccess]['last_price'] ?? 0;
-
-    if($ltp == 0){
-        return response()->json(['error' => 'Unable to fetch LTP'], 500);
-    }
-
-    // Calculate the total amount
-    $totalAmount = $ltp * $query[0]->total_quantity;
-    $userAmount = $query[0]->total_amount;
+            // Fetch trade details
+            $query = DB::table('trades')
+                ->where('instrumentKey', $instrumentKey)
+                ->where('action', $action)
+                ->where('duration', $duration)
+                ->select(
+                    'tradeType',
+                    'expiry',
+                    'stock_symbol',
+                    DB::raw("SUM(quantity) as total_quantity"),
+                    DB::raw("SUM(quantity * price) as total_amount")
+                )
+                ->groupBy('tradeType', 'expiry', 'stock_symbol')
+                ->get();
     
-   
-    $profit = $loss = 0;
-
-    if ($action == 'BUY') {
-        $profit = max(0, $totalAmount - $userAmount);
-        $loss = max(0, $userAmount - $totalAmount);
-    } elseif ($action == 'SELL') {
-        $profit = max(0, $userAmount - $totalAmount);
-        $loss = max(0, $totalAmount - $userAmount);
-    }
+            if ($query->isEmpty()) {
+                DB::rollBack();
+                return response()->json(['error' => 'No trade found'], 404);
+            }
     
-    return response()->json([
-        'ltp' => $ltp,
-        'totalAmount' => $totalAmount,
-        'profit' => number_format($profit, 2),
-        'loss' => number_format($loss, 2),
-    ]);
+            $stock_symbol = $query[0]->stock_symbol;
+            $expiry = $query[0]->expiry;
+            $tradeType = $query[0]->tradeType;
     
+            $expiryParts = explode(' ', $expiry);
+            $formattedExpiry = $expiryParts[2] . strtoupper(substr($expiryParts[1], 0, 3));
+            $formattedString = $stock_symbol . $formattedExpiry;
+    
+            $parts = explode('|', $instrumentKey);
+            $segment = $parts[0];
+    
+            $arrayAccess = $segment . ':' . $formattedString . '' . $tradeType;
+    
+            // Fetch LTP from Upstox API
+            $url = "https://api.upstox.com/v2/market-quote/quotes?instrument_key=" . $instrumentKey;
+            $token = DB::table('upstocks')->where('id', 1)->value('token');
+    
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token,
+            ])->get($url);
+    
+            $data = $response->json();
+            $ltp = $data['data'][$arrayAccess]['last_price'] ?? 0;
+    
+            if ($ltp == 0) {
+                DB::rollBack();
+                return response()->json(['error' => 'Unable to fetch LTP'], 500);
+            }
+    
+            // Calculate Profit/Loss
+            $totalAmount = $ltp * $query[0]->total_quantity;
+            $userAmount = $query[0]->total_amount;
+            $profit = $loss = 0;
+    
+            if ($action == 'BUY') {
+                $profit = max(0, $totalAmount - $userAmount);
+                $loss = max(0, $userAmount - $totalAmount);
+            } elseif ($action == 'SELL') {
+                $profit = max(0, $userAmount - $totalAmount);
+                $loss = max(0, $totalAmount - $userAmount);
+            }
+    
+            // If profit, update user's wallet
+            if ($profit > 0) {
+                DB::table('users')->where('id', Auth::id())->increment('real_wallet', $profit);
 
+                DB::table('transactions')->insert([
+                    'user_id' => Auth::id(),
+                    'type' => 'credit',
+                    'amount' => $profit,
+                    'balance_after' => DB::table('users')->where('id', Auth::id())->value('real_wallet'),
+                    'description' => 'Profit from trade',
+                    'reference_id' => $instrumentKey,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
 
-      
-       return response()->json($query);
+                //update trades table 
+
+                DB::table('trades')
+                    ->where('instrumentKey', $instrumentKey)
+                    ->where('action', $action)
+                    ->where('duration', $duration)
+                    ->update([
+                        'status' => 'closed',
+                        'exit_price' => $ltp,
+                        'profit_loss' => $profit,
+                        'profit_loss_percentage' => ($profit / $userAmount) * 100,
+                    ]);
+            }elseif($loss > 0){
+                DB::table('users')->where('id', Auth::id())->decrement('real_wallet', $loss);
+
+                DB::table('transactions')->insert([
+                    'user_id' => Auth::id(),
+                    'type' => 'debit',
+                    'amount' => $loss,
+                    'balance_after' => DB::table('users')->where('id', Auth::id())->value('real_wallet'),
+                    'description' => 'Loss from trade',
+                    'reference_id' => $instrumentKey,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                //update trades table 
+
+                DB::table('trades')
+                    ->where('instrumentKey', $instrumentKey)
+                    ->where('action', $action)
+                    ->where('duration', $duration)
+                    ->update([
+                        'status' => 'closed',
+                        'exit_price' => $ltp,
+                        'profit_loss' => $loss,
+                        'profit_loss_percentage' => ($loss / $userAmount) * 100,
+                    ]);
+            }
+    
+            // Commit transaction
+            DB::commit();
+    
+            return response()->json([
+                'status' => 'success',
+                'ltp' => $ltp,
+                'totalAmount' => $totalAmount,
+                'profit' => number_format($profit, 2),
+                'loss' => number_format($loss, 2),
+                'message' => 'Order closed'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Transaction failed!', 'message' => $e->getMessage()], 500);
+        }
     }
 
 
