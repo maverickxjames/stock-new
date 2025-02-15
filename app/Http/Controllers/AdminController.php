@@ -229,8 +229,7 @@ class AdminController extends Controller
 
     public function tradeTxn(Request $request): View
     {
-        $trades = DB::table('trades')->get();
-        return view('admin.trades', ['trades' => $trades]);
+        return view('admin.trades');
     }
 
    

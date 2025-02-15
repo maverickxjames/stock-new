@@ -24,6 +24,8 @@ Route::middleware('guest')->group(function () {
 Route::get('future', [ScriptController::class, 'future']);
 Route::get('test', [ScriptController::class, 'test']);
 
+Route::get('allStocks', [ApiController::class, 'allStocks']);
+
 Route::get('/fetch-market-updates', [MarketDataController::class, 'fetchUpdates']);
 
 

@@ -112,6 +112,28 @@
         Main wrapper end
     ***********************************-->
 
+
+            <script src="{{ asset('js/app.js') }}"></script>
+
+            <script>
+                window.Pusher.logToConsole = true; // Enable Pusher logs
+
+console.log('Echo instance:', Echo); // Check if Echo is defined
+
+                Echo.channel('watchlists')
+                    .listen('Watchlist', (e) => {
+                        console.log(e);
+          
+                    });
+            </script>
+
+
+
+
+
+
+
+
         <!--**********************************
         Scripts
     ***********************************-->

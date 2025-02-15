@@ -98,7 +98,7 @@ use App\Models\User;
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Withdraw</h1>
+                            <h1 class="m-0">Trades Order History</h1>
                         </div>
                         <div class="col-sm-6"></div>
                     </div>
@@ -111,15 +111,16 @@ use App\Models\User;
                     <div class="card-header p-2">
                         <!-- Navigation Tabs -->
                         <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link active" href="#pending" data-toggle="tab">Pending</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#complete" data-toggle="tab">Complete</a></li>
+                            <li class="nav-item"><a class="nav-link active" href="#processing" data-toggle="tab">Processing</a></li>
+                            <li class="nav-item"><a class="nav-link " href="#pending" data-toggle="tab">Pending</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#complete" data-toggle="tab">Executed</a></li>
                             <li class="nav-item"><a class="nav-link" href="#failed" data-toggle="tab">Failed</a></li>
                         </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
                             <!-- User's Complete Transaction History -->
-                            <div class="active tab-pane" id="pending">
+                            <div class="active tab-pane" id="processing">
                                 <div class="card">
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
@@ -133,7 +134,9 @@ use App\Models\User;
                                                 <th>Duration</th>
                                                 <th>Lot</th>
                                                 <th>Quantity</th>
-                                                <th>Order Price</th>
+                                                <th>Cost</th>
+                                                <th>Order Cost</th>
+                                                <th>Margin Used</th>
                                                 <th>Expiry</th>
                                                 <th>Action</th>
                                                
@@ -141,7 +144,9 @@ use App\Models\User;
                                         </thead>
                                         <tbody>
                                             
-                                           
+                                           @php
+                                               $trades=DB::table('trades')->where('status', "processing")->get();
+                                           @endphp
                                             @foreach ($trades as $row)
                                                 @php
                                                     $user = User::where('id', $row->user_id)->first();
@@ -151,23 +156,79 @@ use App\Models\User;
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $user->user_id }}</td>
                                                     <td>{{ $row->created_at }}</td>
-                                                    {{-- <td>
-                                                        <a class="market-title d-flex align-items-center"
-                                                            href="javascript:void(0);">
-                                                            <div class="market-icon me-2">
-                                                                <img src="https://s3tv-symbol.dhan.co/symbols/{{ $row->stock_symbol }}.svg" alt="icon"
-                                                                    class="styled-logo">
-                                                            </div>
-                                                            {{ $row->stock_symbol }}
-                                                        </a>
-                                                    </td> --}}
                                                     <td>{{ $row->stock_symbol }}</td>
                                                     <td>{{ $row->order_type }}</td>
                                                     <td>{{ $row->action }}</td>
                                                     <td>{{ $row->duration }}</td>
                                                     <td>{{ $row->lotSize }}</td>
                                                     <td>{{ $row->quantity }}</td>
-                                                    <td>{{ $row->price }}</td>
+                                                    <td>₹{{ $row->cost }}</td>
+                                                    <td>₹{{ $row->total_cost }}</td>
+                                                    <td>₹{{ $row->margin }}</td>
+                                                    <td>{{ $row->expiry }}</td>
+                                                   
+                                                    <td>
+                                                        <form>
+                                                            @csrf
+                                                            <button onclick="addCost()" class="btn btn-success">Add Cost</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                        
+                                        </tbody>
+                                    </table>
+        
+                                </div>
+                            </div>
+        
+                            <!-- Deposit-Specific Transactions -->
+                            <div class="tab-pane" id="pending">
+                                <div class="card">
+                                    <table id="example2" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>USER ID</th>
+                                                <th>Date</th>
+                                                <th>Script</th>
+                                                <th>Order Type</th>
+                                                <th>Order Action</th>
+                                                <th>Duration</th>
+                                                <th>Lot</th>
+                                                <th>Quantity</th>
+                                                <th>Cost</th>
+                                                <th>Order Cost</th>
+                                                <th>Margin Used</th>
+                                                <th>Expiry</th>
+                                                <th>Action</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                           @php
+                                               $trades=DB::table('trades')->where('status', "pending")->get();
+                                           @endphp
+                                            @foreach ($trades as $row)
+                                                @php
+                                                    $user = User::where('id', $row->user_id)->first();
+                                                @endphp
+                                            
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $user->user_id }}</td>
+                                                    <td>{{ $row->created_at }}</td>
+                                                    <td>{{ $row->stock_symbol }}</td>
+                                                    <td>{{ $row->order_type }}</td>
+                                                    <td>{{ $row->action }}</td>
+                                                    <td>{{ $row->duration }}</td>
+                                                    <td>{{ $row->lotSize }}</td>
+                                                    <td>{{ $row->quantity }}</td>
+                                                    <td>₹{{ $row->cost }}</td>
+                                                    <td>₹{{ $row->total_cost }}</td>
+                                                    <td>{{ $row->margin }}</td>
                                                     <td>{{ $row->expiry }}</td>
                                                    
                                                     <td>
@@ -187,65 +248,6 @@ use App\Models\User;
                                 </div>
                             </div>
         
-                            <!-- Deposit-Specific Transactions -->
-                            <div class="tab-pane" id="complete">
-                                <div class="card">
-                                    <table id="example2" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Mobile No.</th>
-                                                <th>Order ID</th>
-                                                <th>Amount</th>
-                                                <th>Type</th>
-                                                <th>UPI</th>
-                                                <th>Remark</th> 
-                                                <th>Time</th>
-                                               
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody>
-                                            @php
-                                                $withdraw = Withdraw::where('status', 1)->orderBy('id', 'DESC')->get();
-                                    
-                                            @endphp
-                                           
-                                            @foreach ($withdraw as $row)
-                                                @php
-                                                    $user = User::where('id', $row->userid)->first();
-                                                @endphp
-                                            
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $user->user_id }}</td>
-                                                    <td>{{ $row->txnid }}</td>
-                                                    <td>{{ $row->amount }}</td>
-                                                    <td>{{ $row->type }}</td>
-                                                    <td>
-                                                        @php
-                                                            $paymentInfo = json_decode($row->payment_info, true); // Decode the JSON string into an array
-                                                        @endphp
-                                                    
-                                                        @if ($paymentInfo['is_upi'] && isset($paymentInfo['upi']))
-                                                            {{ $paymentInfo['upi'] }}
-                                                        @elseif ($paymentInfo['is_bank'] && isset($paymentInfo['bank']))
-                                                            {{ $paymentInfo['bank'] }}
-                                                        @else
-                                                            Not Available
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ $row->remark }}</td>
-                                                    <td>{{ $row->created_at }}</td>
-                                                    
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-        
-                                </div>
-                            </div>
-        
                             <!-- Withdrawal-Specific Transactions -->
                             <div class="tab-pane" id="failed">
                                 <div class="card">
@@ -253,49 +255,108 @@ use App\Models\User;
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Mobile No.</th>
-                                                <th>Order ID</th>
-                                                <th>Amount</th>
-                                                <th>Type</th>
-                                                <th>UPI</th>
-                                                <th>Remark</th> 
-                                                <th>Time</th>
+                                                <th>USER ID</th>
+                                                <th>Date</th>
+                                                <th>Script</th>
+                                                <th>Order Type</th>
+                                                <th>Order Action</th>
+                                                <th>Duration</th>
+                                                <th>Lot</th>
+                                                <th>Quantity</th>
+                                                <th>Cost</th>
+                                                <th>Order Cost</th>
+                                                <th>Margin Used</th>
+                                                <th>Expiry</th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php
-                                                $withdraw = Withdraw::where('status', 2)->orderBy('id', 'DESC')->get();
-                                    
-                                            @endphp
-                                           
-                                            @foreach ($withdraw as $row)
+                                            
+                                           @php
+                                               $trades=DB::table('trades')->where('status', "completed")->get();
+                                           @endphp
+                                            @foreach ($trades as $row)
                                                 @php
-                                                    $user = User::where('id', $row->userid)->first();
+                                                    $user = User::where('id', $row->user_id)->first();
                                                 @endphp
                                             
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $user->user_id }}</td>
-                                                    <td>{{ $row->txnid }}</td>
-                                                    <td>{{ $row->amount }}</td>
-                                                    <td>{{ $row->type }}</td>
-                                                    <td>
-                                                        @php
-                                                            $paymentInfo = json_decode($row->payment_info, true); // Decode the JSON string into an array
-                                                        @endphp
-                                                    
-                                                        @if ($paymentInfo['is_upi'] && isset($paymentInfo['upi']))
-                                                            {{ $paymentInfo['upi'] }}
-                                                        @elseif ($paymentInfo['is_bank'] && isset($paymentInfo['bank']))
-                                                            {{ $paymentInfo['bank'] }}
-                                                        @else
-                                                            Not Available
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ $row->remark }}</td>
                                                     <td>{{ $row->created_at }}</td>
+                                                    <td>{{ $row->stock_symbol }}</td>
+                                                    <td>{{ $row->order_type }}</td>
+                                                    <td>{{ $row->action }}</td>
+                                                    <td>{{ $row->duration }}</td>
+                                                    <td>{{ $row->lotSize }}</td>
+                                                    <td>{{ $row->quantity }}</td>
+                                                    <td>₹{{ $row->cost }}</td>
+                                                    <td>₹{{ $row->total_cost }}</td>
+                                                    <td>{{ $row->margin }}</td>
+                                                    <td>{{ $row->expiry }}</td>
+                                                   
+                                                  
                                                 </tr>
                                             @endforeach
+
+                                        
+                                        </tbody>
+                                    </table>
+        
+                                </div>
+                            </div>
+                            <!-- Withdrawal-Specific Transactions -->
+                            <div class="tab-pane" id="failed">
+                                <div class="card">
+                                    <table id="example4" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>USER ID</th>
+                                                <th>Date</th>
+                                                <th>Script</th>
+                                                <th>Order Type</th>
+                                                <th>Order Action</th>
+                                                <th>Duration</th>
+                                                <th>Lot</th>
+                                                <th>Quantity</th>
+                                                <th>Cost</th>
+                                                <th>Order Cost</th>
+                                                <th>Margin Used</th>
+                                                <th>Expiry</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                           @php
+                                               $trades=DB::table('trades')->where('status', "failed")->get();
+                                           @endphp
+                                            @foreach ($trades as $row)
+                                                @php
+                                                    $user = User::where('id', $row->user_id)->first();
+                                                @endphp
+                                            
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $user->user_id }}</td>
+                                                    <td>{{ $row->created_at }}</td>
+                                                    <td>{{ $row->stock_symbol }}</td>
+                                                    <td>{{ $row->order_type }}</td>
+                                                    <td>{{ $row->action }}</td>
+                                                    <td>{{ $row->duration }}</td>
+                                                    <td>{{ $row->lotSize }}</td>
+                                                    <td>{{ $row->quantity }}</td>
+                                                    <td>₹{{ $row->cost }}</td>
+                                                    <td>₹{{ $row->total_cost }}</td>
+                                                    <td>{{ $row->margin }}</td>
+                                                    <td>{{ $row->expiry }}</td>
+                                                   
+                                                
+                                                </tr>
+                                            @endforeach
+
+                                        
                                         </tbody>
                                     </table>
         
@@ -406,11 +467,8 @@ use App\Models\User;
 <script>
    
 
-    function withdrawApprove(txnid, r_type) {
-        const actionTitle = r_type === 'confirm' ? 'Approving Withdraw...' : 'Declining Withdraw...';
-        const actionMessage = r_type === 'confirm' ? 'Please wait while the withdraw is approved.' :
-            'Please wait while the withdraw is declined.';
-        // Approve request using AJAX and Swal.fire
+    function withdrawApprove(txnid) {
+     
         $.ajax({
             url: '{{ route('approve-withdraw') }}',
             type: 'POST',
@@ -419,12 +477,11 @@ use App\Models\User;
             },
             data: {
                 txnid: txnid,
-                r_type: r_type
             },
             beforeSend: function() {
                 Swal.fire({
-                    title: actionTitle,
-                    text: actionMessage,
+                    title: "info",
+                    text: "Wait a moment while we process your request",
                     allowOutsideClick: false,
                     didOpen: () => Swal.showLoading(),
                 });
@@ -434,14 +491,10 @@ use App\Models\User;
                 const response = data;
 
                 if (response === 'success') {
-                    const message = r_type === 'confirm' ?
-                        'Withdraw Approved Successfully' :
-                        'Withdraw Declined Successfully';
-
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
-                        text: message,
+                        text: "Done",
                     })
                 } else {
                     Swal.fire({

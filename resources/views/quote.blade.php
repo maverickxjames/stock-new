@@ -1426,17 +1426,18 @@ background: linear-gradient(90deg, rgba(21,76,160,1) 52%, rgba(0,212,255,1) 100%
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="{{ asset('js/app.js') }}"></script>
+ 
     <script src="vendor/apexchart/apexchart.js"></script>
     <!-- Chart piety plugin files -->
     <script src="vendor/peity/jquery.peity.min.js"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> --}}
-
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         Echo.channel('watchlists')
             .listen('Watchlist', (event) => {
+                console.log(event);
                 const feeds = event.watchlist.feeds;
-                // console.log(feeds);
+                
                 // Iterate through the received WebSocket data
                 for (const key in feeds) {
                     if (feeds.hasOwnProperty(key)) {
