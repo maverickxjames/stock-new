@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 // db facades 
 use Illuminate\Support\Facades\DB;
+use App\Models\trade;
 
 
 
@@ -37,8 +38,90 @@ class StockController extends Controller
     }
 
     public function closeOrder(Request $request){
-        $id = $request;
-        return $id;
+       $instrumentKey = $request->instrumentKey;
+       $action = $request->tradeType;
+      
+       $duration = $request->duration;
+
+       $action = strtoupper($action);
+
+       $query = DB::table('trades')
+       ->where('instrumentKey', $instrumentKey)
+       ->where('action', $action) // Filtering using $tradeType variable
+       ->where('duration', $duration)
+       ->select(
+           'tradeType', // Database column name
+           'expiry',
+           'stock_symbol',
+           DB::raw("SUM(quantity) as total_quantity"),
+           DB::raw("SUM(quantity * price) as total_amount")
+       )
+       ->groupBy('tradeType','expiry','stock_symbol') // Grouping by tradeType column
+       ->get();
+       
+       $stock_symbol = $query[0]->stock_symbol;
+       $expiry = $query[0]->expiry;
+       $tradeType = $query[0]->tradeType;
+
+        $expiryParts = explode(' ', $expiry);
+        $formattedExpiry = $expiryParts[2] . strtoupper(substr($expiryParts[1], 0, 3));
+
+        // Concatenate symbol and formatted expiry
+        $formattedString = $stock_symbol . $formattedExpiry;
+
+
+        $parts = explode('|', $instrumentKey);
+        $segment = $parts[0]; // "NSE_FO"
+
+        $arrayAccess = $segment . ':' . $formattedString. '' . $tradeType;
+    
+
+    //    get current ltp of the stock using upstock 
+
+    $url = "https://api.upstox.com/v2/market-quote/quotes?instrument_key=" . $instrumentKey;
+    $token = DB::table('upstocks')->where('id', 1)->first();
+    $token = $token->token;
+
+    // use $token as bearear token 
+
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . $token,
+    ])->get($url);
+
+    $data = $response->json();
+
+    $ltp = $data['data'][$arrayAccess]['last_price'] ?? 0;
+
+    if($ltp == 0){
+        return response()->json(['error' => 'Unable to fetch LTP'], 500);
+    }
+
+    // Calculate the total amount
+    $totalAmount = $ltp * $query[0]->total_quantity;
+    $userAmount = $query[0]->total_amount;
+    
+   
+    $profit = $loss = 0;
+
+    if ($action == 'BUY') {
+        $profit = max(0, $totalAmount - $userAmount);
+        $loss = max(0, $userAmount - $totalAmount);
+    } elseif ($action == 'SELL') {
+        $profit = max(0, $userAmount - $totalAmount);
+        $loss = max(0, $totalAmount - $userAmount);
+    }
+    
+    return response()->json([
+        'ltp' => $ltp,
+        'totalAmount' => $totalAmount,
+        'profit' => number_format($profit, 2),
+        'loss' => number_format($loss, 2),
+    ]);
+    
+
+
+      
+       return response()->json($query);
     }
 
 

@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class trade extends Model
 {
+    protected $table = 'trades';
     use HasFactory;
 }
