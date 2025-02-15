@@ -14,7 +14,7 @@ class TradeController extends Controller
 
     public function placeBuyOrder(Request $r)
     {
-
+        $orderId = "buy_".uniqid();
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
         $orderType = $r->orderType;
@@ -54,6 +54,7 @@ class TradeController extends Controller
                                     $trade = new trade();
                                     // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -91,6 +92,7 @@ class TradeController extends Controller
                                     $trade = new trade();
                                     // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -130,6 +132,7 @@ class TradeController extends Controller
                                     $trade = new trade();
                                     // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -167,6 +170,7 @@ class TradeController extends Controller
                                     $trade = new trade();
                                     // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -221,6 +225,7 @@ class TradeController extends Controller
                                     $trade = new trade();
                                     // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -258,6 +263,7 @@ class TradeController extends Controller
                                     $trade = new trade();
                                     // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -297,6 +303,7 @@ class TradeController extends Controller
                                     $trade = new trade();
                                     // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -334,6 +341,7 @@ class TradeController extends Controller
                                     $trade = new trade();
                                     // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -370,6 +378,7 @@ class TradeController extends Controller
 
     public function placeSellOrder(Request $r)
     {
+        $orderId = "sell_".uniqid();
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
         $orderType = $r->orderType;
@@ -405,6 +414,7 @@ class TradeController extends Controller
 
                                     $trade = new trade();
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -440,6 +450,7 @@ class TradeController extends Controller
 
                                     $trade = new trade();
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -477,6 +488,7 @@ class TradeController extends Controller
 
                                     $trade = new trade();
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;
@@ -512,6 +524,7 @@ class TradeController extends Controller
 
                                     $trade = new trade();
                                     $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
                                     $trade->stock_symbol = $stockData[0]->assetSymbol;
                                     $trade->stock_name = $stockData[0]->tradingSymbol;
                                     $trade->instrumentKey = $stockData[0]->instrumentKey;

@@ -37,7 +37,7 @@ class StockController extends Controller
     }
 
     public function closeOrder(Request $request){
-        $id = $request->id;
+        $id = $request;
         return $id;
     }
 

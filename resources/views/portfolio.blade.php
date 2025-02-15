@@ -37,6 +37,11 @@ $user = Auth::user();
     <link href="vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
 
     <style>
+
+        .swal2-actions{
+            gap: 10px;
+        }
+
         .trade-container {
             display: flex;
             flex-direction: column;
@@ -447,7 +452,7 @@ $user = Auth::user();
                                                                                                         </p>
                                                                                                     
                                                                                                 </div>
-                                                                                                {{-- <div class="d-flex gap-3 mb-5 align-items-center justify-content-between">
+                                                                                                <div class="d-flex gap-3 mb-5 align-items-center justify-content-between">
                                                                                                   
                                                                                                         <p class="mb-0 w-50 fs-14 text-dark font-w600 d-flex align-items-center px-3 py-2 bg-light">
                                                                                                             Executed At : 
@@ -460,7 +465,7 @@ $user = Auth::user();
                                                                                                             {{ $stock->quantity }}
                                                                                                         </p>
                                                                                                     
-                                                                                                </div> --}}
+                                                                                                </div>
 
 
                                                                                                    <div class="d-flex flex-column">
@@ -480,7 +485,7 @@ $user = Auth::user();
                                                                                                 <div
                                                                                                     class="mt-3 d-flex justify-content-between">
                                                                                                     <button
-                                                                                                        onclick="closeOrder({{ $i }})"
+                                                                                                        onclick="closeOrder('{{ $foisin }}', '{{ $stock->duration }}', '{{ $stock->action }}')"
                                                                                                         type="submit"
                                                                                                         class="btn btn-primary btn-sm text-uppercase btn-block">CLOSE</button>
                                                                                                 </div>
@@ -1883,20 +1888,50 @@ $user = Auth::user();
     <script src="js/dlabnav-init.js"></script>
     {{-- <script src="js/demo.js"></script> --}}
 
+    {{-- swal fire cdn  --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        function closeOrder(id){
-            // close using ajax 
-            $.ajax({
-                url: "{{ route('closeOrder') }}",
-                type: "POST",
-                data: {
-                    id: id,
-                    _token: "{{ csrf_token() }}"
+        function closeOrder(instrumentKey,duration,tradeType) {
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
                 },
-                success: function(response) {
-                    console.log(response);
-                }
-            });
+                buttonsStyling: false
+                });
+                swalWithBootstrapButtons.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, Close it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('closeOrder') }}",
+                        type: "POST",
+                        data: {
+                            instrumentKey: instrumentKey,
+                            duration: duration,
+                            tradeType: tradeType,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            console.log(response);
+                        }
+                    });
+
+
+
+
+                } 
+                });
+            // close using ajax 
+           
         }
     </script>
 
