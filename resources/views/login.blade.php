@@ -112,7 +112,7 @@
                                                 Password?</a>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-block btn-primary" name="submit">Sign
+                                    <button type="submit" id="submitBtn" class="btn btn-block btn-primary" name="submit">Sign
                                         In</button>
 
                                 </form>
@@ -134,7 +134,15 @@
 
 
     <?php include_once 'includes/footer.php'; ?>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#loginForm').on('submit', function(){
+                let btn = $('#submitBtn');
+                btn.text('Please Wait...').prop('disabled', true).fadeTo(500, 0.5);
+            });
+        });
+    </script>
 </body>
 
 <!-- Mirrored from jiade.dexignlab.com/xhtml/page-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:14 GMT -->
