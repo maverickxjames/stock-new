@@ -67,7 +67,7 @@
 			</div> --}}
         </div>
         <div
-            class="container flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
+            class="container flex-row-fluid d-flex flex-column position-relative overflow-hidden px-7 py-5 mx-auto">
             <div class="d-flex justify-content-center h-100 align-items-center">
                 <div class="authincation-content style-2">
                     <div class="row no-gutters">
