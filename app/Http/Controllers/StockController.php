@@ -37,6 +37,26 @@ class StockController extends Controller
         return view('stockview', ['id' => $id]);
     }
 
+    public function quoteRefresh(){
+        $userId = Auth::id();
+        $cacheKey = "user_{$userId}_watchlist";
+    
+        if (Cache::has($cacheKey)) {
+            Log::info("Data loaded from Redis for user: " . $userId);
+            $fetch = Cache::get($cacheKey);
+            // return response()->json(['source' => 'Redis', 'data' => $fetch]);
+        } else {
+            Log::info("Fetching data from database for user: " . $userId);
+            $fetch = DB::table('watchlist')->where('userid', $userId)->orderBy('id','DESC')->get()->toArray();
+            Cache::put($cacheKey, $fetch, now()->addMinutes(10));
+            // return response()->json(['source' => 'Database', 'data' => $fetch]);
+        }
+
+        return view('components.quotes', compact('fetch'));
+    }
+
+
+
     public function closeOrder(Request $request) {
         DB::beginTransaction();
         try {
@@ -555,7 +575,7 @@ class StockController extends Controller
             // return response()->json(['source' => 'Redis', 'data' => $fetch]);
         } else {
             Log::info("Fetching data from database for user: " . $userId);
-            $fetch = DB::table('watchlist')->where('userid', $userId)->get()->toArray();
+            $fetch = DB::table('watchlist')->where('userid', $userId)->orderBy('id','DESC')->get()->toArray();
             Cache::put($cacheKey, $fetch, now()->addMinutes(10));
             // return response()->json(['source' => 'Database', 'data' => $fetch]);
         }

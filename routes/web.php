@@ -12,6 +12,8 @@ use App\Http\Controllers\CronController;
 use App\Http\Controllers\MarketDataController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TradeController;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Http\Request;
 
 
 Route::middleware('guest')->group(function () {
@@ -126,6 +128,10 @@ Route::middleware('auth')->group(function () {
     Route::get('limitOrder', [StockController::class, 'limitOrder'])->name('limitOrder');
     Route::post('closeOrder', [StockController::class, 'closeOrder'])->name('closeOrder');
 
+    Route::get('quoteRefresh', [StockController::class, 'quoteRefresh'])->name('quoteRefresh');
+
+ 
+
     Route::get('ww', function(){
         return view('wallet');
     });
@@ -137,3 +143,5 @@ Route::get('/updatelotsize', [StockController::class, 'updateLotSize'])->name('u
 
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/channels.php';
+

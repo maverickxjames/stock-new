@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
+use App\Events\QuoteChannel;
 
 use Carbon\Carbon;
 
@@ -67,6 +68,9 @@ class WatchlistController extends Controller
         ]);
 
         if ($query) {
+            // quote-channel event trigger
+            event(new QuoteChannel(auth()->id(), 'add'));
+
             return response()->json([
                 'success' => true,
                 'message' => 'Script added successfully.',
@@ -102,6 +106,7 @@ class WatchlistController extends Controller
 
             if ($watchlist) {
                 $watchlist->delete();
+                event(new QuoteChannel(auth()->id(), 'remove'));
                 return response()->json([
                     'success' => true,
                     'message' => 'script removed successfully.',
