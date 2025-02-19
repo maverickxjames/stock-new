@@ -312,9 +312,14 @@
                                                                 </div>
 
 
-                                                                <button type="button" class="btn-close text-reset"
+                                                                {{-- <button type="button" class="btn-close text-reset"
                                                                     data-bs-dismiss="offcanvas"
-                                                                    aria-label="Close"></button>
+                                                                    aria-label="Close"></button> --}}
+
+                                                                <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
+                                                                    style="border: none">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt="">
+                                                                </button>
                                                             </div>
 
                                                             <div class="offcanvas-body small">
@@ -399,7 +404,7 @@
                                                                                                 }
                                                                                                 ?>
 
-                                                                                                <div
+                                                                                                <div id="changeStatus1{{ $i }}"
                                                                                                     class="d-flex align-items-center mt-3 mb-2">
                                                                                                     <span
                                                                                                         class="badge {{ $statusClass }} me-2">{{ $icon }}</span>
@@ -445,7 +450,7 @@
                                                                                                         align-items-center px-3 py-2 bg-light">
                                                                                                         Initial
                                                                                                         Investment:
-                                                                                                        ₹{{ $stock->cost }}
+                                                                                                        ₹ {{ number_format($stock->cost,2) }}
                                                                                                     </p>
                                                                                                 </div>
                                                                                                 <div
@@ -454,7 +459,7 @@
                                                                                                         class="mb-0 w-100 fs-14 text-dark font-w600 d-flex 
                                                                                                         align-items-center px-3 py-2 bg-light">
                                                                                                         Margin Utilized:
-                                                                                                        ₹{{ $stock->cost - $stock->total_cost }}
+                                                                                                        ₹ {{ number_format(($stock->cost - $stock->total_cost),2) }}
                                                                                                         ({{ $margin }}x)
                                                                                                     </p>
                                                                                                 </div>
@@ -466,7 +471,7 @@
                                                                                                             align-items-center px-3 py-2 bg-light">
                                                                                                         Adjusted
                                                                                                         Investment:
-                                                                                                        ₹{{ $stock->total_cost }}
+                                                                                                        ₹ {{ number_format($stock->total_cost,2) }}
                                                                                                     </p>
                                                                                                 </div>
                                                                                                 <!-- Lot & Quantity -->
@@ -482,25 +487,25 @@
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex 
                                                                                                         align-items-center px-3 py-2 bg-light">
                                                                                                         Quantity:
-                                                                                                        {{ $stock->quantity }}
+                                                                                                        {{ number_format($stock->quantity,2) }}
                                                                                                     </p>
                                                                                                 </div>
 
 
                                                                                                 <!-- Price Details -->
                                                                                                 <div
-                                                                                                    class="d-flex gap-3 mb-5 align-items-center justify-content-between">
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     <p
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex 
                                                                                                         align-items-center px-3 py-2 bg-light">
                                                                                                         Entry Price:
-                                                                                                        {{ $stock->price }}
+                                                                                                        {{ number_format($stock->price,2) }}
                                                                                                     </p>
                                                                                                     <p
                                                                                                         class="mb-0 w-50 fs-14 text-dark font-w600 d-flex 
-                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        align-items-center px-3 py-2 bg-light" id="marketPrice1{{ $i }}">
                                                                                                         Market Price:
-                                                                                                        {{ $stock->ltp }}
+                                                                                                        {{ number_format($stock->ltp,2) }}
                                                                                                     </p>
                                                                                                 </div>
 
@@ -508,36 +513,23 @@
                                                                                                 <!-- Profit/Loss -->
                                                                                                 <div
                                                                                                     class="d-flex flex-column">
-                                                                                                    @if ($change > 0)
-                                                                                                        <div
-                                                                                                            class="d-flex align-items-center">
-                                                                                                            <h4
-                                                                                                                class="mb-0 me-2">
-                                                                                                                Net
-                                                                                                                Gain:
-                                                                                                            </h4>
-                                                                                                            <span
-                                                                                                                class="text-success">₹{{ number_format($change, 2) }}</span>
-                                                                                                        </div>
-                                                                                                    @elseif($change < 0)
-                                                                                                        <div
-                                                                                                            class="d-flex align-items-center">
-                                                                                                            <h4
-                                                                                                                class="mb-0 me-2">
-                                                                                                                Net
-                                                                                                                Loss:
-                                                                                                            </h4>
-                                                                                                            <span
-                                                                                                                class="text-danger">₹{{ number_format($change, 2) }}</span>
-                                                                                                        </div>
+                                                                                                    <div
+                                                                                                    class="d-flex align-items-center">
+                                                                                                    <h4
+                                                                                                        class="mb-0 me-2 fw-bold">
+                                                                                                        You
+                                                                                                        Got:
+                                                                                                    </h4>
+                                                                                                    
+                                                                                                    <span class="text-dark fs-4 fw-bolder" id="gotPrice1{{ $i }}">₹ {{ number_format(($stock->cost+$change), 2) }}</span>
+                                                                                                    {{-- @if ($change > 0)
+                                                                                                    <span class="text-dark fs-4">₹ {{ number_format(($change+$stock->cost), 2) }}</span>
+                                                                                                    @elseif($change <= 0)
+                                                                                                    <span class="text-dark fs-4">₹ {{ number_format(($stock->cost+$change), 2) }}</span>
                                                                                                     @else
-                                                                                                        <div
-                                                                                                            class="text-center">
-                                                                                                            <span
-                                                                                                                class="text-warning">No
-                                                                                                                Change</span>
-                                                                                                        </div>
-                                                                                                    @endif
+                                                                                                    <span class="text-warning fs-4">No Change</span>
+                                                                                                    @endif --}}
+                                                                                                </div>
                                                                                                 </div>
 
 
@@ -576,7 +568,7 @@
                                                         <p style="display: none" id="isin1{{ $i }}">
                                                             {{ $foisin }}</p>
                                                         <p style="display: none" id="invest1{{ $i }}">
-                                                            {{ $stock->total_cost }}</p>
+                                                            {{ $stock->cost }}</p>
                                                         <p style="display: none" id="lotSize1{{ $i }}">
                                                             {{ $stock->lotSize }}</p>
                                                         <p style="display: none" id="quantity1{{ $i }}">
@@ -762,927 +754,927 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane fade show" id="nav-fut" role="tabpanel"
-                                    aria-labelledby="nav-fut-tab">
-                                    <div class="tab-content" id="nav-tabContent3">
-                                        <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
-                                            <div class="d-flex align-items-center justify-content-between"
-                                                style="margin-bottom: 20px">
-                                                <h4 class="card-title">Stocks : Future</h4>
-                                            </div>
+                                    <div class="tab-pane fade show" id="nav-fut" role="tabpanel"aria-labelledby="nav-fut-tab">
+                                        <div class="tab-content" id="nav-tabContent3">
+                                            <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    style="margin-bottom: 20px">
+                                                    <h4 class="card-title">Stocks : Future</h4>
+                                                </div>
 
 
-                                            <div class="col-xl-12">
-                                                <!-- Row -->
-                                                <div class="row">
+                                                <div class="col-xl-12">
+                                                    <!-- Row -->
+                                                    <div class="row">
 
-                                                    <?php
-                                                       $trades = DB::table('trades')
-                                                        ->where('trades.user_id', $user->id)
-                                                        ->where('tradeType','FUT')
-                                                        ->where('trades.status', 'processing')
-                                                        ->leftJoin('future_temp', 'future_temp.instrumentKey', '=', 'trades.instrumentKey') // Join future_temp table
-                                                        ->selectRaw('
-                                                            trades.instrumentKey,
-                                                            SUM(trades.quantity) as quantity,
-                                                            AVG(trades.price) as avg_price,
-                                                            MIN(trades.stock_name) as stock_name,
-                                                            MIN(trades.stock_symbol) as stock_symbol,
-                                                            MIN(trades.action) as action,
-                                                            MIN(trades.tradeType) as tradeType,
-                                                            MIN(trades.duration) as duration,
-                                                            SUM(trades.total_cost) as total_cost,
-                                                            SUM(trades.lotSize) as lotSize,
-                                                            MIN(trades.created_at) as created_at,
-                                                            MIN(trades.tradeType) as tradeType,
-                                                            MIN(future_temp.ltp) as ltp,
-                                                            MIN(future_temp.cp) as cp
-                                                        ')
-                                                        ->groupBy('trades.instrumentKey','trades.duration')
-                                                        ->get();
+                                                        <?php
+                                                        $trades = DB::table('trades')
+                                                            ->where('trades.user_id', $user->id)
+                                                            ->where('tradeType','FUT')
+                                                            ->where('trades.status', 'processing')
+                                                            ->leftJoin('future_temp', 'future_temp.instrumentKey', '=', 'trades.instrumentKey') // Join future_temp table
+                                                            ->selectRaw('
+                                                                trades.instrumentKey,
+                                                                SUM(trades.quantity) as quantity,
+                                                                AVG(trades.price) as avg_price,
+                                                                MIN(trades.stock_name) as stock_name,
+                                                                MIN(trades.stock_symbol) as stock_symbol,
+                                                                MIN(trades.action) as action,
+                                                                MIN(trades.tradeType) as tradeType,
+                                                                MIN(trades.duration) as duration,
+                                                                SUM(trades.total_cost) as total_cost,
+                                                                SUM(trades.lotSize) as lotSize,
+                                                                MIN(trades.created_at) as created_at,
+                                                                MIN(trades.tradeType) as tradeType,
+                                                                MIN(future_temp.ltp) as ltp,
+                                                                MIN(future_temp.cp) as cp
+                                                            ')
+                                                            ->groupBy('trades.instrumentKey','trades.duration')
+                                                            ->get();
 
 
 
-                                                        // print_r($trades);
-                                                        $i = 1;
-                                               
+                                                            // print_r($trades);
+                                                            $i = 1;
+                                                
 
-                                                        foreach ($trades as $stock){
-                                                            $foisin = $stock->instrumentKey;
+                                                            foreach ($trades as $stock){
+                                                                $foisin = $stock->instrumentKey;
 
-                                                         
                                                             
-
-                                                        ?>
-
-                                                    <!--Top up Modal start-->
-                                                    <div class="modal fade"
-                                                        id="exampleModalCenter2{{ $i }}">
-                                                        <div class="modal-dialog modal-dialog-centered"
-                                                            role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header"
-                                                                    style="padding-right: 1.875rem;padding-left: 10px;">
-                                                                    <h2 class="modal-title">
-                                                                        {{ $stock->stock_name }} </h2>
-                                                                    <button type="button" data-bs-dismiss="modal"
-                                                                        style="border: none">
-                                                                        <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
-                                                                            width="20" alt="">
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body p-0">
-                                                                    <div class="trade-container">
-                                                                        <div data-bs-dismiss="modal"
-                                                                            class="trade-item">
-                                                                            <h2>Exit Position</h2>
-                                                                            <div
-                                                                                class="icon-box icon-box-sm bgl-primary">
-                                                                                <a href="javascript:void(0)"
-                                                                                    id="add_script">
-                                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                        width="20" alt="">
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="trade-item"
-                                                                            data-bs-dismiss="modal">
-                                                                            <h2>Details</h2>
-                                                                            <div
-                                                                                class="icon-box icon-box-sm bgl-primary">
-                                                                                <a href="javascript:void(0)"
-                                                                                    id="add_script">
-                                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                        width="20" alt="">
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="trade-item"
-                                                                            data-bs-dismiss="modal">
-                                                                            <h2>Remove</h2>
-                                                                            <div
-                                                                                class="icon-box icon-box-sm bgl-primary">
-                                                                                <a href="javascript:void(0)"
-                                                                                    id="add_script">
-                                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                        width="20" alt="">
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button"
-                                                                        class="btn btn-danger light"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-primary">Save
-                                                                        changes</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--Top up Modal end-->
-                                                    <!-- column -->
-                                                    <p style="display: none" id="isin2{{ $i }}">
-                                                        {{ $foisin }}</p>
-                                                    <p style="display: none" id="invest2{{ $i }}">
-                                                        {{ $stock->total_cost }}</p>
-                                                    <p style="display: none" id="lotSize2{{ $i }}">
-                                                        {{ $stock->lotSize }}</p>
-                                                    <p style="display: none" id="quantity2{{ $i }}">
-                                                        {{ $stock->quantity }}</p>
-                                                    <p style="display: none" id="tradeType2{{ $i }}">
-                                                        {{ $stock->tradeType }}</p>
-
-                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModalCenter2{{ $i }}">
-                                                        <div class="card pull-up"
-                                                            style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                            <div class="card-body align-items-center flex-wrap">
-                                                                <p
-                                                                    class="mb-0 fs-5 font-w500 d-flex align-items-center">
-                                                                    @if ($stock->action == 'BUY')
-                                                                        <span class="badge badge-success me-2">
-                                                                            {{ $stock->action }}</span>
-                                                                    @else
-                                                                        <span class="badge badge-danger me-2">
-                                                                            {{ $stock->action }}</span>
-                                                                    @endif
-                                                                    @if ($stock->duration == 'delivery')
-                                                                        <span class="badge badge-light ml-2">
-                                                                            Delivery</span>
-                                                                    @else
-                                                                        <span class="badge badge-dark ml-1">
-                                                                            Intraday</span>
-                                                                    @endif
-                                                                </p>
-                                                                <div class="d-flex align-items-center mb-4 mt-2">
-
-                                                                    <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                        alt="" width=25
-                                                                        style="border-radius: 100%">
-                                                                    <div class="ms-1">
-                                                                        <a href="javascript:void(0)">
-                                                                            <h4 class="card-title mb-0"
-                                                                                style="font-size:1rem; font-weight:900">
-                                                                                {{ $stock->stock_name }}
-
-
-                                                                            </h4>
-                                                                            <span
-                                                                                id="stockChange2{{ $i }}">
-                                                                                <?php 
-                                                                                    $change = $stock->ltp - $stock->cp;
-                                                                                    if($change > 0){
-                                                                                        ?>
-                                                                                <span
-                                                                                    class="text-success me-1">▲</span>
-                                                                                <span class="text-success"
-                                                                                    id="perc{{ $i }}">
-                                                                                    <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
-                                                                                    &nbsp;
-                                                                                </span>
-                                                                                <span class="text-success"
-                                                                                    id="perc{{ $i }}">(
-                                                                                    <?php echo number_format($change, 2); ?>
-                                                                                    pts)
-                                                                                </span>
-
-
-                                                                                <?php 
-                                                                                    }elseif($change < 0){
-                                                                                        ?>
-                                                                                <span class="text-danger me-1">▼</span>
-                                                                                <span class="text-danger"
-                                                                                    id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
-                                                                                    &nbsp;</span>
-                                                                                <span class="text-danger"
-                                                                                    id="perc{{ $i }}">(
-                                                                                    <?php echo number_format($change, 2); ?>
-                                                                                    pts)
-                                                                                </span>
-
-                                                                                <?php
-                                                                                    }else{
-                                                                                        ?>
-                                                                                <span
-                                                                                    class="text-warning me-1">-</span>
-                                                                                <span class="text-warning"
-                                                                                    id="perc{{ $i }}">0.00%
-                                                                                    &nbsp;</span>
-                                                                                <span class="text-warning"
-                                                                                    id="perc{{ $i }}">(0.00
-                                                                                    pts) </span>
-                                                                                <?php 
-                                                                                    }    
-                                                                                    ?>
-                                                                            </span>
-                                                                        </a>
-                                                                        <div class="text-end"
-                                                                            style="position: absolute;top: 10px;right: 14px;">
-                                                                            <p class="text-muted mb-1 fs-13">
-                                                                                {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
-                                                                            </p>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <?php
-                                                                $margin = 0;
-                                                                if ($stock->tradeType == 'FUT') {
-                                                                    $margin = 500;
-                                                                } elseif ($stock->tradeType == 'CE' || $stock->tradeType == 'PE') {
-                                                                    $margin = 7;
-                                                                } else {
-                                                                    $margin = 0;
-                                                                }
                                                                 
-                                                                if ($margin > 0) {
-                                                                    $currentValue = ($stock->ltp * $stock->quantity) / $margin;
-                                                                } else {
-                                                                    $currentValue = 0; // Prevent division by zero
-                                                                }
-                                                                
-                                                                $investedValue = $stock->total_cost;
-                                                                $change = $currentValue - $investedValue;
-                                                                
-                                                                // Prevent division by zero when calculating percentage
-                                                                $changePercentage = $investedValue > 0 ? ($change / $investedValue) * 100 : 0;
-                                                                $profitAmount = $investedValue + $change;
-                                                                
-                                                                ?>
-                                                                <div
-                                                                    class="d-flex align-items-center justify-content-between">
-                                                                    <div>
-                                                                        <p id="price2{{ $i }}"
-                                                                            class="mb-0 fs-14 text-dark font-w600">
-                                                                            Current : ₹
-                                                                            {{ number_format($profitAmount, 2) }}
-                                                                        </p>
-                                                                        <span class="fs-12">Invest : ₹
-                                                                            {{ $stock->total_cost }}</span>
-                                                                        {{-- <span class="fs-12">Delivery</span>
-                                                                    --}}
-                                                                    </div>
-                                                                    <div>
-                                                                        {{-- <p class="mb-0 fs-14 text-success font-w600">
-                                                                        ₹ 65/10%</P> --}}
-                                                                        <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                            id="change2{{ $i }}">
-                                                                            <?php if ($change >= 0) { ?>
-                                                                            <span class="text-success">+ ₹
-                                                                                {{ number_format($change, 2) }}
-                                                                                ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                            <?php } elseif ($change < 0) { ?>
-                                                                            <span class="text-danger">- ₹
-                                                                                {{ number_format(abs($change), 2) }}
-                                                                                ({{ number_format(abs($changePercentage), 2) }}%)</span>
-                                                                            <?php } else { ?>
-                                                                            <span class="text-warning"> ₹
-                                                                                {{ number_format($change, 2) }}
-                                                                                ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                            <?php } ?>
-                                                                        </p>
-                                                                        <span class="fs-12">Lot :
-                                                                            {{ $stock->lotSize }} [ Qty
-                                                                            {{ $stock->quantity }}]
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /column -->
-                                                    <?php 
-                                                            $i++; 
-                                                        }
-                                                            
+
                                                             ?>
 
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade show" id="nav-opt" role="tabpanel"
-                                    aria-labelledby="nav-opt-tab">
-                                    <div class="tab-content" id="nav-tabContent3">
-                                        <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
-                                            <div class="d-flex align-items-center justify-content-between"
-                                                style="margin-bottom: 20px">
-                                                <h4 class="card-title">Stocks : Option</h4>
-                                            </div>
-
-                                            <div class="col-xl-12">
-                                                <!-- Row -->
-                                                <div class="row">
-
-                                                    <?php
-                                                       $trades = DB::table('trades')
-                                                        ->where('trades.user_id', $user->id)
-                                                        ->where('tradeType','CE')
-                                                        ->orWhere('tradeType','PE')
-                                                        ->where('trades.status', 'processing')
-                                                        ->leftJoin('future_temp', 'future_temp.instrumentKey', '=', 'trades.instrumentKey') // Join future_temp table
-                                                        ->selectRaw('
-                                                            trades.instrumentKey,
-                                                            SUM(trades.quantity) as quantity,
-                                                            AVG(trades.price) as avg_price,
-                                                            MIN(trades.stock_name) as stock_name,
-                                                            MIN(trades.stock_symbol) as stock_symbol,
-                                                            MIN(trades.action) as action,
-                                                            MIN(trades.tradeType) as tradeType,
-                                                            MIN(trades.duration) as duration,
-                                                            SUM(trades.total_cost) as total_cost,
-                                                            SUM(trades.lotSize) as lotSize,
-                                                            MIN(trades.created_at) as created_at,
-                                                            MIN(trades.tradeType) as tradeType,
-                                                            MIN(future_temp.ltp) as ltp,
-                                                            MIN(future_temp.cp) as cp
-                                                        ')
-                                                        ->groupBy('trades.instrumentKey','trades.duration')
-                                                        ->get();
-
-
-
-                                                        // print_r($trades);
-                                                        $i = 1;
-                                               
-
-                                                        foreach ($trades as $stock){
-                                                            $foisin = $stock->instrumentKey;
-
-                                                         
-                                                            
-
-                                                        ?>
-
-                                                    <!--Top up Modal start-->
-                                                    <div class="modal fade"
-                                                        id="exampleModalCenter3{{ $i }}">
-                                                        <div class="modal-dialog modal-dialog-centered"
-                                                            role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header"
-                                                                    style="padding-right: 1.875rem;padding-left: 10px;">
-                                                                    <h2 class="modal-title">
-                                                                        {{ $stock->stock_name }} </h2>
-                                                                    <button type="button" data-bs-dismiss="modal"
-                                                                        style="border: none">
-                                                                        <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
-                                                                            width="20" alt="">
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body p-0">
-                                                                    <div class="trade-container">
-                                                                        <div data-bs-dismiss="modal"
-                                                                            onclick="showOrderForm({{ $i }})"
-                                                                            class="trade-item">
-                                                                            <h2>Exit Position</h2>
-                                                                            <div
-                                                                                class="icon-box icon-box-sm bgl-primary">
-                                                                                <a href="javascript:void(0)"
-                                                                                    id="add_script">
-                                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                        width="20" alt="">
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="trade-item"
-                                                                            data-bs-dismiss="modal">
-                                                                            <h2>Details</h2>
-                                                                            <div
-                                                                                class="icon-box icon-box-sm bgl-primary">
-                                                                                <a href="javascript:void(0)"
-                                                                                    id="add_script">
-                                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                        width="20" alt="">
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="trade-item"
-                                                                            data-bs-dismiss="modal">
-                                                                            <h2>Remove</h2>
-                                                                            <div
-                                                                                class="icon-box icon-box-sm bgl-primary">
-                                                                                <a href="javascript:void(0)"
-                                                                                    id="add_script">
-                                                                                    <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
-                                                                                        width="20" alt="">
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
+                                                        <!--Top up Modal start-->
+                                                        <div class="modal fade"
+                                                            id="exampleModalCenter2{{ $i }}">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header"
+                                                                        style="padding-right: 1.875rem;padding-left: 10px;">
+                                                                        <h2 class="modal-title">
+                                                                            {{ $stock->stock_name }} </h2>
+                                                                        <button type="button" data-bs-dismiss="modal"
+                                                                            style="border: none">
+                                                                            <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                                                width="20" alt="">
+                                                                        </button>
                                                                     </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button"
-                                                                        class="btn btn-danger light"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button"
-                                                                        class="btn btn-primary">Save
-                                                                        changes</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <!--Top up Modal end-->
-
-
-                                                    {{-- <div class="offcanvas offcanvas-bottom" tabindex="-1"
-                                                    id="orderoffcanvasBottom{{ $i }}"
-                                                    aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
-                                                    <div class="offcanvas-header">
-                                                        <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">
-                                                            Offcanvas
-                                                            bottom
-                                                        </h5>
-                                                        <button type="button" class="btn-close text-reset"
-                                                            data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                                    </div>
-
-                                                    <div class="offcanvas-body small">
-                                                        <div class="row">
-                                                            <div class="col-xl-12">
-                                                                <div class="card">
-                                                                    <div class="card-header flex-wrap">
-
-                                                                        <nav class="" style="width: 100%;">
-                                                                            <div class="nav nav-pills light "
-                                                                                id="nav-tab" role="tablist">
-                                                                                <button class="nav-link active "
-                                                                                    style="width: 50%;"
-                                                                                    id="nav-order-tab"
-                                                                                    data-bs-toggle="tab"
-                                                                                    data-bs-target="#nav-order{{ $i }}"
-                                                                                    type="button" role="tab"
-                                                                                    aria-selected="true">Buy</button>
-                                                                                <button class="nav-link"
-                                                                                    style="width: 50%"
-                                                                                    id="nav-histroy-tab"
-                                                                                    data-bs-toggle="tab"
-                                                                                    data-bs-target="#nav-history{{ $i }}"
-                                                                                    type="button" role="tab"
-                                                                                    aria-selected="false">Sell
-                                                                                </button>
-
-                                                                            </div>
-                                                                        </nav>
-                                                                    </div>
-                                                                    <div class="card-body pt-2">
-                                                                        <div class="tab-content" id="nav-tabContent">
-                                                                            <div class="tab-pane fade show active"
-                                                                                id="nav-order{{ $i }}" role="tabpanel"
-                                                                                aria-labelledby="nav-order-tab">
+                                                                    <div class="modal-body p-0">
+                                                                        <div class="trade-container">
+                                                                            <div data-bs-dismiss="modal"
+                                                                                class="trade-item">
+                                                                                <h2>Exit Position</h2>
                                                                                 <div
-                                                                                    class="table-responsive dataTabletrade">
-                                                                                    <form id="buyform{{ $i }}"
-                                                                                        name="buyform{{ $i }}"
-                                                                                        method="POST"
-                                                                                        action="{{ route('placeBuyOrder') }}">
-                                                                                        @csrf
-                                                                                        <input type="text" name="id"
-                                                                                            value="{{ $i }}" id="id"
-                                                                                            hidden>
-                                                                                        <input type="text"
-                                                                                            name="instrumentKey1{{ $i }}"
-                                                                                            value="{{ $foisin }}"
-                                                                                            id="instrumentKey1{{ $i }}"
-                                                                                            hidden>
-                                                                                        <input type="text"
-                                                                                            name="instrumentType{{ $i }}"
-                                                                                            value="{{ $instrumentType }}"
-                                                                                            id="instrumentType{{ $i }}"
-                                                                                            hidden>
-                                                                                        <div class="col-xl-4"
-                                                                                            style="width: 100%;">
-                                                                                            <div class="card">
-                                                                                                <div
-                                                                                                    class="card-body pt-2">
-                                                                                                    <div
-                                                                                                        class="d-flex align-items-center justify-content-between mt-3 mb-2">
-                                                                                                        <span
-                                                                                                            class="small text-muted">Available
-                                                                                                            Balance</span>
-                                                                                                        <span
-                                                                                                            class="text-dark">{{
-                                                                                                            $user->real_wallet
-                                                                                                            }}</span>
-                                                                                                    </div>
-                                                                                                    <div class="mb-3">
-                                                                                                        <label
-                                                                                                            class="form-label">Order
-                                                                                                            Type</label>
-                                                                                                        <select
-                                                                                                            id="orderType1{{ $i }}"
-                                                                                                            name="orderType1{{ $i }}"
-                                                                                                            onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
-                                                                                                            class="form-select">
-                                                                                                            <option
-                                                                                                                value="market"
-                                                                                                                selected="">
-                                                                                                                Market
-                                                                                                                Order
-                                                                                                            </option>
-                                                                                                            <option
-                                                                                                                value="limit">
-                                                                                                                Limit
-                                                                                                                Order
-                                                                                                            </option>
-                                                                                                            <option
-                                                                                                                value="stoploss">
-                                                                                                                Stop
-                                                                                                                Loss
-                                                                                                                Order
-                                                                                                            </option>
-                                                                                                        </select>
-                                                                                                    </div>
-
-                                                                                                    <div
-                                                                                                        class="input-group mb-3">
-                                                                                                        <span
-                                                                                                            class="input-group-text">Market
-                                                                                                            Price</span>
-                                                                                                        <input
-                                                                                                            id="realprice1{{ $i }}"
-                                                                                                            name="realprice1{{ $i }}"
-                                                                                                            readonly
-                                                                                                            type="text"
-                                                                                                            class="form-control"
-                                                                                                            placeholder="Enter price"
-                                                                                                            value="{{ $stock->ltp }}">
-                                                                                                        >
-
-                                                                                                        <span
-                                                                                                            class="input-group-text">₹</span>
-                                                                                                    </div>
-                                                                                                    <div id="limitblock1{{ $i }}"
-                                                                                                        style="display: none"
-                                                                                                        class="input-group mb-3">
-                                                                                                        <span
-                                                                                                            class="input-group-text">Limit
-                                                                                                            Price</span>
-                                                                                                        <input
-                                                                                                            id="limitprice1{{ $i }}"
-                                                                                                            name="limitprice1{{ $i }}"
-                                                                                                            disabled
-                                                                                                            type="hidden"
-                                                                                                            class="form-control"
-                                                                                                            placeholder="Enter price"
-                                                                                                            value="0.00">
-
-                                                                                                        <span
-                                                                                                            class="input-group-text">₹</span>
-                                                                                                    </div>
-
-                                                                                                    <div class=""
-                                                                                                        style="display: flex; justify-content:space-between; gap:20px;">
-                                                                                                        <div
-                                                                                                            class="input-group mb-3">
-                                                                                                            <span
-                                                                                                                class="input-group-text">Lot</span>
-                                                                                                            <button
-                                                                                                                onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy')"
-                                                                                                                class="btn btn-outline-secondary"
-                                                                                                                type="button"
-                                                                                                                id="decrement">-</button>
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                class="form-control text-center"
-                                                                                                                placeholder="Enter size"
-                                                                                                                id="lotSize1{{ $i }}"
-                                                                                                                name="lotSize1{{ $i }}"
-                                                                                                                value="0"
-                                                                                                                readonly>
-                                                                                                            <button
-                                                                                                                onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
-                                                                                                                class="btn btn-outline-secondary"
-                                                                                                                type="button"
-                                                                                                                id="increment">+</button>
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="input-group mb-3">
-                                                                                                            <span
-                                                                                                                class="input-group-text">Quantity</span>
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                class="form-control"
-                                                                                                                placeholder="Enter size"
-                                                                                                                id="quantity1{{ $i }}"
-                                                                                                                name="quantity1{{ $i }}"
-                                                                                                                value={{
-                                                                                                                $quantity
-                                                                                                                }}
-                                                                                                                readonly>
-                                                                                                        </div>
-                                                                                                    </div>
-
-                                                                                                    <div class="mb-3">
-                                                                                                        <label
-                                                                                                            class="form-label">Mode</label>
-                                                                                                        <div
-                                                                                                            class="d-flex align-items-center gap-3">
-                                                                                                            <div
-                                                                                                                class="form-check">
-                                                                                                                <input
-                                                                                                                    class="form-check-input"
-                                                                                                                    type="radio"
-                                                                                                                    name="tradeMode1{{ $i }}"
-                                                                                                                    id="deliveryMode1{{ $i }}"
-                                                                                                                    value="delivery"
-                                                                                                                    onchange="handleTradeModeChange({{ $i }}, 'delivery')"
-                                                                                                                    checked>
-                                                                                                                <label
-                                                                                                                    class="form-check-label"
-                                                                                                                    for="deliveryMode1{{ $i }}">
-                                                                                                                    Delivery
-                                                                                                                    Mode
-                                                                                                                </label>
-                                                                                                            </div>
-
-                                                                                                            <div
-                                                                                                                class="form-check">
-                                                                                                                <input
-                                                                                                                    class="form-check-input"
-                                                                                                                    type="radio"
-                                                                                                                    name="tradeMode1{{ $i }}"
-                                                                                                                    id="intradayMode1{{ $i }}"
-                                                                                                                    value="intraday"
-                                                                                                                    onchange="handleTradeModeChange({{ $i }}, 'intraday')">
-                                                                                                                <label
-                                                                                                                    class="form-check-label"
-                                                                                                                    for="intradayMode1{{ $i }}">
-                                                                                                                    Intraday
-                                                                                                                    Mode
-                                                                                                                </label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-
-
-
-                                                                                                    <div
-                                                                                                        class="d-flex justify-content-between flex-wrap">
-
-                                                                                                        <div
-                                                                                                            class="d-flex justify-content-between flex-wrap align-items-center">
-                                                                                                            <div
-                                                                                                                class="d-flex flex-column">
-                                                                                                                <span>
-                                                                                                                    Cost:
-                                                                                                                    <s id="costPrice1{{ $i }}"
-                                                                                                                        name="costPrice1{{ $i }}"
-                                                                                                                        class="px-1">₹0.00</s>
-                                                                                                                </span>
-                                                                                                                <span>
-                                                                                                                    After
-                                                                                                                    Margin:
-                                                                                                                    <span
-                                                                                                                        id="marginCost1{{ $i }}"
-                                                                                                                        class="text-success">₹0.00</span>
-                                                                                                                </span>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="d-flex">
-                                                                                                            <div>
-                                                                                                                Max:
-                                                                                                            </div>
-                                                                                                            <div id="maxPrice1{{ $i }}"
-                                                                                                                name="maxPrice1{{ $i }}"
-                                                                                                                class=" px-1">
-                                                                                                                ₹{{
-                                                                                                                $user->real_wallet
-                                                                                                                }}
-                                                                                                            </div>
-
-
-                                                                                                        </div>
-
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <p id="error-fund1{{ $i }}"
-                                                                                                            style="display: none;color:red">
-                                                                                                            Insuffient
-                                                                                                            Fund
-                                                                                                        </p>
-                                                                                                    </div>
-
-                                                                                                    <div
-                                                                                                        class="mt-3 d-flex justify-content-between">
-                                                                                                        <button
-                                                                                                            type="subit"
-                                                                                                            class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </form>
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
                                                                                 </div>
                                                                             </div>
 
+                                                                            <div class="trade-item"
+                                                                                data-bs-dismiss="modal">
+                                                                                <h2>Details</h2>
+                                                                                <div
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="trade-item"
+                                                                                data-bs-dismiss="modal">
+                                                                                <h2>Remove</h2>
+                                                                                <div
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
-                                                                        </form>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-danger light"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-primary">Save
+                                                                            changes</button>
                                                                     </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div> --}}
-                                                    <!-- column -->
-                                                    <p style="display: none" id="isin3{{ $i }}">
-                                                        {{ $foisin }}</p>
-                                                    <p style="display: none" id="invest3{{ $i }}">
-                                                        {{ $stock->total_cost }}</p>
-                                                    <p style="display: none" id="lotSize3{{ $i }}">
-                                                        {{ $stock->lotSize }}</p>
-                                                    <p style="display: none" id="quantity3{{ $i }}">
-                                                        {{ $stock->quantity }}</p>
-                                                    <p style="display: none" id="tradeType3{{ $i }}">
-                                                        {{ $stock->tradeType }}</p>
+                                                        <!--Top up Modal end-->
+                                                        <!-- column -->
+                                                        <p style="display: none" id="isin2{{ $i }}">
+                                                            {{ $foisin }}</p>
+                                                        <p style="display: none" id="invest2{{ $i }}">
+                                                            {{ $stock->total_cost }}</p>
+                                                        <p style="display: none" id="lotSize2{{ $i }}">
+                                                            {{ $stock->lotSize }}</p>
+                                                        <p style="display: none" id="quantity2{{ $i }}">
+                                                            {{ $stock->quantity }}</p>
+                                                        <p style="display: none" id="tradeType2{{ $i }}">
+                                                            {{ $stock->tradeType }}</p>
 
-                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModalCenter3{{ $i }}">
-                                                        <div class="card pull-up"
-                                                            style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
-                                                            <div class="card-body align-items-center flex-wrap">
-                                                                <p
-                                                                    class="mb-0 fs-5 font-w500 d-flex align-items-center">
-                                                                    @if ($stock->action == 'BUY')
-                                                                        <span class="badge badge-success me-2">
-                                                                            {{ $stock->action }}</span>
-                                                                    @else
-                                                                        <span class="badge badge-danger me-2">
-                                                                            {{ $stock->action }}</span>
-                                                                    @endif
-                                                                    @if ($stock->duration == 'delivery')
-                                                                        <span class="badge badge-light ml-2">
-                                                                            Delivery</span>
-                                                                    @else
-                                                                        <span class="badge badge-dark ml-1">
-                                                                            Intraday</span>
-                                                                    @endif
-                                                                </p>
-                                                                <div class="d-flex align-items-center mb-4 mt-2">
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModalCenter2{{ $i }}">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <p
+                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                        @if ($stock->action == 'BUY')
+                                                                            <span class="badge badge-success me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @else
+                                                                            <span class="badge badge-danger me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @endif
+                                                                        @if ($stock->duration == 'delivery')
+                                                                            <span class="badge badge-light ml-2">
+                                                                                Delivery</span>
+                                                                        @else
+                                                                            <span class="badge badge-dark ml-1">
+                                                                                Intraday</span>
+                                                                        @endif
+                                                                    </p>
+                                                                    <div class="d-flex align-items-center mb-4 mt-2">
 
-                                                                    <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                        alt="" width=25
-                                                                        style="border-radius: 100%">
-                                                                    <div class="ms-1">
-                                                                        <a href="javascript:void(0)">
-                                                                            <h4 class="card-title mb-0"
-                                                                                style="font-size:1rem; font-weight:900">
-                                                                                {{ $stock->stock_name }}
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=25
+                                                                            style="border-radius: 100%">
+                                                                        <div class="ms-1">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem; font-weight:900">
+                                                                                    {{ $stock->stock_name }}
 
 
-                                                                            </h4>
-                                                                            <span
-                                                                                id="stockChange3{{ $i }}">
-                                                                                <?php 
-                                                                                    $change = $stock->ltp - $stock->cp;
-                                                                                    if($change > 0){
-                                                                                        ?>
+                                                                                </h4>
                                                                                 <span
-                                                                                    class="text-success me-1">▲</span>
-                                                                                <span class="text-success"
-                                                                                    id="perc{{ $i }}">
-                                                                                    <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
-                                                                                    &nbsp;
-                                                                                </span>
-                                                                                <span class="text-success"
-                                                                                    id="perc{{ $i }}">(
-                                                                                    <?php echo number_format($change, 2); ?>
-                                                                                    pts)
-                                                                                </span>
+                                                                                    id="stockChange2{{ $i }}">
+                                                                                    <?php 
+                                                                                        $change = $stock->ltp - $stock->cp;
+                                                                                        if($change > 0){
+                                                                                            ?>
+                                                                                    <span
+                                                                                        class="text-success me-1">▲</span>
+                                                                                    <span class="text-success"
+                                                                                        id="perc{{ $i }}">
+                                                                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
+                                                                                        &nbsp;
+                                                                                    </span>
+                                                                                    <span class="text-success"
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
 
 
-                                                                                <?php 
-                                                                                    }elseif($change < 0){
+                                                                                    <?php 
+                                                                                        }elseif($change < 0){
+                                                                                            ?>
+                                                                                    <span class="text-danger me-1">▼</span>
+                                                                                    <span class="text-danger"
+                                                                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
+                                                                                        &nbsp;</span>
+                                                                                    <span class="text-danger"
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
+
+                                                                                    <?php
+                                                                                        }else{
+                                                                                            ?>
+                                                                                    <span
+                                                                                        class="text-warning me-1">-</span>
+                                                                                    <span class="text-warning"
+                                                                                        id="perc{{ $i }}">0.00%
+                                                                                        &nbsp;</span>
+                                                                                    <span class="text-warning"
+                                                                                        id="perc{{ $i }}">(0.00
+                                                                                        pts) </span>
+                                                                                    <?php 
+                                                                                        }    
                                                                                         ?>
-                                                                                <span class="text-danger me-1">▼</span>
-                                                                                <span class="text-danger"
-                                                                                    id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
-                                                                                    &nbsp;</span>
-                                                                                <span class="text-danger"
-                                                                                    id="perc{{ $i }}">(
-                                                                                    <?php echo number_format($change, 2); ?>
-                                                                                    pts)
                                                                                 </span>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+                                                                                <p class="text-muted mb-1 fs-13">
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                                </p>
+                                                                            </div>
 
-                                                                                <?php
-                                                                                    }else{
-                                                                                        ?>
-                                                                                <span
-                                                                                    class="text-warning me-1">-</span>
-                                                                                <span class="text-warning"
-                                                                                    id="perc{{ $i }}">0.00%
-                                                                                    &nbsp;</span>
-                                                                                <span class="text-warning"
-                                                                                    id="perc{{ $i }}">(0.00
-                                                                                    pts) </span>
-                                                                                <?php 
-                                                                                    }    
-                                                                                    ?>
-                                                                            </span>
-                                                                        </a>
-                                                                        <div class="text-end"
-                                                                            style="position: absolute;top: 10px;right: 14px;">
-                                                                            <p class="text-muted mb-1 fs-13">
-                                                                                {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
-                                                                            </p>
                                                                         </div>
-
+                                                                    </div>
+                                                                    <?php
+                                                                    $margin = 0;
+                                                                    if ($stock->tradeType == 'FUT') {
+                                                                        $margin = 500;
+                                                                    } elseif ($stock->tradeType == 'CE' || $stock->tradeType == 'PE') {
+                                                                        $margin = 7;
+                                                                    } else {
+                                                                        $margin = 0;
+                                                                    }
+                                                                    
+                                                                    if ($margin > 0) {
+                                                                        $currentValue = ($stock->ltp * $stock->quantity) / $margin;
+                                                                    } else {
+                                                                        $currentValue = 0; // Prevent division by zero
+                                                                    }
+                                                                    
+                                                                    $investedValue = $stock->total_cost;
+                                                                    $change = $currentValue - $investedValue;
+                                                                    
+                                                                    // Prevent division by zero when calculating percentage
+                                                                    $changePercentage = $investedValue > 0 ? ($change / $investedValue) * 100 : 0;
+                                                                    $profitAmount = $investedValue + $change;
+                                                                    
+                                                                    ?>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p id="price2{{ $i }}"
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Current : ₹
+                                                                                {{ number_format($profitAmount, 2) }}
+                                                                            </p>
+                                                                            <span class="fs-12">Invest : ₹
+                                                                                {{ $stock->total_cost }}</span>
+                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                                        --}}
+                                                                        </div>
+                                                                        <div>
+                                                                            {{-- <p class="mb-0 fs-14 text-success font-w600">
+                                                                            ₹ 65/10%</P> --}}
+                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                                id="change2{{ $i }}">
+                                                                                <?php if ($change >= 0) { ?>
+                                                                                <span class="text-success">+ ₹
+                                                                                    {{ number_format($change, 2) }}
+                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                <?php } elseif ($change < 0) { ?>
+                                                                                <span class="text-danger">- ₹
+                                                                                    {{ number_format(abs($change), 2) }}
+                                                                                    ({{ number_format(abs($changePercentage), 2) }}%)</span>
+                                                                                <?php } else { ?>
+                                                                                <span class="text-warning"> ₹
+                                                                                    {{ number_format($change, 2) }}
+                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                <?php } ?>
+                                                                            </p>
+                                                                            <span class="fs-12">Lot :
+                                                                                {{ $stock->lotSize }} [ Qty
+                                                                                {{ $stock->quantity }}]
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <?php
-                                                                $margin = 0;
-                                                                if ($stock->tradeType == 'FUT') {
-                                                                    $margin = 500;
-                                                                } elseif ($stock->tradeType == 'CE' || $stock->tradeType == 'PE') {
-                                                                    $margin = 7;
-                                                                } else {
-                                                                    $margin = 0;
-                                                                }
-                                                                
-                                                                if ($margin > 0) {
-                                                                    $currentValue = ($stock->ltp * $stock->quantity) / $margin;
-                                                                } else {
-                                                                    $currentValue = 0; // Prevent division by zero
-                                                                }
-                                                                
-                                                                $investedValue = $stock->total_cost;
-                                                                $change = $currentValue - $investedValue;
-                                                                
-                                                                // Prevent division by zero when calculating percentage
-                                                                $changePercentage = $investedValue > 0 ? ($change / $investedValue) * 100 : 0;
-                                                                $profitAmount = $investedValue + $change;
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
+                                                                $i++; 
+                                                            }
                                                                 
                                                                 ?>
-                                                                <div
-                                                                    class="d-flex align-items-center justify-content-between">
-                                                                    <div>
-                                                                        <p id="price3{{ $i }}"
-                                                                            class="mb-0 fs-14 text-dark font-w600">
-                                                                            Current : ₹
-                                                                            {{ number_format($profitAmount, 2) }}
-                                                                        </p>
-                                                                        <span class="fs-12">Invest : ₹
-                                                                            {{ $stock->total_cost }}</span>
-                                                                        {{-- <span class="fs-12">Delivery</span>
-                                                                    --}}
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="nav-opt" role="tabpanel"
+                                        aria-labelledby="nav-opt-tab">
+                                        <div class="tab-content" id="nav-tabContent3">
+                                            <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    style="margin-bottom: 20px">
+                                                    <h4 class="card-title">Stocks : Option</h4>
+                                                </div>
+
+                                                <div class="col-xl-12">
+                                                    <!-- Row -->
+                                                    <div class="row">
+
+                                                        <?php
+                                                        $trades = DB::table('trades')
+                                                            ->where('trades.user_id', $user->id)
+                                                            ->where('tradeType','CE')
+                                                            ->orWhere('tradeType','PE')
+                                                            ->where('trades.status', 'processing')
+                                                            ->leftJoin('future_temp', 'future_temp.instrumentKey', '=', 'trades.instrumentKey') // Join future_temp table
+                                                            ->selectRaw('
+                                                                trades.instrumentKey,
+                                                                SUM(trades.quantity) as quantity,
+                                                                AVG(trades.price) as avg_price,
+                                                                MIN(trades.stock_name) as stock_name,
+                                                                MIN(trades.stock_symbol) as stock_symbol,
+                                                                MIN(trades.action) as action,
+                                                                MIN(trades.tradeType) as tradeType,
+                                                                MIN(trades.duration) as duration,
+                                                                SUM(trades.total_cost) as total_cost,
+                                                                SUM(trades.lotSize) as lotSize,
+                                                                MIN(trades.created_at) as created_at,
+                                                                MIN(trades.tradeType) as tradeType,
+                                                                MIN(future_temp.ltp) as ltp,
+                                                                MIN(future_temp.cp) as cp
+                                                            ')
+                                                            ->groupBy('trades.instrumentKey','trades.duration')
+                                                            ->get();
+
+
+
+                                                            // print_r($trades);
+                                                            $i = 1;
+                                                
+
+                                                            foreach ($trades as $stock){
+                                                                $foisin = $stock->instrumentKey;
+
+                                                            
+                                                                
+
+                                                            ?>
+
+                                                        <!--Top up Modal start-->
+                                                        <div class="modal fade"
+                                                            id="exampleModalCenter3{{ $i }}">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header"
+                                                                        style="padding-right: 1.875rem;padding-left: 10px;">
+                                                                        <h2 class="modal-title">
+                                                                            {{ $stock->stock_name }} </h2>
+                                                                        <button type="button" data-bs-dismiss="modal"
+                                                                            style="border: none">
+                                                                            <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                                                width="20" alt="">
+                                                                        </button>
                                                                     </div>
-                                                                    <div>
-                                                                        {{-- <p class="mb-0 fs-14 text-success font-w600">
-                                                                        ₹ 65/10%</P> --}}
-                                                                        <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
-                                                                            id="change2{{ $i }}">
-                                                                            <?php if ($change >= 0) { ?>
-                                                                            <span class="text-success">+ ₹
-                                                                                {{ number_format($change, 2) }}
-                                                                                ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                            <?php } elseif ($change < 0) { ?>
-                                                                            <span class="text-danger">- ₹
-                                                                                {{ number_format(abs($change), 2) }}
-                                                                                ({{ number_format(abs($changePercentage), 2) }}%)</span>
-                                                                            <?php } else { ?>
-                                                                            <span class="text-warning"> ₹
-                                                                                {{ number_format($change, 2) }}
-                                                                                ({{ number_format($changePercentage, 2) }}%)</span>
-                                                                            <?php } ?>
-                                                                        </p>
-                                                                        <span class="fs-12">Lot :
-                                                                            {{ $stock->lotSize }} [ Qty
-                                                                            {{ $stock->quantity }}]
-                                                                        </span>
+                                                                    <div class="modal-body p-0">
+                                                                        <div class="trade-container">
+                                                                            <div data-bs-dismiss="modal"
+                                                                                onclick="showOrderForm({{ $i }})"
+                                                                                class="trade-item">
+                                                                                <h2>Exit Position</h2>
+                                                                                <div
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="trade-item"
+                                                                                data-bs-dismiss="modal">
+                                                                                <h2>Details</h2>
+                                                                                <div
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="trade-item"
+                                                                                data-bs-dismiss="modal">
+                                                                                <h2>Remove</h2>
+                                                                                <div
+                                                                                    class="icon-box icon-box-sm bgl-primary">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        id="add_script">
+                                                                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png"
+                                                                                            width="20" alt="">
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-danger light"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-primary">Save
+                                                                            changes</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+
+                                                        <!--Top up Modal end-->
+
+
+                                                        {{-- <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                                                        id="orderoffcanvasBottom{{ $i }}"
+                                                        aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
+                                                        <div class="offcanvas-header">
+                                                            <h5 class="offcanvas-title" id="offcanvasBottomLabel{{ $i }}">
+                                                                Offcanvas
+                                                                bottom
+                                                            </h5>
+                                                            <button type="button" class="btn-close text-reset"
+                                                                data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                                        </div>
+
+                                                        <div class="offcanvas-body small">
+                                                            <div class="row">
+                                                                <div class="col-xl-12">
+                                                                    <div class="card">
+                                                                        <div class="card-header flex-wrap">
+
+                                                                            <nav class="" style="width: 100%;">
+                                                                                <div class="nav nav-pills light "
+                                                                                    id="nav-tab" role="tablist">
+                                                                                    <button class="nav-link active "
+                                                                                        style="width: 50%;"
+                                                                                        id="nav-order-tab"
+                                                                                        data-bs-toggle="tab"
+                                                                                        data-bs-target="#nav-order{{ $i }}"
+                                                                                        type="button" role="tab"
+                                                                                        aria-selected="true">Buy</button>
+                                                                                    <button class="nav-link"
+                                                                                        style="width: 50%"
+                                                                                        id="nav-histroy-tab"
+                                                                                        data-bs-toggle="tab"
+                                                                                        data-bs-target="#nav-history{{ $i }}"
+                                                                                        type="button" role="tab"
+                                                                                        aria-selected="false">Sell
+                                                                                    </button>
+
+                                                                                </div>
+                                                                            </nav>
+                                                                        </div>
+                                                                        <div class="card-body pt-2">
+                                                                            <div class="tab-content" id="nav-tabContent">
+                                                                                <div class="tab-pane fade show active"
+                                                                                    id="nav-order{{ $i }}" role="tabpanel"
+                                                                                    aria-labelledby="nav-order-tab">
+                                                                                    <div
+                                                                                        class="table-responsive dataTabletrade">
+                                                                                        <form id="buyform{{ $i }}"
+                                                                                            name="buyform{{ $i }}"
+                                                                                            method="POST"
+                                                                                            action="{{ route('placeBuyOrder') }}">
+                                                                                            @csrf
+                                                                                            <input type="text" name="id"
+                                                                                                value="{{ $i }}" id="id"
+                                                                                                hidden>
+                                                                                            <input type="text"
+                                                                                                name="instrumentKey1{{ $i }}"
+                                                                                                value="{{ $foisin }}"
+                                                                                                id="instrumentKey1{{ $i }}"
+                                                                                                hidden>
+                                                                                            <input type="text"
+                                                                                                name="instrumentType{{ $i }}"
+                                                                                                value="{{ $instrumentType }}"
+                                                                                                id="instrumentType{{ $i }}"
+                                                                                                hidden>
+                                                                                            <div class="col-xl-4"
+                                                                                                style="width: 100%;">
+                                                                                                <div class="card">
+                                                                                                    <div
+                                                                                                        class="card-body pt-2">
+                                                                                                        <div
+                                                                                                            class="d-flex align-items-center justify-content-between mt-3 mb-2">
+                                                                                                            <span
+                                                                                                                class="small text-muted">Available
+                                                                                                                Balance</span>
+                                                                                                            <span
+                                                                                                                class="text-dark">{{
+                                                                                                                $user->real_wallet
+                                                                                                                }}</span>
+                                                                                                        </div>
+                                                                                                        <div class="mb-3">
+                                                                                                            <label
+                                                                                                                class="form-label">Order
+                                                                                                                Type</label>
+                                                                                                            <select
+                                                                                                                id="orderType1{{ $i }}"
+                                                                                                                name="orderType1{{ $i }}"
+                                                                                                                onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
+                                                                                                                class="form-select">
+                                                                                                                <option
+                                                                                                                    value="market"
+                                                                                                                    selected="">
+                                                                                                                    Market
+                                                                                                                    Order
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="limit">
+                                                                                                                    Limit
+                                                                                                                    Order
+                                                                                                                </option>
+                                                                                                                <option
+                                                                                                                    value="stoploss">
+                                                                                                                    Stop
+                                                                                                                    Loss
+                                                                                                                    Order
+                                                                                                                </option>
+                                                                                                            </select>
+                                                                                                        </div>
+
+                                                                                                        <div
+                                                                                                            class="input-group mb-3">
+                                                                                                            <span
+                                                                                                                class="input-group-text">Market
+                                                                                                                Price</span>
+                                                                                                            <input
+                                                                                                                id="realprice1{{ $i }}"
+                                                                                                                name="realprice1{{ $i }}"
+                                                                                                                readonly
+                                                                                                                type="text"
+                                                                                                                class="form-control"
+                                                                                                                placeholder="Enter price"
+                                                                                                                value="{{ $stock->ltp }}">
+                                                                                                            >
+
+                                                                                                            <span
+                                                                                                                class="input-group-text">₹</span>
+                                                                                                        </div>
+                                                                                                        <div id="limitblock1{{ $i }}"
+                                                                                                            style="display: none"
+                                                                                                            class="input-group mb-3">
+                                                                                                            <span
+                                                                                                                class="input-group-text">Limit
+                                                                                                                Price</span>
+                                                                                                            <input
+                                                                                                                id="limitprice1{{ $i }}"
+                                                                                                                name="limitprice1{{ $i }}"
+                                                                                                                disabled
+                                                                                                                type="hidden"
+                                                                                                                class="form-control"
+                                                                                                                placeholder="Enter price"
+                                                                                                                value="0.00">
+
+                                                                                                            <span
+                                                                                                                class="input-group-text">₹</span>
+                                                                                                        </div>
+
+                                                                                                        <div class=""
+                                                                                                            style="display: flex; justify-content:space-between; gap:20px;">
+                                                                                                            <div
+                                                                                                                class="input-group mb-3">
+                                                                                                                <span
+                                                                                                                    class="input-group-text">Lot</span>
+                                                                                                                <button
+                                                                                                                    onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy')"
+                                                                                                                    class="btn btn-outline-secondary"
+                                                                                                                    type="button"
+                                                                                                                    id="decrement">-</button>
+                                                                                                                <input
+                                                                                                                    type="text"
+                                                                                                                    class="form-control text-center"
+                                                                                                                    placeholder="Enter size"
+                                                                                                                    id="lotSize1{{ $i }}"
+                                                                                                                    name="lotSize1{{ $i }}"
+                                                                                                                    value="0"
+                                                                                                                    readonly>
+                                                                                                                <button
+                                                                                                                    onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
+                                                                                                                    class="btn btn-outline-secondary"
+                                                                                                                    type="button"
+                                                                                                                    id="increment">+</button>
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                class="input-group mb-3">
+                                                                                                                <span
+                                                                                                                    class="input-group-text">Quantity</span>
+                                                                                                                <input
+                                                                                                                    type="text"
+                                                                                                                    class="form-control"
+                                                                                                                    placeholder="Enter size"
+                                                                                                                    id="quantity1{{ $i }}"
+                                                                                                                    name="quantity1{{ $i }}"
+                                                                                                                    value={{
+                                                                                                                    $quantity
+                                                                                                                    }}
+                                                                                                                    readonly>
+                                                                                                            </div>
+                                                                                                        </div>
+
+                                                                                                        <div class="mb-3">
+                                                                                                            <label
+                                                                                                                class="form-label">Mode</label>
+                                                                                                            <div
+                                                                                                                class="d-flex align-items-center gap-3">
+                                                                                                                <div
+                                                                                                                    class="form-check">
+                                                                                                                    <input
+                                                                                                                        class="form-check-input"
+                                                                                                                        type="radio"
+                                                                                                                        name="tradeMode1{{ $i }}"
+                                                                                                                        id="deliveryMode1{{ $i }}"
+                                                                                                                        value="delivery"
+                                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery')"
+                                                                                                                        checked>
+                                                                                                                    <label
+                                                                                                                        class="form-check-label"
+                                                                                                                        for="deliveryMode1{{ $i }}">
+                                                                                                                        Delivery
+                                                                                                                        Mode
+                                                                                                                    </label>
+                                                                                                                </div>
+
+                                                                                                                <div
+                                                                                                                    class="form-check">
+                                                                                                                    <input
+                                                                                                                        class="form-check-input"
+                                                                                                                        type="radio"
+                                                                                                                        name="tradeMode1{{ $i }}"
+                                                                                                                        id="intradayMode1{{ $i }}"
+                                                                                                                        value="intraday"
+                                                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')">
+                                                                                                                    <label
+                                                                                                                        class="form-check-label"
+                                                                                                                        for="intradayMode1{{ $i }}">
+                                                                                                                        Intraday
+                                                                                                                        Mode
+                                                                                                                    </label>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+
+
+
+                                                                                                        <div
+                                                                                                            class="d-flex justify-content-between flex-wrap">
+
+                                                                                                            <div
+                                                                                                                class="d-flex justify-content-between flex-wrap align-items-center">
+                                                                                                                <div
+                                                                                                                    class="d-flex flex-column">
+                                                                                                                    <span>
+                                                                                                                        Cost:
+                                                                                                                        <s id="costPrice1{{ $i }}"
+                                                                                                                            name="costPrice1{{ $i }}"
+                                                                                                                            class="px-1">₹0.00</s>
+                                                                                                                    </span>
+                                                                                                                    <span>
+                                                                                                                        After
+                                                                                                                        Margin:
+                                                                                                                        <span
+                                                                                                                            id="marginCost1{{ $i }}"
+                                                                                                                            class="text-success">₹0.00</span>
+                                                                                                                    </span>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                class="d-flex">
+                                                                                                                <div>
+                                                                                                                    Max:
+                                                                                                                </div>
+                                                                                                                <div id="maxPrice1{{ $i }}"
+                                                                                                                    name="maxPrice1{{ $i }}"
+                                                                                                                    class=" px-1">
+                                                                                                                    ₹{{
+                                                                                                                    $user->real_wallet
+                                                                                                                    }}
+                                                                                                                </div>
+
+
+                                                                                                            </div>
+
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <p id="error-fund1{{ $i }}"
+                                                                                                                style="display: none;color:red">
+                                                                                                                Insuffient
+                                                                                                                Fund
+                                                                                                            </p>
+                                                                                                        </div>
+
+                                                                                                        <div
+                                                                                                            class="mt-3 d-flex justify-content-between">
+                                                                                                            <button
+                                                                                                                type="subit"
+                                                                                                                class="btn btn-success btn-sm light text-uppercase me-3 btn-block">BUY</button>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+                                                        <!-- column -->
+                                                        <p style="display: none" id="isin3{{ $i }}">
+                                                            {{ $foisin }}</p>
+                                                        <p style="display: none" id="invest3{{ $i }}">
+                                                            {{ $stock->total_cost }}</p>
+                                                        <p style="display: none" id="lotSize3{{ $i }}">
+                                                            {{ $stock->lotSize }}</p>
+                                                        <p style="display: none" id="quantity3{{ $i }}">
+                                                            {{ $stock->quantity }}</p>
+                                                        <p style="display: none" id="tradeType3{{ $i }}">
+                                                            {{ $stock->tradeType }}</p>
+
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModalCenter3{{ $i }}">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <p
+                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                        @if ($stock->action == 'BUY')
+                                                                            <span class="badge badge-success me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @else
+                                                                            <span class="badge badge-danger me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @endif
+                                                                        @if ($stock->duration == 'delivery')
+                                                                            <span class="badge badge-light ml-2">
+                                                                                Delivery</span>
+                                                                        @else
+                                                                            <span class="badge badge-dark ml-1">
+                                                                                Intraday</span>
+                                                                        @endif
+                                                                    </p>
+                                                                    <div class="d-flex align-items-center mb-4 mt-2">
+
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=25
+                                                                            style="border-radius: 100%">
+                                                                        <div class="ms-1">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem; font-weight:900">
+                                                                                    {{ $stock->stock_name }}
+
+
+                                                                                </h4>
+                                                                                <span
+                                                                                    id="stockChange3{{ $i }}">
+                                                                                    <?php 
+                                                                                        $change = $stock->ltp - $stock->cp;
+                                                                                        if($change > 0){
+                                                                                            ?>
+                                                                                    <span
+                                                                                        class="text-success me-1">▲</span>
+                                                                                    <span class="text-success"
+                                                                                        id="perc{{ $i }}">
+                                                                                        <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
+                                                                                        &nbsp;
+                                                                                    </span>
+                                                                                    <span class="text-success"
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
+
+
+                                                                                    <?php 
+                                                                                        }elseif($change < 0){
+                                                                                            ?>
+                                                                                    <span class="text-danger me-1">▼</span>
+                                                                                    <span class="text-danger"
+                                                                                        id="perc{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
+                                                                                        &nbsp;</span>
+                                                                                    <span class="text-danger"
+                                                                                        id="perc{{ $i }}">(
+                                                                                        <?php echo number_format($change, 2); ?>
+                                                                                        pts)
+                                                                                    </span>
+
+                                                                                    <?php
+                                                                                        }else{
+                                                                                            ?>
+                                                                                    <span
+                                                                                        class="text-warning me-1">-</span>
+                                                                                    <span class="text-warning"
+                                                                                        id="perc{{ $i }}">0.00%
+                                                                                        &nbsp;</span>
+                                                                                    <span class="text-warning"
+                                                                                        id="perc{{ $i }}">(0.00
+                                                                                        pts) </span>
+                                                                                    <?php 
+                                                                                        }    
+                                                                                        ?>
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+                                                                                <p class="text-muted mb-1 fs-13">
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                                </p>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php
+                                                                    $margin = 0;
+                                                                    if ($stock->tradeType == 'FUT') {
+                                                                        $margin = 500;
+                                                                    } elseif ($stock->tradeType == 'CE' || $stock->tradeType == 'PE') {
+                                                                        $margin = 7;
+                                                                    } else {
+                                                                        $margin = 0;
+                                                                    }
+                                                                    
+                                                                    if ($margin > 0) {
+                                                                        $currentValue = ($stock->ltp * $stock->quantity) / $margin;
+                                                                    } else {
+                                                                        $currentValue = 0; // Prevent division by zero
+                                                                    }
+                                                                    
+                                                                    $investedValue = $stock->total_cost;
+                                                                    $change = $currentValue - $investedValue;
+                                                                    
+                                                                    // Prevent division by zero when calculating percentage
+                                                                    $changePercentage = $investedValue > 0 ? ($change / $investedValue) * 100 : 0;
+                                                                    $profitAmount = $investedValue + $change;
+                                                                    
+                                                                    ?>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <p id="price3{{ $i }}"
+                                                                                class="mb-0 fs-14 text-dark font-w600">
+                                                                                Current : ₹
+                                                                                {{ number_format($profitAmount, 2) }}
+                                                                            </p>
+                                                                            <span class="fs-12">Invest : ₹
+                                                                                {{ $stock->total_cost }}</span>
+                                                                            {{-- <span class="fs-12">Delivery</span>
+                                                                        --}}
+                                                                        </div>
+                                                                        <div>
+                                                                            {{-- <p class="mb-0 fs-14 text-success font-w600">
+                                                                            ₹ 65/10%</P> --}}
+                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                                                                id="change2{{ $i }}">
+                                                                                <?php if ($change >= 0) { ?>
+                                                                                <span class="text-success">+ ₹
+                                                                                    {{ number_format($change, 2) }}
+                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                <?php } elseif ($change < 0) { ?>
+                                                                                <span class="text-danger">- ₹
+                                                                                    {{ number_format(abs($change), 2) }}
+                                                                                    ({{ number_format(abs($changePercentage), 2) }}%)</span>
+                                                                                <?php } else { ?>
+                                                                                <span class="text-warning"> ₹
+                                                                                    {{ number_format($change, 2) }}
+                                                                                    ({{ number_format($changePercentage, 2) }}%)</span>
+                                                                                <?php } ?>
+                                                                            </p>
+                                                                            <span class="fs-12">Lot :
+                                                                                {{ $stock->lotSize }} [ Qty
+                                                                                {{ $stock->quantity }}]
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
+                                                                $i++; 
+                                                            }
+                                                                
+                                                                ?>
+
+
+
                                                     </div>
-                                                    <!-- /column -->
-                                                    <?php 
-                                                            $i++; 
-                                                        }
-                                                            
-                                                            ?>
-
-
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -1781,6 +1773,11 @@
                                 const action = document.getElementById(`action1${rowId}`).innerText
                                     .trim(); // Trade type
 
+
+                                console.log("price", price, "invest", invest, "quanrity", quantity, "tradeType", tradeType, "action", action);
+                                
+
+
                                 let margin = 1;
                                 if (tradeType == 'FUT') {
                                     margin = 500;
@@ -1790,8 +1787,7 @@
                                     margin = 1;
                                 }
 
-                                const currentValue = ((price * parseFloat(quantity)) /
-                                    margin); // Actual investment amount
+                                const currentValue = ((price * parseFloat(quantity)) ); // Actual investment amount
 
                                 let profitAndLoss = (currentValue - invest).toFixed(2);
 
@@ -1808,14 +1804,33 @@
                                 // console.log(rowId,"->price", price,"invest", invest,"quanrity", quantity,"currentValue", currentValue,"tradeType", tradeType,"action", action,"profitAndLoss", profitAndLoss,"profitAndLossPercentage", profitAndLossPercentage,"pandloss", pandloss);
 
 
-                                document.getElementById(`price1${rowId}`).textContent =
-                                    `Current : ₹${pandloss || '0'}`;
+                                const formattedPandloss = Number(pandloss).toLocaleString('en-IN', { 
+                                    minimumFractionDigits: 2, 
+                                    maximumFractionDigits: 2 
+                                });
+
+                                const positiveProfitAndLoss = Math.abs(profitAndLoss);
+                                const formatprofitAndLoss = Number(positiveProfitAndLoss).toLocaleString('en-IN', { 
+                                    minimumFractionDigits: 2, 
+                                    maximumFractionDigits: 2 
+                                });
+
+                                const gotPrice=parseFloat(invest)+parseFloat(profitAndLoss);
+                                const formattedGotPrice = Number(gotPrice).toLocaleString('en-IN', { 
+                                    minimumFractionDigits: 2, 
+                                    maximumFractionDigits: 2 
+                                });
+
+                                document.getElementById(`price1${rowId}`).textContent = `Current : ₹${formattedPandloss || '0'}`;
 
                                 const badgeValue = (price - cp).toFixed(2) || '0';
                                 const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) :
                                     '0';
 
 
+
+                                document.getElementById(`marketPrice1${rowId}`).textContent = `Market Price : ₹ ${price || '0'}`;
+                                document.getElementById(`gotPrice1${rowId}`).textContent = `₹ ${formattedGotPrice || '0'}`;
                                 document.getElementById(`stockChange1${rowId}`).innerHTML =
                                     `
                                         ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
@@ -1823,13 +1838,54 @@
                                          ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
 
-                                document.getElementById(`change1${rowId}`).innerHTML =
-                                    `
+                                document.getElementById(`change1${rowId}`).innerHTML =`
                             ${profitAndLoss > 0 
-                                ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + profitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
-                                : '<span class="text-danger" id="perc' + rowId + '">- ₹' + Math.abs(profitAndLoss) + ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
-                            });
+                                ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + formatprofitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
+                                : '<span class="text-danger" id="perc' + rowId + '">- ₹' + formatprofitAndLoss+ ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
 
+                              // Determine status (Net Gain, Net Loss, or No Change)
+                                let statusClass = "";
+                                let textClass = "";
+                                let icon = "";
+                                let statusText = "";
+
+                                if (profitAndLoss > 0) {
+                                    statusClass = "badge-success";
+                                    textClass = "text-success";
+                                    icon = "▲";
+                                    statusText = "Net Gain";
+                                } else if (profitAndLoss < 0) {
+                                    statusClass = "badge-danger";
+                                    textClass = "text-danger";
+                                    icon = "▼";
+                                    statusText = "Net Loss";
+                                } else {
+                                    statusClass = "badge-warning";
+                                    textClass = "text-warning";
+                                    icon = "-";
+                                    statusText = "No Change";
+                                }
+
+                                // Update UI dynamically
+                                document.getElementById(`changeStatus1${rowId}`).innerHTML = `
+                                    <div class="d-flex align-items-center mt-3 mb-2">
+                                        <span class="badge ${statusClass} me-2">${icon}</span>
+                                        <div class="d-flex flex-column">
+                                            <h4 class="card-title mb-0" style="font-size:1rem; font-weight:900">${statusText}</h4>
+                                            <div class="d-flex">
+                                                <span class="${textClass}">
+                                                ₹ ${formatprofitAndLoss} (${Math.abs(profitAndLossPercentage)}%)
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+
+
+                            });
+                             
+
+                            
 
 
 
