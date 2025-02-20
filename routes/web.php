@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [ProfileController::class, 'profile'])->name('profile');
     Route::POST('change-password', [ProfileController::class, 'changePassword']);
     Route::post('update-profile', [ProfileController::class, 'updateProfile']);
-    
+
 
 
 
@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/fetch-nifty50-stock-data', [StockController::class, 'fetchNifty50StockData']);
     Route::get('/fetch-sensex-stock-data', [StockController::class, 'fetchSensexStockData']);
     Route::get('orders', [StockController::class, 'orderHistory'])->name('order');
-   
+
 
     Route::post('add-watchlist', [WatchlistController::class, 'addWatchlist'])->name('add-watchlist');
     Route::post('remove-watchlist', [WatchlistController::class, 'removeWatchlist'])->name('remove-watchlist');
@@ -82,7 +82,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/trades', [AdminController::class, 'tradeTxn'])->name('admin.tradeTxn');
 
     Route::get('/admin/settings', [SettingsController::class, 'settings'])->name('admin.settings');
-  
+
     Route::post('settings/min-recharge', [SettingsController::class, 'updateMinRecharge'])->name('settings.updateMinRecharge');
     Route::post('settings/min-withdraw', [SettingsController::class, 'updateMinWithdraw'])->name('settings.updateMinWithdraw');
     Route::post('settings/withdraw-msg', [SettingsController::class, 'updateWithdrawMsg'])->name('settings.updateWithdrawMsg');
@@ -94,7 +94,7 @@ Route::middleware('auth')->group(function () {
     Route::post('update-client-id', [SettingsController::class, 'updateClientId'])->name('settings.updateClientID');
     Route::post('update-client-secret', [SettingsController::class, 'updateClientSecret'])->name('settings.updateClientSecret');
     Route::post('update-token', [SettingsController::class, 'updateToken'])->name('settings.generateToken');
-    
+
     Route::post('admin/approve-deposit', [AdminController::class, 'approveDeposit'])->name('approve-deposit');
     Route::post('admin/approve-withdraw', [AdminController::class, 'approveWithdraw'])->name('approve-withdraw');
 
@@ -111,26 +111,26 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('quotes', [StockController::class, 'quotes'])->name('quotes');
- 
+
     Route::get('add-script', [StockController::class, 'addScript'])->name('add-script');
     Route::get('searchScript', [StockController::class, 'searchScript'])->name('searchScript');
 
 
-    // Trade Route 
+    // Trade Route
     Route::post('placeBuyOrder',[TradeController::class,'placeBuyOrder'])->name('placeBuyOrder');
     Route::post('placeSellOrder',[TradeController::class,'placeSellOrder'])->name('placeSellOrder');
-    // Trade Route 
+    // Trade Route
 
     Route::get('trade-details/{id}', [TradeController::class, 'tradeDetails'])->name('tradeDetails');
     Route::get('stock-details/{id}', [StockController::class, 'stockDetails'])->name('stockDetail');
-  
+
 
     Route::get('limitOrder', [StockController::class, 'limitOrder'])->name('limitOrder');
     Route::post('closeOrder', [StockController::class, 'closeOrder'])->name('closeOrder');
 
     Route::get('quoteRefresh', [StockController::class, 'quoteRefresh'])->name('quoteRefresh');
 
- 
+
 
     Route::get('ww', function(){
         return view('wallet');
@@ -141,6 +141,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/updatelotsize', [StockController::class, 'updateLotSize'])->name('updateLotSize');
 
+Route::get('/runWebSocket', [MarketDataController::class, 'fetchUpdates'])->name('runWebSocket');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/channels.php';
