@@ -600,6 +600,7 @@
                                                                             <span class="badge badge-dark ml-1">
                                                                                 Intraday</span>
                                                                         @endif
+                                                                        <span class="badge badge-primary light">{{ $stock->tradeType }}</span>
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 
@@ -1136,6 +1137,7 @@
                                                                             <span class="badge badge-dark ml-1">
                                                                                 Intraday</span>
                                                                         @endif
+                                                                        <span class="badge badge-primary light">{{ $stock->tradeType }}</span>
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 

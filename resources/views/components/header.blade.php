@@ -29,7 +29,7 @@ $user = auth()->user();
                         </a>
                     </li>
 
-                    <li class="nav-item dropdown notification_dropdown" title="Change Theme">
+                    {{-- <li class="nav-item dropdown notification_dropdown" title="Change Theme">
                         <a class="nav-link bell dz-theme-mode" href="javascript:void(0);">
                             <svg id="icon-light" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32"
@@ -55,7 +55,7 @@ $user = auth()->user();
                                 </g>
                             </svg>
                         </a>
-                    </li>
+                    </li> --}}
 
                     {{-- <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">

@@ -762,7 +762,7 @@ $user = Auth::user();
                         </div>
                     </div>
                     <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
-                        <p class="text-muted mb-1 fs-13">{{ $key->exchange }}</p>
+                        <p class="text-muted mb-1 fs-13">{{ $key->instrumentType }}</p>
                     </div>
                 </div>
                 <div class="card-body ">
