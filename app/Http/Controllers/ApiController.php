@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Jobs\FetchStockDataJob;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class ApiController extends Controller
         
         foreach ($instrumentBatches as $batch) {
             $finalArray = implode(",", $batch);
-            $url = 'https://api.upstox.com/v2/market-quote/ltp?instrument_key=' . $finalArray;
+            $url = 'https://api.upstox.com/v2/market-quote/quotes?instrument_key=' . $finalArray;
         
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $bearerToken,
@@ -42,17 +43,27 @@ class ApiController extends Controller
             }
         
             $data = $response->json();
-            echo "<pre>";
-            print_r($data);
+            // echo "<pre>";
+            // print_r($data);
          
             // array merge 
             // $newArray = array_merge($newArray, $data);
+            $newArray = array_merge_recursive($newArray, $data);
 
             // print_r($batch);
         }
         
-        return response()->json($newArray);
+        // return response()->json($newArray);
+        $totalRecords = isset($newArray['data']) ? count($newArray['data']) : 0;
+
+       
         
+
+return response()->json([
+    'total_records' => "Total Records: " . count($newArray['data']),
+    'message' => 'Stocks data updated successfully.',
+    'data' => $newArray['data']
+], 200);
 
     }
 }
