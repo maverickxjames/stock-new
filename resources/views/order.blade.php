@@ -811,6 +811,54 @@ use App\Models\Stockdata;
     <!--**********************************
         Scripts
     ***********************************-->
+
+    <script>
+        window.Echo.channel('stocks')
+            .listen('Stock', (e) => {
+                console.log("Stock event received:", e);
+    
+                // Extracting stock data from the event
+                let sensexData = e.stocks?.feeds?.["BSE_INDEX|SENSEX"]?.ff?.indexFF;
+                let niftyData = e.stocks?.feeds?.["NSE_INDEX|NIFTY 50"]?.ff?.marketFF;
+
+               
+    
+                if (sensexData) {
+                    let sensexLtp = sensexData.ltpc.ltp;
+                    let sensexCP = sensexData.ltpc.cp;
+                    let sensexChange = sensexLtp - sensexCP;
+                    
+                    let sensexChangePercent = ((sensexChange / sensexCP) * 100).toFixed(2);
+    
+                    document.getElementById('sensexLtp').textContent = sensexLtp.toFixed(2);
+                    document.getElementById('sensexChange').innerHTML = `
+                        <p class="${sensexChange >= 0 ? 'text-success' : 'text-danger'} fw-bold mb-1">
+                            ${sensexChangePercent}%
+                        </p>
+                        <p class="${sensexChange >= 0 ? 'text-success' : 'text-danger'} fs-5 fw-semibold">
+                            ${sensexChange.toFixed(2)}
+                        </p>
+                    `;
+                }
+    
+                if (niftyData && niftyData.ltpc.length > 0) {
+                    let niftyLtp = niftyData.ltpc[0].ltp;
+                    let niftyPrevClose = niftyData.ltpc[0].cp;
+                    let niftyChange = niftyLtp - niftyPrevClose;
+                    let niftyChangePercent = ((niftyChange / niftyPrevClose) * 100).toFixed(2);
+    
+                    document.getElementById('niftyLtp').textContent = niftyLtp.toFixed(2);
+                    document.getElementById('niftyChange').innerHTML = `
+                        <p class="${niftyChange >= 0 ? 'text-success' : 'text-danger'} fw-bold mb-1">
+                            ${niftyChangePercent}%
+                        </p>
+                        <p class="${niftyChange >= 0 ? 'text-success' : 'text-danger'} fs-5 fw-semibold">
+                            ${niftyChange.toFixed(2)}
+                        </p>
+                    `;
+                }
+            });
+    </script>
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>

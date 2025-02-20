@@ -206,16 +206,31 @@ $user = auth()->user();
             </div>
         </nav>
     </div>
-    <div class="page-titles">
+    <div class="page-titles  p-3 rounded shadow">
         <div class="d-flex align-items-center justify-content-between">
-            <h2 class="text-white">Nifty 50 </h2>
+            <div class="d-flex flex-column text-center px-3">
+                <h2 class="text-white fw-bold mb-1">Nifty 50</h2>
+                <p class="text-warning fs-5 fw-semibold" id="niftyLtp">22,290</p>
+            </div>
+            <div class="d-flex flex-column text-center px-3" id="niftyChange">
+                <p class="text-danger fw-bold mb-1">-05%</p>
+                <p class="text-danger fs-5 fw-semibold">-12.40</p>
+            </div>
         </div>
+        <hr class="text-white opacity-50">
         <div class="d-flex align-items-center justify-content-between">
-            <h2 class="text-white">Sensex </h2>
+            <div class="d-flex flex-column text-center px-3">
+                <h2 class="text-white fw-bold mb-1">Sensex</h2>
+                <p class="text-warning fs-5 fw-semibold" id="sensexLtp">22,290</p>
+            </div>
+            <div class="d-flex flex-column text-center px-3" id="sensexChange">
+                <p class="text-success fw-bold mb-1">-05%</p>
+                <p class="text-danger fs-5 fw-semibold">-12.40</p>
+            </div>
         </div>
-        <div>
-            <button onclick="history.back()" type="button" class="btn btn-rounded btn-dark">Back</button>
-        </div>
-
+        {{-- <div class="text-center mt-3">
+            <button onclick="history.back()" type="button" class="btn btn-outline-light btn-lg rounded-pill shadow">⬅ Back</button>
+        </div> --}}
     </div>
+    
 </div>
