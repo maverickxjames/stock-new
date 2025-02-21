@@ -293,21 +293,18 @@ $user = Auth::user();
                                                                                 $user->real_wallet }}</span>
                                                                         </div>
                                                                         <!-- Order Type Selector -->
-                                                                        <div class="mb-3">
-                                                                            <label class="form-label">Order
-                                                                                Type</label>
-                                                                            <select id="orderType1{{ $i }}"
-                                                                                name="orderType1{{ $i }}"
-                                                                                onchange="handleOrderTypeChange({{ $i }}, this.value,'buy')"
-                                                                                class="form-select">
-                                                                                <option value="market"
-                                                                                    selected=""> Market
-                                                                                    Order</option>
-                                                                                <option value="limit">Limit
-                                                                                    Order</option>
-                                                                                <option value="stoploss">Stop
-                                                                                    Loss Order</option>
-                                                                            </select>
+                                                                        <div class="mb-3 d-flex flex-column">
+                                                                            <label class="form-label">Order Type</label>
+                                                                            <div class="btn-group" role="group">
+                                                                                <button type="button" class="btn btn-primary" id="marketBtn{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'market', 'buy')">Market</button>
+                                                                                <button type="button" class="btn btn-outline-primary" id="limitBtn{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'limit', 'buy')">Limit</button>
+                                                                                <button type="button" class="btn btn-outline-primary" id="stoplossMarketBtn{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'stoplossMarket', 'buy')">SL Mkt</button>
+                                                                                <button type="button" class="btn btn-outline-primary" id="stoplossLimitBtn{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'stoplossLimit', 'buy')">SL Limit</button>
+                                                                            </div>
                                                                         </div>
 
                                                                         <!-- Price Input -->
@@ -321,7 +318,7 @@ $user = Auth::user();
                                                                                 class="form-control"
                                                                                 placeholder="Enter price"
                                                                                 value="{{ $stock->ltp }}">
-                                                                            >
+                                                                            
 
                                                                             <span
                                                                                 class="input-group-text">₹</span>
@@ -342,6 +339,25 @@ $user = Auth::user();
                                                                             <span
                                                                                 class="input-group-text">₹</span>
                                                                         </div>
+
+                                                                        {{-- marketstoploss input --}}
+                                                                        <div id="targetpriceblock1{{ $i }}"
+                                                                            style="display: none"
+                                                                            class="input-group mb-3">
+                                                                            <span class="input-group-text">Target Price
+                                                                                </span>
+                                                                            <input id="targetprice1{{ $i }}"
+                                                                                name="targetprice1{{ $i }}"
+                                                                                disabled type="hidden"
+                                                                                class="form-control"
+                                                                                placeholder="Enter price"
+                                                                               >
+
+                                                                            <span
+                                                                                class="input-group-text">₹</span>
+                                                                        </div>
+
+                                                                       
 
                                                                         <div class=""
                                                                             style="display: flex; justify-content:space-between; gap:20px;">
@@ -384,6 +400,22 @@ $user = Auth::user();
                                                                                 class="form-label">Mode</label>
                                                                             <div
                                                                                 class="d-flex align-items-center gap-3">
+                                                                                 <!-- Intraday Mode Radio Button -->
+                                                                                 <div class="form-check">
+                                                                                    <input
+                                                                                        class="form-check-input"
+                                                                                        type="radio"
+                                                                                        name="tradeMode1{{ $i }}"
+                                                                                        id="intradayMode1{{ $i }}"
+                                                                                        value="intraday"
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')"
+                                                                                        checked>
+                                                                                    <label
+                                                                                        class="form-check-label"
+                                                                                        for="intradayMode1{{ $i }}">
+                                                                                        Intraday Mode
+                                                                                    </label>
+                                                                                </div>
                                                                                 <!-- Delivery Mode Radio Button -->
                                                                                 <div class="form-check">
                                                                                     <input
@@ -393,7 +425,7 @@ $user = Auth::user();
                                                                                         id="deliveryMode1{{ $i }}"
                                                                                         value="delivery"
                                                                                         onchange="handleTradeModeChange({{ $i }}, 'delivery')"
-                                                                                        checked>
+                                                                                        >
                                                                                     <label
                                                                                         class="form-check-label"
                                                                                         for="deliveryMode1{{ $i }}">
@@ -401,21 +433,7 @@ $user = Auth::user();
                                                                                     </label>
                                                                                 </div>
 
-                                                                                <!-- Intraday Mode Radio Button -->
-                                                                                <div class="form-check">
-                                                                                    <input
-                                                                                        class="form-check-input"
-                                                                                        type="radio"
-                                                                                        name="tradeMode1{{ $i }}"
-                                                                                        id="intradayMode1{{ $i }}"
-                                                                                        value="intraday"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')">
-                                                                                    <label
-                                                                                        class="form-check-label"
-                                                                                        for="intradayMode1{{ $i }}">
-                                                                                        Intraday Mode
-                                                                                    </label>
-                                                                                </div>
+                                                                               
                                                                             </div>
                                                                         </div>
 

@@ -375,6 +375,8 @@ $user = Auth::user();
             var type = form.attr('method');
 
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+            console.log(formData);
+            
 
 
             const id = formData.id;
@@ -382,7 +384,7 @@ $user = Auth::user();
 
             let data = {
                 instrumentKey: formData[`instrumentKey1${id}`],
-                orderType: formData[`orderType1${id}`],
+                orderType: formData[`active1${id}`],
                 // quantity:formData[`quantity1${id}`],
                 price: formData[`realprice1${id}`],
                 limitPrice: formData[`limitprice1${id}`],
@@ -958,64 +960,145 @@ $user = Auth::user();
 
         // Buy Sell Feature Start 
 
+        // function handleOrderTypeChange(id, orderType, tradeType) {
+
+        //     if (tradeType === 'sell') {
+        //         const priceInput = document.getElementById("realprice2" + id);
+        //         const limitprice = document.getElementById("limitprice2" + id);
+        //         const limitblock = document.getElementById("limitblock2" + id);
+        //         if (orderType === 'limit') {
+        //             // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+        //             limitblock.style.display = 'flex';
+        //             limitprice.setAttribute("type", "text");
+        //             limitprice.value = priceInput.value; // Copy the value
+        //             priceInput.disabled = false; // Enable input
+        //             limitprice.disabled = false; // Enable input
+        //         } else if (orderType === 'market') {
+        //             // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+        //             priceInput.setAttribute("type", "text");
+        //             limitprice.setAttribute("type", "hidden");
+        //             limitblock.style.display = 'none';
+        //             priceInput.disabled = true; // Disable input
+        //             limitprice.disabled = true; // Disable input
+        //         } else if (orderType === 'stoploss') {
+        //             // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+        //             priceInput.setAttribute("type", "text");
+        //             limitprice.setAttribute("type", "hidden");
+        //             priceInput.disabled = false; // Enable input
+        //             limitprice.disabled = true; // Disable input
+        //         }
+        //     } else {
+        //         const priceInput = document.getElementById("realprice1" + id);
+        //         const limitprice = document.getElementById("limitprice1" + id);
+        //         const limitblock = document.getElementById("limitblock1" + id);
+
+        //         if (orderType === 'limit') {
+        //             // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
+        //             // priceInput.setAttribute("type", "hidden");
+        //             limitprice.setAttribute("type", "text");
+        //             limitblock.style.display = 'flex';
+        //             limitprice.value = priceInput.value; // Copy the value
+        //             priceInput.disabled = false; // Enable input
+        //             limitprice.disabled = false; // Enable input
+        //         } else if (orderType === 'market') {
+        //             // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+        //             // priceInput.setAttribute("type", "text");
+        //             limitprice.setAttribute("type", "hidden");
+        //             limitblock.style.display = 'none';
+        //             priceInput.disabled = true; // Disable input
+        //             limitprice.disabled = true; // Disable input
+        //         } else if (orderType === 'stoploss') {
+        //             // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
+        //             // priceInput.setAttribute("type", "text");
+        //             limitprice.setAttribute("type", "hidden");
+        //             priceInput.disabled = false; // Enable input
+        //             limitprice.disabled = true; // Disable input
+        //         }
+        //     }
+        // }
+
         function handleOrderTypeChange(id, orderType, tradeType) {
+    // Define all button IDs dynamically
+    const buttons = [
+        `marketBtn${id}`,
+        `limitBtn${id}`,
+        `stoplossMarketBtn${id}`,
+        `stoplossLimitBtn${id}`
+    ];
 
-            if (tradeType === 'sell') {
-                const priceInput = document.getElementById("realprice2" + id);
-                const limitprice = document.getElementById("limitprice2" + id);
-                const limitblock = document.getElementById("limitblock2" + id);
-                if (orderType === 'limit') {
-                    // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                    limitblock.style.display = 'flex';
-                    limitprice.setAttribute("type", "text");
-                    limitprice.value = priceInput.value; // Copy the value
-                    priceInput.disabled = false; // Enable input
-                    limitprice.disabled = false; // Enable input
-                } else if (orderType === 'market') {
-                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    priceInput.setAttribute("type", "text");
-                    limitprice.setAttribute("type", "hidden");
-                    limitblock.style.display = 'none';
-                    priceInput.disabled = true; // Disable input
-                    limitprice.disabled = true; // Disable input
-                } else if (orderType === 'stoploss') {
-                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    priceInput.setAttribute("type", "text");
-                    limitprice.setAttribute("type", "hidden");
-                    priceInput.disabled = false; // Enable input
-                    limitprice.disabled = true; // Disable input
-                }
-            } else {
-                const priceInput = document.getElementById("realprice1" + id);
-                const limitprice = document.getElementById("limitprice1" + id);
-                const limitblock = document.getElementById("limitblock1" + id);
-
-                if (orderType === 'limit') {
-                    // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-                    // priceInput.setAttribute("type", "hidden");
-                    limitprice.setAttribute("type", "text");
-                    limitblock.style.display = 'flex';
-                    limitprice.value = priceInput.value; // Copy the value
-                    priceInput.disabled = false; // Enable input
-                    limitprice.disabled = false; // Enable input
-                } else if (orderType === 'market') {
-                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    // priceInput.setAttribute("type", "text");
-                    limitprice.setAttribute("type", "hidden");
-                    limitblock.style.display = 'none';
-                    priceInput.disabled = true; // Disable input
-                    limitprice.disabled = true; // Disable input
-                } else if (orderType === 'stoploss') {
-                    // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-                    // priceInput.setAttribute("type", "text");
-                    limitprice.setAttribute("type", "hidden");
-                    priceInput.disabled = false; // Enable input
-                    limitprice.disabled = true; // Disable input
-                }
-            }
+    // Reset all buttons to outline-primary and remove active state
+    buttons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            btn.classList.remove("btn-primary", "active");
+            btn.classList.add("btn-outline-primary");
+            btn.removeAttribute("name"); // Remove name attribute from inactive buttons
         }
+    });
 
+    // Highlight selected button and add name attribute
+    const selectedBtn = document.getElementById(`${orderType}Btn${id}`);
+    if (selectedBtn) {
+        selectedBtn.classList.remove("btn-outline-primary");
+        selectedBtn.classList.add("btn-primary", "active");
+        selectedBtn.setAttribute("name", `active1${id}`); // Add name attribute to the active button
+    }
 
+    // Handling input fields based on tradeType (Buy/Sell)
+    let priceInput, limitprice, limitblock, marketstoplossInput, marketstoplossblock, limitstoplossInput, limitstoplossblock;
+
+    if (tradeType === 'sell') {
+        priceInput = document.getElementById(`realprice2${id}`);
+        limitprice = document.getElementById(`limitprice2${id}`);
+        limitblock = document.getElementById(`limitblock2${id}`);
+        targetpriceInput = document.getElementById(`targetprice2${id}`);
+        targetpriceblock = document.getElementById(`targetpriceblock2${id}`);
+       
+    } else {
+        priceInput = document.getElementById(`realprice1${id}`);
+        limitprice = document.getElementById(`limitprice1${id}`);
+        limitblock = document.getElementById(`limitblock1${id}`);
+        targetpriceInput = document.getElementById(`targetprice1${id}`);
+        targetpriceblock = document.getElementById(`targetpriceblock1${id}`);
+       }
+
+    console.log(priceInput, limitprice, limitblock, targetpriceInput, targetpriceblock);
+
+    // Hide all input blocks initially
+    limitblock.style.display = 'none';
+    targetpriceblock.style.display = 'none';
+
+    // Handle different order types
+    if (orderType === 'limit') {
+        limitblock.style.display = 'flex';
+        limitprice.setAttribute("type", "text");
+        limitprice.value = priceInput.value; // Copy value
+        priceInput.disabled = false;
+        limitprice.disabled = false;
+        targetpriceInput.disabled = true;
+    } else if (orderType === 'market') {
+        priceInput.setAttribute("type", "text");
+        limitprice.setAttribute("type", "hidden");
+        priceInput.disabled = true;
+        limitprice.disabled = true;
+        targetpriceInput.disabled = true;
+    } else if (orderType === 'stoplossMarket') {
+        targetpriceblock.style.display = 'flex';
+        targetpriceInput.setAttribute("type", "text");
+        priceInput.disabled = false;
+        limitprice.disabled = false;
+        targetpriceInput.disabled = false;
+    } else if (orderType === 'stoplossLimit') {
+        targetpriceblock.style.display = 'flex';
+        targetpriceInput.setAttribute("type", "text");
+        limitblock.style.display = 'flex';
+        limitprice.setAttribute("type", "text");
+        limitprice.value = priceInput.value; // Copy value
+        priceInput.disabled = false;
+        limitprice.disabled = false;
+        targetpriceInput.disabled = false;
+    }
+}
 
         function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
 
