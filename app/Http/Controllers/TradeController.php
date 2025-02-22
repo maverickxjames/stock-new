@@ -14,11 +14,18 @@ class TradeController extends Controller
 
     public function placeBuyOrder(Request $r)
     {
+        // return $r;
         $orderId = "buy_".uniqid();
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
         $orderType = $r->orderType;
         $limitPrice = $r->limitPrice;
+        if ($r->targetPrice!=null) {
+            $targetPrice = $r->targetPrice;
+        } else {
+            $targetPrice = 0;
+        }
+        // return $targetPrice;
         $price = $r->price;
         $tradeType = $r->tradeType;
         $user = Auth::user();
@@ -34,8 +41,8 @@ class TradeController extends Controller
                 $end_time = strtotime('15:30:00');
                 $current_time = strtotime(date('H:i:s'));
 
-                // if (false) {
-                if ($current_time < $start_time || $current_time > $end_time) {
+                if (false) {
+                // if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                     exit;
                 } else {
@@ -69,7 +76,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'processing';
+                                    $trade->status = 'executed';
                                     $trade->save();
 
 
@@ -107,7 +114,87 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'pending';
+                                    $trade->status = 'processing';
+                                    $trade->save();
+
+
+                                    echo json_encode(['status' => 'success', 'message' => 'Order placed']);
+                                } else {
+                                    echo json_encode(['status' => 'error', 'message' => 'Insufficient balance']);
+                                }
+                            }
+                        } elseif($orderType=='stoplossMarket'){
+                            $margin = 500;
+                            $quantity = $lotSize * $stockData[0]->lotSize;
+                            $cost = $quantity * $price;
+                            $total_cost = $cost / $margin;
+                            
+
+                            if ($tradeType == 'delivery' || $tradeType == 'intraday') {
+                                if ($user->real_wallet >= $total_cost) {
+                                    $user->wallet = $user->real_wallet - $total_cost;
+                                    $updateBalance = DB::table('users')->where('id', $user->id)->update(['real_wallet' => $user->wallet]);
+
+                                    $trade = new trade();
+                                    // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
+                                    $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
+                                    $trade->stock_symbol = $stockData[0]->assetSymbol;
+                                    $trade->stock_name = $stockData[0]->tradingSymbol;
+                                    $trade->instrumentKey = $stockData[0]->instrumentKey;
+                                    $trade->expiry = $stockData[0]->expiry;
+                                    $trade->action = 'BUY';
+                                    $trade->order_type = $orderType;
+                                    $trade->tradeType = 'FUT';
+                                    $trade->duration = $tradeType;
+                                    $trade->price = $price;
+                                    $trade->stop_loss = $targetPrice;
+                                    $trade->quantity = $quantity;
+                                    $trade->lotSize = $lotSize;
+                                    $trade->margin = $margin;
+                                    $trade->cost = $cost;
+                                    $trade->total_cost = $total_cost;
+                                    $trade->status = 'executed';
+                                    $trade->save();
+
+
+
+                                    echo json_encode(['status' => 'success', 'message' => 'Order placed']);
+                                } else {
+                                    echo json_encode(['status' => 'error', 'message' => 'Insufficient balance']);
+                                }
+                            }
+                        } elseif($orderType == 'stoplossLimit'){
+                            $margin = 500;
+                            $quantity = $lotSize * $stockData[0]->lotSize;
+                            $cost = $quantity * $limitPrice;
+                            $total_cost = $cost / $margin;
+
+                            if ($tradeType == 'delivery' || $tradeType == 'intraday') {
+                                if ($user->real_wallet >= $total_cost) {
+                                    $user->wallet = $user->real_wallet - $total_cost;
+                                    $updateBalance = DB::table('users')->where('id', $user->id)->update(['real_wallet' => $user->wallet]);
+
+                                    $trade = new trade();
+                                    // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
+                                    $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
+                                    $trade->stock_symbol = $stockData[0]->assetSymbol;
+                                    $trade->stock_name = $stockData[0]->tradingSymbol;
+                                    $trade->instrumentKey = $stockData[0]->instrumentKey;
+                                    $trade->expiry = $stockData[0]->expiry;
+                                    $trade->action = 'BUY';
+                                    $trade->order_type = $orderType;
+                                    $trade->tradeType = 'FUT';
+                                    $trade->duration = $tradeType;
+                                    $trade->price = $limitPrice;
+                                    $trade->stop_loss = $targetPrice;
+                                    $trade->quantity = $quantity;
+                                    $trade->lotSize = $lotSize;
+                                    $trade->margin = $margin;
+                                    $trade->cost = $cost;
+                                    $trade->total_cost = $total_cost;
+                                    $trade->status = 'processing';
                                     $trade->save();
 
 

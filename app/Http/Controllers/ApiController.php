@@ -43,8 +43,8 @@ class ApiController extends Controller
             }
         
             $data = $response->json();
-            // echo "<pre>";
-            // print_r($data);
+
+           
          
             // array merge 
             // $newArray = array_merge($newArray, $data);
@@ -60,9 +60,7 @@ class ApiController extends Controller
         
 
 return response()->json([
-    'total_records' => "Total Records: " . count($newArray['data']),
-    'message' => 'Stocks data updated successfully.',
-    'data' => $newArray['data']
+    'data' => $newArray['data']['data']
 ], 200);
 
     }

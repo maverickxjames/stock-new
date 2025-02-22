@@ -37,6 +37,7 @@ $user = Auth::user();
 
     <meta name="twitter:image" content="social-image.png">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -230,9 +231,11 @@ $user = Auth::user();
 
         <!--Sidebar start-->
         <x-sidebar />
+
+        <x-footer-menu />
         <!--Sidebar end-->
 
-        {{-- @php 
+        {{-- @php
         $fetch = $fetch->toArray();
         print_r($fetch);
         @endphp --}}
@@ -733,7 +736,6 @@ $user = Auth::user();
     <script>
         let activeFilter = 'ALL';
         let activeFilterCP = 'ALL';
-        let mode = 'delivery';
 
         function setActiveFilter(selectedButton, filterName) {
             const buttons = document.querySelectorAll('.filter');
@@ -788,13 +790,7 @@ $user = Auth::user();
             return activeFilterCP;
         }
 
-        function handleTradeModeChange(id, tradeMode) {
-            mode = tradeMode;
-        }
-
-        function getTradeMode() {
-            return mode;
-        }
+        
 
 
 
@@ -1119,7 +1115,59 @@ $user = Auth::user();
         if (priceInput) priceInput.disabled = false;
     }
 }
+        function getMarginValue(instrumentType, selectedMode) {
+            if (instrumentType == 'FUT' && selectedMode == 'intraday') {
+                return 500;
+            } else if (instrumentType == 'FUT' && selectedMode == 'delivery') {
+                return 50;
+            } else if (instrumentType == 'CE' || instrumentType == 'PE') {
+                return 7;
+            } else {
+                return 0;
+            }
+        }
 
+        function updateColors(wallet, mcp, uniqueId, tradeType) {
+            const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const errorFund = document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+
+            if (wallet >= mcp) {
+                maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                marginCost.style.color = 'green';
+                errorFund.style.display = 'none';
+            } else {
+                maxPrice.style.color = 'red';
+                marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
+                errorFund.style.display = 'block';
+            }
+        }
+
+        function handleTradeModeChange(uniqueId, selectedMode, tradeType) {
+            const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginUsed=document.getElementById('marginUsed'+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const instrumentType = document.getElementById('instrumentType' + uniqueId).value;
+
+            let margin = getMarginValue(instrumentType, selectedMode);
+            let realPriceValue = parseFloat(realPrice.value) || 0;
+            let lotValue = parseInt(lotInput.value) || 1; // Default to 1 if empty
+            let quantityValue = parseInt(quantity.value) || 1;
+
+            if (lotInput && realPriceValue) {
+                let cp = (realPriceValue * lotValue * quantityValue).toFixed(2);
+                let mcp = ((realPriceValue * lotValue * quantityValue) / margin).toFixed(2);
+
+                marginCost.innerHTML = `₹ ${mcp}`;
+                costPrice.innerHTML = `₹ ${cp}`;
+                marginUsed.innerHTML=`(${margin}x)`;
+            }
+        }
+
+        
         function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
 
             const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
@@ -1128,14 +1176,19 @@ $user = Auth::user();
             const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const selectedMode = document.querySelector(`input[name="tradeMode1${uniqueId}"]:checked`).value;
+            const marginUsed=document.getElementById('marginUsed'+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+           
 
             const instrumentType = document.getElementById('instrumentType' + uniqueId).value;
 
             let margin = 0;
 
-            if (instrumentType == 'FUT') {
+            if (instrumentType == 'FUT' && selectedMode == 'intraday') {
                 margin = 500;
-            } else if (instrumentType == 'CE' || instrumentType == 'PE') {
+            } else if(instrumentType == 'FUT' && selectedMode == 'delivery'){ 
+                margin = 50;
+            }else if (instrumentType == 'CE' || instrumentType == 'PE') {
                 margin = 7;
             } else {
                 margin = 0;
@@ -1155,9 +1208,9 @@ $user = Auth::user();
             let mcp = ((realPriceValue * lotInput.value * quantityPerLot) / margin).toFixed(2);
 
 
-            marginCost.innerHTML = "₹ " + mcp;
-
-            costPrice.innerHTML = " ₹ " + cp;
+            marginCost.innerHTML = `₹ ${mcp}`;
+                costPrice.innerHTML = `₹ ${cp}`;
+                marginUsed.innerHTML=`(${margin}x)`;
 
             // Update color logic
             if (wallet >= mcp) {
@@ -1185,14 +1238,18 @@ $user = Auth::user();
             const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginUsed=document.getElementById('marginUsed'+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const selectedMode = document.querySelector(`input[name="tradeMode1${uniqueId}"]:checked`).value;
 
             const instrumentType = document.getElementById('instrumentType' + uniqueId).value;
 
             let margin = 0;
 
-            if (instrumentType == 'FUT') {
+            if (instrumentType == 'FUT' && selectedMode == 'intraday') {
                 margin = 500;
-            } else if (instrumentType == 'CE' || instrumentType == 'PE') {
+            } else if(instrumentType == 'FUT' && selectedMode == 'delivery'){ 
+                margin = 50;
+            }else if (instrumentType == 'CE' || instrumentType == 'PE') {
                 margin = 7;
             } else {
                 margin = 0;
@@ -1209,9 +1266,10 @@ $user = Auth::user();
                 quantity.value = lotInput.value * quantityPerLot;
                 let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
                 let mcp = ((realPriceValue * lotInput.value * quantityPerLot) / margin).toFixed(2);
-                marginCost.innerHTML = "₹ " + mcp;
 
-                costPrice.innerHTML = "₹ " + cp;
+                marginCost.innerHTML = `₹ ${mcp}`;
+                costPrice.innerHTML = `₹ ${cp}`;
+                marginUsed.innerHTML=`(${margin}x)`;
 
                 // Update color logic
                 if (wallet >= mcp) {
@@ -1534,8 +1592,8 @@ $user = Auth::user();
                 }
             });
     </script>
-    
-    
+
+
 
 
 

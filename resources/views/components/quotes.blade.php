@@ -362,10 +362,11 @@ $user = Auth::user();
 
                                                                         <div class=""
                                                                             style="display: flex; justify-content:space-between; gap:20px;">
-                                                                            <div class="input-group mb-3">
+                                                                            <div class="d-flex flex-column gap-2 w-50">
                                                                                 <span
-                                                                                    class="input-group-text">Lot</span>
-                                                                                <button
+                                                                                    class="fs-5">Lot</span>
+                                                                                    <div class=" input-group mb-3">
+                                                                                        <button
                                                                                     onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy')"
                                                                                     class="btn btn-outline-secondary"
                                                                                     type="button"
@@ -381,10 +382,12 @@ $user = Auth::user();
                                                                                     class="btn btn-outline-secondary"
                                                                                     type="button"
                                                                                     id="increment">+</button>
+                                                                                    </div>
+                                                                                
                                                                             </div>
-                                                                            <div class="input-group mb-3">
+                                                                            <div class="d-flex flex-column gap-2 w-50">
                                                                                 <span
-                                                                                    class="input-group-text">Quantity</span>
+                                                                                    class="fs-5">Quantity</span>
                                                                                 <input type="text"
                                                                                     class="form-control"
                                                                                     placeholder="Enter size"
@@ -409,7 +412,7 @@ $user = Auth::user();
                                                                                         name="tradeMode1{{ $i }}"
                                                                                         id="intradayMode1{{ $i }}"
                                                                                         value="intraday"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')"
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday','buy')"
                                                                                         checked>
                                                                                     <label
                                                                                         class="form-check-label"
@@ -425,7 +428,7 @@ $user = Auth::user();
                                                                                         name="tradeMode1{{ $i }}"
                                                                                         id="deliveryMode1{{ $i }}"
                                                                                         value="delivery"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery')"
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery','buy')"
                                                                                         >
                                                                                     <label
                                                                                         class="form-check-label"
@@ -456,7 +459,7 @@ $user = Auth::user();
                                                                                         Cost: <s
                                                                                             id="costPrice1{{ $i }}"
                                                                                             name="costPrice1{{ $i }}"
-                                                                                            class="px-1">₹0.00</s>
+                                                                                            class="px-1">₹0.00</s><span id="marginUsed1{{ $i }}"></span>
                                                                                     </span>
                                                                                     <span>
                                                                                         After Margin: <span
@@ -549,7 +552,7 @@ $user = Auth::user();
                                                                                 readonly type="text"
                                                                                 class="form-control"
                                                                                 placeholder="Enter price"
-                                                                                value="{{ $stock->ltp }}">
+                                                                                value="{{ $stock->ltp }}"
                                                                             >
 
                                                                             <span
@@ -590,12 +593,13 @@ $user = Auth::user();
                                                                              class="input-group-text">₹</span>
                                                                      </div>
 
-                                                                        <div class=""
+                                                                        <div  class=""
                                                                             style="display: flex; justify-content:space-between; gap:20px;">
-                                                                            <div class="input-group mb-3">
+                                                                            <div class="d-flex gap-2 w-50 flex-column">
                                                                                 <span
-                                                                                    class="input-group-text">Lot</span>
-                                                                                <button
+                                                                                    class="fs-5 ">Lot</span>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <button
                                                                                     onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell')"
                                                                                     class="btn btn-outline-secondary"
                                                                                     type="button"
@@ -611,10 +615,12 @@ $user = Auth::user();
                                                                                     class="btn btn-outline-secondary"
                                                                                     type="button"
                                                                                     id="increment">+</button>
+                                                                                    </div>
+                                                                                
                                                                             </div>
-                                                                            <div class="input-group mb-3">
+                                                                            <div class="d-flex gap-2 flex-column w-50">
                                                                                 <span
-                                                                                    class="input-group-text">Quantity</span>
+                                                                                    class="fs-5">Quantity</span>
                                                                                 <input type="text"
                                                                                     class="form-control"
                                                                                     placeholder="Enter size"
@@ -639,7 +645,7 @@ $user = Auth::user();
                                                                                         name="tradeMode2{{ $i }}"
                                                                                         id="intradayMode2{{ $i }}"
                                                                                         value="intraday"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday')"
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday','sell')"
                                                                                         checked>
                                                                                     <label
                                                                                         class="form-check-label"
@@ -655,7 +661,7 @@ $user = Auth::user();
                                                                                         name="tradeMode2{{ $i }}"
                                                                                         id="deliveryMode2{{ $i }}"
                                                                                         value="delivery"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery')"
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery','sell')"
                                                                                         >
                                                                                     <label
                                                                                         class="form-check-label"
@@ -684,7 +690,7 @@ $user = Auth::user();
                                                                                         Cost: <s
                                                                                             id="costPrice2{{ $i }}"
                                                                                             name="costPrice2{{ $i }}"
-                                                                                            class="px-1">₹0.00</s>
+                                                                                            class="px-1">₹0.00</s><span id="marginUsed2{{ $i }}"></span>
                                                                                     </span>
                                                                                     <span>
                                                                                         After Margin: <span
