@@ -815,10 +815,6 @@ select {
 .m-0 {
   margin: 0px;
 }
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
 .mx-5 {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
@@ -870,9 +866,6 @@ select {
 }
 .mb-4 {
   margin-bottom: 1rem;
-}
-.mb-5 {
-  margin-bottom: 1.25rem;
 }
 .me-0 {
   margin-inline-end: 0px;
@@ -928,14 +921,8 @@ select {
 .ms-3 {
   margin-inline-start: 0.75rem;
 }
-.ms-4 {
-  margin-inline-start: 1rem;
-}
 .ms-5 {
   margin-inline-start: 1.25rem;
-}
-.ms-auto {
-  margin-inline-start: auto;
 }
 .mt-0 {
   margin-top: 0px;
@@ -963,9 +950,6 @@ select {
 }
 .block {
   display: block;
-}
-.inline {
-  display: inline;
 }
 .flex {
   display: flex;
@@ -1079,9 +1063,6 @@ select {
 .cursor-pointer {
   cursor: pointer;
 }
-.resize {
-  resize: both;
-}
 .list-inside {
   list-style-position: inside;
 }
@@ -1136,9 +1117,6 @@ select {
 }
 .overflow-hidden {
   overflow: hidden;
-}
-.text-nowrap {
-  text-wrap: nowrap;
 }
 .rounded {
   border-radius: 0.25rem;
@@ -1235,9 +1213,6 @@ select {
 .p-6 {
   padding: 1.5rem;
 }
-.p-7 {
-  padding: 1.75rem;
-}
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -1257,6 +1232,10 @@ select {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 .py-0 {
   padding-top: 0px;
@@ -1278,6 +1257,10 @@ select {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -1288,17 +1271,8 @@ select {
 .pb-1 {
   padding-bottom: 0.25rem;
 }
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
 .pb-3 {
   padding-bottom: 0.75rem;
-}
-.pb-4 {
-  padding-bottom: 1rem;
-}
-.pe-0 {
-  padding-inline-end: 0px;
 }
 .pe-3 {
   padding-inline-end: 0.75rem;
@@ -1357,9 +1331,6 @@ select {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-.font-bold {
-  font-weight: 700;
 }
 .font-medium {
   font-weight: 500;
@@ -1446,6 +1417,9 @@ select {
 }
 .opacity-100 {
   opacity: 1;
+}
+.opacity-50 {
+  opacity: 0.5;
 }
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
