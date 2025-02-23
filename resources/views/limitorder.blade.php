@@ -171,6 +171,8 @@ use App\Models\Stockdata;
             Sidebar end
         ***********************************-->
 
+        <x-footer-menu />
+
         <!--**********************************
             Content body start
         ***********************************-->
@@ -220,7 +222,7 @@ use App\Models\Stockdata;
                                                     <div class="row">
 
                                                         <?php
-                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'pending')->orderBy('id','DESC')->get();
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->orderBy('id','DESC')->get();
                                                         // print_r($stocks);
                                                         $i = 1;
                                                

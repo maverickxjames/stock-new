@@ -171,6 +171,8 @@ use App\Models\Stockdata;
             Sidebar end
         ***********************************-->
 
+        <x-footer-menu />
+
         <!--**********************************
             Content body start
         ***********************************-->
@@ -206,7 +208,7 @@ use App\Models\Stockdata;
                                 </nav>
                             </div>
                             <?php 
-                            $count = DB::table('trades')->where('user_id', $user->id)->where('status', 'pending')->count();
+                            $count = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->count();
                             ?>
 
                             <div style="margin: 0 14px"
