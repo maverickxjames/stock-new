@@ -262,6 +262,8 @@
         ***********************************-->
         <x-sidebar />
 
+        <x-footer-menu />
+
 
 
         <div class="content-body">

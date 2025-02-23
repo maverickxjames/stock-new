@@ -266,7 +266,7 @@ $user = Auth::user();
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
         style="width: 1200px">
         <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+            <h5 id="offcanvasRightLabel">Add Your Script</h5>
             <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
                 style="border: none">
                 <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt="">

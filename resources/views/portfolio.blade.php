@@ -158,6 +158,7 @@
         <!--**********************************
             Sidebar end
         ***********************************-->
+        <x-footer-menu />
 
         <!--**********************************
             Content body start
@@ -220,6 +221,18 @@
                                             aria-controls="nav-opt" aria-selected="false">Option</button>
                                     </div>
                                 </nav>
+                            </div>
+                            <?php 
+                            $count = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->count();
+                            ?>
+
+                            <div style="margin: 0 14px"
+                                class="alert alert-warning alert-dismissible alert-alt solid fade show">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                </button>
+                                <strong>! Warning</strong> You have <span class="badge badge-pill badge-danger">{{
+                                    $count }}</span> pending orders. <a href="{{ route('limitOrder') }}"
+                                    class="badge badge-dark">View</a>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="nav-tabContent1">
