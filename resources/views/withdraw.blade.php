@@ -270,7 +270,7 @@
             <div class="container-fluid">
                 <div class="container mt-5">
                     @php
-                        $settings = setting::where('id', 1)->first();
+                        $settings = Setting::where('id', 1)->first();
                     @endphp
                     <!-- Withdraw Notice Alert Box -->
                     <div class="alert alert-info" role="alert"

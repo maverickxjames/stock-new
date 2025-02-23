@@ -140,8 +140,8 @@ class AdminController extends Controller
         $rType = $request->r_type;
 
         if ($rType === 'confirm') {
-            $updated = deposit::where('order_id', $txnId)->where('status', 0)->update(['status' => 1], ['remark' => 'Deposit Request Approved']);
-            $deposit = deposit::where('order_id', $txnId)->where('status', 1)->first();
+            $updated = Deposit::where('order_id', $txnId)->where('status', 0)->update(['status' => 1], ['remark' => 'Deposit Request Approved']);
+            $deposit = Deposit::where('order_id', $txnId)->where('status', 1)->first();
 
             $user = User::find($deposit->userid);
             $user->real_wallet += $deposit->amount;
@@ -153,7 +153,7 @@ class AdminController extends Controller
                 echo "error";
             }
         } else {
-            $deposit = deposit::where('order_id', $txnId)->where('status', 0)->first();
+            $deposit = Deposit::where('order_id', $txnId)->where('status', 0)->first();
 
             if (!$deposit) {
                 echo "error";
@@ -182,7 +182,7 @@ class AdminController extends Controller
         $rType = $request->r_type;
 
         if ($rType === 'confirm') {
-            $updated = withdraw::where('txnid', $txnId)
+            $updated = Withdraw::where('txnid', $txnId)
                 ->where('status', 0)
                 ->update([
                     'status' => 1,
@@ -197,7 +197,7 @@ class AdminController extends Controller
                 echo "error";
             }
         } else {
-            $withdraw = withdraw::where('txnid', $txnId)->where('status', 0)->first();
+            $withdraw = Withdraw::where('txnid', $txnId)->where('status', 0)->first();
 
             $user = User::find($withdraw->userid);
             $user->withdraw_wallet += $withdraw->amount;
