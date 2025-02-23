@@ -22,6 +22,8 @@ use App\Providers\Helper;
 use Illuminate\Support\Facades\DB;
 // import model wathclist
 use App\Models\Watchlist;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class WatchlistController extends Controller
 {
@@ -70,6 +72,15 @@ class WatchlistController extends Controller
         if ($query) {
             // quote-channel event trigger
             event(new QuoteChannel(auth()->id(), 'add'));
+            
+            // Restart Supervisor process
+        $process = new Process(['sudo', 'supervisorctl', 'restart', 'marketdata']);
+        $process->run();
+        
+            // Check if the process failed
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
 
             return response()->json([
                 'success' => true,
