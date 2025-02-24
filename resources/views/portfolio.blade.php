@@ -269,7 +269,8 @@
                                                             MIN(future_temp.ltp) as ltp,
                                                             MIN(future_temp.cp) as cp,
                                                             MIN(trades.margin) as margin,
-                                                            MIN(trades.price) as price
+                                                            MIN(trades.price) as price,
+                                                            MIN(trades.order_type) as order_type
 
                                                         ')
                                                         ->groupBy('trades.instrumentKey', 'trades.duration')
@@ -613,7 +614,19 @@
                                                                             <span class="badge badge-dark ml-1">
                                                                                 Intraday</span>
                                                                         @endif
-                                                                        <span class="badge badge-primary light">{{ $stock->tradeType }}</span>
+                                                                        @if($stock->order_type=='market')
+                                                                            <span class="badge badge-primary ml-1 light">
+                                                                                Market</span>
+                                                                        @elseif($stock->order_type=='limit')
+                                                                            <span class="badge badge-warning ml-1 light">
+                                                                                Limit</span>
+                                                                        @elseif($stock->order_type=='stoplossMarket')
+                                                                            <span class="badge badge-danger ml-1 light">
+                                                                                SL Market</span>
+                                                                        @elseif($stock->order_type=='stoplossLimit')
+                                                                            <span class="badge badge-info ml-1 light">
+                                                                                SL Limit</span>
+                                                                        @endif  
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 

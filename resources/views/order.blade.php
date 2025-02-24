@@ -1,5 +1,5 @@
 @php
-$user = Auth::user();
+    $user = Auth::user();
 @endphp
 
 <?php
@@ -190,14 +190,14 @@ use App\Models\Stockdata;
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
                                         <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all"
-                                            aria-selected="true">ALL</button>
+                                            data-bs-target="#nav-all" type="button" role="tab"
+                                            aria-controls="nav-all" aria-selected="true">ALL</button>
                                         <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-fut" type="button" role="tab" aria-controls="nav-fut"
-                                            aria-selected="false">OPEN</button>
+                                            data-bs-target="#nav-fut" type="button" role="tab"
+                                            aria-controls="nav-fut" aria-selected="false">OPEN</button>
                                         <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-opt" type="button" role="tab" aria-controls="nav-opt"
-                                            aria-selected="false">CLOSED</button>
+                                            data-bs-target="#nav-opt" type="button" role="tab"
+                                            aria-controls="nav-opt" aria-selected="false">CLOSED</button>
                                         {{-- <button class="nav-link" id="nav-mcx-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-mcx" type="button" role="tab" aria-controls="nav-mcx"
                                             aria-selected="false">MCX</button>
@@ -207,18 +207,7 @@ use App\Models\Stockdata;
                                     </div>
                                 </nav>
                             </div>
-                            <?php 
-                            $count = DB::table('trades')->where('user_id', $user->id)->where('status', 'processing')->count();
-                            ?>
-
-                            <div style="margin: 0 14px"
-                                class="alert alert-warning alert-dismissible alert-alt solid fade show">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-                                </button>
-                                <strong>! Warning</strong> You have <span class="badge badge-pill badge-danger">{{
-                                    $count }}</span> pending orders. <a href="{{ route('limitOrder') }}"
-                                    class="badge badge-dark">View</a>
-                            </div>
+                           
 
 
 
@@ -240,32 +229,6 @@ use App\Models\Stockdata;
                                                         <?php
                                                         $stocks = DB::table('trades')->where('user_id', $user->id)->orderBy('id','DESC')->get();
 
-                                                        $trades = DB::table('trades')
-                                                        ->where('trades.user_id', $user->id)
-                                                        // ->where('trades.status', 'executed')
-                                                        ->leftJoin('future_temp', 'future_temp.instrumentKey', '=', 'trades.instrumentKey') // Join future_temp table
-                                                        ->selectRaw('
-                                                            trades.instrumentKey,
-                                                            SUM(trades.quantity) as quantity,
-                                                            AVG(trades.price) as avg_price,
-                                                            MIN(trades.stock_name) as stock_name,
-                                                            MIN(trades.stock_symbol) as stock_symbol,
-                                                            MIN(trades.action) as action,
-                                                            MIN(trades.tradeType) as tradeType,
-                                                            MIN(trades.duration) as duration,
-                                                            SUM(trades.total_cost) as total_cost,
-                                                            SUM(trades.cost) as cost,
-                                                            SUM(trades.lotSize) as lotSize,
-                                                            MIN(trades.created_at) as created_at,
-                                                            MIN(trades.tradeType) as tradeType,
-                                                            MIN(future_temp.ltp) as ltp,
-                                                            MIN(future_temp.cp) as cp,
-                                                            MIN(trades.margin) as margin,
-                                                            MIN(trades.price) as price
-
-                                                        ')
-                                                        ->groupBy('trades.instrumentKey', 'trades.duration')
-                                                        ->get();
                                                         $i = 1;
                                                
 
@@ -273,36 +236,247 @@ use App\Models\Stockdata;
                                                             $foisin = $stock->instrumentKey;
                                                         ?>
 
+                                                        <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                                                            id="orderoffcanvasBottom1{{ $i }}"
+                                                            aria-labelledby="offcanvasBottomLabel"
+                                                            style="height: fit-content">
+                                                            <div class="offcanvas-header">
+                                                                <div class="d-flex flex-column">
+                                                                    <h5 class="offcanvas-title"
+                                                                        id="offcanvasBottomLabel{{ $i }}">
+                                                                        {{ $stock->stock_name }}
+                                                                    </h5>
+                                                                 
+                                                                </div>
+                                                                <button type="button" class=" text-reset"
+                                                                    data-bs-dismiss="offcanvas" aria-label="Close"
+                                                                    style="border: none">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                                        width="24" alt="">
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="offcanvas-body small">
+                                                                <div class="row">
+                                                                    <div class="col-xl-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header flex-wrap">
+                                                                                <nav class=""
+                                                                                    style="width: 100%;">
+                                                                                    <div class="nav nav-pills light "
+                                                                                        id="nav-tab" role="tablist">
+                                                                                        <button
+                                                                                            class="nav-link active "
+                                                                                            style="width: 100%;"
+                                                                                            id="nav-order-tab"
+                                                                                            data-bs-toggle="tab"
+                                                                                            data-bs-target="#nav-order"
+                                                                                            type="button"
+                                                                                            role="tab"
+                                                                                            aria-selected="true">Order
+                                                                                            Info</button>
+                                                                                    </div>
+                                                                                </nav>
+                                                                            </div>
+                                                                          
+                                                                                <div
+                                                                                    class="table-responsive dataTabletrade">
+                                                                                   
+                                                                                    <div class="col-xl-4"
+                                                                                        style="width: 100%;">
+                                                                                        <div class="card">
+                                                                                            <div class="card-body">
+                                                                                               
+
+
+                                                                                                <!-- Stock Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Initial
+                                                                                                        Investment:
+                                                                                                        ₹
+                                                                                                        {{ number_format($stock->cost, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Margin
+                                                                                                        Utilized:₹{{ number_format($stock->cost - $stock->total_cost, 2) }}({{ $stock->margin }}x)
+                                                                                                    </p>
+                                                                                                </div>
+
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                    align-items-center px-3 py-2 bg-light">
+                                                                                                        Adjusted
+                                                                                                        Investment:
+                                                                                                        ₹
+                                                                                                        {{ number_format($stock->total_cost, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <!-- Lot & Quantity -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Lot Size:{{ $stock->lotSize }}
+                                                                                                    </p>
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Quantity:{{ number_format($stock->quantity, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                              
+                                                                                                @if($stock->status=='closed' || $stock->status=='force_closed')
+
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    <p class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light"
+                                                                                                        id="marketPrice1{{ $i }}">
+                                                                                                        Exit
+                                                                                                        Price:
+                                                                                                        {{ number_format($stock->exit_price, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                         {{ $stock->profit_loss > 0 ? 'Net Gain' : 'Net Loss' }}:₹  {{ number_format($stock->profit_loss, 2) }}({{ $stock->profit_loss_percentage }}%)
+                                                                                                    </p>
+                                                                                                         
+                                                                                                   
+                                                                                                </div>
+
+                                                                                                @elseif($stock->status=='processing')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    @if($stock->order_type=='limit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Limit Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    @elseif($stock->order_type=='stoplossLimit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Limit Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    @endif
+
+                                                                                                    @if($stock->order_type=='stoplossMarket' || $stock->order_type=='stoplossLimit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Auto Close Price:{{ number_format($stock->stop_loss, 2) }}
+                                                                                                    </p>
+                                                                                                    @endif
+                                                                                                </div>
+                                                                                                @elseif($stock->status=='executed')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    
+                                                                                                </div>
+                                                                                                @elseif($stock->status=='cancelled')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                   
+                                                                                                </div>
+                                                                                                @endif
+                                                                                                <!-- Trade Type -->
+
+
+                                                                                               @if($stock->status=='processing')
+                                                                                                <div
+                                                                                                    class="mt-3 d-flex justify-content-between">
+                                                                                                    <button
+                                                                                                        onclick="cancelOrder('{{ $foisin }}', '{{ $stock->duration }}', '{{ $stock->action }}',{{ $i }},1)"
+                                                                                                        type="submit"
+                                                                                                        class="btn btn-primary btn-sm text-uppercase btn-block">Cancel Order</button>
+                                                                                                </div>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+
+
+                                                                                </div>
+
+                                                                            {{-- </div> --}}
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
 
 
 
-                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+
+
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"  data-bs-toggle="modal"
+                                                        onclick="showOrderForm(1,{{ $i }})">
                                                             <div class="card pull-up"
                                                                 style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
                                                                 <div class="card-body align-items-center flex-wrap">
                                                                     <p
                                                                         class="mb-0 fs-5 font-w500 d-flex align-items-center">
                                                                         @if ($stock->action == 'BUY')
-                                                                        <span class="badge badge-success me-2">
-                                                                            {{ $stock->action }}</span>
+                                                                            <span class="badge badge-success me-2">
+                                                                                {{ $stock->action }}</span>
                                                                         @else
-                                                                        <span class="badge badge-danger me-2">
-                                                                            {{ $stock->action }}</span>
+                                                                            <span class="badge badge-danger me-2">
+                                                                                {{ $stock->action }}</span>
                                                                         @endif
                                                                         @if ($stock->duration == 'delivery')
-                                                                        <span class="badge badge-light ml-2">
-                                                                            Delivery</span>
+                                                                            <span class="badge badge-light ml-2">
+                                                                                Delivery</span>
                                                                         @else
-                                                                        <span class="badge badge-dark ml-1">
-                                                                            Intraday</span>
+                                                                            <span class="badge badge-dark ml-1">
+                                                                                Intraday</span>
                                                                         @endif
-                                                                        <span class="badge badge-primary light">{{ $stock->tradeType }}</span>
+                                                                        <span
+                                                                            class="badge badge-primary light">{{ $stock->tradeType }}</span>
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 
                                                                         <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
-                                                                            alt="" width=30 style="border-radius: 100%">
+                                                                            alt="" width=30
+                                                                            style="border-radius: 100%">
                                                                         <div class="ms-2">
                                                                             <a href="javascript:void(0)">
                                                                                 <h4 class="card-title mb-0"
@@ -312,14 +486,13 @@ use App\Models\Stockdata;
 
                                                                                 </h4>
                                                                                 <span>
-                                                                                    @if ($stock->order_type == 'market')
-                                                                                    Market Order
-                                                                                    @elseif ($stock->order_type == 'limit')
-                                                                                    Limit Order
-                                                                                    @elseif ($stock->order_type == 'stoplossMarket')
-                                                                                    Stoploss Market Order
-                                                                                    @elseif ($stock->order_type == 'stoplossLimit')
-                                                                                    Stoploss Limit Order
+                                                                                    @if ($stock->order_type == 'market') Market Order
+                                                                                    @elseif($stock->order_type == 'limit')
+                                                                                        Limit Order
+                                                                                        @elseif($stock->order_type == 'stoplossMarket')
+                                                                                        Stoploss Market Order
+                                                                                        @elseif($stock->order_type == 'stoplossLimit')
+                                                                                        Stoploss Limit Order
                                                                                     @endif
                                                                                 </span>
                                                                             </a>
@@ -327,16 +500,14 @@ use App\Models\Stockdata;
                                                                                 style="position: absolute;top: 10px;right: 14px;">
 
                                                                                 <p class="text-muted mb-1 fs-13">
-                                                                                    {{
-                                                                                    \Carbon\Carbon::parse($stock->created_at)->diffForHumans()
-                                                                                    }}</br>
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}</br>
 
                                                                                     <?php
                                                                                     if($stock->duration=='intraday'){
                                                                                         ?>
-                                                                                    Valid Till : {{
-                                                                                    \Carbon\Carbon::parse($stock->created_at)->addDays(1)->format('d
-                                                                                    M, Y') }}
+                                                                                    Valid Till :
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->addDays(1)->format('d
+                                                                                                                                                                                                                                                            M, Y') }}
                                                                                     <?php
                                                                                     }else{
                                                                                         ?>
@@ -352,55 +523,60 @@ use App\Models\Stockdata;
                                                                     </div>
 
 
-
-
-                                                                    <div class="d-flex align-items-center justify-content-between">
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
                                                                         <div>
                                                                             <?php 
                                                                             switch ($stock->status) {
                                                                                 case 'closed':
                                                                                 case 'force_closed':
                                                                             ?>
-                                                                                    <p class="mb-0 fs-14 text-dark font-w600">
-                                                                                        <span class="<?= $stock->profit_loss > 0 ? 'text-success' : 'text-danger' ?>">
-                                                                                            <?= $stock->profit_loss > 0 ? '+ ₹' . $stock->profit_loss : '- ₹' . abs($stock->profit_loss) ?>
-                                                                                            (<?= abs($stock->profit_loss_percentage) ?>%)
-                                                                                        </span>
-                                                                                    </p>
-                                                                                    <span class="fs-12">Invest Price: ₹ <?= $stock->cost ?></span>
+                                                                            <p class="mb-0 fs-12 text-dark font-w600">
+                                                                                <span
+                                                                                    class="<?= $stock->profit_loss > 0 ? 'text-success' : 'text-danger' ?>">
+                                                                                    <?= $stock->profit_loss > 0 ? '+ ₹' . $stock->profit_loss : '- ₹' . abs($stock->profit_loss) ?>
+                                                                                    (<?= abs($stock->profit_loss_percentage) ?>%)
+                                                                                </span>
+                                                                            </p>
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
                                                                             <?php 
                                                                                     break;
                                                                     
                                                                                 case 'processing': 
                                                                             ?>
-                                                                                  @if($stock->order_type == 'limit')
-                                                                                    <p class="mb-0 fs-14 text-dark font-w600">
-                                                                                        <span class="">Trigger Price : {{ $stock->price }}</span>
-                                                                                    </p>
-                                                                                  @elseif($stock->order_type == 'stoplossMarket')
-                                                                                    <p class="mb-0 fs-14
+                                                                            @if ($stock->order_type == 'limit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12 text-dark font-w600">
+                                                                                    <span class="">Limit Price :
+                                                                                        {{ $stock->price }}</span>
+                                                                                </p>
+                                                                            @elseif($stock->order_type == 'stoplossLimit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12
                                                                                         text-dark font-w600">
-                                                                                        <span class="">Trigger Price : {{ $stock->price }}</span>
-                                                                                    </p>
-                                                                                  @elseif($stock->order_type == 'stoplossLimit')
-                                                                                    <p class="mb-0 fs-14
-                                                                                        text-dark font-w600">
-                                                                                        <span class="">Trigger Price : {{ $stock->price }}</span>
-                                                                                    </p>
-                                                                                    @endif
-                                                                                    
-                                                                                    <span class="fs-12">Invest Price: ₹ <?= $stock->cost ?></span>
+                                                                                    <span class="">Limit Price :
+                                                                                        {{ $stock->price }}</span>
+                                                                                </p>
+                                                                            @endif
+
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
                                                                             <?php 
                                                                                     break;
                                                                     
                                                                                 case 'executed': 
                                                                             ?>
-                                                                                   @if($stock->order_type=='stoplossMarket' || $stock->order_type=='stoplossLimit')
-                                                                                    <p class="mb-0 fs-14 text-dark font-w600">
-                                                                                        <span class="">Auto Close Price : {{ $stock->stop_loss }}</span>
-                                                                                    </p>
-                                                                                    @endif
-                                                                                   <span class="fs-12">Invest Price: ₹ <?= $stock->cost ?></span>
+                                                                            @if ($stock->order_type == 'stoplossMarket' || $stock->order_type == 'stoplossLimit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12 text-dark font-w600">
+                                                                                    <span class="">Auto Close
+                                                                                        Price :
+                                                                                        {{ $stock->stop_loss }}</span>
+                                                                                </p>
+                                                                            @endif
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
                                                                             <?php 
                                                                                     break;
                                                                     
@@ -410,15 +586,15 @@ use App\Models\Stockdata;
                                                                             }
                                                                             ?>
                                                                         </div>
-                                                                    
+
                                                                         <?php
                                                                         // Handling Profit/Loss display
                                                                         $profitLossDisplay = '';
-                                                                    
+                                                                        
                                                                         switch ($stock->status) {
                                                                             case 'closed':
                                                                             case 'force_closed':
-                                                                            $profitLossDisplay = "<span class='text-success'>Closed</span>";
+                                                                                $profitLossDisplay = "<span class='text-success'>Closed</span>";
                                                                                 break;
                                                                             case 'processing':
                                                                                 $profitLossDisplay = "<span class='text-info'>Processing</span>";
@@ -431,16 +607,19 @@ use App\Models\Stockdata;
                                                                                 break;
                                                                         }
                                                                         ?>
-                                                                    
+
                                                                         <div>
-                                                                            <p class="mb-0 fs-5 font-w500 d-flex align-items-center">
-                                                                                <?= $profitLossDisplay; ?>
+                                                                            <p
+                                                                                class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                                <?= $profitLossDisplay ?>
                                                                             </p>
-                                                                            <span class="fs-12">Qty: <?= $stock->lotSize; ?> (<?= $stock->quantity; ?>)</span>
+                                                                            <span class="fs-12">Qty:
+                                                                                <?= $stock->lotSize ?>
+                                                                                (<?= $stock->quantity ?>)</span>
                                                                         </div>
                                                                     </div>
-                                                                    
-                                                               
+
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -464,10 +643,421 @@ use App\Models\Stockdata;
                                             <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
                                                 <div class="d-flex align-items-center justify-content-between"
                                                     style="margin-bottom: 20px">
-                                                    <h4 class="card-title">Stocks : Future</h4>
+                                                    <h4 class="card-title">Stocks : OPEN</h4>
                                                 </div>
 
-                                                
+                                                <div class="col-xl-12">
+                                                    <!-- Row -->
+                                                    <div class="row">
+
+                                                        <?php
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status','processing')->orderBy('id','DESC')->get();
+
+                                                        $i = 1;
+                                               
+
+                                                        foreach ($stocks as $stock){
+                                                            $foisin = $stock->instrumentKey;
+                                                        ?>
+
+                                                        <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                                                            id="orderoffcanvasBottom2{{ $i }}"
+                                                            aria-labelledby="offcanvasBottomLabel"
+                                                            style="height: fit-content">
+                                                            <div class="offcanvas-header">
+                                                                <div class="d-flex flex-column">
+                                                                    <h5 class="offcanvas-title"
+                                                                        id="offcanvasBottomLabel{{ $i }}">
+                                                                        {{ $stock->stock_name }}
+                                                                    </h5>
+                                                                 
+                                                                </div>
+                                                                <button type="button" class=" text-reset"
+                                                                    data-bs-dismiss="offcanvas" aria-label="Close"
+                                                                    style="border: none">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                                        width="24" alt="">
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="offcanvas-body small">
+                                                                <div class="row">
+                                                                    <div class="col-xl-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header flex-wrap">
+                                                                                <nav class=""
+                                                                                    style="width: 100%;">
+                                                                                    <div class="nav nav-pills light "
+                                                                                        id="nav-tab" role="tablist">
+                                                                                        <button
+                                                                                            class="nav-link active "
+                                                                                            style="width: 100%;"
+                                                                                            id="nav-order-tab"
+                                                                                            data-bs-toggle="tab"
+                                                                                            data-bs-target="#nav-order"
+                                                                                            type="button"
+                                                                                            role="tab"
+                                                                                            aria-selected="true">Order
+                                                                                            Info</button>
+                                                                                    </div>
+                                                                                </nav>
+                                                                            </div>
+                                                                          
+                                                                                <div
+                                                                                    class="table-responsive dataTabletrade">
+                                                                                   
+                                                                                    <div class="col-xl-4"
+                                                                                        style="width: 100%;">
+                                                                                        <div class="card">
+                                                                                            <div class="card-body">
+                                                                                               
+
+
+                                                                                                <!-- Stock Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Initial
+                                                                                                        Investment:
+                                                                                                        ₹
+                                                                                                        {{ number_format($stock->cost, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Margin
+                                                                                                        Utilized:₹{{ number_format($stock->cost - $stock->total_cost, 2) }}({{ $stock->margin }}x)
+                                                                                                    </p>
+                                                                                                </div>
+
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                    align-items-center px-3 py-2 bg-light">
+                                                                                                        Adjusted
+                                                                                                        Investment:
+                                                                                                        ₹
+                                                                                                        {{ number_format($stock->total_cost, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <!-- Lot & Quantity -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Lot Size:{{ $stock->lotSize }}
+                                                                                                    </p>
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Quantity:{{ number_format($stock->quantity, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                              
+                                                                                                @if($stock->status=='closed' || $stock->status=='force_closed')
+
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    <p class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light"
+                                                                                                        id="marketPrice1{{ $i }}">
+                                                                                                        Exit
+                                                                                                        Price:
+                                                                                                        {{ number_format($stock->exit_price, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                         {{ $stock->profit_loss > 0 ? 'Net Gain' : 'Net Loss' }}:₹  {{ number_format($stock->profit_loss, 2) }}({{ $stock->profit_loss_percentage }}%)
+                                                                                                    </p>
+                                                                                                         
+                                                                                                   
+                                                                                                </div>
+
+                                                                                                @elseif($stock->status=='processing')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    @if($stock->order_type=='limit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Limit Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    @elseif($stock->order_type=='stoplossLimit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Limit Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    @endif
+
+                                                                                                    @if($stock->order_type=='stoplossMarket' || $stock->order_type=='stoplossLimit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Auto Close Price:{{ number_format($stock->stop_loss, 2) }}
+                                                                                                    </p>
+                                                                                                    @endif
+                                                                                                </div>
+                                                                                                @elseif($stock->status=='executed')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    
+                                                                                                </div>
+                                                                                                @elseif($stock->status=='cancelled')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                   
+                                                                                                </div>
+                                                                                                @endif
+                                                                                                <!-- Trade Type -->
+
+
+                                                                                               @if($stock->status=='processing')
+                                                                                                <div
+                                                                                                    class="mt-3 d-flex justify-content-between">
+                                                                                                    <button
+                                                                                                        onclick="cancelOrder('{{ $foisin }}', '{{ $stock->duration }}', '{{ $stock->action }}',{{ $i }},1)"
+                                                                                                        type="submit"
+                                                                                                        class="btn btn-primary btn-sm text-uppercase btn-block">Cancel Order</button>
+                                                                                                </div>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+
+
+                                                                                </div>
+
+                                                                            {{-- </div> --}}
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"  data-bs-toggle="modal"
+                                                        onclick="showOrderForm(2,{{ $i }})">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <p
+                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                        @if ($stock->action == 'BUY')
+                                                                            <span class="badge badge-success me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @else
+                                                                            <span class="badge badge-danger me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @endif
+                                                                        @if ($stock->duration == 'delivery')
+                                                                            <span class="badge badge-light ml-2">
+                                                                                Delivery</span>
+                                                                        @else
+                                                                            <span class="badge badge-dark ml-1">
+                                                                                Intraday</span>
+                                                                        @endif
+                                                                        <span
+                                                                            class="badge badge-primary light">{{ $stock->tradeType }}</span>
+                                                                    </p>
+                                                                    <div class="d-flex align-items-center mb-4 mt-2">
+
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=30
+                                                                            style="border-radius: 100%">
+                                                                        <div class="ms-2">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem; font-weight: 800">
+                                                                                    {{ $stock->stock_name }}
+
+
+                                                                                </h4>
+                                                                                <span>
+                                                                                    @if ($stock->order_type == 'market') Market Order
+                                                                                    @elseif($stock->order_type == 'limit')
+                                                                                        Limit Order
+                                                                                        @elseif($stock->order_type == 'stoplossMarket')
+                                                                                        Stoploss Market Order
+                                                                                        @elseif($stock->order_type == 'stoplossLimit')
+                                                                                        Stoploss Limit Order
+                                                                                    @endif
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+
+                                                                                <p class="text-muted mb-1 fs-13">
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}</br>
+
+                                                                                    <?php
+                                                                                    if($stock->duration=='intraday'){
+                                                                                        ?>
+                                                                                    Valid Till :
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->addDays(1)->format('d
+                                                                                                                                                                                                                                                            M, Y') }}
+                                                                                    <?php
+                                                                                    }else{
+                                                                                        ?>
+                                                                                    Valid Till : {{ $stock->expiry }}
+                                                                                    <?php
+                                                                                    }
+                                                                                    
+                                                                                    ?>
+                                                                                </p>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <?php 
+                                                                            switch ($stock->status) {
+                                                                                case 'closed':
+                                                                                case 'force_closed':
+                                                                            ?>
+                                                                            <p class="mb-0 fs-12 text-dark font-w600">
+                                                                                <span
+                                                                                    class="<?= $stock->profit_loss > 0 ? 'text-success' : 'text-danger' ?>">
+                                                                                    <?= $stock->profit_loss > 0 ? '+ ₹' . $stock->profit_loss : '- ₹' . abs($stock->profit_loss) ?>
+                                                                                    (<?= abs($stock->profit_loss_percentage) ?>%)
+                                                                                </span>
+                                                                            </p>
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
+                                                                            <?php 
+                                                                                    break;
+                                                                    
+                                                                                case 'processing': 
+                                                                            ?>
+                                                                            @if ($stock->order_type == 'limit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12 text-dark font-w600">
+                                                                                    <span class="">Limit Price :
+                                                                                        {{ $stock->price }}</span>
+                                                                                </p>
+                                                                            @elseif($stock->order_type == 'stoplossLimit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12
+                                                                                        text-dark font-w600">
+                                                                                    <span class="">Limit Price :
+                                                                                        {{ $stock->price }}</span>
+                                                                                </p>
+                                                                            @endif
+
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
+                                                                            <?php 
+                                                                                    break;
+                                                                    
+                                                                                case 'executed': 
+                                                                            ?>
+                                                                            @if ($stock->order_type == 'stoplossMarket' || $stock->order_type == 'stoplossLimit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12 text-dark font-w600">
+                                                                                    <span class="">Auto Close
+                                                                                        Price :
+                                                                                        {{ $stock->stop_loss }}</span>
+                                                                                </p>
+                                                                            @endif
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
+                                                                            <?php 
+                                                                                    break;
+                                                                    
+                                                                                case 'cancelled': 
+                                                                                    // No display for cancelled trades
+                                                                                    break;
+                                                                            }
+                                                                            ?>
+                                                                        </div>
+
+                                                                        <?php
+                                                                        // Handling Profit/Loss display
+                                                                        $profitLossDisplay = '';
+                                                                        
+                                                                        switch ($stock->status) {
+                                                                            case 'closed':
+                                                                            case 'force_closed':
+                                                                                $profitLossDisplay = "<span class='text-success'>Closed</span>";
+                                                                                break;
+                                                                            case 'processing':
+                                                                                $profitLossDisplay = "<span class='text-info'>Processing</span>";
+                                                                                break;
+                                                                            case 'executed':
+                                                                                $profitLossDisplay = "<span class='text-warning'>Executed</span>";
+                                                                                break;
+                                                                            case 'cancelled':
+                                                                                $profitLossDisplay = "<span class='text-danger'>Cancelled</span>";
+                                                                                break;
+                                                                        }
+                                                                        ?>
+
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                                <?= $profitLossDisplay ?>
+                                                                            </p>
+                                                                            <span class="fs-12">Qty:
+                                                                                <?= $stock->lotSize ?>
+                                                                                (<?= $stock->quantity ?>)</span>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
+                                                            $i++; 
+                                                        }
+                                                        
+                                                            ?>
+
+
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -477,10 +1067,421 @@ use App\Models\Stockdata;
                                             <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
                                                 <div class="d-flex align-items-center justify-content-between"
                                                     style="margin-bottom: 20px">
-                                                    <h4 class="card-title">Stocks : Option</h4>
+                                                    <h4 class="card-title">Stocks : Closed</h4>
                                                 </div>
 
-                                                
+                                                <div class="col-xl-12">
+                                                    <!-- Row -->
+                                                    <div class="row">
+
+                                                        <?php
+                                                        $stocks = DB::table('trades')->where('user_id', $user->id)->where('status','closed')->orwhere('status','force_stop')->orderBy('id','DESC')->get();
+
+                                                        $i = 1;
+                                               
+
+                                                        foreach ($stocks as $stock){
+                                                            $foisin = $stock->instrumentKey;
+                                                        ?>
+
+                                                        <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                                                            id="orderoffcanvasBottom3{{ $i }}"
+                                                            aria-labelledby="offcanvasBottomLabel"
+                                                            style="height: fit-content">
+                                                            <div class="offcanvas-header">
+                                                                <div class="d-flex flex-column">
+                                                                    <h5 class="offcanvas-title"
+                                                                        id="offcanvasBottomLabel{{ $i }}">
+                                                                        {{ $stock->stock_name }}
+                                                                    </h5>
+                                                                 
+                                                                </div>
+                                                                <button type="button" class=" text-reset"
+                                                                    data-bs-dismiss="offcanvas" aria-label="Close"
+                                                                    style="border: none">
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
+                                                                        width="24" alt="">
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="offcanvas-body small">
+                                                                <div class="row">
+                                                                    <div class="col-xl-12">
+                                                                        <div class="card">
+                                                                            <div class="card-header flex-wrap">
+                                                                                <nav class=""
+                                                                                    style="width: 100%;">
+                                                                                    <div class="nav nav-pills light "
+                                                                                        id="nav-tab" role="tablist">
+                                                                                        <button
+                                                                                            class="nav-link active "
+                                                                                            style="width: 100%;"
+                                                                                            id="nav-order-tab"
+                                                                                            data-bs-toggle="tab"
+                                                                                            data-bs-target="#nav-order"
+                                                                                            type="button"
+                                                                                            role="tab"
+                                                                                            aria-selected="true">Order
+                                                                                            Info</button>
+                                                                                    </div>
+                                                                                </nav>
+                                                                            </div>
+                                                                          
+                                                                                <div
+                                                                                    class="table-responsive dataTabletrade">
+                                                                                   
+                                                                                    <div class="col-xl-4"
+                                                                                        style="width: 100%;">
+                                                                                        <div class="card">
+                                                                                            <div class="card-body">
+                                                                                               
+
+
+                                                                                                <!-- Stock Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Initial
+                                                                                                        Investment:
+                                                                                                        ₹
+                                                                                                        {{ number_format($stock->cost, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Margin
+                                                                                                        Utilized:₹{{ number_format($stock->cost - $stock->total_cost, 2) }}({{ $stock->margin }}x)
+                                                                                                    </p>
+                                                                                                </div>
+
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                    align-items-center px-3 py-2 bg-light">
+                                                                                                        Adjusted
+                                                                                                        Investment:
+                                                                                                        ₹
+                                                                                                        {{ number_format($stock->total_cost, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <!-- Lot & Quantity -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Lot Size:{{ $stock->lotSize }}
+                                                                                                    </p>
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Quantity:{{ number_format($stock->quantity, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                              
+                                                                                                @if($stock->status=='closed' || $stock->status=='force_closed')
+
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    <p class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light"
+                                                                                                        id="marketPrice1{{ $i }}">
+                                                                                                        Exit
+                                                                                                        Price:
+                                                                                                        {{ number_format($stock->exit_price, 2) }}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                                align-items-center px-3 py-2 bg-light">
+                                                                                                         {{ $stock->profit_loss > 0 ? 'Net Gain' : 'Net Loss' }}:₹  {{ number_format($stock->profit_loss, 2) }}({{ $stock->profit_loss_percentage }}%)
+                                                                                                    </p>
+                                                                                                         
+                                                                                                   
+                                                                                                </div>
+
+                                                                                                @elseif($stock->status=='processing')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    @if($stock->order_type=='limit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Limit Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    @elseif($stock->order_type=='stoplossLimit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Limit Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    @endif
+
+                                                                                                    @if($stock->order_type=='stoplossMarket' || $stock->order_type=='stoplossLimit')
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Auto Close Price:{{ number_format($stock->stop_loss, 2) }}
+                                                                                                    </p>
+                                                                                                    @endif
+                                                                                                </div>
+                                                                                                @elseif($stock->status=='executed')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                    
+                                                                                                </div>
+                                                                                                @elseif($stock->status=='cancelled')
+                                                                                                <!-- Price Details -->
+                                                                                                <div
+                                                                                                    class="d-flex gap-3 mb-4 align-items-center justify-content-between">
+                                                                                                    <p
+                                                                                                        class="mb-0 w-50 fs-12 text-dark font-w600 d-flex
+                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        Entry Price:{{ number_format($stock->price, 2) }}
+                                                                                                    </p>
+                                                                                                   
+                                                                                                </div>
+                                                                                                @endif
+                                                                                                <!-- Trade Type -->
+
+
+                                                                                               @if($stock->status=='processing')
+                                                                                                <div
+                                                                                                    class="mt-3 d-flex justify-content-between">
+                                                                                                    <button
+                                                                                                        onclick="cancelOrder('{{ $foisin }}', '{{ $stock->duration }}', '{{ $stock->action }}',{{ $i }},1)"
+                                                                                                        type="submit"
+                                                                                                        class="btn btn-primary btn-sm text-uppercase btn-block">Cancel Order</button>
+                                                                                                </div>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+
+
+                                                                                </div>
+
+                                                                            {{-- </div> --}}
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"  data-bs-toggle="modal"
+                                                        onclick="showOrderForm(3,{{ $i }})">
+                                                            <div class="card pull-up"
+                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                                <div class="card-body align-items-center flex-wrap">
+                                                                    <p
+                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                        @if ($stock->action == 'BUY')
+                                                                            <span class="badge badge-success me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @else
+                                                                            <span class="badge badge-danger me-2">
+                                                                                {{ $stock->action }}</span>
+                                                                        @endif
+                                                                        @if ($stock->duration == 'delivery')
+                                                                            <span class="badge badge-light ml-2">
+                                                                                Delivery</span>
+                                                                        @else
+                                                                            <span class="badge badge-dark ml-1">
+                                                                                Intraday</span>
+                                                                        @endif
+                                                                        <span
+                                                                            class="badge badge-primary light">{{ $stock->tradeType }}</span>
+                                                                    </p>
+                                                                    <div class="d-flex align-items-center mb-4 mt-2">
+
+                                                                        <img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->stock_symbol; ?>.svg"
+                                                                            alt="" width=30
+                                                                            style="border-radius: 100%">
+                                                                        <div class="ms-2">
+                                                                            <a href="javascript:void(0)">
+                                                                                <h4 class="card-title mb-0"
+                                                                                    style="font-size:1rem; font-weight: 800">
+                                                                                    {{ $stock->stock_name }}
+
+
+                                                                                </h4>
+                                                                                <span>
+                                                                                    @if ($stock->order_type == 'market') Market Order
+                                                                                    @elseif($stock->order_type == 'limit')
+                                                                                        Limit Order
+                                                                                        @elseif($stock->order_type == 'stoplossMarket')
+                                                                                        Stoploss Market Order
+                                                                                        @elseif($stock->order_type == 'stoplossLimit')
+                                                                                        Stoploss Limit Order
+                                                                                    @endif
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="text-end"
+                                                                                style="position: absolute;top: 10px;right: 14px;">
+
+                                                                                <p class="text-muted mb-1 fs-13">
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}</br>
+
+                                                                                    <?php
+                                                                                    if($stock->duration=='intraday'){
+                                                                                        ?>
+                                                                                    Valid Till :
+                                                                                    {{ \Carbon\Carbon::parse($stock->created_at)->addDays(1)->format('d
+                                                                                                                                                                                                                                                            M, Y') }}
+                                                                                    <?php
+                                                                                    }else{
+                                                                                        ?>
+                                                                                    Valid Till : {{ $stock->expiry }}
+                                                                                    <?php
+                                                                                    }
+                                                                                    
+                                                                                    ?>
+                                                                                </p>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
+                                                                        <div>
+                                                                            <?php 
+                                                                            switch ($stock->status) {
+                                                                                case 'closed':
+                                                                                case 'force_closed':
+                                                                            ?>
+                                                                            <p class="mb-0 fs-12 text-dark font-w600">
+                                                                                <span
+                                                                                    class="<?= $stock->profit_loss > 0 ? 'text-success' : 'text-danger' ?>">
+                                                                                    <?= $stock->profit_loss > 0 ? '+ ₹' . $stock->profit_loss : '- ₹' . abs($stock->profit_loss) ?>
+                                                                                    (<?= abs($stock->profit_loss_percentage) ?>%)
+                                                                                </span>
+                                                                            </p>
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
+                                                                            <?php 
+                                                                                    break;
+                                                                    
+                                                                                case 'processing': 
+                                                                            ?>
+                                                                            @if ($stock->order_type == 'limit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12 text-dark font-w600">
+                                                                                    <span class="">Limit Price :
+                                                                                        {{ $stock->price }}</span>
+                                                                                </p>
+                                                                            @elseif($stock->order_type == 'stoplossLimit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12
+                                                                                        text-dark font-w600">
+                                                                                    <span class="">Limit Price :
+                                                                                        {{ $stock->price }}</span>
+                                                                                </p>
+                                                                            @endif
+
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
+                                                                            <?php 
+                                                                                    break;
+                                                                    
+                                                                                case 'executed': 
+                                                                            ?>
+                                                                            @if ($stock->order_type == 'stoplossMarket' || $stock->order_type == 'stoplossLimit')
+                                                                                <p
+                                                                                    class="mb-0 fs-12 text-dark font-w600">
+                                                                                    <span class="">Auto Close
+                                                                                        Price :
+                                                                                        {{ $stock->stop_loss }}</span>
+                                                                                </p>
+                                                                            @endif
+                                                                            <span class="fs-12">Invest Price: ₹
+                                                                                <?= $stock->cost ?></span>
+                                                                            <?php 
+                                                                                    break;
+                                                                    
+                                                                                case 'cancelled': 
+                                                                                    // No display for cancelled trades
+                                                                                    break;
+                                                                            }
+                                                                            ?>
+                                                                        </div>
+
+                                                                        <?php
+                                                                        // Handling Profit/Loss display
+                                                                        $profitLossDisplay = '';
+                                                                        
+                                                                        switch ($stock->status) {
+                                                                            case 'closed':
+                                                                            case 'force_closed':
+                                                                                $profitLossDisplay = "<span class='text-success'>Closed</span>";
+                                                                                break;
+                                                                            case 'processing':
+                                                                                $profitLossDisplay = "<span class='text-info'>Processing</span>";
+                                                                                break;
+                                                                            case 'executed':
+                                                                                $profitLossDisplay = "<span class='text-warning'>Executed</span>";
+                                                                                break;
+                                                                            case 'cancelled':
+                                                                                $profitLossDisplay = "<span class='text-danger'>Cancelled</span>";
+                                                                                break;
+                                                                        }
+                                                                        ?>
+
+                                                                        <div>
+                                                                            <p
+                                                                                class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                                <?= $profitLossDisplay ?>
+                                                                            </p>
+                                                                            <span class="fs-12">Qty:
+                                                                                <?= $stock->lotSize ?>
+                                                                                (<?= $stock->quantity ?>)</span>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /column -->
+                                                        <?php 
+                                                            $i++; 
+                                                        }
+                                                        
+                                                            ?>
+
+
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -524,24 +1525,40 @@ use App\Models\Stockdata;
         Scripts
     ***********************************-->
 
+    <script src="{{ asset('js/app.js') }}"></script>
+    <!-- Event trigger for the modal -->
+    <script>
+    
+        function showOrderForm(id,index) {
+            // console.log("hi");
+
+            const offcanvasId = `orderoffcanvasBottom${id}${index}`;
+            const offcanvasElement = document.getElementById(offcanvasId);
+            const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+            offcanvas.show();
+
+        }
+    </script>
+
+
     <script>
         window.Echo.channel('stocks')
             .listen('Stock', (e) => {
                 console.log("Stock event received:", e);
-    
+
                 // Extracting stock data from the event
                 let sensexData = e.stocks?.feeds?.["BSE_INDEX|SENSEX"]?.ff?.indexFF;
                 let niftyData = e.stocks?.feeds?.["NSE_INDEX|NIFTY 50"]?.ff?.marketFF;
 
-               
-    
+
+
                 if (sensexData) {
                     let sensexLtp = sensexData.ltpc.ltp;
                     let sensexCP = sensexData.ltpc.cp;
                     let sensexChange = sensexLtp - sensexCP;
-                    
+
                     let sensexChangePercent = ((sensexChange / sensexCP) * 100).toFixed(2);
-    
+
                     document.getElementById('sensexLtp').textContent = sensexLtp.toFixed(2);
                     document.getElementById('sensexChange').innerHTML = `
                         <p class="${sensexChange >= 0 ? 'text-success' : 'text-danger'} fw-bold mb-1">
@@ -552,13 +1569,13 @@ use App\Models\Stockdata;
                         </p>
                     `;
                 }
-    
+
                 if (niftyData && niftyData.ltpc.length > 0) {
                     let niftyLtp = niftyData.ltpc[0].ltp;
                     let niftyPrevClose = niftyData.ltpc[0].cp;
                     let niftyChange = niftyLtp - niftyPrevClose;
                     let niftyChangePercent = ((niftyChange / niftyPrevClose) * 100).toFixed(2);
-    
+
                     document.getElementById('niftyLtp').textContent = niftyLtp.toFixed(2);
                     document.getElementById('niftyChange').innerHTML = `
                         <p class="${niftyChange >= 0 ? 'text-success' : 'text-danger'} fw-bold mb-1">
