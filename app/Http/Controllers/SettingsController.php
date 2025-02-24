@@ -287,7 +287,10 @@ public function updateDepositMsg(Request $request)
 
         if (isset($response['access_token'])) {
             
-            $updated = DB::table('upstocks')->update(['token' => $response['access_token']]);
+            $updated = DB::table('upstocks')->update([
+                'token' => $response['access_token'],
+                'isExpired' => 0,
+            ]);
 
             if ($updated) {
                 return response()->json(['success' => true, 'message' => 'Token Created successfully.']);

@@ -73,14 +73,18 @@ class WatchlistController extends Controller
             // quote-channel event trigger
             event(new QuoteChannel(auth()->id(), 'add'));
             
-            // Restart Supervisor process
-        $process = new Process(['sudo', 'supervisorctl', 'restart', 'marketdata']);
-        $process->run();
-        
-            // Check if the process failed
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
+        //    if app_env is production  
+
+            if (config('app.env') == 'production') {
+                 // Restart Supervisor process
+                    $process = new Process(['sudo', 'supervisorctl', 'restart', 'marketdata']);
+                    $process->run();
+                    
+                        // Check if the process failed
+                    if (!$process->isSuccessful()) {
+                        throw new ProcessFailedException($process);
+                    }
+            }
 
             return response()->json([
                 'success' => true,

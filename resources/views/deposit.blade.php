@@ -269,7 +269,7 @@
 
 				<div class="container mt-5">
 					@php
-						$settings = setting::where('id', 1)->first();
+						$settings = Setting::where('id', 1)->first();
 					@endphp
 					<!-- Withdraw Notice Alert Box -->
 					<div class="alert alert-info" role="alert">
@@ -330,7 +330,7 @@
                         <?php
 								// Fetch payment modes and settings
 								$paymentModes = payment_mode::where('status', 1)->get();
-								$settings = setting::where('id', 1)->first();
+								$settings = Setting::where('id', 1)->first();
 							
 								foreach ($paymentModes as $row) {
 								?>

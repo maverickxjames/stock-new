@@ -20,7 +20,17 @@ Route::middleware('guest')->group(function () {
     Route::get('/', function () {
         return view('login');
     });
+
+
+
+    
 });
+
+Route::prefix('cron')->group(function () {
+    Route::get('/expireToken', [CronController::class, 'expireToken']);
+});
+
+
 
 
 Route::get('future', [ScriptController::class, 'future']);
