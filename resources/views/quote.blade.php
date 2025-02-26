@@ -54,6 +54,12 @@ $user = Auth::user();
             width: 80%;
             margin-bottom: 10px;
         }
+
+        @media (min-width: 992px) { /* Large screen (lg) breakpoint in Bootstrap */
+        .pl-lg-custom {
+            padding-left: 10rem !important;
+        }
+    }
     </style>
 
     <!-- FAVICONS ICON -->
