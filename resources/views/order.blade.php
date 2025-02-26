@@ -59,6 +59,9 @@ use App\Models\Stockdata;
     <!-- Style css -->
     <link class="main-css" href="css/style.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
     <style>
         /* Ensure the table is scrollable on smaller screens */
         .table-responsive {
@@ -189,12 +192,12 @@ use App\Models\Stockdata;
                                 {{-- <h4 class="card-title">Buy & Sell Bitcoin</h4> --}}
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
-                                        <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
+                                        {{-- <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-all" type="button" role="tab"
-                                            aria-controls="nav-all" aria-selected="true">ALL</button>
-                                        <button class="nav-link" id="nav-fut-tab" data-bs-toggle="tab"
+                                            aria-controls="nav-all" aria-selected="false">ALL</button> --}}
+                                        <button class="nav-link active" id="nav-fut-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-fut" type="button" role="tab"
-                                            aria-controls="nav-fut" aria-selected="false">OPEN</button>
+                                            aria-controls="nav-fut" aria-selected="true">OPEN</button>
                                         <button class="nav-link" id="nav-opt-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-opt" type="button" role="tab"
                                             aria-controls="nav-opt" aria-selected="false">CLOSED</button>
@@ -214,7 +217,7 @@ use App\Models\Stockdata;
 
                             <div class="card-body">
                                 <div class="tab-content" id="nav-tabContent1">
-                                    <div class="tab-pane fade show active" id="nav-all" role="tabpanel"
+                                    {{-- <div class="tab-pane fade show active" id="nav-all" role="tabpanel"
                                         aria-labelledby="nav-all-tab">
                                         <div class="tab-content" id="nav-tabContent2">
                                             <div class="tab-pane fade show active" id="nav-order1" role="tabpanel">
@@ -223,7 +226,6 @@ use App\Models\Stockdata;
                                                     <h4 class="card-title">Stocks : All</h4>
                                                 </div>
                                                 <div class="col-xl-12">
-                                                    <!-- Row -->
                                                     <div class="row">
 
                                                         <?php
@@ -289,7 +291,6 @@ use App\Models\Stockdata;
                                                                                                
 
 
-                                                                                                <!-- Stock Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-3 align-items-center justify-content-between">
                                                                                                     <p
@@ -322,7 +323,6 @@ use App\Models\Stockdata;
                                                                                                         {{ number_format($stock->total_cost, 2) }}
                                                                                                     </p>
                                                                                                 </div>
-                                                                                                <!-- Lot & Quantity -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-3 align-items-center justify-content-between">
                                                                                                     <p
@@ -339,7 +339,6 @@ use App\Models\Stockdata;
                                                                                               
                                                                                                 @if($stock->status=='closed' || $stock->status=='force_closed')
 
-                                                                                                <!-- Price Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     <p
@@ -367,7 +366,6 @@ use App\Models\Stockdata;
                                                                                                 </div>
 
                                                                                                 @elseif($stock->status=='processing')
-                                                                                                <!-- Price Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     @if($stock->order_type=='limit')
@@ -393,7 +391,6 @@ use App\Models\Stockdata;
                                                                                                     @endif
                                                                                                 </div>
                                                                                                 @elseif($stock->status=='executed')
-                                                                                                <!-- Price Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     <p
@@ -404,7 +401,6 @@ use App\Models\Stockdata;
                                                                                                     
                                                                                                 </div>
                                                                                                 @elseif($stock->status=='cancelled')
-                                                                                                <!-- Price Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     <p
@@ -415,7 +411,6 @@ use App\Models\Stockdata;
                                                                                                    
                                                                                                 </div>
                                                                                                 @endif
-                                                                                                <!-- Trade Type -->
 
 
                                                                                                @if($stock->status=='processing')
@@ -435,7 +430,6 @@ use App\Models\Stockdata;
 
                                                                                 </div>
 
-                                                                            {{-- </div> --}}
                                                                         </div>
                                                                     </div>
 
@@ -594,18 +588,22 @@ use App\Models\Stockdata;
                                                                         switch ($stock->status) {
                                                                             case 'closed':
                                                                             case 'force_closed':
-                                                                                $profitLossDisplay = "<span class='text-success'>Closed</span>";
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-times-circle'></i> Closed</span>";
                                                                                 break;
                                                                             case 'processing':
-                                                                                $profitLossDisplay = "<span class='text-info'>Processing</span>";
+                                                                                $profitLossDisplay = "<span class='text-warning'><i class='fas fa-spinner fa-spin'></i> Processing</span>";
                                                                                 break;
                                                                             case 'executed':
-                                                                                $profitLossDisplay = "<span class='text-warning'>Executed</span>";
+                                                                                $profitLossDisplay = "<span class='text-success'><i class='fas fa-check-circle'></i> Executed</span>";
                                                                                 break;
                                                                             case 'cancelled':
-                                                                                $profitLossDisplay = "<span class='text-danger'>Cancelled</span>";
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-ban'></i> Cancelled</span>";
+                                                                                break;
+                                                                            case 'failed':
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-exclamation-circle'></i> Failed</span>";
                                                                                 break;
                                                                         }
+
                                                                         ?>
 
                                                                         <div>
@@ -636,8 +634,8 @@ use App\Models\Stockdata;
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade show" id="nav-fut" role="tabpanel"
+                                    </div> --}}
+                                    <div class="tab-pane fade show active" id="nav-fut" role="tabpanel"
                                         aria-labelledby="nav-fut-tab">
                                         <div class="tab-content" id="nav-tabContent3">
                                             <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
@@ -647,7 +645,6 @@ use App\Models\Stockdata;
                                                 </div>
 
                                                 <div class="col-xl-12">
-                                                    <!-- Row -->
                                                     <div class="row">
 
                                                         <?php
@@ -713,7 +710,6 @@ use App\Models\Stockdata;
                                                                                                
 
 
-                                                                                                <!-- Stock Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-3 align-items-center justify-content-between">
                                                                                                     <p
@@ -746,7 +742,6 @@ use App\Models\Stockdata;
                                                                                                         {{ number_format($stock->total_cost, 2) }}
                                                                                                     </p>
                                                                                                 </div>
-                                                                                                <!-- Lot & Quantity -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-3 align-items-center justify-content-between">
                                                                                                     <p
@@ -763,7 +758,6 @@ use App\Models\Stockdata;
                                                                                               
                                                                                                 @if($stock->status=='closed' || $stock->status=='force_closed')
 
-                                                                                                <!-- Price Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     <p
@@ -791,7 +785,6 @@ use App\Models\Stockdata;
                                                                                                 </div>
 
                                                                                                 @elseif($stock->status=='processing')
-                                                                                                <!-- Price Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     @if($stock->order_type=='limit')
@@ -817,7 +810,6 @@ use App\Models\Stockdata;
                                                                                                     @endif
                                                                                                 </div>
                                                                                                 @elseif($stock->status=='executed')
-                                                                                                <!-- Price Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     <p
@@ -828,7 +820,6 @@ use App\Models\Stockdata;
                                                                                                     
                                                                                                 </div>
                                                                                                 @elseif($stock->status=='cancelled')
-                                                                                                <!-- Price Details -->
                                                                                                 <div
                                                                                                     class="d-flex gap-3 mb-4 align-items-center justify-content-between">
                                                                                                     <p
@@ -839,7 +830,6 @@ use App\Models\Stockdata;
                                                                                                    
                                                                                                 </div>
                                                                                                 @endif
-                                                                                                <!-- Trade Type -->
 
 
                                                                                                @if($stock->status=='processing')
@@ -859,7 +849,6 @@ use App\Models\Stockdata;
 
                                                                                 </div>
 
-                                                                            {{-- </div> --}}
                                                                         </div>
                                                                     </div>
 
@@ -1018,16 +1007,19 @@ use App\Models\Stockdata;
                                                                         switch ($stock->status) {
                                                                             case 'closed':
                                                                             case 'force_closed':
-                                                                                $profitLossDisplay = "<span class='text-success'>Closed</span>";
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-times-circle'></i> Closed</span>";
                                                                                 break;
                                                                             case 'processing':
-                                                                                $profitLossDisplay = "<span class='text-info'>Processing</span>";
+                                                                                $profitLossDisplay = "<span class='text-warning'><i class='fas fa-spinner fa-spin'></i> Processing</span>";
                                                                                 break;
                                                                             case 'executed':
-                                                                                $profitLossDisplay = "<span class='text-warning'>Executed</span>";
+                                                                                $profitLossDisplay = "<span class='text-success'><i class='fas fa-check-circle'></i> Executed</span>";
                                                                                 break;
                                                                             case 'cancelled':
-                                                                                $profitLossDisplay = "<span class='text-danger'>Cancelled</span>";
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-ban'></i> Cancelled</span>";
+                                                                                break;
+                                                                            case 'failed':
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-exclamation-circle'></i> Failed</span>";
                                                                                 break;
                                                                         }
                                                                         ?>
@@ -1442,16 +1434,19 @@ use App\Models\Stockdata;
                                                                         switch ($stock->status) {
                                                                             case 'closed':
                                                                             case 'force_closed':
-                                                                                $profitLossDisplay = "<span class='text-success'>Closed</span>";
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-times-circle'></i> Closed</span>";
                                                                                 break;
                                                                             case 'processing':
-                                                                                $profitLossDisplay = "<span class='text-info'>Processing</span>";
+                                                                                $profitLossDisplay = "<span class='text-warning'><i class='fas fa-spinner fa-spin'></i> Processing</span>";
                                                                                 break;
                                                                             case 'executed':
-                                                                                $profitLossDisplay = "<span class='text-warning'>Executed</span>";
+                                                                                $profitLossDisplay = "<span class='text-success'><i class='fas fa-check-circle'></i> Executed</span>";
                                                                                 break;
                                                                             case 'cancelled':
-                                                                                $profitLossDisplay = "<span class='text-danger'>Cancelled</span>";
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-ban'></i> Cancelled</span>";
+                                                                                break;
+                                                                            case 'failed':
+                                                                                $profitLossDisplay = "<span class='text-danger'><i class='fas fa-exclamation-circle'></i> Failed</span>";
                                                                                 break;
                                                                         }
                                                                         ?>

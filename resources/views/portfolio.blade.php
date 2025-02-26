@@ -112,6 +112,43 @@
             cursor: pointer;
             /* Pointer cursor for better UX */
         }
+
+        .wallet-wrapper {
+    position: relative;
+    background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC);
+    border-radius: 10px;
+    padding: 1.2rem;
+    overflow: hidden;
+    color: white;
+}
+
+.wallet-wrapper:after {
+    content: "";
+    position: absolute;
+    top: -2rem;
+    right: -6rem;
+    height: 16rem;
+    width: 16rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+}
+
+.shadow-lg {
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fas {
+    margin-right: 5px;
+}
+
     </style>
 </head>
 
@@ -170,35 +207,74 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="row">
+                            @php
+                                $gain_loss=0;
+                                $total_investment=0;
+                                $total_current_value=0;
+                                $change_percentage=0;
+
+                                $trades = DB::table('trades')
+                                ->where('trades.user_id', $user->id)
+                                ->where('trades.status', 'executed')
+                                ->leftJoin('future_temp', 'future_temp.instrumentKey', '=', 'trades.instrumentKey') // Join future_temp
+                                ->selectRaw('
+                                    trades.instrumentKey as instrumentKey,
+                                    SUM(trades.quantity) as quantity,
+                                    AVG(trades.price) as avg_price,
+                                    SUM(trades.cost) as total_cost,
+                                    COALESCE(future_temp.ltp, 0) as ltp
+                                ')
+                                ->groupBy('trades.instrumentKey', 'future_temp.ltp') // Group by instrumentKey and ltp
+                                ->get();
+
+                              
+
+                                foreach ($trades as $trade) {
+                                    $total_investment += $trade->total_cost;
+                                    $total_current_value += $trade->quantity * $trade->ltp;
+                                }
+
+                                $gain_loss = $total_current_value - $total_investment;
+                                $change_percentage = $total_investment > 0 ? ($gain_loss / $total_investment) * 100 : 0;
+                            @endphp
                             <div class="col-xl-12">
-                                <div class="card trad-card wallet-wrapper overflow-hidden">
+                                <div class="card trad-card wallet-wrapper shadow-lg">
                                     <div class="card-header border-0 pb-0 card-bx">
-                                        <div class="me-auto " style="z-index: 1;">
-                                            <h2 class="text-dark mb-2 font-w600">₹ 65,123</h2>
-                                            <div
-                                                class="d-flex col-xl-12 align-items-center justify-content-between gap-2">
-                                                <h6 class="text-dark mb-1 fs-13">Overall Gain</h6>
-                                                <p class="mb-0 fs-13 ">4%(30 days)</p>
+                                        <div class="me-auto">
+                                            <h2 class="text-dark mb-2 font-w600" id="profitAndLoss">
+                                                ₹ {{ number_format($gain_loss,2) }}
+                                            </h2>
+                                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                                <h6 class="text-dark mb-1 fs-14">Overall Gain</h6>
+                                                <span class="mb-0 fs-14 text-white" id="profitAndLossPercentage">
+                                                    ({{ number_format($change_percentage, 2) }}%)
+                                                </span>
                                             </div>
                                         </div>
-                                        {{-- <img src="images/svg/bitcoin-1.svg" alt=""> --}}
                                     </div>
-                                    <div class="card-body col-xl-12 p-0" style="z-index: 1;">
-                                        <div
-                                            class="d-flex justify-content-between align-items-center gap-5 p-3 p-md-4 p-lg-5">
+                                    <div class="card-body col-xl-12 p-0">
+                                        <div class="d-flex justify-content-between align-items-center gap-5 p-4">
                                             <div>
-                                                <h5 class="text-dark mb-1">Invested Value</h5>
-                                                <p class="mb-0 fs-14">₹ 65,123</p>
+                                                <h5 class="text-dark mb-1">
+                                                    Invested Price
+                                                </h5>
+                                                <p class="mb-0 fs-16 text-white" id="investValue">
+                                                    ₹ {{ number_format($total_investment,2) }}
+                                                </p>
                                             </div>
-
                                             <div>
-                                                <h5 class="text-dark mb-1">Today's Gain</h5>
-                                                <p class="mb-0 fs-14">4%(30 days)</p>
+                                                <h5 class="text-dark mb-1">
+                                                     Current Price
+                                                </h5>
+                                                <p class="mb-0 fs-16 text-white" id="currentValue">
+                                                    ₹ {{ number_format($total_current_value,2) }}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            
 
                         </div>
                     </div>
@@ -231,7 +307,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
                                 </button>
                                 <strong>! Warning</strong> You have <span class="badge badge-pill badge-danger">{{
-                                    $count }}</span> pending orders. <a href="{{ route('limitOrder') }}"
+                                    $count }}</span> pending orders. <a href="{{ route('order') }}"
                                     class="badge badge-dark">View</a>
                             </div>
                             <div class="card-body">
@@ -1981,7 +2057,21 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- Event trigger for the modal -->
+
+  
     <script>
+        function updateCard(investValue, currentValue) {
+            console.log(investValue,currentValue);
+            
+    let profitLoss = currentValue - investValue;
+    let profitLossPercentage = ((profitLoss / investValue) * 100).toFixed(2);
+
+    document.getElementById('investValue').textContent = investValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('currentValue').textContent = currentValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('profitAndLoss').textContent = profitLoss.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('profitAndLossPercentage').textContent = profitLossPercentage + '%';
+}
+
         Echo.channel('trades')
             .listen('Trade', (event) => {
                 const feeds = event.trade.feeds;
@@ -2019,6 +2109,10 @@
                         // console.log("optionElement", optionElement);
 
                         if (allElement) {
+                            let total_investValue=0;
+                            let total_currentValue=0;
+                           
+                           
 
                             allElement.forEach(el => {
                                 const rowId = el.id.replace('isin1', '');
@@ -2035,8 +2129,17 @@
                                 const action = document.getElementById(`action1${rowId}`).innerText
                                     .trim(); // Trade type
 
+                                    total_investValue += isNaN(invest) ? 0 : parseFloat(invest);
+                                    total_currentValue += isNaN(price * quantity) ? 0 : parseFloat(price) * parseFloat(quantity);
 
-                                console.log("price", price, "invest", invest, "quanrity", quantity, "tradeType", tradeType, "action", action);
+                                console.log(total_investValue,total_currentValue);
+                                
+
+
+
+
+                              
+                                // console.log("price", price, "invest", invest+100, "quanrity", quantity, "tradeType", tradeType, "action", action);
                                 
 
 
@@ -2107,7 +2210,7 @@
 
 
                                 document.getElementById(`change1${rowId}`).innerHTML =`
-                            ${profitAndLoss > 0 
+                               ${profitAndLoss > 0 
                                 ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + formatprofitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
                                 : '<span class="text-danger" id="perc' + rowId + '">- ₹' + formatprofitAndLoss+ ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
 
@@ -2151,11 +2254,10 @@
 
 
                             });
+
+
+                            updateCard(total_investValue,total_currentValue);
                              
-
-                            
-
-
 
 
                         } else if (futureElement) {
