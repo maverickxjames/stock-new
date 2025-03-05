@@ -2,9 +2,9 @@
 $user = Auth::user();
 @endphp
 
-<div class="content-body">
+{{-- <div class="content-body">
     <!-- row -->
-    <div class="container-fluid">
+    <div class="container-fluid"> --}}
         <div class="row">
             <div class="col-xl-12">
                 <div class="row">
@@ -844,5 +844,5 @@ $user = Auth::user();
 
 
 
-    </div>
-</div>
+    {{-- </div>
+</div> --}}

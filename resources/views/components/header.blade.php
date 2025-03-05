@@ -206,7 +206,7 @@ $user = auth()->user();
             </div>
         </nav>
     </div>
-    <div class="page-titles ps-lg-[10rem] p-3 rounded shadow" style="background-color: #565656">
+    <div class="page-titles ps-lg-[10rem] p-3 rounded shadow" style="background-color: #0c0101">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex flex-column text-center px-3">
                 <h2 class="text-white fw-bold mb-1">Nifty 50</h2>
