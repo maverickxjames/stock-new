@@ -307,7 +307,12 @@ $user = Auth::user();
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="future" role="tabpanel">
-                                                        <div class="input-group mt-4 search-area-2"
+                                                        @php
+                                                            $data=DB::table('future_temp')->where('instrumentType','FUT')->where('is_watchlist',1)->get();
+
+                                                            
+                                                        @endphp
+                                                        <div class="input-group mt-4 search-area-2" onclick="showWatchlist('future',{{ $data }})"
                                                             data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                                                             aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
@@ -619,6 +624,15 @@ $user = Auth::user();
     </div>
 
     </div>
+
+    <script>
+       let activeTab = document.querySelector('.nav-link.active'); 
+if (activeTab) {
+    console.log("Active Tab Text:", activeTab.innerText);
+    console.log("Active Tab Href:", activeTab.getAttribute("href"));
+}
+
+    </script>
     <script>
         // Trade Start
 
@@ -1082,7 +1096,7 @@ $user = Auth::user();
         function fetchResults(isNewSearch = false) {
             if (isFetching || !hasMoreData) return;
             isFetching = true;
-
+           
             let type;
             switch (getActiveFilter()) {
                 case 'Future':
@@ -1132,6 +1146,8 @@ $user = Auth::user();
         });
 
         function updateContactsList(responseData) {
+            console.log(responseData);
+            
             const container = document.getElementById("RecentActivityContent");
 
             // Clear existing content
@@ -1696,8 +1712,17 @@ $user = Auth::user();
    }
 
 
-
+       
         // Remove Watchlist End
+
+
+
+        function showWatchlist(type,data){
+            console.log(type);
+            console.log(data);
+            updateContactsList(data);
+            
+        }
 
         function handleChartClick(foisin, modalId) {
             console.log("Clicked on chart for:", foisin, modalId);
