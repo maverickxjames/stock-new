@@ -349,7 +349,18 @@ $user = Auth::user();
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="option" role="tabpanel">
-                                                        <div class="input-group mt-1 search-area-2">
+                                                        @php
+                                                        $data1 = DB::table('future_temp')
+                                                            ->where(function ($query) {
+                                                                $query->where('instrumentType', 'PE')
+                                                                    ->orWhere('instrumentType', 'CE');
+                                                            })
+                                                            ->where('is_watchlist', 1)
+                                                            ->get();
+                                                    @endphp
+                                                        <div class="input-group mt-1 search-area-2" onclick="showWatchlist('option',{{ $data1 }})"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                        aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
                                                                 placeholder="Search & Add Option Future ">
                                                             <span class="input-group-text"><a href="javascript:void(0)">
@@ -534,63 +545,29 @@ $user = Auth::user();
         <div class="offcanvas-body">
 
             <div class="filter cm-content-box box-primary">
-                <div class="content-title SlideToolHeader">
+                {{-- <div class="content-title SlideToolHeader">
                     <div class="cpa">
                         <i class="fa fa-list-alt me-2"></i>Add Script
                     </div>
                     <div class="tools">
                         <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
                     </div>
-                </div>
+                </div> --}}
                 <div class="cm-content-body form excerpt">
                     <div class="card-body">
                         <div class="row align-items-center mb-3">
 
-                            <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3">
+                            <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0">
                                 <input type="text" class="form-control" id="searchinp" placeholder="Search Script"
                                     onkeyup="searchScript(this)" autofocus>
 
                             </div>
 
 
-                            <div class="col-xl-6 col-xxl-4 col-lg-4 align-self-end">
-                                <button class="btn btn-primary me-2 active-filter filter" type="button"
-                                    onclick="setActiveFilter(this, 'ALL')">ALL</button>
-                                <button class="btn btn-primary light filter" type="button"
-                                    onclick="setActiveFilter(this, 'Future')">Future</button>
-                                <button class="btn btn-primary light me-2 filter" type="button"
-                                    onclick="setActiveFilter(this, 'Option')">Option</button>
-                                <button class="btn btn-primary light filter" type="button"
-                                    onclick="setActiveFilter(this, 'Indicies')">Indicies</button>
-                            </div>
+                       
 
                         </div>
-                        <div class="row align-items-center mb-3">
-                            <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3 " id="expiry-date" hidden>
-                                <label class="me-sm-2 form-label">Expiry Date</label>
-                                <select class="me-sm-2  form-control wide" id="inlineFormCustomSelect">
-                                    <option selected>All...</option>
-                                    <option value="1">30 Jan 2025</option>
-                                    <option value="2">27 Feb 2025</option>
-                                    <option value="3">27 Mar 2025</option>
-                                </select>
-                            </div>
-                            <div class="col-xl-6 col-xxl-4 col-lg-4 align-self-end" id="Order-type" hidden>
-                                <label class="me-sm-2 form-label">Order Type</label>
-                                <div>
-                                    <button class="btn btn-warning me-2 filterCP filterCP" type="button"
-                                        onclick="setActiveFilterCP(this, 'ALL')">ALL</button>
-                                    <button class="btn btn-warning light filterCP" type="button"
-                                        onclick="setActiveFilterCP(this, 'CE')">CE</button>
-                                    <button class="btn btn-warning light me-2 filterCP" type="button"
-                                        onclick="setActiveFilterCP(this, 'PE')">PE</button>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-
+                       
                     </div>
 
                 </div>
@@ -604,10 +581,7 @@ $user = Auth::user();
                             <div class="cpa">
                                 Menus
                             </div>
-                            <div class="tools">
-                                <a href="javascript:void(0);" class="expand handle"><i
-                                        class="fal fa-angle-down"></i></a>
-                            </div>
+                            
                         </div>
                         <div id="scrollR" class=" cm-content-body card-body pt-4 pb-0 height800 dlab-scroll">
                             <div class="contacts-list" id="RecentActivityContent">
