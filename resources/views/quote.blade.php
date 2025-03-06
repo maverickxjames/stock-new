@@ -273,299 +273,240 @@ $user = Auth::user();
                 onclick="setActiveFilter(this, 'Indicies')">Indicies</button>
         </div> --}}
 
-
         <div class="content-body">
             <div class="container-fluid">
-                <!--element-area -->
-                <div class="element-area">
-                    <div class="demo-view">
-                        <div class="container-fluid pt-0 ps-0 pe-lg-4 pe-0">
-                            <!-- row -->
-                            <div class="row">
-                                <!-- Column  -->
-                                <div class="col-xl-12">
-                                    <div class="card dz-card">
-                                        {{-- <div class="card-header flex-wrap border-0" id="default-tab">
-                                           
-                                        </div> --}}
-                                        <div class="tab-content pt-2" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="DefaultTab" role="tabpanel"
-                                                aria-labelledby="home-tab">
-                                                <div class="card-body pt-0">
-                                                    <!-- Nav tabs -->
-                                                    <div class="default-tab">
-                                                        <ul class="nav nav-tabs" role="tablist">
-                                                            <li class="nav-item">
-                                                                <a class="nav-link active" data-bs-toggle="tab"
-                                                                    href="#home"><i class="la la-home me-2"></i>
-                                                                    Home</a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" data-bs-toggle="tab"
-                                                                    href="#profile"><i class="la la-user me-2"></i>
-                                                                    Profile</a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" data-bs-toggle="tab"
-                                                                    href="#contact"><i class="la la-phone me-2"></i>
-                                                                    Contact</a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" data-bs-toggle="tab"
-                                                                    href="#message"><i class="la la-envelope me-2"></i>
-                                                                    Message</a>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="tab-content">
-                                                            <div class="tab-pane fade show active" id="home"
-                                                                role="tabpanel">
-                                                                <div class="pt-4">
-                                                                    <h4>This is home title</h4>
-                                                                    <p>Far far away, behind the word mountains, far from
-                                                                        the countries Vokalia and Consonantia, there
-                                                                        live the blind texts. Separated they live in
-                                                                        Bookmarksgrove.
-                                                                    </p>
-                                                                    <p>Far far away, behind the word mountains, far from
-                                                                        the countries Vokalia and Consonantia, there
-                                                                        live the blind texts. Separated they live in
-                                                                        Bookmarksgrove.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane fade" id="profile">
-                                                                <div class="pt-4">
-                                                                    <h4>This is profile title</h4>
-                                                                    <p>Raw denim you probably haven't heard of them jean
-                                                                        shorts Austin. Nesciunt tofu stumptown aliqua,
-                                                                        retro synth master cleanse. Mustache cliche
-                                                                        tempor.
-                                                                    </p>
-                                                                    <p>Raw denim you probably haven't heard of them jean
-                                                                        shorts Austin. Nesciunt tofu stumptown aliqua,
-                                                                        retro synth master cleanse. Mustache cliche
-                                                                        tempor.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane fade" id="contact">
-                                                                <div class="pt-4">
-                                                                    <h4>This is contact title</h4>
-                                                                    <p>Far far away, behind the word mountains, far from
-                                                                        the countries Vokalia and Consonantia, there
-                                                                        live the blind texts. Separated they live in
-                                                                        Bookmarksgrove.
-                                                                    </p>
-                                                                    <p>Far far away, behind the word mountains, far from
-                                                                        the countries Vokalia and Consonantia, there
-                                                                        live the blind texts. Separated they live in
-                                                                        Bookmarksgrove.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane fade" id="message">
-                                                                <div class="pt-4">
-                                                                    <h4>This is message title</h4>
-                                                                    <p>Raw denim you probably haven't heard of them jean
-                                                                        shorts Austin. Nesciunt tofu stumptown aliqua,
-                                                                        retro synth master cleanse. Mustache cliche
-                                                                        tempor.
-                                                                    </p>
-                                                                    <p>Raw denim you probably haven't heard of them jean
-                                                                        shorts Austin. Nesciunt tofu stumptown aliqua,
-                                                                        retro synth master cleanse. Mustache cliche
-                                                                        tempor.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
+                <div class="container-fluid pt-0 ps-0 pe-lg-4 pe-0">
+                    <!-- row -->
+                    <div class="row">
+                        <!-- Column  -->
+                        <div class="col-xl-12">
+                            <div class="card dz-card" id="custom-tab">
+                                <div class="tab-content pt-3" id="myTabContent1">
+                                    <div class="tab-pane fade show active" id="DefaultTab1" role="tabpanel"
+                                        aria-labelledby="home-tab1">
+                                        <div class="card-body pt-0">
+                                            <!-- Nav tabs -->
+                                            <div class="custom-tab-1">
+                                                <ul class="nav nav-tabs gap-4">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" data-bs-toggle="tab" href="#future"
+                                                            role="tab" onclick="changeQuote('future')">Future</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" data-bs-toggle="tab" href="#option"
+                                                            role="tab" onclick="changeQuote('option')">Option</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" data-bs-toggle="tab" href="#mcx"
+                                                            onclick="changeQuote('mcx')">MCX</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" data-bs-toggle="tab" href="#indcies"
+                                                            onclick="changeQuote('indcies')">Indicies</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade show active" id="future" role="tabpanel">
+                                                        <div class="input-group mt-4 search-area-2"
+                                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                            aria-controls="offcanvasRight">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Search & Add NSE Future ">
+                                                            <span class="input-group-text"><a href="javascript:void(0)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                        width="24px" height="24px" viewBox="0 0 24 24"
+                                                                        version="1.1" class="svg-main-icon">
+                                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                                            fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24">
+                                                                            </rect>
+                                                                            <path
+                                                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                                                                fill="#000000" fill-rule="nonzero"
+                                                                                opacity="0.3"></path>
+                                                                            <path
+                                                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                                                                fill="#000000" fill-rule="nonzero">
+                                                                            </path>
+                                                                        </g>
+                                                                    </svg>
+                                                                </a></span>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Column  -->
-                                <!-- Column  -->
-                                <div class="col-xl-12">
-                                    <div class="card dz-card" id="custom-tab">
-                                        {{-- <div class="card-header flex-wrap border-0">
-                                            <h4 class="card-title">Custom Tab 1</h4>
-                                            <ul class="nav nav-pills light" id="myTab1" role="tablist">
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="nav-link active " id="home-tab1" data-bs-toggle="tab"
-                                                        data-bs-target="#DefaultTab1" type="button" role="tab"
-                                                        aria-controls="home" aria-selected="true">Preview</button>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="nav-link " id="profile-tab1" data-bs-toggle="tab"
-                                                        data-bs-target="#DefaultTab1-html" type="button"
-                                                        role="tab">HTML</button>
-                                                </li>
-                                            </ul>
-                                        </div> --}}
-                                        <div class="tab-content pt-3" id="myTabContent1">
-                                            <div class="tab-pane fade show active" id="DefaultTab1" role="tabpanel"
-                                                aria-labelledby="home-tab1">
-                                                <div class="card-body pt-0">
-                                                    <!-- Nav tabs -->
-                                                    <div class="custom-tab-1">
-                                                        <ul class="nav nav-tabs justify-content-between">
-                                                            <li class="nav-item">
-                                                                <a class="nav-link active" data-bs-toggle="tab"
-                                                                    href="#home1">
-                                                                    Future</a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" data-bs-toggle="tab"
-                                                                    href="#profile1">
-                                                                    Options</a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" data-bs-toggle="tab"
-                                                                    href="#contact1">
-                                                                    MCX</a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" data-bs-toggle="tab"
-                                                                    href="#message1">
-                                                                    Indicies</a>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="tab-content">
-                                                            <div class="tab-pane fade show active" id="home1"
-                                                                role="tabpanel">
-                                                                <div class="input-group mt-1 search-area-2">
-                                                                    <input type="text" class="form-control" placeholder="Search & Add NSE Future ">
-                                                                    <span class="input-group-text"><a href="javascript:void(0)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
-                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                                                <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                                                                <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a></span>
-                                                                </div>
-                                                                <div class="pt-4">
-                                                                    <div id="quotesRefresh">
-                                                                        @include('components.quotes', ['fetch' => $fetch])
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane fade" id="profile1">
-                                                                <div class="input-group mt-1 search-area-2">
-                                                                    <input type="text" class="form-control" placeholder="Search & Add Option Future ">
-                                                                    <span class="input-group-text"><a href="javascript:void(0)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
-                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                                                <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                                                                <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a></span>
-                                                                </div>
-                                                                <div class="pt-4">
-                                                                    <h4>This is profile title</h4>
-                                                                    <p>Raw denim you probably haven't heard of them jean
-                                                                        shorts Austin. Nesciunt tofu stumptown aliqua,
-                                                                        retro synth master cleanse. Mustache cliche
-                                                                        tempor.
-                                                                    </p>
-                                                                    <p>Raw denim you probably haven't heard of them jean
-                                                                        shorts Austin. Nesciunt tofu stumptown aliqua,
-                                                                        retro synth master cleanse. Mustache cliche
-                                                                        tempor.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane fade" id="contact1">
-                                                                <div class="input-group mt-1 search-area-2">
-                                                                    <input type="text" class="form-control" placeholder="Search & Add MCX Future/Option">
-                                                                    <span class="input-group-text"><a href="javascript:void(0)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
-                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                                                <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                                                                <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a></span>
-                                                                </div>
-                                                                <div class="pt-4">
-                                                                    <h4>This is contact title</h4>
-                                                                    <p>Far far away, behind the word mountains, far from
-                                                                        the countries Vokalia and Consonantia, there
-                                                                        live the blind texts. Separated they live in
-                                                                        Bookmarksgrove.
-                                                                    </p>
-                                                                    <p>Far far away, behind the word mountains, far from
-                                                                        the countries Vokalia and Consonantia, there
-                                                                        live the blind texts. Separated they live in
-                                                                        Bookmarksgrove.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane fade" id="message1">
-                                                                <div class="input-group mt-1 search-area-2">
-                                                                    <input type="text" class="form-control" placeholder="Search & Add Indice Future/Option ">
-                                                                    <span class="input-group-text"><a href="javascript:void(0)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
-                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                                                <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                                                                <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
-                                                                            </g>
-                                                                        </svg>
-                                                                    </a></span>
-                                                                </div>
-                                                                <div class="pt-4">
-                                                                    <h4>This is message title</h4>
-                                                                    <p>Raw denim you probably haven't heard of them jean
-                                                                        shorts Austin. Nesciunt tofu stumptown aliqua,
-                                                                        retro synth master cleanse. Mustache cliche
-                                                                        tempor.
-                                                                    </p>
-                                                                    <p>Raw denim you probably haven't heard of them jean
-                                                                        shorts Austin. Nesciunt tofu stumptown aliqua,
-                                                                        retro synth master cleanse. Mustache cliche
-                                                                        tempor.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        
-                                        </div>
 
+
+                                                        <div class="pt-4">
+                                                            <div id="futureRefresh">
+                                                                @include('components.future-quote', ['fetch' =>
+                                                                $fetch])
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="option" role="tabpanel">
+                                                        <div class="input-group mt-1 search-area-2">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Search & Add Option Future ">
+                                                            <span class="input-group-text"><a href="javascript:void(0)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                        width="24px" height="24px" viewBox="0 0 24 24"
+                                                                        version="1.1" class="svg-main-icon">
+                                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                                            fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24">
+                                                                            </rect>
+                                                                            <path
+                                                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                                                                fill="#000000" fill-rule="nonzero"
+                                                                                opacity="0.3"></path>
+                                                                            <path
+                                                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                                                                fill="#000000" fill-rule="nonzero">
+                                                                            </path>
+                                                                        </g>
+                                                                    </svg>
+                                                                </a></span>
+                                                        </div>
+
+
+                                                        <div class="pt-4">
+                                                            <div id="optionRefresh">
+                                                                @include('components.option-quote', ['fetch' =>
+                                                                $fetch])
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="mcx">
+                                                        <div class="input-group mt-1 search-area-2">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Search & Add MCX Future/Option">
+                                                            <span class="input-group-text"><a href="javascript:void(0)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                        width="24px" height="24px" viewBox="0 0 24 24"
+                                                                        version="1.1" class="svg-main-icon">
+                                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                                            fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24">
+                                                                            </rect>
+                                                                            <path
+                                                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                                                                fill="#000000" fill-rule="nonzero"
+                                                                                opacity="0.3"></path>
+                                                                            <path
+                                                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                                                                fill="#000000" fill-rule="nonzero">
+                                                                            </path>
+                                                                        </g>
+                                                                    </svg>
+                                                                </a></span>
+                                                        </div>
+
+
+                                                        <div class="pt-4">
+                                                            <div id="mcxRefresh">
+                                                                @include('components.mcx-quote', ['fetch' =>
+                                                                $fetch])
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="indcies">
+                                                        <div class="input-group mt-1 search-area-2">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Search & Add Indice Future/Option ">
+                                                            <span class="input-group-text"><a href="javascript:void(0)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                        width="24px" height="24px" viewBox="0 0 24 24"
+                                                                        version="1.1" class="svg-main-icon">
+                                                                        <g stroke="none" stroke-width="1" fill="none"
+                                                                            fill-rule="evenodd">
+                                                                            <rect x="0" y="0" width="24" height="24">
+                                                                            </rect>
+                                                                            <path
+                                                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                                                                fill="#000000" fill-rule="nonzero"
+                                                                                opacity="0.3"></path>
+                                                                            <path
+                                                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                                                                fill="#000000" fill-rule="nonzero">
+                                                                            </path>
+                                                                        </g>
+                                                                    </svg>
+                                                                </a></span>
+                                                        </div>
+
+
+                                                        <div class="pt-4">
+                                                            <div id="indciesRefresh" >
+                                                                @include('components.indcies-quote', ['fetch' =>
+                                                                $fetch])
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                                <!-- /Column  -->
-                              
-                              
                             </div>
-                            <!-- /row -->
                         </div>
+                        <!-- /Column  -->
+
+
                     </div>
-                   
+                    <!-- /row -->
+                    {{--
+                    <div id="quotesRefresh">
+                        @include('components.future-quote', ['fetch' =>
+                        $fetch])
+                    </div> --}}
+                    {{-- <div id="futureRefresh">
+                        @include('components.future-quote', ['fetch' =>
+                        $fetch])
+                    </div>
+                    <div id="optionRefresh" style="display: none">
+                        @include('components.option-quote', ['fetch' =>
+                        $fetch])
+                    </div>
+                    <div id="mcxRefresh" style="display: none">
+                        @include('components.mcx-quote', ['fetch' =>
+                        $fetch])
+                    </div>
+                    <div id="indciesRefresh" style="display: none">
+                        @include('components.indcies-quote', ['fetch' =>
+                        $fetch])
+                    </div> --}}
                 </div>
+                <!--element-area -->
+                {{-- <div class="element-area">
+                    <div class="demo-view">
+
+                    </div>
+
+                </div> --}}
                 <!--/element-area-->
-                 <!--content body start-->
-        <div id="quotesRefresh">
-            @include('components.quotes', ['fetch' => $fetch])
-        </div>
+                <!--content body start-->
+                {{-- <div id="quotesRefresh">
+                    @include('components.quotes', ['fetch' => $fetch])
+                </div> --}}
             </div>
         </div>
 
 
-       
+
+        <!--content body start-->
+        {{-- <div id="quotesRefresh">
+            @include('components.quotes', ['fetch' => $fetch])
+        </div> --}}
+
+
     </div>
-    </div>
-    </div>
+    {{-- </div>
+    </div> --}}
 
 
     {{-- main body --}}
@@ -602,7 +543,7 @@ $user = Auth::user();
 
                             <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0 mb-3">
                                 <input type="text" class="form-control" id="searchinp" placeholder="Search Script"
-                                    onkeyup="searchScript(this)">
+                                    onkeyup="searchScript(this)" autofocus>
 
                             </div>
 
@@ -1326,6 +1267,11 @@ $user = Auth::user();
         //         }
         //     }
         // }
+
+    function changeQuote(type){
+     
+
+    }
 
 
     function handleOrderTypeChange(id, orderType, tradeType) {
