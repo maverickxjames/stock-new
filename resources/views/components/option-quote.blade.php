@@ -6,7 +6,7 @@ $user = Auth::user();
 
     <div class="row">
         <div class="col-xl-12">
-
+            <div class="row">
             <?php
                     $i = 1;
                     $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType','CE')->orWhere('instrumentType','PE')->get();
@@ -18,7 +18,7 @@ $user = Auth::user();
                         $stock = DB::table('future_temp')->where('instrumentKey', $foisin)->first();
                         $quantity = $stock->lotSize;
                     ?>
-            <div class="row">
+          
 
                 <div class="modal fade" id="exampleModalCenter{{ $i }}">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -737,11 +737,12 @@ $user = Auth::user();
                 </div>
 
 
-            </div>
+          
             <?php
                 $i++;
                     }
                     ?>
+                      </div>
         </div>
     </div>
     <!-- Trade offcanvas model end -->

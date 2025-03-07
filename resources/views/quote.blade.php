@@ -243,39 +243,10 @@ $user = Auth::user();
         <x-footer-menu />
         <!--Sidebar end-->
 
-        {{-- @php
-        $fetch = $fetch->toArray();
-        print_r($fetch);
-        @endphp --}}
-
-        <!--Content body start-->
-        {{-- <div class="mb-3 d-flex flex-column mt-2">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary">Future</button>
-                <button type="button" class="btn btn-outline-primary">Options</button>
-                <button type="button" class="btn btn-outline-primary">MCX</button>
-                <button type="button" class="btn btn-outline-primary">Indicies</button>
-            </div>
-        </div> --}}
-
-
-
-        {{-- <div class="col-xl-12 col-xxl-4 col-lg-4 mb-3 d-flex justify-content-between mt-2">
-            <button class="btn btn-primary active-filter filter" type="button"
-                onclick="setActiveFilter(this, 'ALL')">ALL</button>
-            <button class="btn btn-primary light filter" type="button"
-                onclick="setActiveFilter(this, 'Future')">Future</button>
-            <button class="btn btn-primary light filter" type="button"
-                onclick="setActiveFilter(this, 'Option')">Option</button>
-            <button class="btn btn-primary light filter" type="button"
-                onclick="setActiveFilter(this, 'Indicies')">Indicies</button>
-            <button class="btn btn-primary light filter" type="button"
-                onclick="setActiveFilter(this, 'Indicies')">Indicies</button>
-        </div> --}}
 
         <div class="content-body">
             <div class="container-fluid">
-                <div class="container-fluid pt-0 ps-0 pe-lg-4 pe-0">
+                {{-- <div class="container-fluid pt-0 ps-0 pe-lg-4 pe-0"> --}}
                     <!-- row -->
                     <div class="row">
                         <!-- Column  -->
@@ -308,7 +279,7 @@ $user = Auth::user();
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="future" role="tabpanel">
                                                         @php
-                                                            $data=DB::table('future_temp')->where('instrumentType','FUT')->where('is_watchlist',1)->get();
+                                                            $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 'NSE_FO')->where('is_watchlist',1)->get();
 
                                                             
                                                         @endphp
@@ -358,7 +329,7 @@ $user = Auth::user();
                                                             ->where('is_watchlist', 1)
                                                             ->get();
                                                     @endphp
-                                                        <div class="input-group mt-1 search-area-2" onclick="showWatchlist('option',{{ $data1 }})"
+                                                        <div class="input-group mt-4 search-area-2" onclick="showWatchlist('option',{{ $data1 }})"
                                                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                                                         aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
@@ -394,7 +365,16 @@ $user = Auth::user();
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="mcx">
-                                                        <div class="input-group mt-1 search-area-2">
+                                                        @php
+                                                        $data2 = DB::table('future_temp')
+                                                        ->where('instrumentType', 'FUT')
+                                                            ->where('segment', 'MCX_FO')
+                                                            ->where('is_watchlist', 1)
+                                                            ->get();
+                                                    @endphp
+                                                        <div class="input-group mt-4 search-area-2" onclick="showWatchlist('option',{{ $data2 }})"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                        aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
                                                                 placeholder="Search & Add MCX Future/Option">
                                                             <span class="input-group-text"><a href="javascript:void(0)">
@@ -428,7 +408,7 @@ $user = Auth::user();
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="indcies">
-                                                        <div class="input-group mt-1 search-area-2">
+                                                        <div class="input-group mt-4 search-area-2">
                                                             <input type="text" class="form-control"
                                                                 placeholder="Search & Add Indice Future/Option ">
                                                             <span class="input-group-text"><a href="javascript:void(0)">
@@ -475,60 +455,11 @@ $user = Auth::user();
 
                     </div>
                     <!-- /row -->
-                    {{--
-                    <div id="quotesRefresh">
-                        @include('components.future-quote', ['fetch' =>
-                        $fetch])
-                    </div> --}}
-                    {{-- <div id="futureRefresh">
-                        @include('components.future-quote', ['fetch' =>
-                        $fetch])
-                    </div>
-                    <div id="optionRefresh" style="display: none">
-                        @include('components.option-quote', ['fetch' =>
-                        $fetch])
-                    </div>
-                    <div id="mcxRefresh" style="display: none">
-                        @include('components.mcx-quote', ['fetch' =>
-                        $fetch])
-                    </div>
-                    <div id="indciesRefresh" style="display: none">
-                        @include('components.indcies-quote', ['fetch' =>
-                        $fetch])
-                    </div> --}}
-                </div>
-                <!--element-area -->
-                {{-- <div class="element-area">
-                    <div class="demo-view">
-
-                    </div>
-
-                </div> --}}
-                <!--/element-area-->
-                <!--content body start-->
-                {{-- <div id="quotesRefresh">
-                    @include('components.quotes', ['fetch' => $fetch])
-                </div> --}}
+                {{-- </div> --}}
             </div>
         </div>
 
-
-
-        <!--content body start-->
-        {{-- <div id="quotesRefresh">
-            @include('components.quotes', ['fetch' => $fetch])
-        </div> --}}
-
-
-    </div>
-    {{-- </div>
-    </div> --}}
-
-
-    {{-- main body --}}
-
-
-
+   
 
 
 
@@ -538,7 +469,7 @@ $user = Auth::user();
             <h5 id="offcanvasRightLabel">Add Your Script</h5>
             <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
                 style="border: none">
-                <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt="">
+                <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt="" onclick="hideSearch()">
             </button>
 
         </div>
@@ -599,14 +530,7 @@ $user = Auth::user();
 
     </div>
 
-    <script>
-       let activeTab = document.querySelector('.nav-link.active'); 
-if (activeTab) {
-    console.log("Active Tab Text:", activeTab.innerText);
-    console.log("Active Tab Href:", activeTab.getAttribute("href"));
-}
-
-    </script>
+    
     <script>
         // Trade Start
 
@@ -955,7 +879,10 @@ if (activeTab) {
                         success: function(response) {
                             // delete quotesRefresh old data and replace with new data
 
-                            $('#quotesRefresh').html(response);
+                            $('#futureRefresh').html(response);
+                            // $('#optionRefresh').html(response);
+                            // $('#mcxRefresh').html(response);
+                            // $('#optionRefresh').html(response);
 
                             
                         }
@@ -975,61 +902,61 @@ if (activeTab) {
 
 
     <script>
-        let activeFilter = 'ALL';
-        let activeFilterCP = 'ALL';
+        // let activeFilter = 'ALL';
+        // let activeFilterCP = 'ALL';
 
-        function setActiveFilter(selectedButton, filterName) {
-            const buttons = document.querySelectorAll('.filter');
+        // function setActiveFilter(selectedButton, filterName) {
+        //     const buttons = document.querySelectorAll('.filter');
 
-            buttons.forEach(button => {
-                button.classList.remove('active-filter');
-                button.classList.add('light');
-            });
+        //     buttons.forEach(button => {
+        //         button.classList.remove('active-filter');
+        //         button.classList.add('light');
+        //     });
 
-            selectedButton.classList.remove('light');
-            selectedButton.classList.add('active-filter');
+        //     selectedButton.classList.remove('light');
+        //     selectedButton.classList.add('active-filter');
 
-            if (filterName === 'Option') {
-                document.getElementById('expiry-date').hidden = false;
-                document.getElementById('Order-type').hidden = false;
-            } else if (filterName === 'Future') {
-                document.getElementById('expiry-date').hidden = false;
-                document.getElementById('Order-type').hidden = true;
-            } else {
-                document.getElementById('expiry-date').hidden = true;
-                document.getElementById('Order-type').hidden = true;
-            }
-
-
-
-            activeFilter = filterName;
-
-        }
-
-        function setActiveFilterCP(selectedButton, filterName) {
-            const buttons = document.querySelectorAll('.filterCP');
-
-            buttons.forEach(button => {
-                button.classList.remove('filterCP');
-                button.classList.add('light');
-            });
-
-            selectedButton.classList.remove('light');
-            selectedButton.classList.add('filterCP');
-
-            activeFilterCP = filterName;
-
-        }
+        //     if (filterName === 'Option') {
+        //         document.getElementById('expiry-date').hidden = false;
+        //         document.getElementById('Order-type').hidden = false;
+        //     } else if (filterName === 'Future') {
+        //         document.getElementById('expiry-date').hidden = false;
+        //         document.getElementById('Order-type').hidden = true;
+        //     } else {
+        //         document.getElementById('expiry-date').hidden = true;
+        //         document.getElementById('Order-type').hidden = true;
+        //     }
 
 
 
-        function getActiveFilter() {
-            return activeFilter;
-        }
+        //     activeFilter = filterName;
 
-        function getActiveFilterCP() {
-            return activeFilterCP;
-        }
+        // }
+
+        // function setActiveFilterCP(selectedButton, filterName) {
+        //     const buttons = document.querySelectorAll('.filterCP');
+
+        //     buttons.forEach(button => {
+        //         button.classList.remove('filterCP');
+        //         button.classList.add('light');
+        //     });
+
+        //     selectedButton.classList.remove('light');
+        //     selectedButton.classList.add('filterCP');
+
+        //     activeFilterCP = filterName;
+
+        // }
+
+
+
+        // function getActiveFilter() {
+        //     return activeFilter;
+        // }
+
+        // function getActiveFilterCP() {
+        //     return activeFilterCP;
+        // }
 
         
 
@@ -1066,10 +993,22 @@ if (activeTab) {
                 fetchResults(true);
             }, 500);
         }
+        function getActiveFilter() {
+    let activeTab = document.querySelector('.nav-tabs .nav-link.active');
+    return activeTab ? activeTab.innerText.trim() : 'all';
+}
+
+        function hideSearch() {
+            document.getElementById("searchinp").value = "";
+            document.getElementById("RecentActivityContent").innerHTML = "";
+            document.getElementById("msg").style.display = "block";
+        }
 
         function fetchResults(isNewSearch = false) {
             if (isFetching || !hasMoreData) return;
             isFetching = true;
+            console.log(getActiveFilter());
+            
            
             let type;
             switch (getActiveFilter()) {
@@ -1083,7 +1022,7 @@ if (activeTab) {
                     type = 'indices';
                     break;
                 default:
-                    type = 'all';
+                    type = 'mcx';
             }
 
             showLoading();
@@ -1139,11 +1078,11 @@ if (activeTab) {
                                                 <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
                                             </div>
                                         </div>
-                                        <div class="icon-box icon-box-sm bgl-primary">
+                                        
                                             <a href="javascript:void(0)" id="add_script">
-                                                <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
+											<input type="checkbox" class="form-check-input icon-box icon-box-sm bgl-primary"  checked required >
                                             </a>
-                                        </div>
+                                      
                                     </div>
                                 `;
                 container.insertAdjacentHTML("beforeend", contentHTML);

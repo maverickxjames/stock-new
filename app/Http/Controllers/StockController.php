@@ -213,14 +213,21 @@ class StockController extends Controller
             ->where('assetSymbol', 'like', "%" . $search . "%");
 
         if ($type == 'future') {
-            $query->where('instrumentType', 'FUT');
+            $query->where('instrumentType', 'FUT')->where('segment', 'NSE_FO');
         } elseif ($type == 'option') {
             $query->where(function ($q) {
                 $q->where('instrumentType', 'CE')
+                ->where('segment', 'NSE_FO')
                     ->orWhere('instrumentType', 'PE');
             });
         } elseif ($type == 'indices') {
             $query->where('instrumentType', 'IDX');
+        } elseif ($type=="mcx"){
+            $query->where(function ($q) {
+                $q->where('instrumentType', 'FUT')
+                    ->Where('segment', 'MCX_FO');
+                    // ->orWhere('instrumentType', 'PE');
+            });
         }
 
         // Apply limit & offset for pagination
