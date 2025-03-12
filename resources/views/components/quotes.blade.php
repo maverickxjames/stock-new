@@ -753,6 +753,7 @@ $user = Auth::user();
                         <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
                             <?php 
                                                         $change = $stock->ltp - $stock->cp;
+                                                        
                                                         if($change > 0){
                                                             ?>
                             <span class="badge badge-success me-1">▲</span>

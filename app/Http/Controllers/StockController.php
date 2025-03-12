@@ -201,38 +201,40 @@ class StockController extends Controller
 
 
 
-    function searchScript(Request $request)
+    public function searchScript(Request $request)
     {
         $search = $request->search ?? '';
         $type = $request->type ?? 'all';
         $page = (int) ($request->page ?? 1);
         $limit = (int) ($request->limit ?? 10);
         $offset = ($page - 1) * $limit;
-
+    
+        $today = Carbon::now(); // Get current date
+    
         $query = DB::table('future_temp')
-            ->where('assetSymbol', 'like', "%" . $search . "%");
-
+            ->where('assetSymbol', 'like', "%" . $search . "%")
+            ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') >= ?", [$today]); // Filter expired contracts
+    
         if ($type == 'future') {
             $query->where('instrumentType', 'FUT')->where('segment', 'NSE_FO');
         } elseif ($type == 'option') {
             $query->where(function ($q) {
                 $q->where('instrumentType', 'CE')
-                ->where('segment', 'NSE_FO')
-                    ->orWhere('instrumentType', 'PE');
+                  ->where('segment', 'NSE_FO')
+                  ->orWhere('instrumentType', 'PE');
             });
         } elseif ($type == 'indices') {
             $query->where('instrumentType', 'IDX');
-        } elseif ($type=="mcx"){
+        } elseif ($type == "mcx") {
             $query->where(function ($q) {
                 $q->where('instrumentType', 'FUT')
-                    ->Where('segment', 'MCX_FO');
-                    // ->orWhere('instrumentType', 'PE');
+                  ->where('segment', 'MCX_FO');
             });
         }
-
+    
         // Apply limit & offset for pagination
         $data = $query->limit($limit)->offset($offset)->get();
-
+    
         return response()->json($data);
     }
 

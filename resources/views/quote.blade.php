@@ -809,12 +809,21 @@ $user = Auth::user();
                         const feedData = feeds[key].ff.marketFF; // Data from WebSocket
                         const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
 
-                        const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el
+                        const isinElement1 = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el
+                            .textContent === receivedIsin);
+
+                        const isinElement2 = Array.from(document.querySelectorAll("p[id^='isin2']")).find(el => el
+                            .textContent === receivedIsin);
+
+                        const isinElement3 = Array.from(document.querySelectorAll("p[id^='isin3']")).find(el => el
+                            .textContent === receivedIsin);
+
+                        const isinElement4 = Array.from(document.querySelectorAll("p[id^='isin4']")).find(el => el
                             .textContent === receivedIsin);
 
                         // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
-                        if (isinElement) {
-                            const rowId = isinElement.id.replace('isin', '');
+                        if (isinElement1) {
+                            const rowId = isinElement1.id.replace('isin1', '');
                             // console.log(rowId);
 
                             const ltp = feedData?.ltpc?.ltp || 1;
@@ -834,7 +843,13 @@ $user = Auth::user();
                                 .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-                            const percentageChange = ltp && cp ? (((ltp - cp) / cp) * 100).toFixed(2) : '0';
+
+                            const percentageChange = cp > 0 
+    ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
+    : 0;
+
+                          
+
 
 
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
@@ -856,8 +871,158 @@ $user = Auth::user();
                                 .bidQ || '0';
                             document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .askQ || '0';
-                        } else {
-                            // console.log('ISIN not found:', receivedIsin);
+                        }
+                        if (isinElement2) {
+                            const rowId = isinElement2.id.replace('isin2', '');
+                            
+
+                            const ltp = feedData?.ltpc?.ltp || 1;
+                            const cp = feedData?.ltpc?.cp || 0;
+
+                            console.log(rowId);
+
+
+
+                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                                '0' +
+                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+
+                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
+
+                            const percentageChange = cp > 0 
+    ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
+    : 0;
+
+                          
+
+
+
+                            const badgeValue = (ltp - cp).toFixed(2) || '0';
+
+
+                            document.getElementById(`change${rowId}`).innerHTML = `
+                                        ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+
+
+                                `;
+
+
+
+
+                            // bid and ask
+                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .bidQ || '0';
+                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .askQ || '0';
+                        }
+                        if (isinElement3) {
+                            const rowId = isinElement3.id.replace('isin3', '');
+                            // console.log(rowId);
+
+                            const ltp = feedData?.ltpc?.ltp || 1;
+                            const cp = feedData?.ltpc?.cp || 0;
+
+
+
+                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                                '0' +
+                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+
+                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
+
+                            const percentageChange = cp > 0 
+    ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
+    : 0;
+
+                          
+
+
+
+                            const badgeValue = (ltp - cp).toFixed(2) || '0';
+
+
+                            document.getElementById(`change${rowId}`).innerHTML = `
+                                        ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+
+
+                                `;
+
+
+
+
+                            // bid and ask
+                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .bidQ || '0';
+                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .askQ || '0';
+                        }
+                        if (isinElement4) {
+                            const rowId = isinElement4.id.replace('isin4', '');
+                            // console.log(rowId);
+
+                            const ltp = feedData?.ltpc?.ltp || 1;
+                            const cp = feedData?.ltpc?.cp || 0;
+
+
+
+                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                                '0' +
+                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+
+                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
+
+                            const percentageChange = cp > 0 
+    ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
+    : 0;
+
+                          
+
+
+
+                            const badgeValue = (ltp - cp).toFixed(2) || '0';
+
+
+                            document.getElementById(`change${rowId}`).innerHTML = `
+                                        ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+
+
+                                `;
+
+
+
+
+                            // bid and ask
+                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .bidQ || '0';
+                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                                .askQ || '0';
                         }
 
                     }

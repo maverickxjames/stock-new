@@ -20,10 +20,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/', function () {
         return view('login');
     });
-
-
-
-    
+ 
 });
 
 Route::prefix('cron')->group(function () {

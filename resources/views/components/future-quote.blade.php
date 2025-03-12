@@ -9,7 +9,7 @@ $user = Auth::user();
                 <div class="row">
                     <?php
                     $i = 1;
-                    $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'FUT')->get();
+                    $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'FUT')->where('segment','NSE_FO')->get();
                     foreach ($fetch as $key) {
                         $foisin = $key->instrumentKey;
                         $isin = $key->isIn;
@@ -650,13 +650,16 @@ $user = Auth::user();
                    
                     <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal"
                         data-bs-target="#exampleModalCenter{{ $i }}">
-                        <p style="display: none" id="isin{{ $i }}">{{ $foisin }}</p>
+                        <p style="display: none" id="isin1{{ $i }}">{{ $foisin }}</p>
                         <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
                             <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
                                         <?php 
                                                                     $change = $stock->ltp - $stock->cp;
+                                                                    if($stock->cp == 0){
+                                                                        $stock->cp = 1;
+                                                                    }
                                 if ($change > 0) {
                                                                         ?>
                                         <span class="badge badge-success me-1">▲</span>
