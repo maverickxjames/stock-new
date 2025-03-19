@@ -47,14 +47,14 @@ $user = Auth::user();
                             <div class="modal-body p-3">
                                 <div class="d-flex flex-column gap-3">
                                     <div class="trade-item d-flex align-items-center p-2 rounded border shadow-sm"
-                                        onclick="showOrderForm({{ $i }})" data-bs-dismiss="modal">
+                                        onclick="showOrderForm(2,{{ $i }})" data-bs-dismiss="modal">
                                         <img src="https://cdn-icons-png.flaticon.com/128/15342/15342293.png" width="30"
                                             class="me-2" alt="Trade Logo">
                                         <h6 class="mb-0 flex-grow-1 fs-2">Trade</h6>
                                     </div>
 
                                     <div class="trade-item d-flex align-items-center p-2 rounded border shadow-sm"
-                                        onclick="handleChartClick('{{ $foisin }}', '{{ $i }}')" data-bs-dismiss="modal">
+                                        onclick="handleChartClick('{{ $foisin }}', 2,'{{ $i }}')" data-bs-dismiss="modal">
                                         <img src="https://cdn-icons-png.flaticon.com/128/2285/2285559.png" width="30"
                                             class="me-2" alt="Chart Logo">
                                         <h6 class="mb-0 flex-grow-1 fs-2">Chart</h6>
@@ -82,7 +82,7 @@ $user = Auth::user();
                 <!-- Top-up Modal End -->
 
                 <!--chart offcanvas start -->
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom{{ $i }}"
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom2{{ $i }}"
                     aria-labelledby="offcanvasBottomLabel" style="height: fit-content;">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasBottomLabel">Chart</h5>
@@ -140,7 +140,7 @@ $user = Auth::user();
                                 </div>
 
 
-                                <div id="marketOverview{{ $i }}" style="height: 300px"></div>
+                                <div id="marketOverview2{{ $i }}" style="height: 300px"></div>
 
 
 
@@ -153,7 +153,7 @@ $user = Auth::user();
 
                 <!-- Trade offcanvas model -->
 
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom{{ $i }}"
+                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom2{{ $i }}"
                     aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title fs-2" id="offcanvasBottomLabel{{ $i }}">
@@ -637,7 +637,7 @@ $user = Auth::user();
                     <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
                         <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change{{ $i }}">
+                                <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change2{{ $i }}">
                                     <?php 
                                                                     $change = $stock->ltp - $stock->cp;
                                                                     if($stock->cp == 0){
@@ -646,10 +646,10 @@ $user = Auth::user();
                                 if ($change > 0) {
                                                                         ?>
                                     <span class="badge badge-success me-1">▲</span>
-                                    <span class="text-success" id="perc{{ $i }}">
+                                    <span class="text-success" id="perc2{{ $i }}">
                                         <?php echo number_format(($change / $stock->cp) * 100, 2); ?>% &nbsp;
                                     </span>
-                                    <span class="text-success" id="perc{{ $i }}">(
+                                    <span class="text-success" id="perc2{{ $i }}">(
                                         <?php echo number_format($change, 2); ?> pts)
                                     </span>
 
@@ -658,10 +658,10 @@ $user = Auth::user();
                                 } elseif ($change < 0) {
                                                                         ?>
                                     <span class="badge badge-danger me-1">▼</span>
-                                    <span class="text-danger" id="perc{{ $i }}">{{ number_format(($change / $stock->cp)
+                                    <span class="text-danger" id="perc2{{ $i }}">{{ number_format(($change / $stock->cp)
                                         * 100, 2) }}%
                                         &nbsp;</span>
-                                    <span class="text-danger" id="perc{{ $i }}">(
+                                    <span class="text-danger" id="perc2{{ $i }}">(
                                         <?php        echo number_format($change, 2); ?> pts)
                                     </span>
 
@@ -669,8 +669,8 @@ $user = Auth::user();
                                 } else {
                                                                         ?>
                                     <span class="badge badge-warning me-1">-</span>
-                                    <span class="text-warning" id="perc{{ $i }}">0.00% &nbsp;</span>
-                                    <span class="text-warning" id="perc{{ $i }}">(0.00 pts) </span>
+                                    <span class="text-warning" id="perc2{{ $i }}">0.00% &nbsp;</span>
+                                    <span class="text-warning" id="perc2{{ $i }}">(0.00 pts) </span>
                                     <?php 
                                                                     }    
                                                                     ?>
@@ -685,7 +685,7 @@ $user = Auth::user();
                                 <div class="d-flex justify-content-between ">
                                     <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
                                         LTP:
-                                        <span id="ltp{{ $i }}" class="font-w600 text-primary fs-4">
+                                        <span id="ltp2{{ $i }}" class="font-w600 text-primary fs-4">
                                             {{ $stock->ltp }}</span>
                                     </p>
                                 </div>
@@ -702,11 +702,11 @@ $user = Auth::user();
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-2">
                                 <div class="me-3">
-                                    <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600" id="bid{{ $i }}">{{
+                                    <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600" id="bid2{{ $i }}">{{
                                             $stock->bid }}</span></p>
                                 </div>
                                 <div class="me-3">
-                                    <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600" id="ask{{ $i }}">{{
+                                    <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600" id="ask2{{ $i }}">{{
                                             $stock->ask }}</span></p>
                                 </div>
                             </div>
@@ -716,14 +716,14 @@ $user = Auth::user();
                                 <div class="d-flex align-items-center">
                                     <div class="me-3">
                                         <p class="mb-0">Open/Close</p>
-                                        <p class="text-dark mb-0 font-w600" id="openclose{{ $i }}">
+                                        <p class="text-dark mb-0 font-w600" id="openclose2{{ $i }}">
                                             {{ $stock->open }}/{{ $stock->close }}
                                         </p>
                                     </div>
                                 </div>
                                 <div class="me-3">
                                     <p class="mb-0">High/Low</p>
-                                    <p class="text-dark mb-0 font-w600" id="highlow{{ $i }}">
+                                    <p class="text-dark mb-0 font-w600" id="highlow2{{ $i }}">
                                         {{ $stock->high }}/{{ $stock->low }}
                                     </p>
                                 </div>

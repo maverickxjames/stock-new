@@ -831,15 +831,15 @@ $user = Auth::user();
 
 
 
-                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                            document.getElementById(`highlow1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
                                 '0' +
                                 '/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                            document.getElementById(`openclose1${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
                                 .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
@@ -855,10 +855,10 @@ $user = Auth::user();
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 
-                            document.getElementById(`change${rowId}`).innerHTML = `
+                            document.getElementById(`change1${rowId}`).innerHTML = `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc1'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc1'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc1'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc1'+rowId+'">  ('+badgeValue+' pts)</span>'}
 
 
                                 `;
@@ -867,9 +867,9 @@ $user = Auth::user();
 
 
                             // bid and ask
-                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                            document.getElementById(`bid1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .bidQ || '0';
-                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                            document.getElementById(`ask1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .askQ || '0';
                         }
                         if (isinElement2) {
@@ -883,15 +883,15 @@ $user = Auth::user();
 
 
 
-                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                            document.getElementById(`highlow2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
                                 '0' +
                                 '/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                            document.getElementById(`openclose2${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
                                 .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
@@ -907,10 +907,10 @@ $user = Auth::user();
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 
-                            document.getElementById(`change${rowId}`).innerHTML = `
+                            document.getElementById(`change2${rowId}`).innerHTML = `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc2'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc2'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc2'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc2'+rowId+'">  ('+badgeValue+' pts)</span>'}
 
 
                                 `;
@@ -919,9 +919,9 @@ $user = Auth::user();
 
 
                             // bid and ask
-                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                            document.getElementById(`bid2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .bidQ || '0';
-                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                            document.getElementById(`ask2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .askQ || '0';
                         }
                         if (isinElement3) {
@@ -933,15 +933,15 @@ $user = Auth::user();
 
 
 
-                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                            document.getElementById(`highlow3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
                                 '0' +
                                 '/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                            document.getElementById(`openclose3${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
                                 .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
@@ -957,10 +957,10 @@ $user = Auth::user();
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 
-                            document.getElementById(`change${rowId}`).innerHTML = `
+                            document.getElementById(`change3${rowId}`).innerHTML = `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc3'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc3'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc3'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc3'+rowId+'">  ('+badgeValue+' pts)</span>'}
 
 
                                 `;
@@ -969,9 +969,9 @@ $user = Auth::user();
 
 
                             // bid and ask
-                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                            document.getElementById(`bid3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .bidQ || '0';
-                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                            document.getElementById(`ask3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .askQ || '0';
                         }
                         if (isinElement4) {
@@ -983,15 +983,15 @@ $user = Auth::user();
 
 
 
-                            document.getElementById(`ltp${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            document.getElementById(`ltp4${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                            document.getElementById(`highlow4${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
                                 '0' +
                                 '/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                            document.getElementById(`openclose4${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
                                 .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
@@ -1007,10 +1007,10 @@ $user = Auth::user();
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 
-                            document.getElementById(`change${rowId}`).innerHTML = `
+                            document.getElementById(`change4${rowId}`).innerHTML = `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc4'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc4'+rowId+'">'+percentageChange+'%</span>&nbsp'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc4'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc4'+rowId+'">  ('+badgeValue+' pts)</span>'}
 
 
                                 `;
@@ -1019,9 +1019,9 @@ $user = Auth::user();
 
 
                             // bid and ask
-                            document.getElementById(`bid${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                            document.getElementById(`bid4${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .bidQ || '0';
-                            document.getElementById(`ask${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
+                            document.getElementById(`ask4${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .askQ || '0';
                         }
 
@@ -1128,8 +1128,8 @@ $user = Auth::user();
 
 
 
-        function showOrderForm(index) {
-            const offcanvasId = `orderoffcanvasBottom${index}`;
+        function showOrderForm(row,index) {
+            const offcanvasId = `orderoffcanvasBottom${row}${index}`;
             const offcanvasElement = document.getElementById(offcanvasId);
             const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
             offcanvas.show();
@@ -1802,12 +1802,12 @@ $user = Auth::user();
             
         }
 
-        function handleChartClick(foisin, modalId) {
+        function handleChartClick(foisin,rowId, modalId) {
             console.log("Clicked on chart for:", foisin, modalId);
 
-            var offcanvas = new bootstrap.Offcanvas(document.getElementById(`offcanvasBottom${modalId}`));
+            var offcanvas = new bootstrap.Offcanvas(document.getElementById(`offcanvasBottom${rowId}${modalId}`));
             offcanvas.show();
-            let chartContainer = document.getElementById(`marketOverview${modalId}`);
+            let chartContainer = document.getElementById(`marketOverview${rowId}${modalId}`);
             if (!chartContainer) {
                 console.error("Chart container not found:", `marketOverview${modalId}`);
                 return;
