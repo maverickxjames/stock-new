@@ -178,10 +178,10 @@ $user = Auth::user();
                                                 <div class="nav nav-pills light " id="nav-tab" role="tablist">
                                                     <button class="nav-link active " style="width: 50%;"
                                                         id="nav-order-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#nav-order{{ $i }}" type="button" role="tab"
+                                                        data-bs-target="#nav-order1{{ $i }}" type="button" role="tab"
                                                         aria-selected="true">Buy</button>
                                                     <button class="nav-link" style="width: 50%" id="nav-histroy-tab"
-                                                        data-bs-toggle="tab" data-bs-target="#nav-history{{ $i }}"
+                                                        data-bs-toggle="tab" data-bs-target="#nav-history1{{ $i }}"
                                                         type="button" role="tab" aria-selected="false">Sell
                                                     </button>
 
@@ -191,7 +191,7 @@ $user = Auth::user();
                                         </div>
                                         <div class="card-body pt-2">
                                             <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-order{{ $i }}"
+                                                <div class="tab-pane fade show active" id="nav-order1{{ $i }}"
                                                     role="tabpanel" aria-labelledby="nav-order-tab">
                                                     <div class="table-responsive dataTabletrade">
                                                         <form id="buyform{{ $i }}" name="buyform{{ $i }}" method="POST"
@@ -419,7 +419,7 @@ $user = Auth::user();
 
 
 
-                                                <div class="tab-pane fade" id="nav-history{{ $i }}" role="tabpanel">
+                                                <div class="tab-pane fade" id="nav-history1{{ $i }}" role="tabpanel">
                                                     <div class="table-responsive dataTabletrade">
                                                         <form id="sellform" name="sellform{{ $i }}" method="POST"
                                                             action="{{ route('placeSellOrder') }}">

@@ -884,8 +884,8 @@ $user = Auth::user();
 
 
                             document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice21${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice22${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`highlow2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
@@ -934,8 +934,8 @@ $user = Auth::user();
 
 
                             document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice31${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice32${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`highlow3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
@@ -984,8 +984,8 @@ $user = Auth::user();
 
 
                             document.getElementById(`ltp4${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice41${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice42${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`highlow4${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
