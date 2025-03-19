@@ -832,8 +832,8 @@ $user = Auth::user();
 
 
                             document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice2${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice11${rowId}`).value = feedData.ltpc.ltp || '0';
+                            document.getElementById(`realprice12${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`highlow1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
@@ -1368,25 +1368,25 @@ $user = Auth::user();
     }
 
 
-    function handleOrderTypeChange(id, orderType, tradeType) {
+    function handleOrderTypeChange(rowId,id, orderType, tradeType) {
     // Define all button IDs dynamically
     let orderT, buttons, selectedBtn;
 
     if (tradeType === "buy") {
-        orderT = document.getElementById(`orderType1${id}`);
+        orderT = document.getElementById(`orderType${rowId}1${id}`);
         buttons = [
-            `marketBtn1${id}`,
-            `limitBtn1${id}`,
-            `stoplossMarketBtn1${id}`,
-            `stoplossLimitBtn1${id}`
+            `marketBtn${rowId}1${id}`,
+            `limitBtn${rowId}1${id}`,
+            `stoplossMarketBtn${rowId}1${id}`,
+            `stoplossLimitBtn${rowId}1${id}`
         ];
     } else {
-        orderT = document.getElementById(`orderType2${id}`);
+        orderT = document.getElementById(`orderType${rowId}2${id}`);
         buttons = [
-            `marketBtn2${id}`,
-            `limitBtn2${id}`,
-            `stoplossMarketBtn2${id}`,
-            `stoplossLimitBtn2${id}`
+            `marketBtn${rowId}2${id}`,
+            `limitBtn${rowId}2${id}`,
+            `stoplossMarketBtn${rowId}2${id}`,
+            `stoplossLimitBtn${rowId}2${id}`
         ];
     }
 
@@ -1403,7 +1403,7 @@ $user = Auth::user();
     });
 
     // Highlight selected button
-    selectedBtn = document.getElementById(`${orderType}Btn${tradeType === "buy" ? "1" : "2"}${id}`);
+    selectedBtn = document.getElementById(`${orderType}Btn${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
     if (selectedBtn) {
         selectedBtn.classList.remove("btn-outline-primary");
         selectedBtn.classList.add("btn-primary", "active");
@@ -1414,11 +1414,11 @@ $user = Auth::user();
     }
 
      // Get relevant input fields
-    let priceInput = document.getElementById(`realprice${tradeType === "buy" ? "1" : "2"}${id}`);
-    let limitprice = document.getElementById(`limitprice${tradeType === "buy" ? "1" : "2"}${id}`);
-    let limitblock = document.getElementById(`limitblock${tradeType === "buy" ? "1" : "2"}${id}`);
-    let targetpriceInput = document.getElementById(`targetprice${tradeType === "buy" ? "1" : "2"}${id}`);
-    let targetpriceblock = document.getElementById(`targetpriceblock${tradeType === "buy" ? "1" : "2"}${id}`);
+    let priceInput = document.getElementById(`realprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+    let limitprice = document.getElementById(`limitprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+    let limitblock = document.getElementById(`limitblock${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+    let targetpriceInput = document.getElementById(`targetprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+    let targetpriceblock = document.getElementById(`targetpriceblock${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
 
     // Ensure elements exist before modifying them
     if (limitblock) limitblock.style.display = 'none';
@@ -1495,14 +1495,14 @@ $user = Auth::user();
             }
         }
 
-        function handleTradeModeChange(uniqueId, selectedMode, tradeType) {
-            const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginUsed=document.getElementById('marginUsed'+(tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const instrumentType = document.getElementById('instrumentType' + uniqueId).value;
+        function handleTradeModeChange(uniqueId, selectedMode, tradeType,rowId) {
+            const lotInput = document.getElementById('lotSize'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const instrumentType = document.getElementById('instrumentType'+rowId + uniqueId).value;
 
             let margin = getMarginValue(instrumentType, selectedMode);
             let realPriceValue = parseFloat(realPrice.value) || 0;
@@ -1520,19 +1520,21 @@ $user = Auth::user();
         }
 
         
-        function incrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
+        function incrementLot(quantityPerLot, uniqueId, wallet, tradeType,rowId) {
 
-            const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const selectedMode = document.querySelector(`input[name="tradeMode1${uniqueId}"]:checked`).value;
-            const marginUsed=document.getElementById('marginUsed'+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const lotInput = document.getElementById('lotSize'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const maxPrice = document.getElementById('maxPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const selectedMode = document.querySelector(`input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
+
+            const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+            
            
 
-            const instrumentType = document.getElementById('instrumentType' + uniqueId).value;
+            const instrumentType = document.getElementById('instrumentType'+rowId + uniqueId).value;
 
             let margin = 0;
 
@@ -1582,18 +1584,19 @@ $user = Auth::user();
 
         }
 
-        function decrementLot(quantityPerLot, uniqueId, wallet, tradeType) {
+        function decrementLot(quantityPerLot, uniqueId, wallet, tradeType,rowId) {
 
-            const lotInput = document.getElementById('lotSize' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const maxPrice = document.getElementById('maxPrice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost' + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginUsed=document.getElementById('marginUsed'+(tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const selectedMode = document.querySelector(`input[name="tradeMode1${uniqueId}"]:checked`).value;
+            const lotInput = document.getElementById('lotSize'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const maxPrice = document.getElementById('maxPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+           const selectedMode = document.querySelector(`input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
 
-            const instrumentType = document.getElementById('instrumentType' + uniqueId).value;
+
+            const instrumentType = document.getElementById('instrumentType'+rowId + uniqueId).value;
 
             let margin = 0;
 

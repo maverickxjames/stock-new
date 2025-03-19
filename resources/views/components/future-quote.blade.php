@@ -202,9 +202,9 @@ $user = Auth::user();
                                                             <input type="text" name="instrumentKey1{{ $i }}"
                                                                 value="{{ $foisin }}" id="instrumentKey1{{ $i }}"
                                                                 hidden>
-                                                            <input type="text" name="instrumentType{{ $i }}"
+                                                            <input type="text" name="instrumentType1{{ $i }}"
                                                                 value="{{ $instrumentType }}"
-                                                                id="instrumentType{{ $i }}" hidden>
+                                                                id="instrumentType1{{ $i }}" hidden>
                                                             <div class="col-xl-4" style="width: 100%;">
                                                                 <div class="card">
                                                                     <div class="card-body pt-2">
@@ -218,28 +218,28 @@ $user = Auth::user();
                                                                         </div>
                                                                         <!-- Order Type Selector -->
                                                                         <input type="text" value="market"
-                                                                            name="orderType1{{ $i }}"
-                                                                            id="orderType1{{ $i }}" hidden>
+                                                                            name="orderType11{{ $i }}"
+                                                                            id="orderType11{{ $i }}" hidden>
                                                                         <div class="mb-3 d-flex flex-column">
                                                                             <label class="form-label">Order Type</label>
                                                                             <div class="btn-group" role="group">
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
-                                                                                    id="marketBtn1{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'market', 'buy')">Market</button>
+                                                                                    id="marketBtn11{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'market', 'buy')">Market</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="limitBtn1{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'limit', 'buy')">Limit</button>
+                                                                                    id="limitBtn11{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'limit', 'buy')">Limit</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="stoplossMarketBtn1{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'stoplossMarket', 'buy')">SL
+                                                                                    id="stoplossMarketBtn11{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'stoplossMarket', 'buy')">SL
                                                                                     Mkt</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="stoplossLimitBtn1{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'stoplossLimit', 'buy')">SL
+                                                                                    id="stoplossLimitBtn11{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'stoplossLimit', 'buy')">SL
                                                                                     Limit</button>
                                                                             </div>
                                                                         </div>
@@ -248,8 +248,8 @@ $user = Auth::user();
                                                                         <div class="input-group mb-3">
                                                                             <span class="input-group-text">Market
                                                                                 Price</span>
-                                                                            <input id="realprice1{{ $i }}"
-                                                                                name="realprice1{{ $i }}" readonly
+                                                                            <input id="realprice11{{ $i }}"
+                                                                                name="realprice11{{ $i }}" readonly
                                                                                 type="text" class="form-control"
                                                                                 placeholder="Enter price"
                                                                                 value="{{ $stock->ltp }}">
@@ -258,13 +258,13 @@ $user = Auth::user();
                                                                             <span class="input-group-text">₹</span>
                                                                         </div>
                                                                         <!-- Limit Input -->
-                                                                        <div id="limitblock1{{ $i }}"
+                                                                        <div id="limitblock11{{ $i }}"
                                                                             style="display: none"
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Limit
                                                                                 Price</span>
-                                                                            <input id="limitprice1{{ $i }}"
-                                                                                name="limitprice1{{ $i }}" disabled
+                                                                            <input id="limitprice11{{ $i }}"
+                                                                                name="limitprice11{{ $i }}" disabled
                                                                                 type="hidden" class="form-control"
                                                                                 placeholder="Enter price" value="0.00">
 
@@ -272,13 +272,13 @@ $user = Auth::user();
                                                                         </div>
 
                                                                         {{-- marketstoploss input --}}
-                                                                        <div id="targetpriceblock1{{ $i }}"
+                                                                        <div id="targetpriceblock11{{ $i }}"
                                                                             style="display: none"
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Target Price
                                                                             </span>
-                                                                            <input id="targetprice1{{ $i }}"
-                                                                                name="targetprice1{{ $i }}" disabled
+                                                                            <input id="targetprice11{{ $i }}"
+                                                                                name="targetprice11{{ $i }}" disabled
                                                                                 type="hidden" class="form-control"
                                                                                 placeholder="Enter price">
 
@@ -293,18 +293,18 @@ $user = Auth::user();
                                                                                 <span class="fs-5">Lot</span>
                                                                                 <div class=" input-group mb-3">
                                                                                     <button
-                                                                                        onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy')"
+                                                                                        onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }}, 'buy',1)"
                                                                                         class="btn btn-outline-secondary"
                                                                                         type="button"
                                                                                         id="decrement">-</button>
                                                                                     <input type="text"
                                                                                         class="form-control text-center"
                                                                                         placeholder="Enter size"
-                                                                                        id="lotSize1{{ $i }}"
-                                                                                        name="lotSize1{{ $i }}"
+                                                                                        id="lotSize11{{ $i }}"
+                                                                                        name="lotSize11{{ $i }}"
                                                                                         value="0" readonly>
                                                                                     <button
-                                                                                        onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy')"
+                                                                                        onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy',1)"
                                                                                         class="btn btn-outline-secondary"
                                                                                         type="button"
                                                                                         id="increment">+</button>
@@ -315,8 +315,8 @@ $user = Auth::user();
                                                                                 <span class="fs-5">Quantity</span>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder="Enter size"
-                                                                                    id="quantity1{{ $i }}"
-                                                                                    name="quantity1{{ $i }}" value={{
+                                                                                    id="quantity11{{ $i }}"
+                                                                                    name="quantity11{{ $i }}" value={{
                                                                                     $quantity }} readonly>
                                                                             </div>
                                                                         </div>
@@ -330,13 +330,13 @@ $user = Auth::user();
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input"
                                                                                         type="radio"
-                                                                                        name="tradeMode1{{ $i }}"
-                                                                                        id="intradayMode1{{ $i }}"
+                                                                                        name="tradeMode11{{ $i }}"
+                                                                                        id="intradayMode11{{ $i }}"
                                                                                         value="intraday"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday','buy')"
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday','buy',1)"
                                                                                         checked>
                                                                                     <label class="form-check-label"
-                                                                                        for="intradayMode1{{ $i }}">
+                                                                                        for="intradayMode11{{ $i }}">
                                                                                         Intraday
                                                                                     </label>
                                                                                 </div>
@@ -344,12 +344,12 @@ $user = Auth::user();
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input"
                                                                                         type="radio"
-                                                                                        name="tradeMode1{{ $i }}"
-                                                                                        id="deliveryMode1{{ $i }}"
+                                                                                        name="tradeMode11{{ $i }}"
+                                                                                        id="deliveryMode11{{ $i }}"
                                                                                         value="delivery"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery','buy')">
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery','buy',1)">
                                                                                     <label class="form-check-label"
-                                                                                        for="deliveryMode1{{ $i }}">
+                                                                                        for="deliveryMode11{{ $i }}">
                                                                                         Delivery
                                                                                     </label>
                                                                                 </div>
@@ -373,22 +373,22 @@ $user = Auth::user();
                                                                                 <!-- Displaying Cost and Margin Price -->
                                                                                 <div class="d-flex flex-column">
                                                                                     <span>
-                                                                                        Cost: <s id="costPrice1{{ $i }}"
+                                                                                        Cost: <s id="costPrice11{{ $i }}"
                                                                                             name="costPrice1{{ $i }}"
                                                                                             class="px-1">₹0.00</s><span
-                                                                                            id="marginUsed1{{ $i }}"></span>
+                                                                                            id="marginUsed11{{ $i }}"></span>
                                                                                     </span>
                                                                                     <span>
                                                                                         After Margin: <span
-                                                                                            id="marginCost1{{ $i }}"
+                                                                                            id="marginCost11{{ $i }}"
                                                                                             class="text-success">₹0.00</span>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="d-flex">
                                                                                 <div>Max:</div>
-                                                                                <div id="maxPrice1{{ $i }}"
-                                                                                    name="maxPrice1{{ $i }}"
+                                                                                <div id="maxPrice11{{ $i }}"
+                                                                                    name="maxPrice11{{ $i }}"
                                                                                     class=" px-1">
                                                                                     ₹{{ $user->real_wallet }}
                                                                                 </div>
@@ -446,28 +446,28 @@ $user = Auth::user();
 
 
                                                                         <input type="text" value="market"
-                                                                            name="orderType2{{ $i }}"
-                                                                            id="orderType2{{ $i }}" hidden>
+                                                                            name="orderType12{{ $i }}"
+                                                                            id="orderType12{{ $i }}" hidden>
                                                                         <div class="mb-3 d-flex flex-column">
                                                                             <label class="form-label">Order Type</label>
                                                                             <div class="btn-group" role="group">
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
-                                                                                    id="marketBtn2{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'market', 'sell')">Market</button>
+                                                                                    id="marketBtn12{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'market', 'sell')">Market</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="limitBtn2{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'limit', 'sell')">Limit</button>
+                                                                                    id="limitBtn12{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'limit', 'sell')">Limit</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="stoplossMarketBtn2{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'stoplossMarket', 'sell')">SL
+                                                                                    id="stoplossMarketBtn12{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'stoplossMarket', 'sell')">SL
                                                                                     Mkt</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="stoplossLimitBtn2{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange({{ $i }}, 'stoplossLimit', 'sell')">SL
+                                                                                    id="stoplossLimitBtn12{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'stoplossLimit', 'sell')">SL
                                                                                     Limit</button>
                                                                             </div>
                                                                         </div>
@@ -476,8 +476,8 @@ $user = Auth::user();
                                                                         <div class="input-group mb-3">
                                                                             <span class="input-group-text">Market
                                                                                 Price</span>
-                                                                            <input id="realprice2{{ $i }}"
-                                                                                name="realprice2{{ $i }}" readonly
+                                                                            <input id="realprice12{{ $i }}"
+                                                                                name="realprice12{{ $i }}" readonly
                                                                                 type="text" class="form-control"
                                                                                 placeholder="Enter price"
                                                                                 value="{{ $stock->ltp }}">
@@ -486,13 +486,13 @@ $user = Auth::user();
                                                                         </div>
 
                                                                         <!-- Limit Input -->
-                                                                        <div id="limitblock2{{ $i }}"
+                                                                        <div id="limitblock12{{ $i }}"
                                                                             style="display: none"
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Limit
                                                                                 Price</span>
-                                                                            <input id="limitprice2{{ $i }}"
-                                                                                name="limitprice2{{ $i }}" disabled
+                                                                            <input id="limitprice12{{ $i }}"
+                                                                                name="limitprice12{{ $i }}" disabled
                                                                                 type="hidden" class="form-control"
                                                                                 placeholder="Enter price" value="0.00">
 
@@ -500,13 +500,13 @@ $user = Auth::user();
                                                                         </div>
 
                                                                         {{-- marketstoploss input --}}
-                                                                        <div id="targetpriceblock2{{ $i }}"
+                                                                        <div id="targetpriceblock12{{ $i }}"
                                                                             style="display: none"
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Target Price
                                                                             </span>
-                                                                            <input id="targetprice2{{ $i }}"
-                                                                                name="targetprice2{{ $i }}" disabled
+                                                                            <input id="targetprice12{{ $i }}"
+                                                                                name="targetprice12{{ $i }}" disabled
                                                                                 type="hidden" class="form-control"
                                                                                 placeholder="Enter price">
 
@@ -519,18 +519,18 @@ $user = Auth::user();
                                                                                 <span class="fs-5 ">Lot</span>
                                                                                 <div class="input-group mb-3">
                                                                                     <button
-                                                                                        onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell')"
+                                                                                        onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell',2)"
                                                                                         class="btn btn-outline-secondary"
                                                                                         type="button"
                                                                                         id="decrement">-</button>
                                                                                     <input type="text"
                                                                                         class="form-control text-center"
                                                                                         placeholder="Enter size"
-                                                                                        id="lotSize2{{ $i }}"
-                                                                                        name="lotSize2{{ $i }}"
+                                                                                        id="lotSize12{{ $i }}"
+                                                                                        name="lotSize12{{ $i }}"
                                                                                         value="0" readonly>
                                                                                     <button
-                                                                                        onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell')"
+                                                                                        onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell',2)"
                                                                                         class="btn btn-outline-secondary"
                                                                                         type="button"
                                                                                         id="increment">+</button>
@@ -541,8 +541,8 @@ $user = Auth::user();
                                                                                 <span class="fs-5">Quantity</span>
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder="Enter size"
-                                                                                    id="quantity2{{ $i }}"
-                                                                                    name="quantity2{{ $i }}" value={{
+                                                                                    id="quantity12{{ $i }}"
+                                                                                    name="quantity12{{ $i }}" value={{
                                                                                     $quantity }} readonly>
                                                                             </div>
                                                                         </div>
@@ -556,13 +556,13 @@ $user = Auth::user();
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input"
                                                                                         type="radio"
-                                                                                        name="tradeMode2{{ $i }}"
-                                                                                        id="intradayMode2{{ $i }}"
+                                                                                        name="tradeMode12{{ $i }}"
+                                                                                        id="intradayMode12{{ $i }}"
                                                                                         value="intraday"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday','sell')"
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday','sell',2)"
                                                                                         checked>
                                                                                     <label class="form-check-label"
-                                                                                        for="intradayMode2{{ $i }}">
+                                                                                        for="intradayMode12{{ $i }}">
                                                                                         Intraday
                                                                                     </label>
                                                                                 </div>
@@ -570,12 +570,12 @@ $user = Auth::user();
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input"
                                                                                         type="radio"
-                                                                                        name="tradeMode2{{ $i }}"
-                                                                                        id="deliveryMode2{{ $i }}"
+                                                                                        name="tradeMode12{{ $i }}"
+                                                                                        id="deliveryMode12{{ $i }}"
                                                                                         value="delivery"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery','sell')">
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery','sell',2)">
                                                                                     <label class="form-check-label"
-                                                                                        for="deliveryMode2{{ $i }}">
+                                                                                        for="deliveryMode12{{ $i }}">
                                                                                         Delivery
                                                                                     </label>
                                                                                 </div>
@@ -593,21 +593,21 @@ $user = Auth::user();
                                                                                 <!-- Displaying Cost and Margin Price -->
                                                                                 <div class="d-flex flex-column">
                                                                                     <span>
-                                                                                        Cost: <s id="costPrice2{{ $i }}"
-                                                                                            name="costPrice2{{ $i }}"
+                                                                                        Cost: <s id="costPrice12{{ $i }}"
+                                                                                            name="costPrice12{{ $i }}"
                                                                                             class="px-1">₹0.00</s><span
-                                                                                            id="marginUsed2{{ $i }}"></span>
+                                                                                            id="marginUsed12{{ $i }}"></span>
                                                                                     </span>
                                                                                     <span>
                                                                                         After Margin: <span
-                                                                                            id="marginCost2{{ $i }}"
+                                                                                            id="marginCost12{{ $i }}"
                                                                                             class="text-success">₹0.00</span>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="d-flex">
                                                                                 <div>Max:</div>
-                                                                                <div id="maxPrice2{{ $i }}"
+                                                                                <div id="maxPrice12{{ $i }}"
                                                                                     class=" px-1">
                                                                                     ₹{{ $user->real_wallet }}
                                                                                 </div>
