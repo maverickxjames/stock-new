@@ -195,10 +195,12 @@ $user = Auth::user();
                                                         action="{{ route('placeBuyOrder') }}">
                                                         @csrf
                                                         <input type="text" name="id" value="{{ $i }}" id="id" hidden>
-                                                        <input type="text" name="instrumentKey2{{ $i }}"
-                                                            value="{{ $foisin }}" id="instrumentKey2{{ $i }}" hidden>
-                                                        <input type="text" name="instrumentType2{{ $i }}"
-                                                            value="{{ $instrumentType }}" id="instrumentType2{{ $i }}"
+                                                        <input type="text" name="row" value="2" id="row"
+                                                                hidden>
+                                                        <input type="text" name="instrumentKey21{{ $i }}"
+                                                            value="{{ $foisin }}" id="instrumentKey21{{ $i }}" hidden>
+                                                        <input type="text" name="instrumentType21{{ $i }}"
+                                                            value="{{ $instrumentType }}" id="instrumentType21{{ $i }}"
                                                             hidden>
                                                         <div class="col-xl-4" style="width: 100%;">
                                                             <div class="card">
@@ -368,7 +370,7 @@ $user = Auth::user();
                                                                                     Cost: <s id="costPrice21{{ $i }}"
                                                                                         name="costPrice21{{ $i }}"
                                                                                         class="px-1">₹0.00</s><span
-                                                                                        id="marginUsed1{{ $i }}"></span>
+                                                                                        id="marginUsed21{{ $i }}"></span>
                                                                                 </span>
                                                                                 <span>
                                                                                     After Margin: <span
@@ -415,8 +417,14 @@ $user = Auth::user();
                                                         action="{{ route('placeSellOrder') }}">
                                                         @csrf
                                                         <input type="text" name="id2" value="{{ $i }}" id="id" hidden>
-                                                        <input type="text" name="instrumentKey2{{ $i }}"
-                                                            value="{{ $foisin }}" id="instrumentKey2{{ $i }}" hidden>
+                                                        
+                                                            <input type="text" name="row2" value="2" id="row2"
+                                                                hidden>
+                                                        <input type="text" name="instrumentKey22{{ $i }}"
+                                                            value="{{ $foisin }}" id="instrumentKey22{{ $i }}" hidden>
+                                                            <input type="text" name="instrumentType22{{ $i }}"
+                                                                value="{{ $instrumentType }}"
+                                                                id="instrumentType22{{ $i }}" hidden>
                                                       
                                                         <div class="col-xl-4" style="width: 100%;">
                                                             <div class="card">

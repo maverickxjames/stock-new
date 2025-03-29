@@ -199,12 +199,14 @@ $user = Auth::user();
                                                             @csrf
                                                             <input type="text" name="id" value="{{ $i }}" id="id"
                                                                 hidden>
+                                                                <input type="text" name="row" value="4" id="row"
+                                                                hidden>
                                                             <input type="text" name="instrumentKey41{{ $i }}"
                                                                 value="{{ $foisin }}" id="instrumentKey41{{ $i }}"
                                                                 hidden>
-                                                            <input type="text" name="instrumentType4{{ $i }}"
+                                                            <input type="text" name="instrumentType41{{ $i }}"
                                                                 value="{{ $instrumentType }}"
-                                                                id="instrumentType4{{ $i }}" hidden>
+                                                                id="instrumentType41{{ $i }}" hidden>
                                                             <div class="col-xl-4" style="width: 100%;">
                                                                 <div class="card">
                                                                     <div class="card-body pt-2">
@@ -426,9 +428,15 @@ $user = Auth::user();
                                                             @csrf
                                                             <input type="text" name="id2" value="{{ $i }}" id="id"
                                                                 hidden>
+                                                            
+                                                            <input type="text" name="row2" value="1" id="row2"
+                                                                hidden>
                                                             <input type="text" name="instrumentKey42{{ $i }}"
                                                                 value="{{ $foisin }}" id="instrumentKey42{{ $i }}"
                                                                 hidden>
+                                                                <input type="text" name="instrumentType42{{ $i }}"
+                                                                value="{{ $instrumentType }}"
+                                                                id="instrumentType42{{ $i }}" hidden>
                                                             <div class="col-xl-4" style="width: 100%;">
                                                                 <div class="card">
                                                                     <div class="card-body pt-2">

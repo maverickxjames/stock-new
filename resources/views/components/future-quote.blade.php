@@ -194,17 +194,19 @@ $user = Auth::user();
                                                 <div class="tab-pane fade show active" id="nav-order1{{ $i }}"
                                                     role="tabpanel" aria-labelledby="nav-order-tab">
                                                     <div class="table-responsive dataTabletrade">
-                                                        <form id="buyform{{ $i }}" name="buyform{{ $i }}" method="POST"
+                                                        <form id="buyform1{{ $i }}" name="buyform1{{ $i }}" method="POST"
                                                             action="{{ route('placeBuyOrder') }}">
                                                             @csrf
                                                             <input type="text" name="id" value="{{ $i }}" id="id"
                                                                 hidden>
-                                                            <input type="text" name="instrumentKey1{{ $i }}"
-                                                                value="{{ $foisin }}" id="instrumentKey1{{ $i }}"
+                                                            <input type="text" name="row" value="1" id="row"
                                                                 hidden>
-                                                            <input type="text" name="instrumentType1{{ $i }}"
+                                                            <input type="text" name="instrumentKey11{{ $i }}"
+                                                                value="{{ $foisin }}" id="instrumentKey11{{ $i }}"
+                                                                hidden>
+                                                            <input type="text" name="instrumentType11{{ $i }}"
                                                                 value="{{ $instrumentType }}"
-                                                                id="instrumentType1{{ $i }}" hidden>
+                                                                id="instrumentType11{{ $i }}" hidden>
                                                             <div class="col-xl-4" style="width: 100%;">
                                                                 <div class="card">
                                                                     <div class="card-body pt-2">
@@ -421,14 +423,19 @@ $user = Auth::user();
 
                                                 <div class="tab-pane fade" id="nav-history1{{ $i }}" role="tabpanel">
                                                     <div class="table-responsive dataTabletrade">
-                                                        <form id="sellform" name="sellform{{ $i }}" method="POST"
+                                                        <form id="sellform1{{ $i }}" name="sellform1{{ $i }}" method="POST"
                                                             action="{{ route('placeSellOrder') }}">
                                                             @csrf
-                                                            <input type="text" name="id2" value="{{ $i }}" id="id"
+                                                            <input type="text" name="id2" value="{{ $i }}" id="id2"
                                                                 hidden>
-                                                            <input type="text" name="instrumentKey2{{ $i }}"
-                                                                value="{{ $foisin }}" id="instrumentKey2{{ $i }}"
+                                                            <input type="text" name="row2" value="1" id="row2"
                                                                 hidden>
+                                                            <input type="text" name="instrumentKey12{{ $i }}"
+                                                                value="{{ $foisin }}" id="instrumentKey12{{ $i }}"
+                                                                hidden>
+                                                                <input type="text" name="instrumentType12{{ $i }}"
+                                                                value="{{ $instrumentType }}"
+                                                                id="instrumentType12{{ $i }}" hidden>
                                                             <div class="col-xl-4" style="width: 100%;">
                                                                 <div class="card">
                                                                     <div class="card-body pt-2">
@@ -519,7 +526,7 @@ $user = Auth::user();
                                                                                 <span class="fs-5 ">Lot</span>
                                                                                 <div class="input-group mb-3">
                                                                                     <button
-                                                                                        onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell',2)"
+                                                                                        onclick="decrementLot({{ $quantity }}, {{ $i }},{{ $user->real_wallet }},'sell',1)"
                                                                                         class="btn btn-outline-secondary"
                                                                                         type="button"
                                                                                         id="decrement">-</button>
@@ -530,7 +537,7 @@ $user = Auth::user();
                                                                                         name="lotSize12{{ $i }}"
                                                                                         value="0" readonly>
                                                                                     <button
-                                                                                        onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell',2)"
+                                                                                        onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell',1)"
                                                                                         class="btn btn-outline-secondary"
                                                                                         type="button"
                                                                                         id="increment">+</button>
@@ -559,7 +566,7 @@ $user = Auth::user();
                                                                                         name="tradeMode12{{ $i }}"
                                                                                         id="intradayMode12{{ $i }}"
                                                                                         value="intraday"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday','sell',2)"
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'intraday','sell',1)"
                                                                                         checked>
                                                                                     <label class="form-check-label"
                                                                                         for="intradayMode12{{ $i }}">
@@ -573,7 +580,7 @@ $user = Auth::user();
                                                                                         name="tradeMode12{{ $i }}"
                                                                                         id="deliveryMode12{{ $i }}"
                                                                                         value="delivery"
-                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery','sell',2)">
+                                                                                        onchange="handleTradeModeChange({{ $i }}, 'delivery','sell',1)">
                                                                                     <label class="form-check-label"
                                                                                         for="deliveryMode12{{ $i }}">
                                                                                         Delivery

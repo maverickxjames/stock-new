@@ -548,23 +548,24 @@ $user = Auth::user();
 
 
             const id = formData.id;
+            const row = formData.row;
 
 
             let data = {
-                instrumentKey: formData[`instrumentKey1${id}`],
-                orderType: formData[`orderType1${id}`],
+                instrumentKey: formData[`instrumentKey${row}1${id}`],
+                orderType: formData[`orderType${row}1${id}`],
                 // quantity:formData[`quantity1${id}`],
-                price: formData[`realprice1${id}`],
-                limitPrice: formData[`limitprice1${id}`],
-                targetPrice:formData[`targetprice1${id}`],
-                lotSize: formData[`lotSize1${id}`],
+                price: formData[`realprice${row}1${id}`],
+                limitPrice: formData[`limitprice${row}1${id}`],
+                targetPrice:formData[`targetprice${row}1${id}`],
+                lotSize: formData[`lotSize${row}1${id}`], 
                 // costPrice:document.getElementById(`costPrice1${id}`).textContent,
-                tradeType: formData[`tradeMode1${id}`],
+                tradeType: formData[`tradeMode${row}1${id}`],
                 _token: formData._token,
                 // id:formData.id,
             }
 
-            if (formData[`lotSize1${id}`] < 1) {
+            if (formData[`lotSize${row}1${id}`] < 1) {
                 Toastify({
                     text: "Lot size must be greater than 0.",
                     duration: 3000,
@@ -611,7 +612,7 @@ $user = Auth::user();
                             backgroundColor: "#3ab67a",
                             callback: function() {
                                 let offcanvas = document.getElementById(
-                                    `orderoffcanvasBottom${id}`
+                                    `orderoffcanvasBottom${row}${id}`
                                 ); // Use ID to select offcanvas
                                 let bsOffcanvas = bootstrap.Offcanvas.getInstance(
                                     offcanvas);
@@ -672,26 +673,29 @@ $user = Auth::user();
             var type = form.attr('method');
 
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
+            console.log(formData);
+            
 
 
             const id = formData.id2;
+            const row = formData.row2;
 
 
             let data = {
-                instrumentKey: formData[`instrumentKey2${id}`],
-                orderType: formData[`orderType2${id}`],
+                instrumentKey: formData[`instrumentKey${row}2${id}`],
+                orderType: formData[`orderType${row}2${id}`],
                 // quantity:formData[`quantity1${id}`],
-                price: formData[`realprice2${id}`],
-                limitPrice: formData[`limitprice2${id}`],
-                lotSize: formData[`lotSize2${id}`],
-                targetPrice:formData[`targetprice2${id}`],
+                price: formData[`realprice${row}2${id}`],
+                limitPrice: formData[`limitprice${row}2${id}`],
+                lotSize: formData[`lotSize${row}2${id}`],
+                targetPrice:formData[`targetprice${row}2${id}`],
                 // costPrice:document.getElementById(`costPrice1${id}`).textContent,
-                tradeType: formData[`tradeMode2${id}`],
+                tradeType: formData[`tradeMode${row}2${id}`],
                 _token: formData._token,
                 // id:formData.id,
             }
 
-            if (formData[`lotSize2${id}`] < 1) {
+            if (formData[`lotSize${row}2${id}`] < 1) {
                 Toastify({
                     text: "Lot size must be greater than 0.",
                     duration: 3000,
@@ -723,6 +727,8 @@ $user = Auth::user();
                 data: data,
                 success: function(response) {
                     loadingToast.hideToast();
+                    console.log(response); // Log the response for debugging
+                    
                     response = JSON.parse(response);
 
                     if (response.status === 'success') {
@@ -737,7 +743,7 @@ $user = Auth::user();
                             backgroundColor: "#3ab67a",
                             callback: function() {
                                 let offcanvas = document.getElementById(
-                                    `orderoffcanvasBottom${id}`
+                                    `orderoffcanvasBottom${row}${id}`
                                 ); // Use ID to select offcanvas
                                 let bsOffcanvas = bootstrap.Offcanvas.getInstance(
                                     offcanvas);
@@ -1502,7 +1508,7 @@ $user = Auth::user();
             const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const instrumentType = document.getElementById('instrumentType'+rowId + uniqueId).value;
+            const instrumentType = document.getElementById('instrumentType'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId).value;
 
             let margin = getMarginValue(instrumentType, selectedMode);
             let realPriceValue = parseFloat(realPrice.value) || 0;
@@ -1534,7 +1540,7 @@ $user = Auth::user();
             
            
 
-            const instrumentType = document.getElementById('instrumentType'+rowId + uniqueId).value;
+            const instrumentType = document.getElementById('instrumentType'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId).value;
 
             let margin = 0;
 
@@ -1596,7 +1602,7 @@ $user = Auth::user();
            const selectedMode = document.querySelector(`input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
 
 
-            const instrumentType = document.getElementById('instrumentType'+rowId + uniqueId).value;
+            const instrumentType = document.getElementById('instrumentType'+rowId +(tradeType === 'sell' ? '2' : '1')+ uniqueId).value;
 
             let margin = 0;
 
