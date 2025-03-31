@@ -904,8 +904,8 @@ $user = Auth::user();
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
 
                             const percentageChange = cp > 0 
-    ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
-    : 0;
+                                ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
+                                : 0;
 
                           
 
@@ -954,8 +954,8 @@ $user = Auth::user();
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
 
                             const percentageChange = cp > 0 
-    ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
-    : 0;
+                                ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
+                                : 0;
 
                           
 
@@ -1004,8 +1004,8 @@ $user = Auth::user();
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
 
                             const percentageChange = cp > 0 
-    ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
-    : 0;
+                                            ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
+                                            : 0;
 
                           
 
