@@ -16,15 +16,18 @@ class QuoteChannel implements ShouldBroadcast
     public $userId;
     public $quote;
 
+    public $sendId;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($userId, $quote)
+    public function __construct($userId, $quote, $sendId)
     {
         $this->userId = $userId;
         $this->quote = $quote;
+        $this->sendId = $sendId;
     }
   
 

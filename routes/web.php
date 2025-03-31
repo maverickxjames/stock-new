@@ -135,7 +135,7 @@ Route::middleware('auth')->group(function () {
     Route::get('limitOrder', [StockController::class, 'limitOrder'])->name('limitOrder');
     Route::post('closeOrder', [StockController::class, 'closeOrder'])->name('closeOrder');
 
-    Route::get('quoteRefresh', [StockController::class, 'quoteRefresh'])->name('quoteRefresh');
+    Route::get('quoteRefresh/{id}', [StockController::class, 'quoteRefresh'])->name('quoteRefresh');
 
 
 

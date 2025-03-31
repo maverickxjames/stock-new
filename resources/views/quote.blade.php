@@ -1041,20 +1041,33 @@ $user = Auth::user();
             Echo.channel('quote-channel')
                 .listen('QuoteChannel', (data) => {
                     console.log("New quote received:", data);
+                    let sendId = getActiveFilter();
+                    if(sendId == 'Future') {
+                        sendId = '1';
+                    } else if (sendId == 'Option') {
+                        sendId = '2';
+                    } else if (sendId == 'MCX') {
+                        sendId = '3';
+                    } else {
+                        sendId = '4';
+                    }
                     if (data.userId == userId) {
 
-
-
                         $.ajax({
-                        url: '{{ route("quoteRefresh") }}', // Define this route
+                        url: '{{ route("quoteRefresh", ":sendId") }}'.replace(':sendId', sendId), // Properly passing the sendId
                         type: 'GET',
                         success: function(response) {
                             // delete quotesRefresh old data and replace with new data
-
-                            $('#futureRefresh').html(response);
-                            // $('#optionRefresh').html(response);
-                            // $('#mcxRefresh').html(response);
-                            // $('#optionRefresh').html(response);
+                            if(sendId == '1') {
+                                $('#futureRefresh').html(response);
+                            } else if (sendId == '2') {
+                                $('#optionRefresh').html(response);
+                            } else if (sendId == '3') {
+                                $('#mcxRefresh').html(response);
+                            } else {
+                                $('#indciesRefresh').html(response);
+                            }
+                            
 
                             
                         }

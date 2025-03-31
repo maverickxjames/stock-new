@@ -69,9 +69,18 @@ class WatchlistController extends Controller
             'updated_at' => Carbon::now(),
         ]);
 
+        if($request->instrumentType == 'FUT' && $request->segment == 'NSE_FO'){
+            $sendId = 1;
+        }elseif(($request->instrumentType == 'CE' || $request->instrumentType == 'PE') && $request->segment == 'NSE_FO'){
+            $sendId = 2;
+        }elseif($request->instrumentType == 'FUT' && $request->segment == 'MCX_FO'){
+            $sendId = 3;
+        }elseif($request->instrumentType == 'OPT' && $request->segment == 'NSE_EQ'){
+            $sendId = 4;
+        }
         if ($query) {
             // quote-channel event trigger
-            event(new QuoteChannel(auth()->id(), 'add'));
+            event(new QuoteChannel(auth()->id(), 'add', $sendId));
             
         //    if app_env is production  
 
@@ -116,12 +125,14 @@ class WatchlistController extends Controller
             ], 422);
         }
 
+        $sendId = $request->sendId;
+
         try {
             $watchlist = Watchlist::find($request->id);
 
             if ($watchlist) {
                 $watchlist->delete();
-                event(new QuoteChannel(auth()->id(), 'remove'));
+                event(new QuoteChannel(auth()->id(), 'remove', $sendId));
                 return response()->json([
                     'success' => true,
                     'message' => 'script removed successfully.',

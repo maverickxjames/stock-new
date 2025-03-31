@@ -37,7 +37,7 @@ class StockController extends Controller
         return view('stockview', ['id' => $id]);
     }
 
-    public function quoteRefresh(){
+    public function quoteRefresh($id){
         $userId = Auth::id();
         $cacheKey = "user_{$userId}_watchlist";
     
@@ -47,7 +47,18 @@ class StockController extends Controller
             // return response()->json(['source' => 'Redis', 'data' => $fetch]);
         } else {
             Log::info("Fetching data from database for user: " . $userId);
-            $fetch = DB::table('watchlist')->where('userid', $userId)->orderBy('id','DESC')->get()->toArray();
+
+            $query = DB::table('watchlist')->where('userid', $userId);
+
+            if ($id == 1) {
+                $query->where('segment', 'NSE_FO')->where('instrumentType', 'FUT');
+            } elseif ($id == 2) {
+                $query->whereIn('instrumentType', ['CE', 'PE']);
+            } elseif ($id == 3) {
+                $query->where('segment', 'MCX_FO')->where('instrumentType', 'FUT');
+            }
+    
+            $fetch = $query->orderBy('id', 'DESC')->get()->toArray();
             Cache::put($cacheKey, $fetch, now()->addMinutes(10));
             // return response()->json(['source' => 'Database', 'data' => $fetch]);
         }
