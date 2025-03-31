@@ -211,6 +211,7 @@ $user = Auth::user();
     .button.active {
         background-color: #d1e7ff;
     }
+ 
 </style>
 
 <body>
@@ -1251,7 +1252,13 @@ $user = Auth::user();
                                         </div>
                                         
                                             <a href="javascript:void(0)" id="add_script">
-											<input type="checkbox" class="form-check-input icon-box icon-box-sm bgl-primary"  checked required >
+											<div class="form-check custom-checkbox mb-3 checkbox-success">
+											<input type="checkbox" class="form-check-input" ${item.is_watchlist? 'checked':''} id="customCheckBox3" required="" style="
+                                                        height: 30px;
+                                                        width: 30px;
+                                                    ">
+											
+										    </div>
                                             </a>
                                       
                                     </div>
@@ -1282,7 +1289,13 @@ $user = Auth::user();
                                 </div>
                                 <div class="icon-box icon-box-sm bgl-primary">
                                     <a href="javascript:void(0)" id="add_script">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" width="24" alt="">
+                                       <div class="form-check custom-checkbox mb-3 checkbox-success">
+											<input type="checkbox" class="form-check-input" ${item.is_watchlist? 'checked':''} id="customCheckBox3" required="" style="
+                                                                    height: 30px;
+                                                                    width: 30px;
+                                                                ">
+											
+										</div>
                                     </a>
                                 </div>
                             </div>
