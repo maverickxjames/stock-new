@@ -37,34 +37,95 @@ class StockController extends Controller
         return view('stockview', ['id' => $id]);
     }
 
-    public function quoteRefresh($id){
-        $userId = Auth::id();
-        $cacheKey = "user_{$userId}_watchlist";
+    // public function quoteRefresh($id){
+    //     $userId = Auth::id();
+    //     $cacheKey = "user_{$userId}_watchlist";
     
-        if (Cache::has($cacheKey)) {
-            Log::info("Data loaded from Redis for user: " . $userId);
-            $fetch = Cache::get($cacheKey);
-            // return response()->json(['source' => 'Redis', 'data' => $fetch]);
-        } else {
-            Log::info("Fetching data from database for user: " . $userId);
+    //     if (Cache::has($cacheKey)) {
+    //         Log::info("Data loaded from Redis for user: " . $userId);
+    //         $fetch = Cache::get($cacheKey);
+    //         // return response()->json(['source' => 'Redis', 'data' => $fetch]);
+    //     } else {
+    //         Log::info("Fetching data from database for user: " . $userId);
 
-            $query = DB::table('watchlist')->where('userid', $userId);
+    //         $query = DB::table('watchlist')->where('userid', $userId);
 
-            if ($id == 1) {
-                $query->where('segment', 'NSE_FO')->where('instrumentType', 'FUT');
-            } elseif ($id == 2) {
-                $query->whereIn('instrumentType', ['CE', 'PE']);
-            } elseif ($id == 3) {
-                $query->where('segment', 'MCX_FO')->where('instrumentType', 'FUT');
-            }
+    //         if ($id == 1) {
+    //             $query->where('segment', 'NSE_FO')->where('instrumentType', 'FUT');
+    //             $fetch = $query->orderBy('id', 'DESC')->get()->toArray();
+    //         Cache::put($cacheKey, $fetch, now()->addMinutes(10));
+    //         return view('components.future-quote', compact('fetch'));
+    //         } elseif ($id == 2) {
+    //             $query->whereIn('instrumentType', ['CE', 'PE']);
+    //             $fetch = $query->orderBy('id', 'DESC')->get()->toArray();
+    //         Cache::put($cacheKey, $fetch, now()->addMinutes(10));
+    //         return view('components.option-quote', compact('fetch'));
+    //         } elseif ($id == 3) {
+    //             $query->where('segment', 'MCX_FO')->where('instrumentType', 'FUT');
+    //             $fetch = $query->orderBy('id', 'DESC')->get()->toArray();
+    //         Cache::put($cacheKey, $fetch, now()->addMinutes(10));
+    //         return view('components.mcx-quote', compact('fetch'));
+    //         } elseif ($id == 4) {
+    //             $query->where('segment', 'NSE_FO')->where('instrumentType', 'IDX');
+    //             $fetch = $query->orderBy('id', 'DESC')->get()->toArray();
+    //         Cache::put($cacheKey, $fetch, now()->addMinutes(10));
+    //         return view('components.indices-quote', compact('fetch'));
+    //         }
     
-            $fetch = $query->orderBy('id', 'DESC')->get()->toArray();
-            Cache::put($cacheKey, $fetch, now()->addMinutes(10));
-            // return response()->json(['source' => 'Database', 'data' => $fetch]);
-        }
+            
+    //         // return response()->json(['source' => 'Database', 'data' => $fetch]);
+    //     }
 
-        return view('components.quotes', compact('fetch'));
+    //     // return view('components.quotes', compact('fetch'));
+    // }
+
+    public function quoteRefresh($id)
+{
+    $userId = Auth::id();
+    $cacheKey = "user_{$userId}_watchlist";
+
+    if (Cache::has($cacheKey)) {
+        Log::info("Data loaded from Redis for user: " . $userId);
+        $fetch = Cache::get($cacheKey);
+        
+        // Return cached data immediately
+        return match ($id) {
+            '1' => view('components.future-quote', compact('fetch')),
+            '2' => view('components.option-quote', compact('fetch')),
+            '3' => view('components.mcx-quote', compact('fetch')),
+            '4' => view('components.indices-quote', compact('fetch')),
+        };
     }
+
+    Log::info("Fetching data from database for user: " . $userId);
+    $query = DB::table('watchlist')->where('userid', $userId);
+
+    switch ($id) {
+        case '1':
+            $query->where('segment', 'NSE_FO')->where('instrumentType', 'FUT');
+            break;
+        case '2':
+            $query->whereIn('instrumentType', ['CE', 'PE']);
+            break;
+        case '3':
+            $query->where('segment', 'MCX_FO')->where('instrumentType', 'FUT');
+            break;
+        case '4':
+            $query->where('segment', 'NSE_FO')->where('instrumentType', 'IDX');
+            break;
+    }
+
+    $fetch = $query->orderBy('id', 'DESC')->get()->toArray();
+    Cache::put($cacheKey, $fetch, now()->addMinutes(10));
+
+    return match ($id) {
+        '1' => view('components.future-quote', compact('fetch')),
+        '2' => view('components.option-quote', compact('fetch')),
+        '3' => view('components.mcx-quote', compact('fetch')),
+        '4' => view('components.indices-quote', compact('fetch')),
+    };
+}
+
 
 
 

@@ -15,16 +15,24 @@ class TradeController extends Controller
     public function placeBuyOrder(Request $r)
     {
         // return $r;
-        $orderId = "buy_".uniqid();
+        $orderId = "buy_" . uniqid();
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
         $orderType = $r->orderType;
         $limitPrice = $r->limitPrice;
-        if ($r->targetPrice!=null) {
+        if ($r->targetPrice != null) {
             $targetPrice = $r->targetPrice;
         } else {
             $targetPrice = 0;
         }
+
+        if ($orderType == 'stoplossMarket' && $r->targetPrice == 0) {
+            $orderType = 'market';
+        } elseif ($orderType == 'stoplossLimit' && $r->targetPrice == 0) {
+            $orderType = 'limit';
+        }
+
+
         // return $targetPrice;
         $price = $r->price;
         $tradeType = $r->tradeType;
@@ -42,7 +50,7 @@ class TradeController extends Controller
                 $current_time = strtotime(date('H:i:s'));
 
                 if (false) {
-                // if ($current_time < $start_time || $current_time > $end_time) {
+                    // if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                     exit;
                 } else {
@@ -123,12 +131,12 @@ class TradeController extends Controller
                                     echo json_encode(['status' => 'error', 'message' => 'Insufficient balance']);
                                 }
                             }
-                        } elseif($orderType=='stoplossMarket'){
+                        } elseif ($orderType == 'stoplossMarket') {
                             $margin = 500;
                             $quantity = $lotSize * $stockData[0]->lotSize;
                             $cost = $quantity * $price;
                             $total_cost = $cost / $margin;
-                            
+
 
                             if ($tradeType == 'delivery' || $tradeType == 'intraday') {
                                 if ($user->real_wallet >= $total_cost) {
@@ -164,7 +172,7 @@ class TradeController extends Controller
                                     echo json_encode(['status' => 'error', 'message' => 'Insufficient balance']);
                                 }
                             }
-                        } elseif($orderType == 'stoplossLimit'){
+                        } elseif ($orderType == 'stoplossLimit') {
                             $margin = 500;
                             $quantity = $lotSize * $stockData[0]->lotSize;
                             $cost = $quantity * $limitPrice;
@@ -234,7 +242,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'processing';
+                                    $trade->status = 'executed';
                                     $trade->save();
 
 
@@ -272,7 +280,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'pending';
+                                    $trade->status = 'processing';
                                     $trade->save();
 
 
@@ -281,9 +289,53 @@ class TradeController extends Controller
                                     echo json_encode(['status' => 'error', 'message' => 'Insufficient balance']);
                                 }
                             }
+                        } elseif ($orderType == 'stoplossMarket') {
+                            $margin = 7;
+                            $quantity = $lotSize * $stockData[0]->lotSize;
+                            $cost = $quantity * $price;
+                            $total_cost = $cost / $margin;
+
+
+                            if ($tradeType == 'delivery' || $tradeType == 'intraday') {
+                                if ($user->real_wallet >= $total_cost) {
+                                    $user->wallet = $user->real_wallet - $total_cost;
+                                    $updateBalance = DB::table('users')->where('id', $user->id)->update(['real_wallet' => $user->wallet]);
+
+                                    $trade = new trade();
+                                    // INSERT INTO `trades`(`id`, `user_id`, `stock_symbol`, `stock_name`, `instrumentKey`, `action`, `order_type`, `tradeType`, `duration`, `price`, `quantity`, `lotSize`, `take_profit`, `stop_loss`, `stop_price`, `margin`, `cost`, `total_cost`, `status`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]','[value-17]','[value-18]','[value-19]','[value-20]','[value-21]') 
+                                    $trade->user_id = $user->id;
+                                    $trade->orderId = $orderId;
+                                    $trade->stock_symbol = $stockData[0]->assetSymbol;
+                                    $trade->stock_name = $stockData[0]->tradingSymbol;
+                                    $trade->instrumentKey = $stockData[0]->instrumentKey;
+                                    $trade->expiry = $stockData[0]->expiry;
+                                    $trade->action = 'BUY';
+                                    $trade->order_type = 'market';
+                                    $trade->tradeType = 'FUT';
+                                    $trade->duration = 'intraday';
+                                    // echo json_encode($targetPrice);
+                                    // exit;
+                                    // echo json_encode($targetPrice);
+                                    // exit;
+                                    $trade->price = $price;
+                                    $trade->stop_loss = $targetPrice;
+                                    $trade->quantity = $quantity;
+                                    $trade->lotSize = $lotSize;
+                                    $trade->margin = $margin;
+                                    $trade->cost = $cost;
+                                    $trade->total_cost = $total_cost;
+                                    $trade->status = 'executed';
+                                    $trade->save();
+
+
+                                    echo json_encode(['status' => 'success', 'message' => 'Order placed']);
+                                } else {
+                                    echo json_encode(['status' => 'error', 'message' => 'Insufficient balance']);
+                                }
+                            }
+                        } else {
+                            $margin = 0;
                         }
-                    } else {
-                        $margin = 0;
                     }
                 }
             } elseif ($stockData[0]->segment == 'MCX_FO') {
@@ -465,8 +517,8 @@ class TradeController extends Controller
 
     public function placeSellOrder(Request $r)
     {
-        
-        $orderId = "sell_".uniqid();
+
+        $orderId = "sell_" . uniqid();
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
         $orderType = $r->orderType;
@@ -476,7 +528,7 @@ class TradeController extends Controller
         $user = Auth::user();
 
         $stockData = DB::table('future_temp')->where('instrumentKey', $instrumentKey)->get();
-        
+
         if ($stockData->count() > 0) {
             if ($stockData[0]->segment == 'NSE_FO') {
                 // starttime = 9:15AM (MON - FRIDAY) to 3:30 PM  (MON - FRIDAY) 
@@ -485,12 +537,12 @@ class TradeController extends Controller
                 $current_time = strtotime(date('H:i:s'));
 
                 if (false) {
-                    
+
                     // if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                     exit;
                 } else {
-                    
+
                     if ($stockData[0]->instrumentType == 'FUT') {
                         if ($orderType == 'market') {
                             $margin = 500;
@@ -643,7 +695,7 @@ class TradeController extends Controller
                         $margin = 0;
                     }
                 }
-            } elseif ($stockData[0]->segment=='MCX_FO'){
+            } elseif ($stockData[0]->segment == 'MCX_FO') {
                 // starttime = 9:15AM (MON - FRIDAY) to 11:30 PM  (MON - FRIDAY) 
                 $start_time = strtotime('09:15:00');
                 $end_time = strtotime('23:30:00');
@@ -653,7 +705,7 @@ class TradeController extends Controller
                 if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                     exit;
-                } else{
+                } else {
                     if ($stockData[0]->instrumentType == 'FUT') {
                         if ($orderType == 'market') {
                             $margin = 500;
