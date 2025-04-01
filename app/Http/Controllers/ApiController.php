@@ -97,10 +97,14 @@ public function allStocks()
             continue;
         }
 
+        // return response()->json([
+        //     'data' => $data['data']
+        // ], 200);
+
         // Loop through the API response and update the database
-        foreach ($data['data'] as $instrumentKey => $stockData) {
+        foreach ($data['data'] as $stockData) {
             DB::table('future_temp')
-                ->where('instrumentKey', $instrumentKey)
+                ->where('instrumentKey', $stockData['instrument_token'] ?? null)
                 ->update([
                     'cp'        => $stockData['ohlc']['close'] ?? null,
                     'ltp'       => $stockData['last_price'] ?? null,
