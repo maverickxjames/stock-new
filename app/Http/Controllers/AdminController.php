@@ -259,14 +259,6 @@ class AdminController extends Controller
 
     public function fetchWatchlist(Request $request)
     {
-        // return $request->all();
-        // $search = $request->search ?? '';
-        // $type = $request->type ?? 'all';
-        // $sortOrder = strtolower($request->query('sortOrder', 'asc'));
-        // $page = (int) ($request->page ?? 1);
-        // $limit = (int) ($request->limit ?? 10);
-        // $offset = ($page - 1) * $limit;
-
         $search = $request->query('search', '');
         $type = strtolower($request->query('type', 'all'));
         $sortOrder = strtolower($request->query('sortOrder', 'asc'));
@@ -279,8 +271,10 @@ class AdminController extends Controller
         $query = DB::table('future_temp')
             ->where('assetSymbol', 'like', "%" . $search . "%")
             ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') >= ?", [$today]); // Filter expired contracts
-    
-        if ($type == 'future') {
+        if($type == 'all'){
+            $query->where('instrumentType', '!=', 'IDX');
+        }
+        elseif ($type == 'future') {
             $query->where('instrumentType', 'FUT')->where('segment', 'NSE_FO');
         } elseif ($type == 'option') {
             $query->where(function ($q) {
@@ -300,8 +294,31 @@ class AdminController extends Controller
 
     
         // Apply limit & offset for pagination
-        $data = $query->limit($limit)->offset($offset)->get();
+        // $data = $query->limit($limit)->offset($offset)->get();
+        // $data = $query->orderBy('expiry', $sortOrder)->paginate($limit, ['*'], 'page', $page);
+        $data = $query->orderBy('expiry', $sortOrder)->get();
     
         return response()->json($data);
     }
+
+    public function addToWatchlist($id)
+    {
+        try {
+            DB::table('future_temp')->where('id', $id)->update(['is_watchlist' => 1]);
+            return response()->json(['success' => true, 'message' => 'Watchlist updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error updating watchlist: ' . $e->getMessage()]);
+        }
+    }
+
+    public function removeFromWatchlist($id)
+    {
+        try {
+            DB::table('future_temp')->where('id', $id)->update(['is_watchlist' => 0]);
+            return response()->json(['success' => true, 'message' => 'Watchlist updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error updating watchlist: ' . $e->getMessage()]);
+        }
+    }
+   
 }

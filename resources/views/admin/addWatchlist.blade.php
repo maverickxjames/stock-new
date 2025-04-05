@@ -216,7 +216,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">All Admin</h1>
+            <h1 class="m-0 ">Add Watchlist</h1>
           </div><!-- /.col -->
          
         </div><!-- /.row -->
@@ -234,7 +234,8 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Result Type:</label>
-                                    <select id="resultType" class="select2" style="width: 100%;">
+                                    <select id="resultType" class="select2" style="width: 100%;" onchange="searchScriptOnChange()">
+                                        <option selected>All</option>
                                         <option>Future</option>
                                         <option>Options</option>
                                         <option>MCX</option>
@@ -245,7 +246,8 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Sort Order:</label>
-                                    <select id="sortOrder" class="select2" style="width: 100%;">
+                                    <select id="sortOrder" class="select2" style="width: 100%;" onchange="searchScriptOnChange()">
+
                                         <option selected>ASC</option>
                                         <option>DESC</option>
                                     </select>
@@ -276,44 +278,9 @@
           
             <div class="row mt-3">
                 <div class="col-md-10 offset-md-1">
-                    <div class="list-group">
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col px-4">
-                                    <div id="resultsContainer">
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo" style="max-height: 160px;">
-                                </div>
-                                <div class="col px-4">
-                                    <div>
-                                        <div class="float-right">2021-04-20 10:14pm</div>
-                                        <h3>Lorem ipsum dolor sit amet</h3>
-                                        <p class="mb-0">consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <iframe width="240" height="160" src="https://www.youtube.com/embed/WEkSYw3o5is?controls=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" class="border-0" allowfullscreen></iframe>
-                                </div>
-                                <div class="col px-4">
-                                    <div>
-                                        <div class="float-right">2021-04-20 11:54pm</div>
-                                        <h3>Lorem ipsum dolor sit amet</h3>
-                                        <p class="mb-0">consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="list-group" id="resultsContainer">
+                        <!-- Results will be appended here -->
+                       
                     </div>
                 </div>
             </div>
@@ -403,6 +370,7 @@
 </script>
 
 <script>
+  
      let searchTimeout;
         let page = 1;
         let isFetching = false;
@@ -422,6 +390,15 @@
                 hasMoreData = true;
                 fetchResults(true);
             }, 500);
+        }
+
+        function searchScriptOnChange() {
+            searchValue = document.getElementById('searchScript').value.toLowerCase().trim();
+            console.log(searchValue);
+
+            if (!searchValue) return;
+
+            fetchResults(true);
         }
         function getActiveType(){
             const resultType = document.getElementById('resultType').value;
@@ -452,14 +429,14 @@
                     const data = response;
                     console.log(data);
                     
-
+                   if(data.length == 0){
+                        const container = document.getElementById('resultsContainer');
+                        container.innerHTML = '<div class="alert alert-info">No results found.</div>';
+                        return;
+                    } else{
                     updateContactsList(data);
-
-                    if (data.length < 10) {
-                        hasMoreData = false;
-                    } else {
-                        page++;
                     }
+
                 })
                 .catch(error => console.error('Error:', error))
                 .finally(() => {
@@ -471,22 +448,102 @@
         function updateContactsList(data) {
             console.log(data);
             
-    const container = document.getElementById('resultsContainer');
-    container.innerHTML = ''; // Clear old results
-    appendContactsList(data);
-}
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = ''; // Clear old results
+            appendContactsList(data);
+        }
 
 function appendContactsList(data) {
     console.log(data);
     
     const container = document.getElementById('resultsContainer');
-    data.forEach(item => {
+     data.forEach(item => {
         const div = document.createElement('div');
-        div.innerHTML = `<p><strong>${item.assetSymbol}</strong> - Expiry: ${item.expiry}</p>`;
+        div.classList.add('list-group-item');
+
+        div.innerHTML = `
+            <div class="row align-items-center">
+                <div class="col px-4">
+                    <div>
+                        <strong>${item.tradingSymbol}</strong><br>
+                        <small>Expiry: ${item.expiry}</small>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    ${
+                        item.is_watchlist == 0
+                            ? `<button class="btn btn-sm btn-primary" onclick="addToWatchlist(${item.id})">Add to Watchlist</button>`
+                            : `<span class="btn btn-sm btn-danger" onclick="removeToWatchlist(${item.id})">Remove to Watchlist</span>`
+                    }
+                </div>
+            </div>
+        `;
+
         container.appendChild(div);
     });
 }
 
+
+function addToWatchlist(id) {
+    $.ajax({
+        url: `/admin/add-watchlist/${id}`,
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function () {
+            Swal.fire({ icon: 'info', title: 'Processing', text: 'Please wait...', showConfirmButton: false });
+        },
+        success: function (response) {
+            console.log(response);
+            if (response.success) {
+                Swal.fire('Success', response.message, 'success').then(() => {
+                  searchScriptOnChange()
+                });
+            } else {
+                Swal.fire('Error', response.message || 'Something went wrong!', 'error');
+            }
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire('Error', 'Unable to process the request.', 'error');
+        }
+    });
+}
+
+
+function removeToWatchlist(id) {
+    $.ajax({
+        url: `/admin/remove-watchlist/${id}`,
+        type: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function () {
+            Swal.fire({ icon: 'info', title: 'Processing', text: 'Please wait...', showConfirmButton: false });
+        },
+        success: function (response) {
+            console.log(response);
+            if (response.success) {
+                Swal.fire('Success', response.message, 'success').then(() => {
+                    // location.reload();
+                    searchScriptOnChange()
+                });
+            } else {
+                Swal.fire('Error', response.message || 'Something went wrong!', 'error');
+            }
+        },
+        error: function (error) {
+            console.error('Error:', error);
+            Swal.fire('Error', 'Unable to process the request.', 'error');
+        }
+    });
+}
+
+
+       
+
+      
 </script>
 
 
@@ -515,59 +572,8 @@ function appendContactsList(data) {
   
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-<script>
-  function addFund(userId) {
-  Swal.fire({
-    title: 'Add Funds',
-    input: 'number',
-    inputLabel: 'Enter the amount you want to add:',
-    inputPlaceholder: 'Amount',
-    showCancelButton: true,
-    confirmButtonText: 'Add',
-    cancelButtonText: 'Cancel',
-    inputValidator: (value) => {
-      if (!value || value <= 0) {
-        return 'Please enter a valid amount';
-      }
-    }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const amount = parseFloat(result.value);
-
-      // Use AJAX to send the request
-      $.ajax({
-        url: `/admin/add-fund/${userId}`, // Laravel route
-        type: 'POST',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: { amount: amount },
-        beforeSend: function () {
-					Swal.fire({ icon: 'info', title: 'Processing', text: 'Please wait...', showConfirmButton: false });
-				},
-        success: function (response) {
-          console.log(response);
-          if (response.success) {
-            Swal.fire('Success', `Successfully added ₹${amount} to the wallet.`, 'success').then(() => {
-                location.reload();
-            });
-           
-          } else {
-            Swal.fire('Error', response.message || 'Something went wrong!', 'error');
-          }
-        },
-        error: function (error) {
-          console.error('Error:', error);
-          Swal.fire('Error', 'Unable to process the request.', 'error');
-        }
-      });
-    }
-  });
-}
-
-</script>
 
 </body>
 </html>

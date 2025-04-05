@@ -89,6 +89,9 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/trades', [AdminController::class, 'tradeTxn'])->name('admin.tradeTxn');
     Route::get('/admin/add-watchlist', [AdminController::class, 'addWatchlist'])->name('admin.add-watchlist');
     Route::get('/admin/fetch-watchlist', [AdminController::class, 'fetchWatchlist'])->name('admin.fetch-watchlist');
+    // Watchlist routes for admin
+    Route::post('/admin/add-watchlist/{id}', [AdminController::class, 'addToWatchlist'])->name('admin.add-to-watchlist');
+    Route::post('/admin/remove-watchlist/{id}', [AdminController::class, 'removeFromWatchlist'])->name('admin.remove-watchlist');
 
 
     Route::get('/admin/settings', [SettingsController::class, 'settings'])->name('admin.settings');

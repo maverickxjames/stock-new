@@ -98,47 +98,7 @@
 
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Watchlist Manager
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="javascript:void(0);" class="nav-link"
-                                onclick="window.location.href='{{ route('all-user') }}'">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Future </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="javascript:void(0);" class="nav-link"
-                                onclick="window.location.href='{{ route('admin_add_user') }}'">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Option</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:void(0);" class="nav-link"
-                                onclick="window.location.href='{{ route('admin_add_user') }}'">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>MCX</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:void(0);" class="nav-link"
-                                onclick="window.location.href='{{ route('admin_add_user') }}'">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Indices</p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
+               
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -186,6 +146,14 @@
                 </li>
 
                 {{-- for setting --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.add-watchlist') }}" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Watchlist Manager
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.settings') }}" class="nav-link">
                         <i class="nav-icon fas fa-cogs"></i>
