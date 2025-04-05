@@ -313,7 +313,7 @@ use App\Models\User;
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-12">
                                         <div class="col-md">
                                             <div class="card">
                                                 <div class="card-header p-2">
@@ -321,7 +321,7 @@ use App\Models\User;
                                                     <ul class="nav nav-pills">
                                                         <li class="nav-item"><a class="nav-link active" href="#processing" data-toggle="tab">Processing</a></li>
                                                         <li class="nav-item"><a class="nav-link " href="#pending" data-toggle="tab">Pending</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="#complete" data-toggle="tab">Executed</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="#executed" data-toggle="tab">Executed</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="#failed" data-toggle="tab">Failed</a></li>
                                                     </ul>
                                                 </div>
@@ -457,7 +457,7 @@ use App\Models\User;
                                                         </div>
                                     
                                                         <!-- Withdrawal-Specific Transactions -->
-                                                        <div class="tab-pane" id="failed">
+                                                        <div class="tab-pane" id="executed">
                                                             <div class="card">
                                                                 <table id="example3" class="table table-bordered table-striped">
                                                                     <thead>
@@ -481,7 +481,7 @@ use App\Models\User;
                                                                     <tbody>
                                                                         
                                                                        @php
-                                                                           $trades=DB::table('trades')->where('user_id',$user->id)->where('status', "completed")->get();
+                                                                           $trades=DB::table('trades')->where('user_id',$user->id)->where('status', "executed")->get();
                                                                        @endphp
                                                                         @foreach ($trades as $row)
                                                                             @php
