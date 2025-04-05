@@ -16,6 +16,8 @@ use PhpParser\Node\Stmt\TryCatch;
 use App\Models\withdraw;
 //imort settings model
 use GrahamCampbell\ResultType\Success;
+// fetch cardon
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -247,5 +249,59 @@ class AdminController extends Controller
         $user->save();
 
         return response()->json(['success'=>true,'message' => 'Fund added successfully']);
+    }
+
+
+    public function addWatchlist(Request $request)
+    {
+        return view('admin.addWatchlist');
+    }
+
+    public function fetchWatchlist(Request $request)
+    {
+        // return $request->all();
+        // $search = $request->search ?? '';
+        // $type = $request->type ?? 'all';
+        // $sortOrder = strtolower($request->query('sortOrder', 'asc'));
+        // $page = (int) ($request->page ?? 1);
+        // $limit = (int) ($request->limit ?? 10);
+        // $offset = ($page - 1) * $limit;
+
+        $search = $request->query('search', '');
+        $type = strtolower($request->query('type', 'all'));
+        $sortOrder = strtolower($request->query('sortOrder', 'asc'));
+        $page = (int) $request->query('page', 1);
+        $limit = (int) $request->query('limit', 10);
+        $offset = ($page - 1) * $limit;
+    
+        $today = Carbon::now(); // Get current date
+    
+        $query = DB::table('future_temp')
+            ->where('assetSymbol', 'like', "%" . $search . "%")
+            ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') >= ?", [$today]); // Filter expired contracts
+    
+        if ($type == 'future') {
+            $query->where('instrumentType', 'FUT')->where('segment', 'NSE_FO');
+        } elseif ($type == 'option') {
+            $query->where(function ($q) {
+                $q->where('instrumentType', 'CE')
+                  ->where('segment', 'NSE_FO')
+                  ->orWhere('instrumentType', 'PE');
+            });
+        } elseif ($type == 'indices') {
+            $query->where('instrumentType', 'IDX');
+        } elseif ($type == "mcx") {
+            $query->where(function ($q) {
+                $q->where('instrumentType', 'FUT')
+                  ->where('segment', 'MCX_FO');
+            });
+        }
+
+
+    
+        // Apply limit & offset for pagination
+        $data = $query->limit($limit)->offset($offset)->get();
+    
+        return response()->json($data);
     }
 }

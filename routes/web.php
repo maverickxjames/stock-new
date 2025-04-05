@@ -87,8 +87,12 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/deposits', [AdminController::class, 'depositTxn'])->name('admin.deposit_txn');
     Route::get('admin/withdraws', [AdminController::class, 'withdrawTXn'])->name('admin.withdraw_txn');
     Route::get('admin/trades', [AdminController::class, 'tradeTxn'])->name('admin.tradeTxn');
+    Route::get('/admin/add-watchlist', [AdminController::class, 'addWatchlist'])->name('admin.add-watchlist');
+    Route::get('/admin/fetch-watchlist', [AdminController::class, 'fetchWatchlist'])->name('admin.fetch-watchlist');
+
 
     Route::get('/admin/settings', [SettingsController::class, 'settings'])->name('admin.settings');
+    
 
     Route::post('settings/min-recharge', [SettingsController::class, 'updateMinRecharge'])->name('settings.updateMinRecharge');
     Route::post('settings/min-withdraw', [SettingsController::class, 'updateMinWithdraw'])->name('settings.updateMinWithdraw');
