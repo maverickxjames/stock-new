@@ -48,7 +48,7 @@
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
+    {{-- <style>
         .wallet-balance {
             font-size: 2rem;
             font-weight: bold;
@@ -196,7 +196,7 @@
             color: #555;
             margin: 0;
         }
-    </style>
+    </style> --}}
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
@@ -217,6 +217,193 @@
     {{-- csrf token --}}
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        :root {
+            --color-background: #fae3ea;
+            --color-primary: #3736AF;
+            --font-family-base: Poppin, sans-serif;
+            --font-size-h1: 1.25rem;
+            --font-size-h2: 1rem;
+        }
+
+
+        address {
+            font-style: normal;
+        }
+
+        button {
+            border: 0;
+            color: inherit;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        fieldset {
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: var(--font-size-h1);
+            line-height: 1.2;
+            margin-block: 0 1.5em;
+        }
+
+        h2 {
+            font-size: var(--font-size-h2);
+            line-height: 1.2;
+            margin-block: 0 0.5em;
+        }
+
+        legend {
+            font-weight: 600;
+            margin-block-end: 0.5em;
+            padding: 0;
+        }
+
+        input {
+            border: 0;
+            color: inherit;
+            font: inherit;
+        }
+
+        input[type="radio"] {
+            accent-color: var(--color-primary);
+        }
+
+        table {
+            border-collapse: collapse;
+            inline-size: 100%;
+        }
+
+        tbody {
+            color: #b4b4b4;
+        }
+
+        td {
+            padding-block: 0.125em;
+        }
+
+        tfoot {
+            border-top: 1px solid #b4b4b4;
+            font-weight: 600;
+        }
+
+        .align {
+            display: grid;
+            place-items: center;
+        }
+
+        .button {
+            align-items: center;
+            background-color: var(--color-primary);
+            border-radius: 1em;
+            color: #fff;
+            display: flex;
+            gap: 0.5em;
+            justify-content: center;
+            padding-block: 0.75em;
+            padding-inline: 1em;
+            transition: 0.3s;
+        }
+
+        .button:focus,
+        .button:hover {
+            background-color: #3736AF;
+        }
+
+        .button--full {
+            inline-size: 100%;
+        }
+
+        .cardx {
+            border-radius: 0.5em;
+            background-color: var(--color-primary);
+            color: #fff;
+            padding: 1em;
+        }
+
+        .form {
+            display: grid;
+            gap: 2em;
+        }
+
+        .form__radios {
+            display: grid;
+            gap: 1em;
+        }
+
+        .form__radio {
+            align-items: center;
+            background-color: #fefdfe;
+            border-radius: 1em;
+            box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+            display: flex;
+            padding: 1em;
+        }
+
+        .form__radio label {
+            align-items: center;
+            display: flex;
+            flex: 1;
+            gap: 1em;
+            color: #000;
+        }
+
+        .head {
+            display: flex;
+            justify-content: center;
+            padding-block: 0.5em;
+            padding-inline: 1em;
+        }
+
+        .icon {
+            block-size: 1em;
+            display: inline-block;
+            fill: currentColor;
+            inline-size: 1em;
+            vertical-align: middle;
+        }
+
+        .iphone {
+            background-color: #fbf6f7;
+            background-image: linear-gradient(to bottom, #fbf6f7, #fff);
+            /* border-radius: 2em; */
+            /* block-size: 812px; */
+            box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+            /* inline-size: 375px; */
+            /* overflow: auto; */
+            padding: 2em;
+        }
+
+        .notice-section {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #D3D3D3;
+            cursor: crosshair;
+        }
+
+        .notice-section ul {
+            margin-top: 20px;
+            padding-left: 20px;
+        }
+
+        .notice-section ul li h5 {
+            font-size: 16px;
+            margin-bottom: 5px;
+			color: #007bff;
+        }
+
+		.notice-section ul li p {
+			font-size: 14px;
+			margin-bottom: 5px;
+			color: #555;
+		}
+
+    </style>
 
 </head>
 
@@ -267,32 +454,104 @@
 
 
         <div class="content-body">
-            <div class="container-fluid">
+            <div class="iphone">
+                <header class="head">
+                    <h1>Withdraw</h1>
+                </header>
+
+                <form action="" class="">
+                    @csrf
+                    @php
+                        $settings = Setting::where('id', 1)->first();
+                    @endphp
+                    <div>
+                        <h2>Wallet</h2>
+
+                        <div class="cardx">
+                            <p>Withdraw Wallet : {{ $user->withdraw_wallet }} INR</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 mb-4">
+                        <div class="form-group mt-0">
+                            <label class="fw-bold text-dark mb-2" for="amount">Amount</label>
+                            <input type="number" class="form-control" id="amount" placeholder="Enter Amount">
+                        </div>
+                    </div>
+
+                    <fieldset>
+                        <h2 class="mb-2">Choose Method</h2>
+                        {{-- <legend>Payment Method</legend> --}}
+                        @php
+                             $paymentModes = withdraw_mode::where('status', 1)->get();
+                        @endphp
+
+
+                        <div class="form__radios">
+
+                            @foreach ($paymentModes as $modes)
+                                <div class="form__radio">
+                                    <label for="paymentMethod"><img src={{ $modes['icon'] }}
+                                            alt={{ $modes['pay_name'] }} class="img-fluid me-2"
+                                            style="width: 30px;">{{ $modes['pay_name'] }}</label>
+                                    <input {{ $loop->first ? 'checked' : '' }} id={{ $modes['slug'] }} name="paymentMethod" type="radio" />
+                                </div>
+                            @endforeach
+
+
+
+                        </div>
+                    </fieldset>
+
+                  
+                    @if($paymentModes->isEmpty())
+                    <div class="mt-2">
+                        <button style="cursor:not-allowed;opacity:0.5" class="btn btn-secondary button button--full" disabled>No
+                            Payment Method Available</button>
+                    </div>
+                    @else
+                    <div class="mt-4">
+                        <button class="button button--full" type="button" onclick="initiateWithdraw()">Withdraw</button>
+                    </div>
+                    @endif
+                   
+                </form>
+
+
+                <div class="notice-section mt-4">
+                    <h4 class="fw-semibold title-color">Notice:</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <h5>Minimum Withdraw</h5>
+                            <p>Minimum Withdraw is
+                                <?= $settings['minWithdraw'] ?> INR
+                            </p>
+                        </li>
+                        <li>
+                            <h5>Withdraw Frequency</h5>
+                            <p>You can place only 10 free withdrawals in a day. After that, 1% TDS will be applied.
+                            </p>
+                        </li>
+                    </ul>
+                   
+                </div>
+            </div>
+            {{-- <div class="container-fluid">
                 <div class="container mt-5">
                     @php
                         $settings = Setting::where('id', 1)->first();
                     @endphp
-                    <!-- Withdraw Notice Alert Box -->
                     <div class="alert alert-info" role="alert"
                         style="
                     
                     cursor: not-allowed;">
                         <h4 class="alert-heading">Notice</h4>
                         <p>Withdraw Wallet : {{ $user->withdraw_wallet }} INR</p>
-                        {{-- Additional information can be added here if needed --}}
                     </div>
                 </div>
 
-                <div class="custom-container"
-                    style="
-                padding: 20px;
-                background-color: #f9f9f9;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            ">
+                <div class="custom-container">
 
 
-                    <!-- Amount Input Section -->
                     <form action="" class="">
                         @csrf
                         <div class="form-group mt-0">
@@ -301,7 +560,6 @@
                         </div>
                     </form>
 
-                    <!-- Payment Methods Section -->
                     <br>
                     <h3 class="fw-semibold title-color text-center">Choose Method</h3>
                     <ul class="payment-method-list pt-0">
@@ -321,7 +579,6 @@
                         <?php } ?>
                     </ul>
 
-                    <!-- Button Section -->
                     <?php if (count($paymentModes) == 0) { ?>
                     <div class="grid-btn mt-2">
                         <button style="cursor:not-allowed;opacity:0.5" class="btn btn-secondary w-100 m-0" disabled>No
@@ -333,7 +590,6 @@
                     </div>
                     <?php } ?>
 
-                    <!-- Notice Section -->
                     <div class="condition-part mt-4" style="cursor: crosshair">
                         <h4 class="fw-semibold title-color">Notice:</h4>
                         <ul class="condition-list">
@@ -351,7 +607,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!--**********************************

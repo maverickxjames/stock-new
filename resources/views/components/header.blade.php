@@ -12,7 +12,7 @@ $user = auth()->user();
                 </div>
                 <ul class="navbar-nav header-right">
 
-                    <li class="nav-item dropdown add_item_dropdown" title="Add Script">
+                    {{-- <li class="nav-item dropdown add_item_dropdown" title="Add Script">
                         <a class="nav-link add-icon " href="javascript:void(0);" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <!-- Light Theme Add Icon -->
@@ -27,7 +27,7 @@ $user = auth()->user();
                             </svg>
 
                         </a>
-                    </li>
+                    </li> --}}
 
                     {{-- <li class="nav-item dropdown notification_dropdown" title="Change Theme">
                         <a class="nav-link bell dz-theme-mode" href="javascript:void(0);">

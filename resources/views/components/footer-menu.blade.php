@@ -95,7 +95,7 @@ span.bosluk {
   </a>
   <a href="/history" class="{{ Request::is('history') ? 'active' : '' }}">
       <i class="fa-solid fa-clock-rotate-left"></i>
-      History
+      Transaction
   </a>
   <a href="/profile" class="{{ Request::is('profile') ? 'active' : '' }}">
       <i class="fa-regular fa-circle-user"></i>

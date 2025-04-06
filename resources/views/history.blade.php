@@ -179,7 +179,7 @@ use App\Models\Stockdata;
         ***********************************-->
         <div class="content-body">
             <!-- row -->
-            <div class="container-fluid">
+            {{-- <div class="container-fluid"> --}}
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="card">
@@ -379,7 +379,7 @@ use App\Models\Stockdata;
                         </div>
                     </div>
                 </div>
-            </div>
+            {{-- </div> --}}
         </div>
         <!--**********************************
             Content body end
@@ -432,7 +432,7 @@ use App\Models\Stockdata;
     <script src="js/custom.min.js"></script>
     <script src="js/dlabnav-init.js"></script>
     <script src="js/demo.js"></script>
-    <script src="js/styleSwitcher.js"></script>
+    {{-- <script src="js/styleSwitcher.js"></script> --}}
 </body>
 
 <!-- Mirrored from jiade.dexignlab.com/xhtml/history.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:24 GMT -->

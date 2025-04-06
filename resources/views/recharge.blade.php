@@ -303,14 +303,14 @@
 		<div class="custom-container">
 			<div class="header-panel">
 				<div>
-					<a href="dashboard">
+					<a href="deposit">
 						<img src="https://cdn-icons-png.flaticon.com/512/2985/2985162.png" alt="" width="20"
 							height="auto">
 					</a>
 				</div>
 
 
-				<h3 class="fw-semibold title-color">Add Funds</h3>
+				<h3 class="fw-semibold text-dark">Add Funds</h3>
 			</div>
 		</div>
 	</header>

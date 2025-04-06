@@ -181,7 +181,7 @@ use App\Models\Stockdata;
         ***********************************-->
         <div class="content-body">
             <!-- row -->
-            <div class="container-fluid">
+            {{-- <div class="container-fluid"> --}}
 
                 <div class="row">
 
@@ -1486,7 +1486,7 @@ use App\Models\Stockdata;
                     </div>
                 </div>
 
-            </div>
+            {{-- </div> --}}
         </div>
         <!--**********************************
             Content body end

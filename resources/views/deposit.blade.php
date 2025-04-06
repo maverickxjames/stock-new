@@ -42,8 +42,8 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-	    <!-- Style css -->
-		<link class="main-css" href="css/style.css" rel="stylesheet">
+    <!-- Style css -->
+    <link class="main-css" href="css/style.css" rel="stylesheet">
 
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,7 +57,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 
-    <style>
+    {{-- <style>
         .recharge-section {
             background: #f8f9fa;
             padding: 20px;
@@ -170,6 +170,193 @@
         .myW-float {
             margin-top: 11px;
         }
+    </style> --}}
+
+    <style>
+        :root {
+            --color-background: #fae3ea;
+            --color-primary: #3736AF;
+            --font-family-base: Poppin, sans-serif;
+            --font-size-h1: 1.25rem;
+            --font-size-h2: 1rem;
+        }
+
+
+        address {
+            font-style: normal;
+        }
+
+        button {
+            border: 0;
+            color: inherit;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        fieldset {
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: var(--font-size-h1);
+            line-height: 1.2;
+            margin-block: 0 1.5em;
+        }
+
+        h2 {
+            font-size: var(--font-size-h2);
+            line-height: 1.2;
+            margin-block: 0 0.5em;
+        }
+
+        legend {
+            font-weight: 600;
+            margin-block-end: 0.5em;
+            padding: 0;
+        }
+
+        input {
+            border: 0;
+            color: inherit;
+            font: inherit;
+        }
+
+        input[type="radio"] {
+            accent-color: var(--color-primary);
+        }
+
+        table {
+            border-collapse: collapse;
+            inline-size: 100%;
+        }
+
+        tbody {
+            color: #b4b4b4;
+        }
+
+        td {
+            padding-block: 0.125em;
+        }
+
+        tfoot {
+            border-top: 1px solid #b4b4b4;
+            font-weight: 600;
+        }
+
+        .align {
+            display: grid;
+            place-items: center;
+        }
+
+        .button {
+            align-items: center;
+            background-color: var(--color-primary);
+            border-radius: 1em;
+            color: #fff;
+            display: flex;
+            gap: 0.5em;
+            justify-content: center;
+            padding-block: 0.75em;
+            padding-inline: 1em;
+            transition: 0.3s;
+        }
+
+        .button:focus,
+        .button:hover {
+            background-color: #3736AF;
+        }
+
+        .button--full {
+            inline-size: 100%;
+        }
+
+        .cardx {
+            border-radius: 0.5em;
+            background-color: var(--color-primary);
+            color: #fff;
+            padding: 1em;
+        }
+
+        .form {
+            display: grid;
+            gap: 2em;
+        }
+
+        .form__radios {
+            display: grid;
+            gap: 1em;
+        }
+
+        .form__radio {
+            align-items: center;
+            background-color: #fefdfe;
+            border-radius: 1em;
+            box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+            display: flex;
+            padding: 1em;
+        }
+
+        .form__radio label {
+            align-items: center;
+            display: flex;
+            flex: 1;
+            gap: 1em;
+            color: #000;
+        }
+
+        .head {
+            display: flex;
+            justify-content: center;
+            padding-block: 0.5em;
+            padding-inline: 1em;
+        }
+
+        .icon {
+            block-size: 1em;
+            display: inline-block;
+            fill: currentColor;
+            inline-size: 1em;
+            vertical-align: middle;
+        }
+
+        .iphone {
+            background-color: #fbf6f7;
+            background-image: linear-gradient(to bottom, #fbf6f7, #fff);
+            /* border-radius: 2em; */
+            /* block-size: 812px; */
+            box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+            /* inline-size: 375px; */
+            /* overflow: auto; */
+            padding: 2em;
+        }
+
+        .notice-section {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #D3D3D3;
+            cursor: crosshair;
+        }
+
+        .notice-section ul {
+            margin-top: 20px;
+            padding-left: 20px;
+        }
+
+        .notice-section ul li h5 {
+            font-size: 16px;
+            margin-bottom: 5px;
+			color: #007bff;
+        }
+
+		.notice-section ul li p {
+			font-size: 14px;
+			margin-bottom: 5px;
+			color: #555;
+		}
+
     </style>
 
 </head>
@@ -223,73 +410,88 @@
             Content body start
         ***********************************-->
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label mb-2">Email address</label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1"
-                                placeholder="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput2" class="form-label mb-2">User Name</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput2"
-                                placeholder="username">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label mb-2">Joining Date</label>
-                            <div class="input-hasicon mb-sm-0 mb-3">
-                                <input name="datepicker" class="form-control bt-datepicker">
-                                <div class="icon"><i class="far fa-calendar"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-       
-
 
         <div class="content-body">
             <!-- row -->
-            <div class="container-fluid">
+            {{-- <div class="container-fluid"> --}}
+                <div class="iphone">
+                    <header class="head">
+                        <h1>Deposit</h1>
+                    </header>
 
-				<div class="container mt-5">
-					@php
-						$settings = Setting::where('id', 1)->first();
-					@endphp
-					<!-- Withdraw Notice Alert Box -->
-					<div class="alert alert-info" role="alert">
-						<p class="">Real Wallet : {{ $user->real_wallet }} INR</p>
-						<p>Withdraw Wallet : {{ $user->withdraw_wallet }} INR</p>
-						{{-- <p>You can place only 10 free Withdraw in a day. After that 1% TDS will be applied</p> --}}
-					</div>
-		
-		
-				</div>
-		
-		
-                
-                <div class="custom-container" style="
-                padding: 20px;
-                background-color: #f9f9f9;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            ">
-                    <!-- Amount Input Section -->
+                    <form action="" class="">
+                        @csrf
+                        @php
+                            $settings = Setting::where('id', 1)->first();
+                        @endphp
+                        <div>
+                            <h2>Wallet</h2>
+
+                            <div class="cardx">
+                                <p class="">Real Wallet : {{ $user->real_wallet }} INR</p>
+                                <p>Withdraw Wallet : {{ $user->withdraw_wallet }} INR</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-4">
+                            <div class="form-group mt-0">
+                                <label class="fw-bold text-dark mb-2" for="amount">Amount</label>
+                                <input type="number" class="form-control" id="amount" placeholder="Enter Amount">
+                            </div>
+                        </div>
+
+                        <fieldset>
+                            <h2 class="mb-2">Payment Method</h2>
+                            {{-- <legend>Payment Method</legend> --}}
+                            @php
+                                $paymentModes = payment_mode::where('status', 1)->get();
+                                $settings = Setting::where('id', 1)->first();
+                            @endphp
+
+
+                            <div class="form__radios">
+
+                                @foreach ($paymentModes as $modes)
+                                    <div class="form__radio">
+                                        <label for="paymentMethod"><img src={{ $modes['icon'] }}
+                                                alt={{ $modes['pay_name'] }} class="img-fluid me-2"
+                                                style="width: 30px;">{{ $modes['pay_name'] }}</label>
+                                        <input {{ $loop->first ? 'checked' : '' }} id={{ $modes['slug'] }} name="paymentMethod" type="radio" />
+                                    </div>
+                                @endforeach
+
+
+
+                            </div>
+                        </fieldset>
+
+                      
+
+                        <div class="mt-4">
+                                <button class="button button--full" type="button" onclick="initiatePayment()" class="btn btn-primary w-100">Proceed to Pay</button>
+                        </div>
+                    </form>
+
+
+                    <div class="notice-section mt-4">
+                        <h4 class="fw-semibold title-color">Notice:</h4>
+                        <ul class="list-unstyled">
+                            <li>
+                                <h5>Minimum Recharge</h5>
+                                <p>Minimum Recharge is <?= $settings['minRecharge'] ?> INR</p>
+                            </li>
+                            <li>
+                                <h5>Fill UTR</h5>
+                                <p>Enter your UTR number after payment</p>
+                            </li>
+                        </ul>
+
+                       
+                    </div>
+                </div>
+
+
+
+                {{-- <div class="custom-container">
 
                     <form action="" class="">
                         @csrf
@@ -299,36 +501,11 @@
                         </div>
                     </form>
 
-                    <!-- Quick Amount Buttons -->
-                    <div class="quick-amount-buttons ">
-                        <button type="button" class="btn btn-outline-primary" onclick="setAmount(500)">500</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(1000)">1000</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(2500)">2500</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(5000)">5000</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(10000)">10000</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(20000)">20000</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(25000)">25000</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(30000)">30000</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(50000)">50000</button>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="setAmount(100000)">100000</button>
-                    </div>
 
-                    <!-- Payment Methods Section -->
                     <br>
                     <h3 class="fw-semibold title-color text-center">Choose Payment Method</h3>
-                    {{-- <br> --}}
                     <ul class="payment-method-list list-unstyled">
                         <?php
-								// Fetch payment modes and settings
 								$paymentModes = payment_mode::where('status', 1)->get();
 								$settings = Setting::where('id', 1)->first();
 							
@@ -347,13 +524,10 @@
 								}
 								?>
                     </ul>
-                    <!-- Proceed Button -->
                     <div class="text-center mt-4">
                         <button onclick="initiatePayment()" class="btn btn-primary w-100">Proceed to Pay</button>
-                        {{-- <button onclick="" class="btn btn-primary w-100">Proceed to Pay</button> --}}
                     </div>
 
-                    <!-- Notice Section -->
                     <div class="notice-section mt-4">
                         <h4 class="fw-semibold title-color">Notice:</h4>
                         <ul class="list-unstyled">
@@ -367,12 +541,12 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> --}}
                 {{-- </section> --}}
 
 
                 {{-- </div> --}}
-            </div>
+            {{-- </div> --}}
         </div>
         <!--**********************************
             Content body end
@@ -411,19 +585,19 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    	<!-- Required vendors -->
-	<script src="vendor/global/global.min.js"></script>
-	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-	<script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
-	<script src="js/plugins-init/datatables.init.js"></script>
-	<script src="vendor/chart-js/chart.bundle.min.js"></script>
-	<!-- Chart piety plugin files -->
-	<script src="vendor/peity/jquery.peity.min.js"></script>
-	<script src="js/dashboard/trading-market.js"></script>
-	<!-- Dashboard 1 -->
-	<script src="js/custom.min.js"></script>
-	<script src="js/dlabnav-init.js"></script>
-	<script src="js/demo.js"></script>
+    <!-- Required vendors -->
+    <script src="vendor/global/global.min.js"></script>
+    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="js/plugins-init/datatables.init.js"></script>
+    <script src="vendor/chart-js/chart.bundle.min.js"></script>
+    <!-- Chart piety plugin files -->
+    <script src="vendor/peity/jquery.peity.min.js"></script>
+    <script src="js/dashboard/trading-market.js"></script>
+    <!-- Dashboard 1 -->
+    <script src="js/custom.min.js"></script>
+    <script src="js/dlabnav-init.js"></script>
+    <script src="js/demo.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
