@@ -154,7 +154,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/updatelotsize', [StockController::class, 'updateLotSize'])->name('updateLotSize');
+Route::get('/updatelotsize', [StockController::class, 'runUpdateLotSize'])->name('updateLotSize');
 
 Route::get('/runWebSocket', [MarketDataController::class, 'fetchUpdates'])->name('runWebSocket');
 
