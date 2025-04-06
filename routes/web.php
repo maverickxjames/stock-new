@@ -32,6 +32,7 @@ Route::prefix('cron')->group(function () {
 
 Route::get('future', [ScriptController::class, 'future']);
 Route::get('test', [ScriptController::class, 'test']);
+Route::get('deleteExpiredStock', [ScriptController::class, 'deleteExpiredStock']);
 
 Route::get('allStocks', [ApiController::class, 'allStocks']);
 
