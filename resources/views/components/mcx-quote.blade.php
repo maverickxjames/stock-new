@@ -1,15 +1,41 @@
 @php
-$user = Auth::user();
+    $user = Auth::user();
 @endphp
 
 <div>
 
-        <div class="row">
-            <div class="col-xl-12">
+    <div class="row">
+        <div class="col-xl-12">
+            @php
+                $fetch = DB::table('watchlist')
+                    ->where('userId', $user->id)
+                    ->where('instrumentType', 'FUT')
+                    ->Where('segment', 'MCX_FO')
+                    ->get();
+            @endphp
+
+            @if ($fetch->isEmpty())
+                {{-- <div class="alert alert-danger text-center" role="alert">
+                        No Such Data Found. Please first add to watchlist.
+                    </div> --}}
+                <div class="error-page" style="height: 50vh;">
+                    <div class="error-inner text-center">
+                        <div class="dz-error">
+                            <img src="https://cdn-icons-png.flaticon.com/128/7486/7486754.png" alt="error"
+                                class="img-fluid mb-3">
+                        </div>
+
+                        <h2 class="error-head mb-0">No Data Found.</h2>
+                        <p>Please First Add to Watchlist</p>
+                        <a onclick="showWatchlist('mcx',{{ $data2 }})" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                            class="btn btn-secondary">ADD WATCHLIST</a>
+                    </div>
+                </div>
+            @else
                 <div class="row">
                     <?php
                     $i = 1;
-                    $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'FUT')->Where('segment','MCX_FO')->get();
                     foreach ($fetch as $key) {
                         $foisin = $key->instrumentKey;
                         $isin = $key->isIn;
@@ -17,8 +43,8 @@ $user = Auth::user();
                         $instrumentType = $key->instrumentType;
                         $stock = DB::table('future_temp')->where('instrumentKey', $foisin)->first();
                         $quantity = $stock->lotSize;
-                    ?>          
-                
+                    ?>
+
 
                     <div class="modal fade" id="exampleModalCenter3{{ $i }}">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -29,18 +55,18 @@ $user = Auth::user();
                                 <div
                                     class="modal-header px-3 py-2 d-flex align-items-center justify-content-between border-0 bg-transparent">
                                     <div class="d-flex align-items-center gap-2">
-                                        <span><img
-                                                src="https://s3tv-symbol.dhan.co/symbols/<?php    echo $stock->assetSymbol; ?>.svg"
-                                                alt="" style="border-radius: 100%;width:2rem;height:2rem"></span>
-                                        <h5 class="modal-title fw-bold fs-2" style="color: #fff">{{
-                                            $key->tradingSymbol }}</h5>
+                                        <span><img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->assetSymbol; ?>.svg"
+                                                alt=""
+                                                style="border-radius: 100%;width:2rem;height:2rem"></span>
+                                        <h5 class="modal-title fw-bold fs-2" style="color: #fff">
+                                            {{ $key->tradingSymbol }}</h5>
                                     </div>
                                     {{-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                         aria-label="Close"></button> --}}
                                     <button type="button" data-bs-dismiss="modal"
                                         style="border: none;border-radius:100%">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/9974/9974058.png" width="30"
-                                            alt="">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/9974/9974058.png"
+                                            width="30" alt="">
                                     </button>
                                 </div>
 
@@ -117,24 +143,24 @@ $user = Auth::user();
                                         <div class="d-flex justify-content-between align-items-center  mt-md-0 mt-2">
                                             <ul class="nav nav-pills" id="myTab1" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link active" id="Day-tab{{ $i }}" data-bs-toggle="tab"
-                                                        data-bs-target="#Day" href="#Day" role="tab"
-                                                        aria-selected="true">Day</a>
+                                                    <a class="nav-link active" id="Day-tab{{ $i }}"
+                                                        data-bs-toggle="tab" data-bs-target="#Day" href="#Day"
+                                                        role="tab" aria-selected="true">Day</a>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link" id="Week-tab{{ $i }}" data-bs-toggle="tab"
-                                                        data-bs-target="#Week" href="#Week" role="tab"
-                                                        aria-selected="true">Week</a>
+                                                    <a class="nav-link" id="Week-tab{{ $i }}"
+                                                        data-bs-toggle="tab" data-bs-target="#Week" href="#Week"
+                                                        role="tab" aria-selected="true">Week</a>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link" id="Month-tab{{ $i }}" data-bs-toggle="tab"
-                                                        data-bs-target="#Month" href="#Month" role="tab"
-                                                        aria-selected="false">Month</a>
+                                                    <a class="nav-link" id="Month-tab{{ $i }}"
+                                                        data-bs-toggle="tab" data-bs-target="#Month" href="#Month"
+                                                        role="tab" aria-selected="false">Month</a>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link" id="Year-tab{{ $i }}" data-bs-toggle="tab"
-                                                        data-bs-target="#Year" href="#Year" role="tab"
-                                                        aria-selected="false">Year</a>
+                                                    <a class="nav-link" id="Year-tab{{ $i }}"
+                                                        data-bs-toggle="tab" data-bs-target="#Year" href="#Year"
+                                                        role="tab" aria-selected="false">Year</a>
                                                 </li>
                                             </ul>
 
@@ -155,16 +181,18 @@ $user = Auth::user();
 
                     <!-- Trade offcanvas model -->
 
-                    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom3{{ $i }}"
-                        aria-labelledby="offcanvasBottomLabel" style="height: fit-content">
+                    <div class="offcanvas offcanvas-bottom" tabindex="-1"
+                        id="orderoffcanvasBottom3{{ $i }}" aria-labelledby="offcanvasBottomLabel"
+                        style="height: fit-content">
                         <div class="offcanvas-header">
                             <h5 class="offcanvas-title fs-2" id="offcanvasBottomLabel{{ $i }}">
                                 Trade
                             </h5>
 
                             <button type="button" data-bs-dismiss="offcanvas" aria-label="Close"
-                                style="border: none"><img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png"
-                                    width="20" alt=""></button>
+                                style="border: none"><img
+                                    src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="20"
+                                    alt=""></button>
                         </div>
 
                         <div class="offcanvas-body small">
@@ -178,10 +206,12 @@ $user = Auth::user();
                                                 <div class="nav nav-pills light " id="nav-tab" role="tablist">
                                                     <button class="nav-link active " style="width: 50%;"
                                                         id="nav-order-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#nav-order3{{ $i }}" type="button" role="tab"
+                                                        data-bs-target="#nav-order3{{ $i }}"
+                                                        type="button" role="tab"
                                                         aria-selected="true">Buy</button>
                                                     <button class="nav-link" style="width: 50%" id="nav-histroy-tab"
-                                                        data-bs-toggle="tab" data-bs-target="#nav-history3{{ $i }}"
+                                                        data-bs-toggle="tab"
+                                                        data-bs-target="#nav-history3{{ $i }}"
                                                         type="button" role="tab" aria-selected="false">Sell
                                                     </button>
 
@@ -191,20 +221,24 @@ $user = Auth::user();
                                         </div>
                                         <div class="card-body pt-2">
                                             <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-order3{{ $i }}"
-                                                    role="tabpanel" aria-labelledby="nav-order-tab">
+                                                <div class="tab-pane fade show active"
+                                                    id="nav-order3{{ $i }}" role="tabpanel"
+                                                    aria-labelledby="nav-order-tab">
                                                     <div class="table-responsive dataTabletrade">
-                                                        <form id="buyform{{ $i }}" name="buyform{{ $i }}" method="POST"
+                                                        <form id="buyform{{ $i }}"
+                                                            name="buyform{{ $i }}" method="POST"
                                                             action="{{ route('placeBuyOrder') }}">
                                                             @csrf
-                                                            <input type="text" name="id" value="{{ $i }}" id="id"
-                                                                hidden>
-                                                                <input type="text" name="row" value="3" id="row"
-                                                                hidden>
-                                                            <input type="text" name="instrumentKey31{{ $i }}"
-                                                                value="{{ $foisin }}" id="instrumentKey31{{ $i }}"
-                                                                hidden>
-                                                            <input type="text" name="instrumentType31{{ $i }}"
+                                                            <input type="text" name="id"
+                                                                value="{{ $i }}" id="id" hidden>
+                                                            <input type="text" name="row" value="3"
+                                                                id="row" hidden>
+                                                            <input type="text"
+                                                                name="instrumentKey31{{ $i }}"
+                                                                value="{{ $foisin }}"
+                                                                id="instrumentKey31{{ $i }}" hidden>
+                                                            <input type="text"
+                                                                name="instrumentType31{{ $i }}"
                                                                 value="{{ $instrumentType }}"
                                                                 id="instrumentType31{{ $i }}" hidden>
                                                             <div class="col-xl-4" style="width: 100%;">
@@ -215,15 +249,17 @@ $user = Auth::user();
                                                                             class="d-flex align-items-center justify-content-between mt-3 mb-2">
                                                                             <span class="small text-muted">Available
                                                                                 Balance</span>
-                                                                            <span class="text-dark">{{
-                                                                                $user->real_wallet }}</span>
+                                                                            <span
+                                                                                class="text-dark">{{ $user->real_wallet }}</span>
                                                                         </div>
                                                                         <!-- Order Type Selector -->
                                                                         <input type="text" value="market"
                                                                             name="orderType31{{ $i }}"
-                                                                            id="orderType31{{ $i }}" hidden>
+                                                                            id="orderType31{{ $i }}"
+                                                                            hidden>
                                                                         <div class="mb-3 d-flex flex-column">
-                                                                            <label class="form-label">Order Type</label>
+                                                                            <label class="form-label">Order
+                                                                                Type</label>
                                                                             <div class="btn-group" role="group">
                                                                                 {{-- <button type="button"
                                                                                     class="btn btn-primary"
@@ -249,8 +285,9 @@ $user = Auth::user();
                                                                             <span class="input-group-text">Market
                                                                                 Price</span>
                                                                             <input id="realprice31{{ $i }}"
-                                                                                name="realprice31{{ $i }}" readonly
-                                                                                type="text" class="form-control"
+                                                                                name="realprice31{{ $i }}"
+                                                                                readonly type="text"
+                                                                                class="form-control"
                                                                                 placeholder="Enter price"
                                                                                 value="{{ $stock->ltp }}">
 
@@ -263,10 +300,13 @@ $user = Auth::user();
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Limit
                                                                                 Price</span>
-                                                                            <input id="limitprice31{{ $i }}"
-                                                                                name="limitprice31{{ $i }}" disabled
-                                                                                type="hidden" class="form-control"
-                                                                                placeholder="Enter price" value="0.00">
+                                                                            <input
+                                                                                id="limitprice31{{ $i }}"
+                                                                                name="limitprice31{{ $i }}"
+                                                                                disabled type="hidden"
+                                                                                class="form-control"
+                                                                                placeholder="Enter price"
+                                                                                value="0.00">
 
                                                                             <span class="input-group-text">₹</span>
                                                                         </div>
@@ -276,7 +316,8 @@ $user = Auth::user();
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Target Price
                                                                             </span>
-                                                                            <input id="targetprice31{{ $i }}"
+                                                                            <input
+                                                                                id="targetprice31{{ $i }}"
                                                                                 name="targetprice31{{ $i }}"
                                                                                 type="text" class="form-control"
                                                                                 placeholder="Enter price">
@@ -312,11 +353,12 @@ $user = Auth::user();
                                                                             </div>
                                                                             <div class="d-flex flex-column gap-2 w-50">
                                                                                 <span class="fs-5">Quantity</span>
-                                                                                <input type="text" class="form-control"
+                                                                                <input type="text"
+                                                                                    class="form-control"
                                                                                     placeholder="Enter size"
                                                                                     id="quantity31{{ $i }}"
-                                                                                    name="quantity31{{ $i }}" value={{
-                                                                                    $quantity }} readonly>
+                                                                                    name="quantity31{{ $i }}"
+                                                                                    value={{ $quantity }} readonly>
                                                                             </div>
                                                                         </div>
 
@@ -372,7 +414,8 @@ $user = Auth::user();
                                                                                 <!-- Displaying Cost and Margin Price -->
                                                                                 <div class="d-flex flex-column">
                                                                                     <span>
-                                                                                        Cost: <s id="costPrice31{{ $i }}"
+                                                                                        Cost: <s
+                                                                                            id="costPrice31{{ $i }}"
                                                                                             name="costPrice31{{ $i }}"
                                                                                             class="px-1">₹0.00</s><span
                                                                                             id="marginUsed31{{ $i }}"></span>
@@ -418,20 +461,23 @@ $user = Auth::user();
 
 
 
-                                                <div class="tab-pane fade" id="nav-history3{{ $i }}" role="tabpanel">
+                                                <div class="tab-pane fade" id="nav-history3{{ $i }}"
+                                                    role="tabpanel">
                                                     <div class="table-responsive dataTabletrade">
-                                                        <form id="sellform" name="sellform{{ $i }}" method="POST"
-                                                            action="{{ route('placeSellOrder') }}">
+                                                        <form id="sellform" name="sellform{{ $i }}"
+                                                            method="POST" action="{{ route('placeSellOrder') }}">
                                                             @csrf
-                                                            <input type="text" name="id2" value="{{ $i }}" id="id2"
-                                                                hidden>
-                                                            
-                                                            <input type="text" name="row2" value="3" id="row2"
-                                                                hidden>
-                                                            <input type="text" name="instrumentKey32{{ $i }}"
-                                                                value="{{ $foisin }}" id="instrumentKey32{{ $i }}"
-                                                                hidden>
-                                                                <input type="text" name="instrumentType32{{ $i }}"
+                                                            <input type="text" name="id2"
+                                                                value="{{ $i }}" id="id2" hidden>
+
+                                                            <input type="text" name="row2" value="3"
+                                                                id="row2" hidden>
+                                                            <input type="text"
+                                                                name="instrumentKey32{{ $i }}"
+                                                                value="{{ $foisin }}"
+                                                                id="instrumentKey32{{ $i }}" hidden>
+                                                            <input type="text"
+                                                                name="instrumentType32{{ $i }}"
                                                                 value="{{ $instrumentType }}"
                                                                 id="instrumentType32{{ $i }}" hidden>
                                                             <div class="col-xl-4" style="width: 100%;">
@@ -443,8 +489,8 @@ $user = Auth::user();
                                                                             class="d-flex align-items-center justify-content-between mt-3 mb-2">
                                                                             <span class="small text-muted">Available
                                                                                 Balance</span>
-                                                                            <span class="text-dark">{{
-                                                                                $user->real_wallet }}</span>
+                                                                            <span
+                                                                                class="text-dark">{{ $user->real_wallet }}</span>
                                                                         </div>
 
                                                                         <!-- Order Type Selector -->
@@ -452,9 +498,11 @@ $user = Auth::user();
 
                                                                         <input type="text" value="market"
                                                                             name="orderType32{{ $i }}"
-                                                                            id="orderType32{{ $i }}" hidden>
+                                                                            id="orderType32{{ $i }}"
+                                                                            hidden>
                                                                         <div class="mb-3 d-flex flex-column">
-                                                                            <label class="form-label">Order Type</label>
+                                                                            <label class="form-label">Order
+                                                                                Type</label>
                                                                             <div class="btn-group" role="group">
                                                                                 {{-- <button type="button"
                                                                                     class="btn btn-primary"
@@ -480,8 +528,9 @@ $user = Auth::user();
                                                                             <span class="input-group-text">Market
                                                                                 Price</span>
                                                                             <input id="realprice32{{ $i }}"
-                                                                                name="realprice32{{ $i }}" readonly
-                                                                                type="text" class="form-control"
+                                                                                name="realprice32{{ $i }}"
+                                                                                readonly type="text"
+                                                                                class="form-control"
                                                                                 placeholder="Enter price"
                                                                                 value="{{ $stock->ltp }}">
 
@@ -494,10 +543,13 @@ $user = Auth::user();
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Limit
                                                                                 Price</span>
-                                                                            <input id="limitprice32{{ $i }}"
-                                                                                name="limitprice32{{ $i }}" disabled
-                                                                                type="hidden" class="form-control"
-                                                                                placeholder="Enter price" value="0.00">
+                                                                            <input
+                                                                                id="limitprice32{{ $i }}"
+                                                                                name="limitprice32{{ $i }}"
+                                                                                disabled type="hidden"
+                                                                                class="form-control"
+                                                                                placeholder="Enter price"
+                                                                                value="0.00">
 
                                                                             <span class="input-group-text">₹</span>
                                                                         </div>
@@ -507,7 +559,8 @@ $user = Auth::user();
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Target Price
                                                                             </span>
-                                                                            <input id="targetprice32{{ $i }}"
+                                                                            <input
+                                                                                id="targetprice32{{ $i }}"
                                                                                 name="targetprice32{{ $i }}"
                                                                                 type="text" class="form-control"
                                                                                 placeholder="Enter price">
@@ -541,11 +594,13 @@ $user = Auth::user();
                                                                             </div>
                                                                             <div class="d-flex gap-2 flex-column w-50">
                                                                                 <span class="fs-5">Quantity</span>
-                                                                                <input type="text" class="form-control"
+                                                                                <input type="text"
+                                                                                    class="form-control"
                                                                                     placeholder="Enter size"
                                                                                     id="quantity32{{ $i }}"
-                                                                                    name="quantity32{{ $i }}" value={{
-                                                                                    $quantity }} readonly>
+                                                                                    name="quantity32{{ $i }}"
+                                                                                    value={{ $quantity }}
+                                                                                    readonly>
                                                                             </div>
                                                                         </div>
 
@@ -595,7 +650,8 @@ $user = Auth::user();
                                                                                 <!-- Displaying Cost and Margin Price -->
                                                                                 <div class="d-flex flex-column">
                                                                                     <span>
-                                                                                        Cost: <s id="costPrice32{{ $i }}"
+                                                                                        Cost: <s
+                                                                                            id="costPrice32{{ $i }}"
                                                                                             name="costPrice32{{ $i }}"
                                                                                             class="px-1">₹0.00</s><span
                                                                                             id="marginUsed32{{ $i }}"></span>
@@ -649,14 +705,15 @@ $user = Auth::user();
                         </div>
                     </div>
 
-                   
+
                     <div class="col-xl-3 col-xxl-4 col-lg-6 col-sm-6 col-12" data-bs-toggle="modal"
                         data-bs-target="#exampleModalCenter3{{ $i }}">
                         <p style="display: none" id="isin3{{ $i }}">{{ $foisin }}</p>
                         <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
                             <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
                                 <div>
-                                    <p class="mb-0 fs-5 font-w500 d-flex align-items-center" id="change3{{ $i }}">
+                                    <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
+                                        id="change3{{ $i }}">
                                         <?php 
                                                                     $change = $stock->ltp - $stock->cp;
                                                                     if($stock->cp == 0){
@@ -677,11 +734,11 @@ $user = Auth::user();
                                 } elseif ($change < 0) {
                                                                         ?>
                                         <span class="badge badge-danger me-1">▼</span>
-                                        <span class="text-danger" id="perc3{{ $i }}">{{ number_format(($change / $stock->cp)
-                                            * 100, 2) }}%
+                                        <span class="text-danger"
+                                            id="perc3{{ $i }}">{{ number_format(($change / $stock->cp) * 100, 2) }}%
                                             &nbsp;</span>
                                         <span class="text-danger" id="perc3{{ $i }}">(
-                                            <?php        echo number_format($change, 2); ?> pts)
+                                            <?php echo number_format($change, 2); ?> pts)
                                         </span>
 
                                         <?php
@@ -696,9 +753,9 @@ $user = Auth::user();
                                     </p>
 
                                     <div class="d-flex align-items-center gap-2">
-                                        <span><img
-                                                src="https://s3tv-symbol.dhan.co/symbols/<?php    echo $stock->assetSymbol; ?>.svg"
-                                                alt="" style="border-radius: 100%;width:2rem;height:2rem"></span>
+                                        <span><img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->assetSymbol; ?>.svg"
+                                                alt=""
+                                                style="border-radius: 100%;width:2rem;height:2rem"></span>
                                         <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
                                     </div>
                                     <div class="d-flex justify-content-between ">
@@ -721,12 +778,12 @@ $user = Auth::user();
                             <div class="card-body">
                                 <div class="d-flex justify-content-between mb-2">
                                     <div class="me-3">
-                                        <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600" id="bid3{{ $i }}">{{
-                                                $stock->bid }}</span></p>
+                                        <p class="mb-0">Bid : <span class="text-dark mb-0 font-w600"
+                                                id="bid3{{ $i }}">{{ $stock->bid }}</span></p>
                                     </div>
                                     <div class="me-3">
-                                        <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600" id="ask3{{ $i }}">{{
-                                                $stock->ask }}</span></p>
+                                        <p class="mb-0">Ask : <span class="text-dark mb-0 font-w600"
+                                                id="ask3{{ $i }}">{{ $stock->ask }}</span></p>
                                     </div>
                                 </div>
 
@@ -759,19 +816,19 @@ $user = Auth::user();
                     </div>
 
 
-              
-                <?php
-                $i++;
+
+                    <?php
+                    $i++;
                     }
                     ?>
-                      </div>
-            </div>
-        </div>
-        <!-- Trade offcanvas model end -->
+                </div>
+            @endif
 
-       
-      
+        </div>
+    </div>
+    <!-- Trade offcanvas model end -->
+
+
+
 
 </div>
-
-  

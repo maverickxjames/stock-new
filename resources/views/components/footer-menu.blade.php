@@ -79,7 +79,7 @@ span.bosluk {
 
 </style>
 
-<div class="bottom-menu">
+<div class="bottom-menu" style="z-index: 100">
   <a href="/quotes" class="{{ Request::is('quotes') ? 'active' : '' }}">
       <i class="fa-solid fa-list"></i>
       Watchlist

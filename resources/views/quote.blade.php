@@ -373,7 +373,7 @@ $user = Auth::user();
                                                             ->where('is_watchlist', 1)
                                                             ->get();
                                                     @endphp
-                                                        <div class="input-group mt-4 search-area-2" onclick="showWatchlist('option',{{ $data2 }})"
+                                                        <div class="input-group mt-4 search-area-2" onclick="showWatchlist('mcx',{{ $data2 }})"
                                                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                                                         aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"

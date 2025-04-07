@@ -6,10 +6,29 @@ $user = Auth::user();
 
         <div class="row">
             <div class="col-xl-12">
+                @php
+                    $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'FUT')->get();
+                @endphp
+
+                @if($fetch->isEmpty())
+                <div class="error-page" style="height: 50vh;">
+                    <div class="error-inner text-center">
+                        <div class="dz-error">
+                            <img src="https://cdn-icons-png.flaticon.com/128/7486/7486754.png" alt="error"
+                                class="img-fluid mb-3">
+                        </div>
+
+                        <h2 class="error-head mb-0">No Data Found.</h2>
+                        <p>Please First Add to Watchlist</p>
+                        <a onclick="showWatchlist('future',{{ $data }})"
+                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                        aria-controls="offcanvasRight" class="btn btn-secondary">ADD WATCHLIST</a>
+                    </div>
+                </div>
+                @else
                 <div class="row">
                     <?php
                     $i = 1;
-                    $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'FUT')->get();
                     foreach ($fetch as $key) {
                         $foisin = $key->instrumentKey;
                         $isin = $key->isIn;
@@ -766,11 +785,12 @@ $user = Auth::user();
 
 
               
-                <?php
-                $i++;
-                    }
-                    ?>
-                      </div>
+                    <?php
+                    $i++;
+                        }
+                        ?>
+                </div>
+                @endif
             </div>
         </div>
         <!-- Trade offcanvas model end -->
