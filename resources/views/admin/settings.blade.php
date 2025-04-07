@@ -272,7 +272,7 @@ $upstock=Upstock::where('id',1)->first();
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Update API</h1>
+                            <h1 class="m-0">Update Upstox</h1>
                         </div>
                         <div class="col-sm-6"></div>
                     </div>
@@ -307,7 +307,7 @@ $upstock=Upstock::where('id',1)->first();
                     </div>
                 </form>
 
-                <!-- Withdraw Status -->
+               
                 <form id="">
                     @csrf
                     <div class="form-group row">
@@ -349,6 +349,51 @@ $upstock=Upstock::where('id',1)->first();
                             
                             <button type="button" class="btn btn-primary ml-2" onclick="openUpstoxLogin()">Generate
                                 Token</button>
+                        </div>
+                    </div>
+                </form>
+
+                <form id="">
+                    @csrf
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4" for="token">Cookies</label>
+                        <div class="col-sm-8 d-flex">
+                            <?php
+                            $isExpired = $upstock->isCookieExpired;
+                            $tokenValue = $upstock['cookie'] ?? '';
+                            ?>
+                            
+                            <?php if ($isExpired): ?>
+                                <div class="form-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control is-invalid" 
+                                        id="cookie" 
+                                        name="cookie" 
+                                        value="<?= htmlspecialchars($tokenValue) ?>" 
+                                        readonly 
+                                    >
+                                    <div class="invalid-feedback">
+                                        Cookie is expired.
+                                    </div>
+                                </div>
+                            <?php else: ?>
+                                <div class="form-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control is-valid" 
+                                        id="token" 
+                                        name="token" 
+                                        value="<?= htmlspecialchars($tokenValue) ?>" 
+                                    >
+                                    <div class="valid-feedback">
+                                        Cookie is valid.
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <button type="button" class="btn btn-primary ml-2" onclick="openGenerateCookie()">Generate
+                                Cookie</button>
                         </div>
                     </div>
                 </form>
@@ -446,6 +491,8 @@ $upstock=Upstock::where('id',1)->first();
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <script>
         function updateMinRecharge() {
@@ -818,6 +865,144 @@ $upstock=Upstock::where('id',1)->first();
                 }
             , });
         }
+
+        function openGenerateCookie() {
+    Swal.fire({
+        title: 'Enter Cookie',
+        input: 'text',
+        inputPlaceholder: 'Paste your Upstox Cookie here',
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonText: 'Submit',
+        denyButtonText: 'Test Cookie',
+        cancelButtonText: 'Cancel',
+        preConfirm: (value) => {
+            if (!value) {
+                Swal.showValidationMessage('Authorization code cannot be empty!');
+            }
+            return value;
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const authCode = result.value;
+            generateCookie(authCode);
+        } else if (result.isDenied) {
+            // Get the input value manually on Deny
+            const authCode = Swal.getInput().value;
+            if (!authCode) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Cookie Required',
+                    text: 'Please enter the cookie before testing.',
+                });
+                return;
+            }
+            testCookie(authCode);
+        }
+    });
+}
+
+
+        function generateCookie(value) {
+            console.log(value);
+            $.ajax({
+                url: '{{ route('settings.updateCookie') }}',
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { value },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Generating...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function(response) {
+                    Swal.close();
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Generated Successfully',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Generate Failed',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error Occurred',
+                        text: 'Something went wrong.'+error,
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+            
+        }
+
+        function testCookie(value) {
+            
+            $.ajax({
+                url: '{{ route('settings.testCookie') }}',
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { value },
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Testing...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function(response) {
+                    Swal.close();
+                    console.log(response);
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Test Successful',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Test Failed',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error Occurred',
+                        text: 'Something went wrong. Please try again later.'+error,
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
+
+ 
+        
 
     
 
