@@ -38,13 +38,35 @@ class StartProject extends Command
      */
     public function handle()
     {
+        // $commands = [
+        //     'php artisan optimize',
+        //     'docker-compose up -d',
+        //     'php artisan websockets:serve',
+        //     'php artisan serve',
+        //     'php artisan queue:listen',
+        //     'php artisan queue:work'
+        // ];
+
+        // for Linux 
+
+        // $commands = [
+        //     'php artisan optimize',
+        //     'docker-compose up -d',
+        //     'php artisan websockets:serve > /dev/null 2>&1 &',
+        //     'php artisan serve > /dev/null 2>&1 &',
+        //     'php artisan queue:listen > /dev/null 2>&1 &',
+        //     'php artisan queue:work > /dev/null 2>&1 &'
+        // ];
+
+        // for Windows 
+
         $commands = [
             'php artisan optimize',
             'docker-compose up -d',
-            'php artisan websockets:serve',
-            'php artisan serve',
-            'php artisan queue:listen',
-            'php artisan queue:work'
+            'start /b php artisan websockets:serve',
+            'start /b php artisan serve',
+            'start /b php artisan queue:listen',
+            'start /b php artisan queue:work'
         ];
 
         foreach ($commands as $command) {

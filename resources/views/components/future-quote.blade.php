@@ -10,6 +10,12 @@ $user = Auth::user();
                     $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'FUT')->where('segment','NSE_FO')->get();
                 @endphp
 
+@php
+$data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 'NSE_FO')->where('is_watchlist',1)->get();
+
+
+@endphp
+
                 @if($fetch->isEmpty())
                 <div class="error-page" style="height: 50vh;">
                     <div class="error-inner text-center">
@@ -20,6 +26,7 @@ $user = Auth::user();
 
                         <h2 class="error-head mb-0">No Data Found.</h2>
                         <p>Please First Add to Watchlist</p>
+                        
                         <a onclick="showWatchlist('future',{{ $data }})"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                         aria-controls="offcanvasRight"  class="btn btn-secondary">ADD WATCHLIST</a>
