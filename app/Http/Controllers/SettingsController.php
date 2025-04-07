@@ -19,6 +19,7 @@ use App\Models\withdraw;
 use App\Models\Setting;
 use GrahamCampbell\ResultType\Success;
 use App\Models\Upstock;
+use Illuminate\Support\Facades\Http;
 
 class SettingsController extends Controller
 {
@@ -303,6 +304,76 @@ public function updateDepositMsg(Request $request)
                 'message' => 'Failed to generate token. API response: ' . json_encode($response),
             ]);
         
+    }
+
+    public function updateCookie(Request $request)
+    {
+        $request->validate([
+            'value' => 'required|string',
+        ]);
+
+        // Update the specific column directly on upstocks table on id 1
+        
+
+        if($request->value===DB::table('upstocks')->value('cookie')){
+            return response()->json(['success' => false, 'message' => 'This Cookie is already set.']);
+        }
+        
+        $updated = DB::table('upstocks')->where('id', 1)->update(['cookie' => $request->value]);
+
+        if ($updated) {
+            return response()->json(['success' => true, 'message' => 'Cookie updated successfully.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Failed to update Cookie.']);
+
+    }
+
+    public function testCookie(Request $request)
+    {
+        $request->validate([
+            'value' => 'required|string',
+        ]);
+
+        $cookie= $request->value;
+
+
+        $ch=curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://service.upstox.com/gateway-worker/v1/verify-access-token');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $cookie,
+            'Content-Type: application/json',
+        ]);
+
+        $response=curl_exec($ch);
+        $error = curl_error($ch);
+        $httpCode=curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($error) {
+            return response()->json(['success' => false, 'message' => 'Failed to connect to API: ' . $error]);
+        }
+        $responseData=json_decode($response, true);
+
+        return $responseData;
+
+        if ($httpCode === 200 && isset($responseData['success']) && $responseData['success'] === true) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Cookie is valid.',
+                'data' => $responseData,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid cookie or failed response.',
+                'data' => $responseData,
+            ]);
+        }
+
+
+
     }
 
 

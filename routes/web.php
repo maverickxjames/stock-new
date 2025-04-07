@@ -109,6 +109,8 @@ Route::middleware('auth')->group(function () {
     Route::post('update-client-id', [SettingsController::class, 'updateClientId'])->name('settings.updateClientID');
     Route::post('update-client-secret', [SettingsController::class, 'updateClientSecret'])->name('settings.updateClientSecret');
     Route::post('update-token', [SettingsController::class, 'updateToken'])->name('settings.generateToken');
+    Route::post('update-cookie', [SettingsController::class, 'updateCookie'])->name('settings.updateCookie');
+    Route::post('test-cookie', [SettingsController::class, 'testCookie'])->name('settings.testCookie');
 
     Route::post('admin/approve-deposit', [AdminController::class, 'approveDeposit'])->name('approve-deposit');
     Route::post('admin/approve-withdraw', [AdminController::class, 'approveWithdraw'])->name('approve-withdraw');
