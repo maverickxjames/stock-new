@@ -40,10 +40,11 @@ class StartProject extends Command
     {
         $commands = [
             'php artisan optimize',
-
             'docker-compose up -d',
             'php artisan websockets:serve',
             'php artisan serve',
+            'php artisan queue:listen',
+            'php artisan queue:work'
         ];
 
         foreach ($commands as $command) {
