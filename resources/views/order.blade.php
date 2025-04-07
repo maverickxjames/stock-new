@@ -197,7 +197,7 @@ use App\Models\Stockdata;
                                             aria-controls="nav-all" aria-selected="false">ALL</button> --}}
                                         <button class="nav-link active" id="nav-open-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-open" type="button" role="tab"
-                                            aria-controls="nav-open" aria-selected="true">OPEN</button>
+                                            aria-controls="nav-open" aria-selected="true">PENDING</button>
                                         <button class="nav-link" id="nav-close-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-close" type="button" role="tab"
                                             aria-controls="nav-close" aria-selected="false">CLOSED</button>
@@ -243,8 +243,18 @@ use App\Models\Stockdata;
                                                 @endphp
 
                                                 @if ($stocks->isEmpty())
-                                                <div class="alert alert-info" role="alert">
-                                                    No open orders found.
+                                                <div class="error-page" style="height: 50vh;">
+                                                    <div class="error-inner text-center">
+                                                        <div class="dz-error">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/7486/7486754.png" alt="error"
+                                                                class="img-fluid mb-3">
+                                                        </div>
+                                
+                                                        <h2 class="error-head mb-0">No Pending Order Found.</h2>
+                                                        <p class="mb-2">You don't have any Pending trades at the moment.</p>
+                                                        <a href="/quotes" class="btn btn-success mb-2">Place a New Trade</a>
+                                                        <p class="text-muted mb-0">Pick a stock and place your first order!</p>
+                                                    </div>
                                                 </div>
                                                 @else
                                                 <div class="col-xl-12">
@@ -672,8 +682,18 @@ use App\Models\Stockdata;
                                                 @endphp
                                                 
                                                 @if ($stocks->isEmpty())
-                                                <div class="alert alert-info" role="alert">
-                                                    No closed orders found.
+                                                <div class="error-page" style="height: 50vh;">
+                                                    <div class="error-inner text-center">
+                                                        <div class="dz-error">
+                                                            <img src="https://cdn-icons-png.flaticon.com/128/7486/7486754.png" alt="error"
+                                                                class="img-fluid mb-3">
+                                                        </div>
+                                
+                                                        <h2 class="error-head mb-0">No Closed Order Found.</h2>
+                                                        <p class="mb-2">It looks like you haven't closed any trades yet.</p>
+                                                        <a href="/quotes" class="btn btn-primary mb-2">Browse Stocks</a>
+                                                        <p class="text-muted mb-0">Start by adding stocks to your watchlist and placing trades.</p>
+                                                    </div>
                                                 </div>
                                                 @else
                                                 <div class="col-xl-12">
