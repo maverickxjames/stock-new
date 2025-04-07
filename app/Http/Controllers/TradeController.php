@@ -76,6 +76,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -116,6 +117,7 @@ class TradeController extends Controller
                                     $trade->order_type = $orderType;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->price = $limitPrice;
                                     $trade->quantity = $quantity;
                                     $trade->lotSize = $lotSize;
@@ -153,6 +155,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -193,6 +196,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
@@ -234,6 +238,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -272,6 +277,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
@@ -311,6 +317,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = 'market';
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = 'intraday';
                                     // echo json_encode($targetPrice);
@@ -371,6 +378,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -409,6 +417,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
@@ -449,6 +458,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -487,6 +497,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'BUY';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
@@ -564,6 +575,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'SELL';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -600,6 +612,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'SELL';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
@@ -638,6 +651,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'SELL';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -674,6 +688,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'SELL';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
@@ -728,6 +743,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'SELL';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -766,6 +782,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'SELL';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
@@ -806,6 +823,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'SELL';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
@@ -844,6 +862,7 @@ class TradeController extends Controller
                                     $trade->expiry = $stockData[0]->expiry;
                                     $trade->action = 'SELL';
                                     $trade->order_type = $orderType;
+                                    $trade->segment=$stockData[0]->segment;
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;

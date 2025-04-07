@@ -274,7 +274,7 @@ $user = Auth::user();
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" data-bs-toggle="tab" href="#indcies"
-                                                            onclick="changeQuote('indcies')">Indicies</a>
+                                                            onclick="changeQuote('indcies')">Indices</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
