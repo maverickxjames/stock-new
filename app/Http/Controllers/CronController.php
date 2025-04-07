@@ -13,4 +13,11 @@ class CronController extends Controller
         "isExpired" => 1
     ]);
    }
+   public function expireCookie(){
+    DB::table('upstocks')->update([
+        "isCookieExpired" => 1
+    ]);
+   }
+
+    
 }

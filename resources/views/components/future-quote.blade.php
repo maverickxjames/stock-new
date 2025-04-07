@@ -12,8 +12,6 @@ $user = Auth::user();
 
 @php
 $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 'NSE_FO')->where('is_watchlist',1)->get();
-
-
 @endphp
 
                 @if($fetch->isEmpty())
