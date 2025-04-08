@@ -89,12 +89,14 @@ class StockController extends Controller
         $fetch = Cache::get($cacheKey);
         
         // Return cached data immediately
-        return match ($id) {
+        return match ((string) $id) {
             '1' => view('components.future-quote', compact('fetch')),
             '2' => view('components.option-quote', compact('fetch')),
             '3' => view('components.mcx-quote', compact('fetch')),
             '4' => view('components.indices-quote', compact('fetch')),
+            default => abort(404, 'Component not found'),
         };
+        
     }
 
     Log::info("Fetching data from database for user: " . $userId);

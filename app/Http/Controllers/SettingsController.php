@@ -342,7 +342,7 @@ public function updateDepositMsg(Request $request)
         curl_setopt($ch, CURLOPT_URL, 'https://service.upstox.com/gateway-worker/v1/verify-access-token');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer ' . $cookie,
+            'Cookie:  '.$cookie,
             'Content-Type: application/json',
         ]);
 
@@ -356,7 +356,7 @@ public function updateDepositMsg(Request $request)
         }
         $responseData=json_decode($response, true);
 
-        return $responseData;
+        // return $responseData;
 
         if ($httpCode === 200 && isset($responseData['success']) && $responseData['success'] === true) {
             return response()->json([
