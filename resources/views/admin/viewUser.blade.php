@@ -313,14 +313,166 @@ use App\Models\User;
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-8">
+                                        <div class="col-md">
+                                            <div class="card">
+                                                <div class="card-header p-2">
+                                                    <h4>Payment History</h4>
+                                                    <!-- Navigation Tabs -->
+                                                    <ul class="nav nav-pills">
+                                                        <li class="nav-item"><a class="nav-link active" href="#deposit" data-toggle="tab">Deposit</a></li>
+                                                        <li class="nav-item"><a class="nav-link " href="#withdraw" data-toggle="tab">Withdraw</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="tab-content">
+                                                        <!-- User's Complete Transaction History -->
+                                                        <div class="active tab-pane" id="deposit">
+                                                            <div class="card">
+                                                                <table id="example1" class="table table-bordered table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Order ID</th>
+                                                                            <th>Amount</th>
+                                                                            <th>Prrof</th>
+                                                                            <th>UPI</th>
+                                                                            <th>UTR</th>
+                                                                            <th>Time</th>
+                                                                            <th>Status</th>
+                                                                            {{-- <th>Action</th> --}}
+                                                                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        
+                                                                       @php
+                                                                           $deposits=DB::table('deposits')->where('userid',$user->id)->get();
+                                                                       @endphp
+                                                                        @foreach ($deposits as $row)
+                                                                          
+                                                                        
+                                                                            <tr>
+                                                                                <td>{{ $loop->iteration }}</td>
+                                                                                <td>{{ $row->order_id }}</td>
+                                                                                <td>{{ $row->amount }}</td>
+                                                                                <td>
+                                                                                    <img 
+                                                                                        src="{{ asset('storage/payment_ss/'.$row->payment_ss) }}" 
+                                                                                        alt="proof" 
+                                                                                        style="width: 100px; height: 100px; cursor: pointer;" 
+                                                                                        onclick="showFullImage('{{ asset('../storage/payment_ss/'.$row->payment_ss) }}')">
+                                                                                </td>
+                                                                                <td>{{ $row->upi }}</td>
+                                                                                <td>{{ $row->utr }}</td>
+                                                                                <td>{{ $row->created_at }}</td>
+                                                                                <td>
+                                                                                    @if ($row->status == 0)
+                                                                                        <span class="badge badge-warning">Pending</span>
+                                                                                    @elseif ($row->status == 1)
+                                                                                        <span class="badge badge-success">Approved</span>
+                                                                                    @else
+                                                                                        <span class="badge badge-danger">Declined</span>
+                                                                                    @endif
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                            
+                                                                    
+                                                                    </tbody>
+                                                                </table>
+                                    
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <!-- Deposit-Specific Transactions -->
+                                                        <div class="tab-pane" id="withdraw">
+                                                            <div class="card">
+                                                                <table id="example2" class="table table-bordered table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Txn ID</th>
+                                                                            <th>Amount</th>
+                                                                            <th>Type</th>
+                                                                            <th>UPI</th>
+                                                                            <th>Time</th>
+                                                                            <th>Status</th>
+                                                                            {{-- <th>Action</th> --}}
+                                                                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        
+                                                                       @php
+                                                                           $withdraws=DB::table('withdraws')->where('userid',$user->id)->get();
+                                                                       @endphp
+                                                                        @foreach ($withdraws as $row)
+                                                                          
+                                                                        
+                                                                        <tr>
+                                                                            <td>{{ $loop->iteration }}</td>
+                                                                            <td>{{ $row->txnid }}</td>
+                                                                            <td>{{ $row->amount }}</td>
+                                                                            <td>{{ $row->type }}</td>
+                                                                            <td>
+                                                                                @php
+                                                                                    $paymentInfo = json_decode($row->payment_info, true); // Decode the JSON string into an array
+                                                                                @endphp
+                                                                            
+                                                                                @if ($paymentInfo['is_upi'] && isset($paymentInfo['upi']))
+                                                                                    {{ $paymentInfo['upi'] }}
+                                                                                @elseif ($paymentInfo['is_bank'] && isset($paymentInfo['bank']))
+                                                                                    {{ $paymentInfo['bank'] }}
+                                                                                @else
+                                                                                    Not Available
+                                                                                @endif
+                                                                            </td>
+                                                                            <td>{{ $row->created_at }}</td>
+                                                                            <td>
+                                                                                @if ($row->status == 0)
+                                                                                    <span class="badge badge-warning">Pending</span>
+                                                                                @elseif ($row->status == 1)
+                                                                                    <span class="badge badge-success">Approved</span>
+                                                                                @else
+                                                                                    <span class="badge badge-danger">Declined</span>
+                                                                                @endif
+                                                                            </td>
+                                                                          
+                                                                        </tr>
+                                                                          
+                                                                        @endforeach
+                            
+                                                                    
+                                                                    </tbody>
+                                                                </table>
+                                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                    
+                                                </div>
+                                            </div>
+                                    
+                                        </div>
+
+                                       
+
+                                       
+
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-lg-12">
                                         <div class="col-md">
                                             <div class="card">
                                                 <div class="card-header p-2">
+                                                    <h4>Order History</h4>
                                                     <!-- Navigation Tabs -->
                                                     <ul class="nav nav-pills">
                                                         <li class="nav-item"><a class="nav-link active" href="#processing" data-toggle="tab">Processing</a></li>
-                                                        <li class="nav-item"><a class="nav-link " href="#pending" data-toggle="tab">Pending</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="#executed" data-toggle="tab">Executed</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="#failed" data-toggle="tab">Failed</a></li>
                                                     </ul>
@@ -330,7 +482,7 @@ use App\Models\User;
                                                         <!-- User's Complete Transaction History -->
                                                         <div class="active tab-pane" id="processing">
                                                             <div class="card">
-                                                                <table id="example1" class="table table-bordered table-striped">
+                                                                <table id="example3" class="table table-bordered table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>ID</th>
@@ -391,75 +543,11 @@ use App\Models\User;
                                                             </div>
                                                         </div>
                                     
-                                                        <!-- Deposit-Specific Transactions -->
-                                                        <div class="tab-pane" id="pending">
-                                                            <div class="card">
-                                                                <table id="example2" class="table table-bordered table-striped">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>ID</th>
-                                                                            <th>USER ID</th>
-                                                                            <th>Date</th>
-                                                                            <th>Script</th>
-                                                                            <th>Order Type</th>
-                                                                            <th>Order Action</th>
-                                                                            <th>Duration</th>
-                                                                            <th>Lot</th>
-                                                                            <th>Quantity</th>
-                                                                            <th>Cost</th>
-                                                                            <th>Order Cost</th>
-                                                                            <th>Margin Used</th>
-                                                                            <th>Expiry</th>
-                                                                            <th>Action</th>
-                                                                           
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        
-                                                                       @php
-                                                                           $trades=DB::table('trades')->where('user_id',$user->id)->where('status', "pending")->get();
-                                                                       @endphp
-                                                                        @foreach ($trades as $row)
-                                                                            @php
-                                                                                $user = User::where('id', $row->user_id)->first();
-                                                                            @endphp
-                                                                        
-                                                                            <tr>
-                                                                                <td>{{ $loop->iteration }}</td>
-                                                                                <td>{{ $user->user_id }}</td>
-                                                                                <td>{{ $row->created_at }}</td>
-                                                                                <td>{{ $row->stock_symbol }}</td>
-                                                                                <td>{{ $row->order_type }}</td>
-                                                                                <td>{{ $row->action }}</td>
-                                                                                <td>{{ $row->duration }}</td>
-                                                                                <td>{{ $row->lotSize }}</td>
-                                                                                <td>{{ $row->quantity }}</td>
-                                                                                <td>₹{{ $row->cost }}</td>
-                                                                                <td>₹{{ $row->total_cost }}</td>
-                                                                                <td>{{ $row->margin }}</td>
-                                                                                <td>{{ $row->expiry }}</td>
-                                                                               
-                                                                                <td>
-                                                                                    <form>
-                                                                                        @csrf
-                                                                                        <button class="btn btn-success">Approve</button>
-                                                                                        <button class="btn btn-warning">Decline</button>
-                                                                                    </form>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                            
-                                                                    
-                                                                    </tbody>
-                                                                </table>
-                                    
-                                                            </div>
-                                                        </div>
-                                    
+                                                       
                                                         <!-- Withdrawal-Specific Transactions -->
                                                         <div class="tab-pane" id="executed">
                                                             <div class="card">
-                                                                <table id="example3" class="table table-bordered table-striped">
+                                                                <table id="example4" class="table table-bordered table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>ID</th>
@@ -516,7 +604,7 @@ use App\Models\User;
                                                         <!-- Withdrawal-Specific Transactions -->
                                                         <div class="tab-pane" id="failed">
                                                             <div class="card">
-                                                                <table id="example4" class="table table-bordered table-striped">
+                                                                <table id="example5" class="table table-bordered table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>ID</th>
@@ -681,12 +769,14 @@ use App\Models\User;
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
+                "pageLength": 5,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $("#example2").DataTable({
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
+                "pageLength": 5,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
             $("#example3").DataTable({
@@ -695,8 +785,29 @@ use App\Models\User;
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
+            $("#example4").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example4_wrapper .col-md-6:eq(0)');
+            $("#example5").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example5_wrapper .col-md-6:eq(0)');
 
         });
+        function showFullImage(imageUrl) {
+        Swal.fire({
+            title: 'Proof Image',
+            imageUrl: imageUrl,
+            imageAlt: 'Proof Image',
+            width: 'auto',
+            confirmButtonText: 'Close',
+        });
+    }
     </script>
 
 
