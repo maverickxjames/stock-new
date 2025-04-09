@@ -260,8 +260,8 @@
                             @endphp
                             <div class="col-xl-12">
                                 <div class="card trad-card wallet-wrapper shadow-lg">
-                                    <div class="card-header border-0 pb-0 card-bx">
-                                        <div class="me-auto">
+                                    <div class="card-header border-0 pb-0 card-bx w-100">
+                                        <div class="me-auto d-flex justify-content-between w-100">
                                             <h2 class="text-light mb-2 font-w600" id="profitAndLoss">
                                                 ₹ {{ number_format($gain_loss, 2) }}
                                             </h2>
@@ -296,24 +296,24 @@
                                             <hr class="border-white opacity-25 mb-3">
                                             <div class="d-flex justify-content-between mb-4">
                                                 <div class="d-flex flex-column align-items-center">
-                                                    <span class="text-light fs-4 font-w600">₹ 30,000</span>
+                                                    <span id="marginWallet" class="text-light fs-4 font-w600">₹ 0</span>
                                                     <span class="text-light fw-medium font-w300">Margin Used</span>
                                                     {{-- <span class="text-white">₹ {{ number_format($margin_used, 2) }}</span> --}}
                                                 </div>
                                                 <div class="d-flex flex-column align-items-center">
-                                                    <span class="text-light fs-4 font-w600">₹ 20,000</span>
+                                                    <span class="text-light fs-4 font-w600">₹ 0</span>
                                                     <span class="text-light fw-medium font-w300">Margin Available</span>
                                                     {{-- <span class="text-white">₹ {{ number_format($margin_available, 2) }}</span> --}}
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-between mb-2">
                                                 <div class="d-flex flex-column align-items-center">
-                                                    <span class="text-light fs-4 font-w600">₹ 50000</span>
+                                                    <span class="text-light fs-4 font-w600">₹ <span id="totalInvest"><?=number_format($total_investment,2) ?></span> </span>
                                                     <span class="text-light fw-medium font-w300">Total Investment:</span>
                                                 {{-- <span class="text-white">₹ {{ number_format($total_investment, 2) }}</span> --}}
                                                 </div>
                                                 <div class="d-flex flex-column align-items-center">
-                                                    <span class="text-light fs-4 font-w600">₹ 55000</span>
+                                                    <span class="text-light fs-4 font-w600">₹ <span id="current"><?=number_format($total_current_value,2) ?></span> </span>
                                                     <span class="text-light fw-medium font-w300"> Current Portfolio Value:</span>
                                                     {{-- <span class="text-white">₹ {{ number_format($total_current_value, 2) }}</span> --}}
                                                 </div>
@@ -3243,15 +3243,20 @@
             document.getElementById('profitAndLossPercentage').textContent = profitLossPercentage + '%';
         }
 
+        let tradeQueue = [];
+let isProcessing = false;
+var csrfToken = "{{ csrf_token() }}";
+
         Echo.channel('trades')
             .listen('Trade', (event) => {
                 const feeds = event.trade.feeds;
 
-                // console.log(feeds);
+                console.log(feeds);
 
 
                 // Iterate through the received WebSocket data
                 for (const key in feeds) {
+                    tradeQueue.push(feeds[key]);
                     if (feeds.hasOwnProperty(key)) {
                         const feedData = feeds[key].ff.marketFF; // Data from WebSocket
                         const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
@@ -3314,7 +3319,7 @@
                                 total_currentValue += isNaN(price * quantity) ? 0 : parseFloat(price) *
                                     parseFloat(quantity);
 
-                                console.log(total_investValue, total_currentValue);
+                            
 
 
 
@@ -3439,12 +3444,12 @@
                                         </div>
                                     </div>
                                 `;
-
+                                updateCard(total_investValue, total_currentValue);
 
                             });
 
 
-                            updateCard(total_investValue, total_currentValue);
+                           
 
 
 
@@ -4009,7 +4014,50 @@
                 }
             });
 
-        function showOrderForm(id, index) {
+        // Function to process the trade queue
+async function processQueue() {
+    if (isProcessing || tradeQueue.length === 0) return;
+
+    isProcessing = true;
+    const tradeData = tradeQueue.shift(); // Get the first item from the queue
+
+    try {
+        // Make an API call to update the portfolio values
+        const response = await fetch('/updatePortfolio', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify(tradeData),
+            
+        });
+
+        const result = await response.json();
+        if(result.status == "success"){
+            const currentValue = document.getElementById('current');
+            const totalValue = document.getElementById('totalInvest');
+            const profitAndLoss = document.getElementById('profitAndLoss');
+            const profitAndLossPercentage = document.getElementById('profitAndLossPercentage');
+
+            currentValue.textContent = `${result.trades[0]['current_value']}`;
+            totalValue.textContent = `${result.trades[0]['totalInvest']}`;
+            profitAndLoss.textContent = `₹ ${result.trades[0]['profit_loss']}`;
+            profitAndLossPercentage.textContent = `(${result.trades[0]['profit_loss_percentage']}%)`;
+
+           
+        }
+    } catch (error) {
+        console.error('Error updating portfolio:', error);
+    } finally {
+        isProcessing = false;
+    }
+}
+
+// Run the processQueue function every 5 seconds
+setInterval(processQueue, 5000);
+        
+            function showOrderForm(id, index) {
             // console.log("hi");
 
             const offcanvasId = `orderoffcanvasBottom${id}${index}`;

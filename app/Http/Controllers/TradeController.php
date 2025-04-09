@@ -897,4 +897,49 @@ class TradeController extends Controller
         $trade = DB::table('trades')->where('id', $tradeId)->get();
         return view('tradeDetail', ['trade' => $trade]);
     }
+
+    public function updatePortfolio(Request $r){
+        // calculate current portfolio value  
+
+        $user = Auth::user()->id;
+        $userData = \App\Models\User::find($user);
+
+        if ($userData) {
+            $wallet = $userData->real_wallet;
+            $margin_wallet = $userData->margin_wallet;
+        } else {
+            $wallet = 0;
+            $margin_wallet = 0;
+        }
+
+        $trades = DB::table('trades')->where('user_id', $user)->where('status','executed')->get();
+
+        foreach($trades as $trade){
+            $instrumentKey = $trade->instrumentKey;
+            $ltp = DB::table('future_temp')->where('instrumentKey', $instrumentKey)->value('ltp');
+            if($ltp){
+                $trade->ltp = $ltp;
+                $trade->current_value = $trade->quantity * $ltp;
+                $trade->totalInvest = $trade->quantity * $trade->price;
+                $trade->profit_loss = $trade->current_value - $trade->cost;
+                $trade->profit_loss_percentage = $trade->profit_loss / $trade->cost * 100;
+                $trade->wallet = $wallet;
+                $trade->margin_wallet = $margin_wallet;
+            }else{
+                $trade->ltp = null;
+                $trade->current_value = null;
+                $trade->profit_loss = null;
+                $trade->profit_loss_percentage = null;
+                $trade->totalInvest = null;
+                $trade->wallet = $wallet;
+                $trade->margin_wallet = $margin_wallet;
+            }
+        }
+
+        // return response data 
+
+        return response()->json(['status' => 'success', 'trades' => $trades]);
+        
+
+    }
 }
