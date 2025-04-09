@@ -143,15 +143,20 @@ class StockController extends Controller
                 ->where('instrumentKey', $instrumentKey)
                 ->where('action', $action)
                 ->where('duration', $duration)
+                ->where('status','executed')
                 ->select(
                     'tradeType',
                     'expiry',
                     'stock_symbol',
+                    'cost',
+                    'total_cost',
                     DB::raw("SUM(quantity) as total_quantity"),
                     DB::raw("SUM(quantity * price) as total_amount")
                 )
-                ->groupBy('tradeType', 'expiry', 'stock_symbol')
+                ->groupBy('tradeType', 'expiry', 'stock_symbol','cost', 'total_cost')
                 ->get();
+
+                // return $query;
     
             if ($query->isEmpty()) {
                 DB::rollBack();
@@ -180,6 +185,7 @@ class StockController extends Controller
             ])->get($url);
     
             $data = $response->json();
+            // return $data;
             $ltp = $data['data'][$arrayAccess]['last_price'] ?? 0;
     
             if ($ltp == 0) {
@@ -191,7 +197,8 @@ class StockController extends Controller
             $totalAmount = $ltp * $query[0]->total_quantity;
             $userAmount = $query[0]->total_amount;
             $profit = $loss = 0;
-    
+            $platformMargin = $query[0]->cost - $query[0]->total_cost;
+            // return array("totalAmount" => $totalAmount, "userAmount" => $userAmount, "platformMargin" => $platformMargin);
             if ($action == 'BUY') {
                 $profit = max(0, $totalAmount - $userAmount);
                 $loss = max(0, $userAmount - $totalAmount);
@@ -199,9 +206,20 @@ class StockController extends Controller
                 $profit = max(0, $userAmount - $totalAmount);
                 $loss = max(0, $totalAmount - $userAmount);
             }
+
+            
     
             // If profit, update user's wallet
-            if ($profit > 0) {
+            if ($profit >= 0) {
+                // return $profit;
+                if($profit == 0){
+                    $profit = $query[0]->total_cost;
+                }else{
+                    $profit = $profit - $platformMargin;
+                }
+
+                
+                 // Deduct platform margin from profit
                 DB::table('users')->where('id', Auth::id())->increment('real_wallet', $profit);
 
                 DB::table('transactions')->insert([
@@ -227,7 +245,15 @@ class StockController extends Controller
                         'profit_loss' => $profit,
                         'profit_loss_percentage' => ($profit / $userAmount) * 100,
                     ]);
-            }elseif($loss > 0){
+            }elseif($loss >= 0) {
+
+                if($loss == 0){
+                    $loss = $query[0]->total_cost;
+                }else{
+                    $loss = $loss + $platformMargin; // Add platform margin to loss
+                }
+
+                
                 DB::table('users')->where('id', Auth::id())->decrement('real_wallet', $loss);
 
                 DB::table('transactions')->insert([
@@ -264,8 +290,9 @@ class StockController extends Controller
                 'totalAmount' => $totalAmount,
                 'profit' => number_format($profit, 2),
                 'loss' => number_format($loss, 2),
-                'message' => 'Order closed'
+                'message' =>'Order closed'
             ]);
+            
 
         } catch (\Exception $e) {
             DB::rollBack();

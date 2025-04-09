@@ -146,6 +146,7 @@ Route::middleware('auth')->group(function () {
     Route::post('closeOrder', [StockController::class, 'closeOrder'])->name('closeOrder');
 
     Route::get('quoteRefresh/{id}', [StockController::class, 'quoteRefresh'])->name('quoteRefresh');
+    Route::post('updatePortfolio', [TradeController::class, 'updatePortfolio'])->name('updatePortfolio');
 
 
 
