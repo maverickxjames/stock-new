@@ -474,6 +474,7 @@ use App\Models\User;
                                                     <ul class="nav nav-pills">
                                                         <li class="nav-item"><a class="nav-link active" href="#processing" data-toggle="tab">Processing</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="#executed" data-toggle="tab">Executed</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="#closed" data-toggle="tab">Closed</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="#failed" data-toggle="tab">Failed</a></li>
                                                     </ul>
                                                 </div>
@@ -481,7 +482,7 @@ use App\Models\User;
                                                     <div class="tab-content">
                                                         <div class="active tab-pane" id="processing">
                                                             <div class="card">
-                                                                <table id="example4" class="table table-bordered table-striped">
+                                                                <table id="example3" class="table table-bordered table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>ID</th>
@@ -538,7 +539,7 @@ use App\Models\User;
                                                         </div>
                                                         <div class="tab-pane" id="executed">
                                                             <div class="card">
-                                                                <table id="example3" class="table table-bordered table-striped">
+                                                                <table id="example4" class="table table-bordered table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>ID</th>
@@ -576,6 +577,87 @@ use App\Models\User;
                                                                                 <td>{{ $row->tradeType }}</td>
                                                                                 <td>{{ $row->action }}</td>
                                                                                 <td>{{ $row->duration }}</td>
+                                                                                <td onclick="updateStock('lotSize','{{ $row->instrumentKey }}')">{{ $row->lotSize }} 
+                                                                                    <span>
+                                                                                    <i class="fas fa-info-circle cursor-pointer"  data-toggle="tooltip" title="Lot Size"></i>
+                                                                                    </span>
+                                                                                </td>
+                                                                                <td onclick="updateStock('quantity','{{ $row->instrumentKey }}')">{{ $row->quantity }}
+                                                                                    <span>
+                                                                                        <i class="fas fa-info-circle"  data-toggle="tooltip" title="Lot Size"></i>
+                                                                                        </span>
+                                                                                </td>
+                                                                                <td onclick="updateStock('stop_loss','{{ $row->instrumentKey }}')">{{ $row->stop_loss!=NULL?$row->stop_loss:'none' }}
+                                                                                    <span>
+                                                                                        <i class="fas fa-info-circle"  data-toggle="tooltip" title="Lot Size"></i>
+                                                                                        </span>
+                                                                                </td>
+                                                                                <td>₹{{ $row->profit_loss }}</td>
+                                                                                <td>{{ $row->profit_loss_percentage }}%</td>
+                                                                                <td  onclick="updateStock('cost','{{ $row->instrumentKey }}')">₹{{ $row->cost }}
+                                                                                    <span>
+                                                                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="Lot Size"></i>
+                                                                                        </span>
+                                                                                </td>
+                                                                                <td onclick="updateStock('total_cost','{{ $row->instrumentKey }}')">₹{{ $row->total_cost }}
+                                                                                    <span>
+                                                                                        <i class="fas fa-info-circle"  data-toggle="tooltip" title="Lot Size"></i>
+                                                                                        </span>
+                                                                                </td>
+                                                                                <td>₹{{ $row->cost-$row->total_cost }}({{ $row->margin }})x</td>
+                                                                                <td>{{ $row->created_at }}</td>
+                                                                               
+                                                                               
+                                                                              
+                                                                            </tr>
+                                                                        @endforeach
+                            
+                                                                    
+                                                                    </tbody>
+                                                                </table>
+                                    
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane" id="closed">
+                                                            <div class="card">
+                                                                <table id="example5" class="table table-bordered table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Script</th>
+                                                                            <th>Expiry</th>
+                                                                            <th>Instrument Key</th>
+                                                                            <th>Order Type</th>
+                                                                            <th>Type</th>
+                                                                            <th>Order Action</th>
+                                                                            <th>Duration</th>
+                                                                            <th>Lot</th>
+                                                                            <th>Quantity</th>
+                                                                            <th>Stop Loss Price</th>
+                                                                            <th>Profit & Loss</th>
+                                                                            <th>Profit & Loss %</th>
+                                                                            <th>Order Cost</th>
+                                                                            <th>Total Order Cost</th>
+                                                                            <th>Margin Used</th>
+                                                                            <th>Order Date</th>
+                                                                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        
+                                                                       @php
+                                                                           $trades=DB::table('trades')->where('user_id',$user->id)->where('status', "closed")->get();
+                                                                       @endphp
+                                                                        @foreach ($trades as $row)
+                                                                            <tr>
+                                                                                <td>{{ $loop->iteration }}</td>
+                                                                                <td>{{ $row->stock_symbol }}</td>
+                                                                                <td>{{ $row->expiry }}</td>
+                                                                                <td>{{ $row->instrumentKey }}</td>
+                                                                                <td>{{ $row->order_type }}</td>
+                                                                                <td>{{ $row->tradeType }}</td>
+                                                                                <td>{{ $row->action }}</td>
+                                                                                <td>{{ $row->duration }}</td>
                                                                                 <td>{{ $row->lotSize }}</td>
                                                                                 <td>{{ $row->quantity }}</td>
                                                                                 <td>{{ $row->stop_loss!=NULL?$row->stop_loss:'none' }}</td>
@@ -599,7 +681,7 @@ use App\Models\User;
                                                         </div>
                                                         <div class="tab-pane" id="failed">
                                                             <div class="card">
-                                                                <table id="example5" class="table table-bordered table-striped">
+                                                                <table id="example6" class="table table-bordered table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>ID</th>
@@ -792,6 +874,12 @@ use App\Models\User;
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example5_wrapper .col-md-6:eq(0)');
+            $("#example6").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example6_wrapper .col-md-6:eq(0)');
 
            
 
@@ -808,11 +896,50 @@ use App\Models\User;
     </script>
 
 
-    <script>
 
-
-
+<script>
+    function updateStock(field, instrumentKey) {
+        Swal.fire({
+            title: `Update ${field.replace('_', ' ').toUpperCase()}`,
+            input: 'text',
+            inputLabel: `Enter new value for ${field}`,
+            inputPlaceholder: 'Enter new value',
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            preConfirm: (newValue) => {
+                if (!newValue) {
+                    Swal.showValidationMessage('Value cannot be empty');
+                }
+                return newValue;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const newValue = result.value;
+    
+                // AJAX call to update the field
+                $.ajax({
+                    url: "{{ route('admin.updateTradeField') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        instrumentKey: instrumentKey,
+                        field: field,
+                        value: newValue
+                    },
+                    success: function (response) {
+                        Swal.fire('Updated!', response.message, 'success').then(() => {
+                            location.reload(); // Optional: reload to reflect change
+                        });
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Error', 'Something went wrong!', 'error');
+                    }
+                });
+            }
+        });
+    }
     </script>
+    
 
 
 

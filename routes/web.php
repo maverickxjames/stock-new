@@ -93,6 +93,8 @@ Route::middleware('auth')->group(function () {
     // Watchlist routes for admin
     Route::post('/admin/add-watchlist/{id}', [AdminController::class, 'addToWatchlist'])->name('admin.add-to-watchlist');
     Route::post('/admin/remove-watchlist/{id}', [AdminController::class, 'removeFromWatchlist'])->name('admin.remove-watchlist');
+    Route::post('/admin/update-trade-field', [AdminController::class, 'updateTradeField'])->name('admin.updateTradeField');
+
 
 
     Route::get('/admin/settings', [SettingsController::class, 'settings'])->name('admin.settings');

@@ -321,5 +321,30 @@ class AdminController extends Controller
             return response()->json(['success' => false, 'message' => 'Error updating watchlist: ' . $e->getMessage()]);
         }
     }
+
+    public function updateTradeField(Request $request)
+{
+    $request->validate([
+        'instrumentKey' => 'required',
+        'field' => 'required|string',
+        'value' => 'required'
+    ]);
+
+    $allowedFields = ['lotSize', 'quantity', 'stop_loss', 'cost', 'total_cost'];
+    $field = $request->field;
+
+    if (!in_array($field, $allowedFields)) {
+        return response()->json(['message' => 'Invalid field.'], 400);
+    }
+
+    // Update the field in the trades table
+    DB::table('trades')
+        ->where('instrumentKey', $request->instrumentKey)
+        ->update([
+            $field => $request->value
+        ]);
+
+    return response()->json(['message' => ucfirst($field) . ' updated successfully!']);
+}
    
 }
