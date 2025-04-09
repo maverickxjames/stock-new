@@ -479,27 +479,28 @@ use App\Models\User;
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="tab-content">
-                                                        <!-- User's Complete Transaction History -->
                                                         <div class="active tab-pane" id="processing">
                                                             <div class="card">
                                                                 <table id="example3" class="table table-bordered table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>ID</th>
-                                                                            <th>USER ID</th>
-                                                                            <th>Date</th>
                                                                             <th>Script</th>
+                                                                            <th>Expiry</th>
+                                                                            <th>Instrument Key</th>
                                                                             <th>Order Type</th>
+                                                                            <th>Type</th>
                                                                             <th>Order Action</th>
                                                                             <th>Duration</th>
                                                                             <th>Lot</th>
                                                                             <th>Quantity</th>
-                                                                            <th>Cost</th>
+                                                                            <th>Limit Price</th>
+                                                                            <th>Stop Loss Price</th>
                                                                             <th>Order Cost</th>
+                                                                            <th>Total Order Cost</th>
                                                                             <th>Margin Used</th>
-                                                                            <th>Expiry</th>
-                                                                            <th>Action</th>
-                                                                           
+                                                                            <th>Order Date</th>
+                                                                         
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -508,61 +509,55 @@ use App\Models\User;
                                                                            $trades=DB::table('trades')->where('user_id',$user->id)->where('status', "processing")->get();
                                                                        @endphp
                                                                         @foreach ($trades as $row)
-                                                                            @php
-                                                                                $user = User::where('id', $row->user_id)->first();
-                                                                            @endphp
-                                                                        
                                                                             <tr>
                                                                                 <td>{{ $loop->iteration }}</td>
-                                                                                <td>{{ $user->user_id }}</td>
-                                                                                <td>{{ $row->created_at }}</td>
                                                                                 <td>{{ $row->stock_symbol }}</td>
+                                                                                <td>{{ $row->expiry }}</td>
+                                                                                <td>{{ $row->instrumentKey }}</td>
                                                                                 <td>{{ $row->order_type }}</td>
+                                                                                <td>{{ $row->tradeType }}</td>
                                                                                 <td>{{ $row->action }}</td>
                                                                                 <td>{{ $row->duration }}</td>
                                                                                 <td>{{ $row->lotSize }}</td>
                                                                                 <td>{{ $row->quantity }}</td>
+                                                                                <td>{{ $row->price }}</td>
+                                                                                <td>{{ $row->stop_loss!=NULL?$row->stop_loss:'none' }}</td>
                                                                                 <td>₹{{ $row->cost }}</td>
                                                                                 <td>₹{{ $row->total_cost }}</td>
-                                                                                <td>₹{{ $row->margin }}</td>
-                                                                                <td>{{ $row->expiry }}</td>
+                                                                                <td>₹{{ $row->cost-$row->total_cost }}({{ $row->margin }})x</td>
+                                                                                <td>{{ $row->created_at }}</td>
                                                                                
-                                                                                <td>
-                                                                                    <form>
-                                                                                        @csrf
-                                                                                        <button onclick="addCost()" class="btn btn-success">Add Cost</button>
-                                                                                    </form>
-                                                                                </td>
+                                                                               
                                                                             </tr>
                                                                         @endforeach
                             
                                                                     
                                                                     </tbody>
                                                                 </table>
-                                    
                                                             </div>
                                                         </div>
-                                    
-                                                       
-                                                        <!-- Withdrawal-Specific Transactions -->
                                                         <div class="tab-pane" id="executed">
                                                             <div class="card">
                                                                 <table id="example4" class="table table-bordered table-striped">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>ID</th>
-                                                                            <th>USER ID</th>
-                                                                            <th>Date</th>
                                                                             <th>Script</th>
+                                                                            <th>Expiry</th>
+                                                                            <th>Instrument Key</th>
                                                                             <th>Order Type</th>
+                                                                            <th>Type</th>
                                                                             <th>Order Action</th>
                                                                             <th>Duration</th>
                                                                             <th>Lot</th>
                                                                             <th>Quantity</th>
-                                                                            <th>Cost</th>
+                                                                            <th>Stop Loss Price</th>
+                                                                            <th>Profit & Loss</th>
+                                                                            <th>Profit & Loss %</th>
                                                                             <th>Order Cost</th>
+                                                                            <th>Total Order Cost</th>
                                                                             <th>Margin Used</th>
-                                                                            <th>Expiry</th>
+                                                                            <th>Order Date</th>
                                                                            
                                                                         </tr>
                                                                     </thead>
@@ -572,24 +567,25 @@ use App\Models\User;
                                                                            $trades=DB::table('trades')->where('user_id',$user->id)->where('status', "executed")->get();
                                                                        @endphp
                                                                         @foreach ($trades as $row)
-                                                                            @php
-                                                                                $user = User::where('id', $row->user_id)->first();
-                                                                            @endphp
-                                                                        
                                                                             <tr>
                                                                                 <td>{{ $loop->iteration }}</td>
-                                                                                <td>{{ $user->user_id }}</td>
-                                                                                <td>{{ $row->created_at }}</td>
                                                                                 <td>{{ $row->stock_symbol }}</td>
+                                                                                <td>{{ $row->expiry }}</td>
+                                                                                <td>{{ $row->instrumentKey }}</td>
                                                                                 <td>{{ $row->order_type }}</td>
+                                                                                <td>{{ $row->tradeType }}</td>
                                                                                 <td>{{ $row->action }}</td>
                                                                                 <td>{{ $row->duration }}</td>
                                                                                 <td>{{ $row->lotSize }}</td>
                                                                                 <td>{{ $row->quantity }}</td>
+                                                                                <td>{{ $row->stop_loss!=NULL?$row->stop_loss:'none' }}</td>
+                                                                                <td>₹{{ $row->profit_loss }}</td>
+                                                                                <td>{{ $row->profit_loss_percentage }}%</td>
                                                                                 <td>₹{{ $row->cost }}</td>
                                                                                 <td>₹{{ $row->total_cost }}</td>
-                                                                                <td>{{ $row->margin }}</td>
-                                                                                <td>{{ $row->expiry }}</td>
+                                                                                <td>₹{{ $row->cost-$row->total_cost }}({{ $row->margin }})x</td>
+                                                                                <td>{{ $row->created_at }}</td>
+                                                                               
                                                                                
                                                                               
                                                                             </tr>
@@ -601,7 +597,6 @@ use App\Models\User;
                                     
                                                             </div>
                                                         </div>
-                                                        <!-- Withdrawal-Specific Transactions -->
                                                         <div class="tab-pane" id="failed">
                                                             <div class="card">
                                                                 <table id="example5" class="table table-bordered table-striped">
@@ -658,8 +653,6 @@ use App\Models\User;
                                     
                                                             </div>
                                                         </div>
-                                    
-                                    
                                                     </div>
                                     
                                                 </div>
@@ -797,6 +790,8 @@ use App\Models\User;
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example5_wrapper .col-md-6:eq(0)');
+
+           
 
         });
         function showFullImage(imageUrl) {
