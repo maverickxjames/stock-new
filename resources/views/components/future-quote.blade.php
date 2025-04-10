@@ -339,7 +339,7 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                         placeholder="Enter size"
                                                                                         id="lotSize11{{ $i }}"
                                                                                         name="lotSize11{{ $i }}"
-                                                                                        value="0" readonly>
+                                                                                        value="1" readonly>
                                                                                     <button
                                                                                         onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy',1)"
                                                                                         class="btn btn-outline-secondary"
@@ -354,7 +354,7 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                     placeholder="Enter size"
                                                                                     id="quantity11{{ $i }}"
                                                                                     name="quantity11{{ $i }}" value={{
-                                                                                    $quantity }} readonly>
+                                                                                    $quantity }} onkeyup="handleQuantityChange({{ $quantity }},{{ $i }},{{ $user->real_wallet }},'buy',1)">
                                                                             </div>
                                                                         </div>
 
@@ -412,13 +412,13 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                     <span>
                                                                                         Cost: <s id="costPrice11{{ $i }}"
                                                                                             name="costPrice1{{ $i }}"
-                                                                                            class="px-1">₹0.00</s><span
+                                                                                            class="px-1">₹ {{ number_format($stock->ltp*1*$quantity,2) }}(500x)</s><span
                                                                                             id="marginUsed11{{ $i }}"></span>
                                                                                     </span>
                                                                                     <span>
                                                                                         After Margin: <span
                                                                                             id="marginCost11{{ $i }}"
-                                                                                            class="text-success">₹0.00</span>
+                                                                                            class="text-success">₹{{ number_format($stock->ltp*1*$quantity/500,2) }}</span>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -567,7 +567,7 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                         placeholder="Enter size"
                                                                                         id="lotSize12{{ $i }}"
                                                                                         name="lotSize12{{ $i }}"
-                                                                                        value="0" readonly>
+                                                                                        value="1" readonly>
                                                                                     <button
                                                                                         onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell',1)"
                                                                                         class="btn btn-outline-secondary"
@@ -582,7 +582,7 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                     placeholder="Enter size"
                                                                                     id="quantity12{{ $i }}"
                                                                                     name="quantity12{{ $i }}" value={{
-                                                                                    $quantity }} readonly>
+                                                                                    $quantity }} onkeyup="handleQuantityChange({{ $quantity }},{{ $i }},{{ $user->real_wallet }},'sell',1)">
                                                                             </div>
                                                                         </div>
 
@@ -634,13 +634,13 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                     <span>
                                                                                         Cost: <s id="costPrice12{{ $i }}"
                                                                                             name="costPrice12{{ $i }}"
-                                                                                            class="px-1">₹0.00</s><span
+                                                                                            class="px-1">₹ {{ number_format($stock->ltp*1*$quantity,2) }}(500x)</s><span
                                                                                             id="marginUsed12{{ $i }}"></span>
                                                                                     </span>
                                                                                     <span>
                                                                                         After Margin: <span
                                                                                             id="marginCost12{{ $i }}"
-                                                                                            class="text-success">₹0.00</span>
+                                                                                            class="text-success">₹{{ number_format($stock->ltp*1*$quantity/500,2) }}</span>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>

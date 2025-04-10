@@ -566,19 +566,19 @@ $user = Auth::user();
                 // id:formData.id,
             }
 
-            if (formData[`lotSize${row}1${id}`] < 1) {
-                Toastify({
-                    text: "Lot size must be greater than 0.",
-                    duration: 3000,
-                    gravity: "top",
-                    position: "center",
-                    offset: {
-                        y: "90px" // Moves it 60px down from the top
-                    },
-                    backgroundColor: "#FF5733",
-                }).showToast();
-                return;
-            }
+            // if (formData[`lotSize${row}1${id}`] < 1) {
+            //     Toastify({
+            //         text: "Lot size must be greater than 0.",
+            //         duration: 3000,
+            //         gravity: "top",
+            //         position: "center",
+            //         offset: {
+            //             y: "90px" 
+            //         },
+            //         backgroundColor: "#FF5733",
+            //     }).showToast();
+            //     return;
+            // }
 
             const loadingToast = Toastify({
                 text: "Processing your order...",
@@ -696,19 +696,19 @@ $user = Auth::user();
                 // id:formData.id,
             }
 
-            if (formData[`lotSize${row}2${id}`] < 1) {
-                Toastify({
-                    text: "Lot size must be greater than 0.",
-                    duration: 3000,
-                    gravity: "top",
-                    position: "center",
-                    offset: {
-                        y: "90px" // Moves it 60px down from the top
-                    },
-                    backgroundColor: "#FF5733",
-                }).showToast();
-                return;
-            }
+            // if (formData[`lotSize${row}2${id}`] < 1) {
+            //     Toastify({
+            //         text: "Lot size must be greater than 0.",
+            //         duration: 3000,
+            //         gravity: "top",
+            //         position: "center",
+            //         offset: {
+            //             y: "90px" 
+            //         },
+            //         backgroundColor: "#FF5733",
+            //     }).showToast();
+            //     return;
+            // }
 
             const loadingToast = Toastify({
                 text: "Processing your order...",
@@ -1549,6 +1549,64 @@ $user = Auth::user();
                 costPrice.innerHTML = `₹ ${cp}`;
                 marginUsed.innerHTML=`(${margin}x)`;
             }
+        }
+
+
+        function handleQuantityChange(quantityPerLot, uniqueId, wallet, tradeType,rowId){
+            const lotInput = document.getElementById('lotSize'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const maxPrice = document.getElementById('maxPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const selectedMode = document.querySelector(`input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
+
+            const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+
+            const instrumentType = document.getElementById('instrumentType'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId).value;
+
+            let margin = 0;
+
+            if (instrumentType == 'FUT' && selectedMode == 'intraday') {
+                margin = 500;
+            } else if(instrumentType == 'FUT' && selectedMode == 'delivery'){ 
+                margin = 50;
+            }else if (instrumentType == 'CE' || instrumentType == 'PE') {
+                margin = 7;
+            } else {
+                margin = 0;
+            }
+
+
+
+            let currentValue = parseInt(lotInput.value) || 0;
+            let realPriceValue = parseFloat(realPrice.value) || 0;
+
+            lotInput.value = quantity.value / quantityPerLot;
+
+            let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
+            let mcp = ((realPriceValue * lotInput.value * quantityPerLot) / margin).toFixed(2);
+
+
+            marginCost.innerHTML = `₹ ${mcp}`;
+                costPrice.innerHTML = `₹ ${cp}`;
+                marginUsed.innerHTML=`(${margin}x)`;
+
+             // Update color logic
+             if (wallet >= mcp) {
+                maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                // costPrice.style.color = 'green';
+                marginCost.style.color = 'green';
+                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display =
+                    'none';
+            } else {
+                maxPrice.style.color = 'red';
+                // costPrice.style.color = 'rgba(113, 117, 121, 0.75)';
+                marginCost.style.color = 'rgba(113, 117, 121, 0.75)';
+                document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display =
+                    'block';
+            }
+
         }
 
         

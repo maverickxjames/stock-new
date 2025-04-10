@@ -342,7 +342,7 @@
                                                                                         placeholder="Enter size"
                                                                                         id="lotSize31{{ $i }}"
                                                                                         name="lotSize31{{ $i }}"
-                                                                                        value="0" readonly>
+                                                                                        value="1" readonly>
                                                                                     <button
                                                                                         onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy',3)"
                                                                                         class="btn btn-outline-secondary"
@@ -358,7 +358,8 @@
                                                                                     placeholder="Enter size"
                                                                                     id="quantity31{{ $i }}"
                                                                                     name="quantity31{{ $i }}"
-                                                                                    value={{ $quantity }} readonly>
+                                                                                    value={{ $quantity }} 
+                                                                                    onkeyup="handleQuantityChange({{ $quantity }},{{ $i }},{{ $user->real_wallet }},'buy',3)">
                                                                             </div>
                                                                         </div>
 
@@ -417,13 +418,13 @@
                                                                                         Cost: <s
                                                                                             id="costPrice31{{ $i }}"
                                                                                             name="costPrice31{{ $i }}"
-                                                                                            class="px-1">₹0.00</s><span
+                                                                                            class="px-1">₹{{ number_format($stock->ltp*1*$quantity,2) }}(500x)</s><span
                                                                                             id="marginUsed31{{ $i }}"></span>
                                                                                     </span>
                                                                                     <span>
                                                                                         After Margin: <span
                                                                                             id="marginCost31{{ $i }}"
-                                                                                            class="text-success">₹0.00</span>
+                                                                                            class="text-success">₹{{ number_format($stock->ltp*1*$quantity/500,2) }}(7x)</span>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -583,7 +584,7 @@
                                                                                         placeholder="Enter size"
                                                                                         id="lotSize32{{ $i }}"
                                                                                         name="lotSize32{{ $i }}"
-                                                                                        value="0" readonly>
+                                                                                        value="1" readonly>
                                                                                     <button
                                                                                         onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell',3)"
                                                                                         class="btn btn-outline-secondary"
@@ -600,7 +601,7 @@
                                                                                     id="quantity32{{ $i }}"
                                                                                     name="quantity32{{ $i }}"
                                                                                     value={{ $quantity }}
-                                                                                    readonly>
+                                                                                    onkeyup="handleQuantityChange({{ $quantity }},{{ $i }},{{ $user->real_wallet }},'sell',3)">
                                                                             </div>
                                                                         </div>
 
@@ -653,13 +654,13 @@
                                                                                         Cost: <s
                                                                                             id="costPrice32{{ $i }}"
                                                                                             name="costPrice32{{ $i }}"
-                                                                                            class="px-1">₹0.00</s><span
+                                                                                            class="px-1">₹ {{ number_format($stock->ltp*1*$quantity,2) }}(500x)</s><span
                                                                                             id="marginUsed32{{ $i }}"></span>
                                                                                     </span>
                                                                                     <span>
                                                                                         After Margin: <span
                                                                                             id="marginCost32{{ $i }}"
-                                                                                            class="text-success">₹0.00</span>
+                                                                                            class="text-success">₹{{ number_format($stock->ltp*1*$quantity/500,2) }}</span>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
