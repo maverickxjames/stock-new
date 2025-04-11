@@ -17,7 +17,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['username', 'password'];
+
+    //  INSERT INTO `users`(`id`, `user_id`, `name`, `email`, `username`, `referred_by`, `refer_code`, `password`, `plain_password`, `is_dummy`, `demo_wallet`, `real_wallet`, `margin_wallet`, `withdraw_wallet`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]','[value-16]')
+    protected $fillable = ['username', 'password', 'user_id', 'email','name','refer_code','referred_by','plain_password','is_dummy','demo_wallet','real_wallet','margin_wallet','withdraw_wallet'];
 
     /**
      * The attributes that should be hidden for serialization.
