@@ -408,8 +408,15 @@ $user = Auth::user();
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @php
+                                                            $data3=DB::table('future_temp')->where('instrumentType','INDEX')->where('is_watchlist',1)->get();
+
+                                                            
+                                                        @endphp
                                                     <div class="tab-pane fade" id="indcies">
-                                                        <div class="input-group mt-4 search-area-2">
+                                                        <div class="input-group mt-4 search-area-2 "  onclick="showWatchlist('indices',{{ $data3 }})"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                        aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
                                                                 placeholder="Search & Add Indice Future/Option ">
                                                             <span class="input-group-text"><a href="javascript:void(0)">
@@ -1203,12 +1210,15 @@ $user = Auth::user();
                 case 'Option':
                     type = 'option';
                     break;
-                case 'Indicies':
+                case 'Indices':
                     type = 'indices';
                     break;
                 default:
                     type = 'mcx';
+                    break;
             }
+
+            
 
             showLoading();
 

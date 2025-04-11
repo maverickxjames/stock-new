@@ -325,7 +325,9 @@ class StockController extends Controller
                   ->orWhere('instrumentType', 'PE');
             });
         } elseif ($type == 'indices') {
-            $query->where('instrumentType', 'IDX');
+            $query = DB::table('future_temp')
+            ->where('assetSymbol', 'like', "%" . $search . "%");
+            $query->where('instrumentType', 'INDEX');
         } elseif ($type == "mcx") {
             $query->where(function ($q) {
                 $q->where('instrumentType', 'FUT')
@@ -566,6 +568,8 @@ class StockController extends Controller
     {
         // fetch symbol list from db
         $equities = DB::table('equities')->get();
+        $cookie = DB::table('upstocks')->where('id', 1)->value('cookie');
+        // return $cookie;
         foreach ($equities as $equity) {
             $symbol = $equity->symbol;
 
@@ -573,8 +577,9 @@ class StockController extends Controller
             //     continue;
             // }
             // $url = "https://service.upstox.com/search/v1?allValuesFor=expiry&pageNumber=1&query=aubank&records=90&segments=FUT"; 
-            $url = "https://service.upstox.com/search/v1?allValuesFor=expiry&pageNumber=1&query=" . $symbol . "&records=500&segments=OPT";
-            $cookie = "access_token=eyJ0eXAiOiJKV1QiLCJraWQiOiJpZHQtODAxYzAxZmEtOWRmNy00YjMyLThjZmItNzE2MzgxZjQ0YzAxIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI4NTc2NzcyIiwianRpIjoiTlRvTUIxcnUzV0tmeEk0MWtwcThkQWg3NVJvIiwiaWF0IjoxNzQzNDYwNzgyLCJleHAiOjE3NDM0NjQzODIsImlzcyI6ImxvZ2luLXNlcnZpY2UiLCJzY29wZSI6WyJzZXJ2aWNlOnJlYWQiLCJzZXJ2aWNlOndyaXRlIl0sImNsaWVudF9pZCI6IklORC1ueWp2NzB1OXhjZzJ0OGUzaGtycGRtNWIiLCJrZXlfaWQiOiJpZHQtODAxYzAxZmEtOWRmNy00YjMyLThjZmItNzE2MzgxZjQ0YzAxIiwicmVmcmVzaF90b2tlbl9pZCI6IlRraW02OUdiYS1xUW9QMnRWWW1HVC10V05ROCIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJyb2xlIjoiQ1VTVE9NRVIiLCJ1c2VyX3R5cGUiOiJDVVNUT01FUiIsInVzZXJfaWQiOiIzS0JSNTgiLCJ2ZXJzaW9uIjoiVjIiLCJzdHAiOiJPTVMzIn0.b96qVNDbiFz0dUdjkm90CZq1PdKvDmZSJ7IKzdNG9tPOtpQDMacDcPx5tPWe8PUOYmYs_e2uiwJmJcpGMmuOK7aKszhEeQiBxgwoRKAJQndrN5MKQjLfqDzpo_Oo6TDQMj80TuS3gUt63OTOIcB30FXC0BZ1tSIXoS0QJAqZoKGGmf2msjXMt5UTMTtddUe0bX88dAlb8WvRyb0GZYEKzBhXi665XmB7FgveNlfa77rnHQowIm2jmnTho8XOguH4QZ7ajdGWmOBTyHjXUl4NvxBPtPu7jO08hNyT4tUNy79hplHdnValbJm5Phtz72Y9DpKv_EtnhBsBz_wiKvv9EQ;";
+            $url = "https://service.upstox.com/search/v1?allValuesFor=expiry&pageNumber=1&query=bankex&records=5&segments=INDEX";
+            // $url = "https://service.upstox.com/search/v1?allValuesFor=expiry&pageNumber=1&query=" . $symbol . "&records=500&segments=OPT";
+            // $cookie = "access_token=eyJ0eXAiOiJKV1QiLCJraWQiOiJpZHQtODAxYzAxZmEtOWRmNy00YjMyLThjZmItNzE2MzgxZjQ0YzAxIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI4NTc2NzcyIiwianRpIjoiTlRvTUIxcnUzV0tmeEk0MWtwcThkQWg3NVJvIiwiaWF0IjoxNzQzNDYwNzgyLCJleHAiOjE3NDM0NjQzODIsImlzcyI6ImxvZ2luLXNlcnZpY2UiLCJzY29wZSI6WyJzZXJ2aWNlOnJlYWQiLCJzZXJ2aWNlOndyaXRlIl0sImNsaWVudF9pZCI6IklORC1ueWp2NzB1OXhjZzJ0OGUzaGtycGRtNWIiLCJrZXlfaWQiOiJpZHQtODAxYzAxZmEtOWRmNy00YjMyLThjZmItNzE2MzgxZjQ0YzAxIiwicmVmcmVzaF90b2tlbl9pZCI6IlRraW02OUdiYS1xUW9QMnRWWW1HVC10V05ROCIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJyb2xlIjoiQ1VTVE9NRVIiLCJ1c2VyX3R5cGUiOiJDVVNUT01FUiIsInVzZXJfaWQiOiIzS0JSNTgiLCJ2ZXJzaW9uIjoiVjIiLCJzdHAiOiJPTVMzIn0.b96qVNDbiFz0dUdjkm90CZq1PdKvDmZSJ7IKzdNG9tPOtpQDMacDcPx5tPWe8PUOYmYs_e2uiwJmJcpGMmuOK7aKszhEeQiBxgwoRKAJQndrN5MKQjLfqDzpo_Oo6TDQMj80TuS3gUt63OTOIcB30FXC0BZ1tSIXoS0QJAqZoKGGmf2msjXMt5UTMTtddUe0bX88dAlb8WvRyb0GZYEKzBhXi665XmB7FgveNlfa77rnHQowIm2jmnTho8XOguH4QZ7ajdGWmOBTyHjXUl4NvxBPtPu7jO08hNyT4tUNy79hplHdnValbJm5Phtz72Y9DpKv_EtnhBsBz_wiKvv9EQ;";
             $response = Http::withHeaders([
                 'cookie' => $cookie,
             ])->get($url);
@@ -600,18 +605,24 @@ class StockController extends Controller
 
                 $tradingSymbol = $fetch['attributes']['tradingSymbol'];
                 $segment = $fetch['attributes']['segment'];
-                $expiry = $fetch['attributes']['expiry'];
+                $expiry = $fetch['attributes']['expiry'] ?? 'N/A';
                 $instrumentType = $fetch['attributes']['instrumentType'];
-                $assetSymbol = $fetch['attributes']['assetSymbol'];
-                $strikePrice = $fetch['attributes']['strikePrice'];
+                $assetSymbol = $fetch['attributes']['assetSymbol'] ?? 'N/A';
+                $strikePrice = $fetch['attributes']['strikePrice'] ?? 'N/A';
                 $exchange = $fetch['attributes']['exchange'];
-                $assetType = $fetch['attributes']['assetType'];
-                $assetKey = $fetch['attributes']['assetKey'];
+                $assetType = $fetch['attributes']['assetType'] ?? 'N/A';
+                $assetKey = $fetch['attributes']['assetKey'] ?? 'N/A';
                 // NSE_EQ|INE113A01013 remove "NSE_EQ|" from assetKey 
+                // $isIn = "";
+               if($assetKey == 'N/A'){
+                $isIn = "";
+               }else{
                 $isIn = explode('|', $assetKey)[1];
+               }
+                
                 $searchedField = $fetch['attributes']['searchedField'];
                 $exchangeToken = $fetch['attributes']['exchangeToken'];
-                $assetToken = $fetch['attributes']['assetToken'];
+                $assetToken = $fetch['attributes']['assetToken'] ?? 'N/A';
 
                 // INSERT INTO `future_temp`(`id`, `instrumentKey`, `tradingSymbol`, `segment`, `expiry`, `instrumentType`, `assetSymbol`, `exchange`, `assetType`, `assetKey`, `isIn`, `exchangeToken`, `assetToken`, `created_at`, `updated_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]','[value-12]','[value-13]','[value-14]','[value-15]') 
 
@@ -638,6 +649,8 @@ class StockController extends Controller
                     echo "Not Inserted";
                 }
             }
+
+            exit;
         }
     }
 

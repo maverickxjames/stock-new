@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\trade;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 
 class TradeController extends Controller
@@ -49,8 +51,8 @@ class TradeController extends Controller
                 $end_time = strtotime('15:30:00');
                 $current_time = strtotime(date('H:i:s'));
 
-                if (false) {
-                    // if ($current_time < $start_time || $current_time > $end_time) {
+                // if (false) {
+                    if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                     exit;
                 } else {
@@ -87,6 +89,17 @@ class TradeController extends Controller
                                     $trade->total_cost = $total_cost;
                                     $trade->status = 'executed';
                                     $trade->save();
+
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
 
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed']);
@@ -167,6 +180,17 @@ class TradeController extends Controller
                                     $trade->total_cost = $total_cost;
                                     $trade->status = 'executed';
                                     $trade->save();
+
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
 
 
 
@@ -249,6 +273,17 @@ class TradeController extends Controller
                                     $trade->total_cost = $total_cost;
                                     $trade->status = 'executed';
                                     $trade->save();
+
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
 
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed']);
@@ -334,6 +369,17 @@ class TradeController extends Controller
                                     $trade->status = 'executed';
                                     $trade->save();
 
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
+
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed']);
                                 } else {
@@ -387,8 +433,19 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'processing';
+                                    $trade->status = 'executed';
                                     $trade->save();
+
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
 
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed']);
@@ -426,7 +483,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'pending';
+                                    $trade->status = 'processing';
                                     $trade->save();
 
 
@@ -467,8 +524,19 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'processing';
+                                    $trade->status = 'executed';
                                     $trade->save();
+
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
 
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed']);
@@ -506,7 +574,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'pending';
+                                    $trade->status = 'processing';
                                     $trade->save();
 
 
@@ -547,9 +615,9 @@ class TradeController extends Controller
                 $end_time = strtotime('15:30:00');
                 $current_time = strtotime(date('H:i:s'));
 
-                if (false) {
+                // if (false) {
 
-                    // if ($current_time < $start_time || $current_time > $end_time) {
+                    if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                     exit;
                 } else {
@@ -584,8 +652,19 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'processing';
+                                    $trade->status = 'executed';
                                     $trade->save();
+
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed ']);
                                 } else {
@@ -621,7 +700,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'pending';
+                                    $trade->status = 'processing';
                                     $trade->save();
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed']);
@@ -660,8 +739,19 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'processing';
+                                    $trade->status = 'executed';
                                     $trade->save();
+
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed ']);
                                 } else {
@@ -697,7 +787,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'pending';
+                                    $trade->status = 'processing';
                                     $trade->save();
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed']);
@@ -752,8 +842,19 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'processing';
+                                    $trade->status = 'executed';
                                     $trade->save();
+
+                                    if (config('app.env') == 'production') {
+                                        // Restart Supervisor process
+                                           $process = new Process(['sudo', 'supervisorctl', 'restart', 'markettradedata']);
+                                           $process->run();
+                                           
+                                               // Check if the process failed
+                                           if (!$process->isSuccessful()) {
+                                               throw new ProcessFailedException($process);
+                                           }
+                                   }
 
 
                                     echo json_encode(['status' => 'success', 'message' => 'Order placed']);
@@ -791,7 +892,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'pending';
+                                    $trade->status = 'processing';
                                     $trade->save();
 
 
@@ -832,7 +933,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'processing';
+                                    $trade->status = 'executed';
                                     $trade->save();
 
 
@@ -871,7 +972,7 @@ class TradeController extends Controller
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
                                     $trade->total_cost = $total_cost;
-                                    $trade->status = 'pending';
+                                    $trade->status = 'processing';
                                     $trade->save();
 
 

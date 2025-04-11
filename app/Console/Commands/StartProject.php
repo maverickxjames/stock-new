@@ -52,10 +52,11 @@ class StartProject extends Command
         // $commands = [
         //     'php artisan optimize',
         //     'docker-compose up -d',
-        //     'php artisan websockets:serve > /dev/null 2>&1 &',
-        //     'php artisan serve > /dev/null 2>&1 &',
         //     'php artisan queue:listen > /dev/null 2>&1 &',
-        //     'php artisan queue:work > /dev/null 2>&1 &'
+        //     'php artisan queue:work > /dev/null 2>&1 &',
+        //     'sudo supervisorctl restart markettradedata > /dev/null 2>&1 &',
+        //     'sudo supervisorctl restart marketdata > /dev/null 2>&1 &',
+        //     'sudo supervisorctl restart websockets > /dev/null 2>&1 &',
         // ];
 
         // for Windows 

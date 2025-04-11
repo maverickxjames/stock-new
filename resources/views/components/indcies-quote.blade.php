@@ -7,7 +7,7 @@ $user = Auth::user();
         <div class="row">
             <div class="col-xl-12">
                 @php
-                    $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'FUT')->get();
+                    $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'INDEX')->get();
                 @endphp
 
                 @if($fetch->isEmpty())
