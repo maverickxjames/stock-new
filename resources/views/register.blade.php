@@ -37,9 +37,10 @@
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
 	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
-   <link class="main-css" href="css/style.css" rel="stylesheet">
+   <link class="main-css" href="{{ asset('css/style.css') }}" rel="stylesheet">
    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
@@ -51,6 +52,7 @@
                 <div class="text-center  mb-2 pt-5 logo">
                     <img src="images/logo-white.png" alt="" width="400">
                 </div>
+
                 <h3 class="mb-2 text-white">Welcome to StockMantra!</h3>
                 <p class="mb-4">Real-Time Market Insights & Trading Tools <br>Secure. Fast. Reliable.</p>
             </div>
@@ -95,21 +97,29 @@
 										<span class="d-block mb-4 fs-13">Or with email</span>
 									</div> --}}
 									<div class="mb-3">
-										<label for="exampleFormControlInput1" class="form-label required">Full Name</label>
-									  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="username">
+										<label for="fullname" class="form-label required">Full Name</label>
+									  <input type="text" class="form-control" id="fullname" placeholder="fullname">
 									</div>
 									<div class="mb-3">
-										<label for="exampleFormControlInput2" class="form-label required">Email address</label>
-									  <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="Email">
+										<label for="username" class="form-label required">username</label>
+									  <input type="text" class="form-control" id="username" placeholder="username">
+									</div>
+									<div class="mb-3">
+										<label for="email" class="form-label required">Email address</label>
+									  <input type="email" class="form-control" id="email" placeholder="Email">
 									</div>
 									<div class="mb-3 position-relative">
 										<label class="form-label required">Password</label>
-										<input type="password" id="dlab-password" class="form-control" placeholder="password">
+										<input type="password" id="password" class="form-control" placeholder="password">
 										<span class="show-pass eye">
 											<i class="fa fa-eye-slash"></i>
 											<i class="fa fa-eye"></i>
 										
 										</span>
+									</div>
+                                    <div class="mb-3">
+										<label for="refercode" class="form-label required">Refer Code</label>
+									  <input type="text" class="form-control" id="refercode" value="{{ $error==NULL?$refer_code:'' }}" placeholder="refer Code">
 									</div>
 									{{-- <div class="form-row d-flex justify-content-between mt-4 mb-2">
 										<div class="mb-3">
@@ -122,7 +132,7 @@
 											<a href="page-forgot-password.html" class="btn-link text-primary">Sign in</a>
 										</div>
 									</div> --}}
-									<button onclick="register()" type="submit" class="btn btn-block btn-primary">Sign up</button>
+									<button onclick="register()" type="button" class="btn btn-block btn-primary">Sign up</button>
 									
 								</form>
 								<div class="new-account mt-3 text-center">
@@ -136,10 +146,112 @@
 			</div>
 		</div>
 	</div>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
+       const refer_code = @json($refer_code);
+    const error = @json($error);
 
+    if(refer_code && error){
+        Toastify({
+            text: "Refer code is not valid",
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: 'center', // `left`, `center` or `right`
+            backgroundColor: "#ff0000",
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+        }).showToast();
+    }
+       
+    function register(){
+        var fullname = document.getElementById('fullname').value;
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var refercode = document.getElementById('refercode').value;
+
+        if(fullname == '' || username == '' || email == '' || password == ''){
+            Toastify({
+                text: "Please fill all the fields",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                backgroundColor: "#ff0000",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+            }).showToast();
+            return false;
+        }
+        if(password.length < 8){
+            Toastify({
+                text: "Password must be at least 8 characters",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                backgroundColor: "#ff0000",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+            }).showToast();
+            return false;
+        }
+
+        if(refer_code!=refercode){
+            Toastify({
+                text: "Refer code is not valid",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                backgroundColor: "#ff0000",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+            }).showToast();
+            return false;
+        }
+        if (refercode === '') {
+            Toastify({
+                text: "Please enter refer code",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: 'center',
+                backgroundColor: "#ff0000",
+                stopOnFocus: true,
+            }).showToast();
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/register",
+            data: {
+                fullname: fullname,
+                username: username,
+                email: email,
+                password: password,
+                refercode: refercode,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log("response", response);
+                if(response.status == 200){
+                    window.location.href = '/login';
+                }else{
+                    Toastify({
+                        text: response.message,
+                        duration: 3000,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: 'center', // `left`, `center` or `right`
+                        backgroundColor: "#ff0000",
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                    }).showToast();
+                }
+            }
+        });
+    }
     </script>
 
 
@@ -153,7 +265,7 @@
 	<script src="js/dlabnav-init.js"></script>
 	<script src="js/demo.js"></script>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
 </body>
 
 <!-- Mirrored from jiade.dexignlab.com/xhtml/page-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:06:01 GMT -->
