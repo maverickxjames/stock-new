@@ -566,6 +566,7 @@ $user = Auth::user();
                 price: formData[`realprice${row}1${id}`],
                 limitPrice: formData[`limitprice${row}1${id}`],
                 targetPrice:formData[`targetprice${row}1${id}`],
+                stoploss:formData[`stoploss${row}1${id}`],
                 lotSize: formData[`lotSize${row}1${id}`], 
                 // costPrice:document.getElementById(`costPrice1${id}`).textContent,
                 tradeType: formData[`tradeMode${row}1${id}`],
@@ -697,6 +698,7 @@ $user = Auth::user();
                 limitPrice: formData[`limitprice${row}2${id}`],
                 lotSize: formData[`lotSize${row}2${id}`],
                 targetPrice:formData[`targetprice${row}2${id}`],
+                stoploss:formData[`stoploss${row}2${id}`],
                 // costPrice:document.getElementById(`costPrice1${id}`).textContent,
                 tradeType: formData[`tradeMode${row}2${id}`],
                 _token: formData._token,
@@ -1094,67 +1096,7 @@ $user = Auth::user();
 
 
     <script>
-        // let activeFilter = 'ALL';
-        // let activeFilterCP = 'ALL';
-
-        // function setActiveFilter(selectedButton, filterName) {
-        //     const buttons = document.querySelectorAll('.filter');
-
-        //     buttons.forEach(button => {
-        //         button.classList.remove('active-filter');
-        //         button.classList.add('light');
-        //     });
-
-        //     selectedButton.classList.remove('light');
-        //     selectedButton.classList.add('active-filter');
-
-        //     if (filterName === 'Option') {
-        //         document.getElementById('expiry-date').hidden = false;
-        //         document.getElementById('Order-type').hidden = false;
-        //     } else if (filterName === 'Future') {
-        //         document.getElementById('expiry-date').hidden = false;
-        //         document.getElementById('Order-type').hidden = true;
-        //     } else {
-        //         document.getElementById('expiry-date').hidden = true;
-        //         document.getElementById('Order-type').hidden = true;
-        //     }
-
-
-
-        //     activeFilter = filterName;
-
-        // }
-
-        // function setActiveFilterCP(selectedButton, filterName) {
-        //     const buttons = document.querySelectorAll('.filterCP');
-
-        //     buttons.forEach(button => {
-        //         button.classList.remove('filterCP');
-        //         button.classList.add('light');
-        //     });
-
-        //     selectedButton.classList.remove('light');
-        //     selectedButton.classList.add('filterCP');
-
-        //     activeFilterCP = filterName;
-
-        // }
-
-
-
-        // function getActiveFilter() {
-        //     return activeFilter;
-        // }
-
-        // function getActiveFilterCP() {
-        //     return activeFilterCP;
-        // }
-
-        
-
-
-
-
+    
         function showOrderForm(row,index) {
             const offcanvasId = `orderoffcanvasBottom${row}${index}`;
             const offcanvasElement = document.getElementById(offcanvasId);
@@ -1163,10 +1105,6 @@ $user = Auth::user();
 
         }
 
-        //fetch all scripts from the server
-
-
-        //implement search script using of $scripts variable thgen filter the scripts their we serach tradingSymbol
         let searchTimeout;
         let page = 1;
         let isFetching = false;
@@ -1461,6 +1399,7 @@ $user = Auth::user();
     let limitblock = document.getElementById(`limitblock${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
     let targetpriceInput = document.getElementById(`targetprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
     let targetpriceblock = document.getElementById(`targetpriceblock${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+    
 
     // Ensure elements exist before modifying them
     if (limitblock) limitblock.style.display = 'none';

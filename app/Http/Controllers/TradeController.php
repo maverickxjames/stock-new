@@ -16,12 +16,13 @@ class TradeController extends Controller
 
     public function placeBuyOrder(Request $r)
     {
-        // return $r;
+        return $r;
         $orderId = "buy_" . uniqid();
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
         $orderType = $r->orderType;
         $limitPrice = $r->limitPrice;
+        
         if ($r->targetPrice != null) {
             $targetPrice = $r->targetPrice;
         } else {
@@ -51,8 +52,8 @@ class TradeController extends Controller
                 $end_time = strtotime('15:30:00');
                 $current_time = strtotime(date('H:i:s'));
 
-                // if (false) {
-                    if ($current_time < $start_time || $current_time > $end_time) {
+                if (false) {
+                    // if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                     exit;
                 } else {

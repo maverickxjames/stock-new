@@ -296,6 +296,18 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                         </div>
 
                                                                         {{-- marketstoploss input --}}
+                                                                        <div id="stoplossblock11{{ $i }}"
+                                                                            class="input-group mb-3">
+                                                                            <span class="input-group-text">Stop Loss
+                                                                            </span>
+                                                                            <input id="stoploss11{{ $i }}"
+                                                                                name="stoploss11{{ $i }}"
+                                                                                type="text" class="form-control"
+                                                                                placeholder="Enter price">
+
+                                                                            <span class="input-group-text">₹</span>
+                                                                        </div>
+
                                                                         <div id="targetpriceblock11{{ $i }}"
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Target Price
@@ -535,6 +547,18 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                 name="limitprice12{{ $i }}" disabled
                                                                                 type="hidden" class="form-control"
                                                                                 placeholder="Enter price" value="0.00">
+
+                                                                            <span class="input-group-text">₹</span>
+                                                                        </div>
+
+                                                                        <div id="stoplossblock12{{ $i }}"
+                                                                            class="input-group mb-3">
+                                                                            <span class="input-group-text">Stop Loss
+                                                                            </span>
+                                                                            <input id="stoploss12{{ $i }}"
+                                                                                name="stoploss12{{ $i }}"
+                                                                                type="text" class="form-control"
+                                                                                placeholder="Enter price">
 
                                                                             <span class="input-group-text">₹</span>
                                                                         </div>
