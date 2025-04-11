@@ -35,7 +35,7 @@
 	
 	<!-- FAVICONS ICON -->
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
-	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
    <link class="main-css" href="{{ asset('css/style.css') }}" rel="stylesheet">
    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -50,7 +50,7 @@
 		<div class="login-aside text-center  d-flex flex-column flex-row-auto">
 			<div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15 ">
                 <div class="text-center  mb-2 pt-5 logo">
-                    <img src="images/logo-white.png" alt="" width="400">
+                    <img src="{{ asset('images/logo-white.png') }}" alt="" width="400">
                 </div>
 
                 <h3 class="mb-2 text-white">Welcome to StockMantra!</h3>
@@ -260,10 +260,10 @@
     ***********************************-->
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
-	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-	<script src="js/custom.min.js"></script>
-	<script src="js/dlabnav-init.js"></script>
-	<script src="js/demo.js"></script>
+	<script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+	<script src="{{ asset('js/custom.min.js') }}"></script>
+	<script src="{{ asset('js/dlabnav-init.js') }}"></script>
+    <script src="{{ asset('js/demo.js') }}"></script>
 
     
 </body>
