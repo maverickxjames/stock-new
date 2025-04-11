@@ -16,7 +16,7 @@ class TradeController extends Controller
 
     public function placeBuyOrder(Request $r)
     {
-        return $r;
+        // return $r;
         $orderId = "buy_" . uniqid();
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
@@ -26,7 +26,12 @@ class TradeController extends Controller
         if ($r->targetPrice != null) {
             $targetPrice = $r->targetPrice;
         } else {
-            $targetPrice = 0;
+            $targetPrice = null;
+        }
+        if($r->stoploss!=null){
+            $stoploss = $r->stoploss;
+        }else{
+            $stoploss = null;
         }
 
         if ($orderType == 'stoplossMarket' && $r->targetPrice == 0) {
@@ -84,6 +89,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -134,6 +141,8 @@ class TradeController extends Controller
                                     $trade->segment=$stockData[0]->segment;
                                     $trade->price = $limitPrice;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -173,7 +182,8 @@ class TradeController extends Controller
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
-                                    $trade->stop_loss = $targetPrice;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->quantity = $quantity;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
@@ -225,7 +235,8 @@ class TradeController extends Controller
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
-                                    $trade->stop_loss = $targetPrice;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->quantity = $quantity;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
@@ -268,6 +279,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -318,6 +331,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -361,7 +376,8 @@ class TradeController extends Controller
                                     // echo json_encode($targetPrice);
                                     // exit;
                                     $trade->price = $price;
-                                    $trade->stop_loss = $targetPrice;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->quantity = $quantity;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
@@ -430,6 +446,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -480,6 +498,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -521,6 +541,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -570,6 +592,8 @@ class TradeController extends Controller
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->quantity = $quantity;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
@@ -598,6 +622,7 @@ class TradeController extends Controller
     public function placeSellOrder(Request $r)
     {
 
+
         $orderId = "sell_" . uniqid();
         $instrumentKey = $r->instrumentKey;
         $lotSize = $r->lotSize;
@@ -606,6 +631,9 @@ class TradeController extends Controller
         $price = $r->price;
         $tradeType = $r->tradeType;
         $user = Auth::user();
+
+        $stoploss = $r->stoploss;
+        $targetPrice = $r->targetPrice;
 
         $stockData = DB::table('future_temp')->where('instrumentKey', $instrumentKey)->get();
 
@@ -616,7 +644,7 @@ class TradeController extends Controller
                 $end_time = strtotime('15:30:00');
                 $current_time = strtotime(date('H:i:s'));
 
-                // if (false) {
+                if (false) {
 
                     if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
@@ -649,6 +677,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -697,6 +727,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -736,6 +768,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -784,6 +818,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -839,6 +875,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -889,6 +927,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -930,6 +970,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
@@ -969,6 +1011,8 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
                                     $trade->quantity = $quantity;
+                                    $trade->stop_loss = $stoploss;
+                                    $trade->target_price = $targetPrice;
                                     $trade->lotSize = $lotSize;
                                     $trade->margin = $margin;
                                     $trade->cost = $cost;
