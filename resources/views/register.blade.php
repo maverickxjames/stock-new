@@ -119,7 +119,7 @@
 									</div>
                                     <div class="mb-3">
 										<label for="refercode" class="form-label required">Refer Code</label>
-									  <input type="text" class="form-control" id="refercode" value="{{ $error==NULL?$refer_code:'' }}" placeholder="refer Code">
+									  <input type="text" class="form-control" id="refercode" value="{{ $refer_code ?? '' }}" {{ $valid_code ?'readonly':'' }} placeholder="refer Code">
 									</div>
 									{{-- <div class="form-row d-flex justify-content-between mt-4 mb-2">
 										<div class="mb-3">
@@ -151,10 +151,13 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-       const refer_code = @json($refer_code);
-    const error = @json($error);
+       const refer_code = @json($refer_code??'');
+       const validCode=@json($valid_code??'');
+       console.log("refer_code", refer_code);
+       console.log("validCode", validCode);
+       
 
-    if(refer_code && error){
+    if(refer_code!==null &&!validCode){
         Toastify({
             text: "Refer code is not valid",
             duration: 3000,
@@ -165,6 +168,19 @@
             stopOnFocus: true, // Prevents dismissing of toast on hover
         }).showToast();
     }
+    if(refer_code!==null &&validCode){
+        Toastify({
+            text: "Refer code is valid",
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: 'center', // `left`, `center` or `right`
+            backgroundColor: "#00ff00",
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+        }).showToast();
+    }
+
+
        
     function register(){
         var fullname = document.getElementById('fullname').value;
@@ -198,18 +214,7 @@
             return false;
         }
 
-        if(refer_code!=refercode){
-            Toastify({
-                text: "Refer code is not valid",
-                duration: 3000,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: 'center', // `left`, `center` or `right`
-                backgroundColor: "#ff0000",
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-            }).showToast();
-            return false;
-        }
+        
         if (refercode === '') {
             Toastify({
                 text: "Please enter refer code",

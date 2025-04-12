@@ -22,18 +22,16 @@ class RegisteredUserController extends Controller
      */
     public function create($refer_code = null)
     {
-        $error = null;
-
+        $valid_code =false;
         if ($refer_code) {
-            $user = User::where('refer_code', $refer_code)->first();
-            if (!$user) {
-                $error = 'Invalid refer code';
+            $referrer = User::where('refer_code', $refer_code)->first();
+            if ($referrer) {
+                $valid_code = true;
             }
         }
-
         return view('register', [
             'refer_code' => $refer_code,
-            'error' => $error,
+            'valid_code' => $valid_code,
         ]);
     }
 
