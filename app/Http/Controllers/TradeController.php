@@ -613,6 +613,32 @@ class TradeController extends Controller
                         $margin = 0;
                     }
                 }
+            } elseif($stockData[0]->segment=='NSE_INDEX'){
+                  // starttime = 9:15AM (MON - FRIDAY) to 11:30 PM  (MON - FRIDAY) 
+                  $start_time = strtotime('09:15:00');
+                  $end_time = strtotime('23:30:00');
+                  $current_time = strtotime(date('H:i:s'));
+  
+                  if (false) {
+                  // if ($current_time < $start_time || $current_time > $end_time) {
+                      echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
+                      exit;
+                  }else{
+                      
+                    if($stockData[0]->instrumentType == 'INDEX'){
+                        if ($orderType == 'market') {
+                            $margin = 500;
+                            $quantity = $lotSize * $stockData[0]->lotSize;
+                            $cost = $quantity * $price;
+                            $total_cost = $cost / $margin;
+
+                           
+
+
+
+                    }
+
+                  }
             }
         } else {
             return response()->json(['status' => 'error', 'message' => 'Stock not found']);
@@ -644,7 +670,7 @@ class TradeController extends Controller
                 $end_time = strtotime('15:30:00');
                 $current_time = strtotime(date('H:i:s'));
 
-                if (false) {
+                // if (false) {
 
                     if ($current_time < $start_time || $current_time > $end_time) {
                     echo json_encode(['status' => 'error', 'message' => 'Market is closed']);

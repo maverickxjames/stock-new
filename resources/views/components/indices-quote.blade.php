@@ -216,7 +216,7 @@ $user = Auth::user();
                                                 <div class="tab-pane fade show active" id="nav-order4{{ $i }}"
                                                     role="tabpanel" aria-labelledby="nav-order-tab">
                                                     <div class="table-responsive dataTabletrade">
-                                                        <form id="buyform{{ $i }}" name="buyform{{ $i }}" method="POST"
+                                                        <form id="buyform4{{ $i }}" name="buyform4{{ $i }}" method="POST"
                                                             action="{{ route('placeBuyOrder') }}">
                                                             @csrf
                                                             <input type="text" name="id" value="{{ $i }}" id="id"
@@ -247,24 +247,23 @@ $user = Auth::user();
                                                                         <div class="mb-3 d-flex flex-column">
                                                                             <label class="form-label">Order Type</label>
                                                                             <div class="btn-group" role="group">
-                                                                                <button type="button"
+                                                                                   {{-- <button type="button"
                                                                                     class="btn btn-primary"
-                                                                                    id="marketBtn41{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'market', 'buy')">Market</button>
+                                                                                    id="marketBtn11{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'market', 'buy')">Market</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="limitBtn41{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'limit', 'buy')">Limit</button>
-                                                                                <button type="button"
-                                                                                    class="btn btn-outline-primary"
+                                                                                    id="limitBtn11{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'limit', 'buy')">Limit</button> --}}
+                                                                                    <button type="button"
+                                                                                    class="btn btn-primary"
                                                                                     id="stoplossMarketBtn41{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'stoplossMarket', 'buy')">SL
-                                                                                    Mkt</button>
+                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'stoplossMarket', 'buy')">Market</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
                                                                                     id="stoplossLimitBtn41{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'stoplossLimit', 'buy')">SL
-                                                                                    Limit</button>
+                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'stoplossLimit', 'buy')">Limit</button>
+                                                                               
                                                                             </div>
                                                                         </div>
 
@@ -295,15 +294,26 @@ $user = Auth::user();
                                                                             <span class="input-group-text">₹</span>
                                                                         </div>
 
+                                                                        <div id="stoplossblock41{{ $i }}"
+                                                                        class="input-group mb-3">
+                                                                        <span class="input-group-text">Stop Loss
+                                                                        </span>
+                                                                        <input id="stoploss41{{ $i }}"
+                                                                            name="stoploss41{{ $i }}"
+                                                                            type="text" class="form-control"
+                                                                            placeholder="Enter price">
+
+                                                                        <span class="input-group-text">₹</span>
+                                                                        </div>
+
                                                                         {{-- marketstoploss input --}}
                                                                         <div id="targetpriceblock41{{ $i }}"
-                                                                            style="display: none"
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Target Price
                                                                             </span>
                                                                             <input id="targetprice41{{ $i }}"
-                                                                                name="targetprice41{{ $i }}" disabled
-                                                                                type="hidden" class="form-control"
+                                                                                name="targetprice41{{ $i }}" 
+                                                                                 class="form-control"
                                                                                 placeholder="Enter price">
 
                                                                             <span class="input-group-text">₹</span>
@@ -445,13 +455,13 @@ $user = Auth::user();
 
                                                 <div class="tab-pane fade" id="nav-history4{{ $i }}" role="tabpanel">
                                                     <div class="table-responsive dataTabletrade">
-                                                        <form id="sellform" name="sellform{{ $i }}" method="POST"
+                                                        <form id="sellform4{{ $i }}" name="sellform4{{ $i }}" method="POST"
                                                             action="{{ route('placeSellOrder') }}">
                                                             @csrf
                                                             <input type="text" name="id2" value="{{ $i }}" id="id"
                                                                 hidden>
                                                             
-                                                            <input type="text" name="row2" value="1" id="row2"
+                                                            <input type="text" name="row2" value="4" id="row2"
                                                                 hidden>
                                                             <input type="text" name="instrumentKey42{{ $i }}"
                                                                 value="{{ $foisin }}" id="instrumentKey42{{ $i }}"
@@ -483,22 +493,12 @@ $user = Auth::user();
                                                                             <div class="btn-group" role="group">
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
-                                                                                    id="marketBtn42{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'market', 'sell')">Market</button>
-                                                                                <button type="button"
-                                                                                    class="btn btn-outline-primary"
-                                                                                    id="limitBtn42{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'limit', 'sell')">Limit</button>
-                                                                                <button type="button"
-                                                                                    class="btn btn-outline-primary"
                                                                                     id="stoplossMarketBtn42{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'stoplossMarket', 'sell')">SL
-                                                                                    Mkt</button>
+                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'stoplossMarket', 'sell')">Market</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
                                                                                     id="stoplossLimitBtn42{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'stoplossLimit', 'sell')">SL
-                                                                                    Limit</button>
+                                                                                    onclick="handleOrderTypeChange(4,{{ $i }}, 'stoplossLimit', 'sell')">Limit</button>
                                                                             </div>
                                                                         </div>
 
@@ -529,15 +529,26 @@ $user = Auth::user();
                                                                             <span class="input-group-text">₹</span>
                                                                         </div>
 
+                                                                        <div id="stoplossblock42{{ $i }}"
+                                                                        class="input-group mb-3">
+                                                                        <span class="input-group-text">Stop Loss
+                                                                        </span>
+                                                                        <input id="stoploss42{{ $i }}"
+                                                                            name="stoploss42{{ $i }}"
+                                                                            type="text" class="form-control"
+                                                                            placeholder="Enter price">
+
+                                                                        <span class="input-group-text">₹</span>
+                                                                    </div>
+
                                                                         {{-- marketstoploss input --}}
                                                                         <div id="targetpriceblock42{{ $i }}"
-                                                                            style="display: none"
                                                                             class="input-group mb-3">
                                                                             <span class="input-group-text">Target Price
                                                                             </span>
                                                                             <input id="targetprice42{{ $i }}"
-                                                                                name="targetprice42{{ $i }}" disabled
-                                                                                type="hidden" class="form-control"
+                                                                                name="targetprice42{{ $i }}"
+                                                                                class="form-control"
                                                                                 placeholder="Enter price">
 
                                                                             <span class="input-group-text">₹</span>
