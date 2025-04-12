@@ -113,7 +113,7 @@ class StockController extends Controller
             $query->where('segment', 'MCX_FO')->where('instrumentType', 'FUT');
             break;
         case '4':
-            $query->where('segment', 'NSE_FO')->where('instrumentType', 'IDX');
+            $query->where('instrumentType', 'NSE_INDEX');
             break;
     }
 

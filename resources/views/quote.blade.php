@@ -274,7 +274,7 @@ $user = Auth::user();
                                                     </li>
                                                     <li class="nav-item">
                                                         <a class="nav-link" data-bs-toggle="tab" href="#indcies"
-                                                            onclick="changeQuote('indcies')">Indices</a>
+                                                            onclick="changeQuote('indices')">Indices</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
@@ -444,7 +444,7 @@ $user = Auth::user();
 
                                                         <div class="pt-4">
                                                             <div id="indciesRefresh" >
-                                                                @include('components.indcies-quote', ['fetch' =>
+                                                                @include('components.indices-quote', ['fetch' =>
                                                                 $fetch])
                                                             </div>
                                                         </div>

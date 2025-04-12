@@ -75,7 +75,7 @@ class WatchlistController extends Controller
             $sendId = 2;
         }elseif($request->instrumentType == 'FUT' && $request->segment == 'MCX_FO'){
             $sendId = 3;
-        }elseif($request->instrumentType == 'OPT' && $request->segment == 'NSE_EQ'){
+        }else{
             $sendId = 4;
         }
         if ($query) {

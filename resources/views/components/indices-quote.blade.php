@@ -8,7 +8,10 @@ $user = Auth::user();
             <div class="col-xl-12">
                 @php
                     $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType', 'INDEX')->get();
-                @endphp
+                    $data=DB::table('future_temp')->where('instrumentType','INDEX')->where('segment', 'NSE_INDEX')->where('is_watchlist',1)->get();
+
+              @endphp
+
 
                 @if($fetch->isEmpty())
                 <div class="error-page" style="height: 50vh;">

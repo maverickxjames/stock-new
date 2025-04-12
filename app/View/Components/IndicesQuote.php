@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class IndciesQuote extends Component
+class IndicesQuote extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class IndciesQuote extends Component
      */
     public function render()
     {
-        return view('components.indcies-quote');
+        return view('components.indices-quote');
     }
 }
