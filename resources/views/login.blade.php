@@ -46,6 +46,9 @@
     <link class="main-css" href="css/style.css" rel="stylesheet">
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
@@ -60,65 +63,70 @@
                 <p class="mb-4">Real-Time Market Insights & Trading Tools <br>Secure. Fast. Reliable.</p>
             </div>
             {{-- <div class="aside-image position-relative" style="background-image:url(images/background/pic-2.png);">
-				<img class="img1 move-1" src="images/background/pic3.png" alt="">
-				<img class="img2 move-2" src="images/background/pic4.png" alt="">
-				<img class="img3 move-3" src="images/background/pic5.png" alt="">
-				
-			</div> --}}
+                <img class="img1 move-1" src="images/background/pic3.png" alt="">
+                <img class="img2 move-2" src="images/background/pic4.png" alt="">
+                <img class="img3 move-3" src="images/background/pic5.png" alt="">
+
+            </div> --}}
         </div>
-        <div
-            class="container flex-row-fluid d-flex flex-column position-relative overflow-hidden px-7 py-5 mx-auto">
+        <div class="container flex-row-fluid d-flex flex-column position-relative overflow-hidden px-7 py-5 mx-auto">
             <div class="d-flex justify-content-center h-100 align-items-center">
                 <div class="authincation-content style-2">
                     <div class="row no-gutters">
                         <div class="col-xl-12 tab-content">
                             <div id="sign-up" class="auth-form tab-pane fade show active  form-validation">
-                                <form action="{{ route('login') }}" method="post" id="loginForm">
-                                    @csrf
-                                    <div class="text-center mb-4">
-                                        <h3 class="text-center mb-2 text-dark">Sign In</h3>
-                                        <!-- <span>Your Social Campaigns</span> -->
-                                    </div>
+                                {{-- <form action="{{ route('login') }}" method="post" id="loginForm"> --}}
+                                    <form >
+                                        @csrf
+                                        <div class="text-center mb-4">
+                                            <h3 class="text-center mb-2 text-dark">Sign In</h3>
+                                            <!-- <span>Your Social Campaigns</span> -->
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="exampleFormControlInput1" class="form-label required">User
-                                            ID</label>
-                                        <input type="text" class="form-control" name="username"
-                                            id="exampleFormControlInput1" value="{{ old('email') }}">
-                                        {{-- <x-input-error :messages="$errors->get('email')" class="mt-2" /> --}}
-                                    </div>
-                                    <div class="mb-3 position-relative">
-                                        <label class="form-label required">Password</label>
-                                        <input type="password" id="dlab-password" name="password" class="form-control"
-                                            value="">
-                                        <span class="show-pass eye">
-                                            <i class="fa fa-eye-slash"></i>
-                                            <i class="fa fa-eye"></i>
-
-                                        </span>
-                                        {{-- <x-input-error :messages="$errors->get('password')" class="mt-2" /> --}}
-                                    </div>
-
-                                    <div class="form-row d-flex justify-content-between mt-4 mb-2">
                                         <div class="mb-3">
-                                            <div class="form-check custom-checkbox mb-0">
-                                                <input type="checkbox" class="form-check-input" id="customCheckBox1">
-                                                <label class="form-check-label" for="customCheckBox1">Remember my
-                                                    preference</label>
+                                            <label for="exampleFormControlInput1" class="form-label required">User ID / Email / Username</label>
+                                            <input type="text" class="form-control" name="login_input" id="exampleFormControlInput1" placeholder="Enter User ID, Email or Username" value="{{ old('login_input') }}">
+                                            
+                                            {{--
+                                            <x-input-error :messages="$errors->get('email')" class="mt-2" /> --}}
+                                        </div>
+                                        <div class="mb-3 position-relative">
+                                            <label class="form-label required">Password</label>
+                                            <input type="password" id="dlab-password" name="password"
+                                                class="form-control" value="" placeholder="Enter Password">
+                                            <span class="show-pass eye">
+                                                <i class="fa fa-eye-slash"></i>
+                                                <i class="fa fa-eye"></i>
+
+                                            </span>
+                                            {{--
+                                            <x-input-error :messages="$errors->get('password')" class="mt-2" /> --}}
+                                        </div>
+
+                                        <div class="form-row d-flex justify-content-between mt-4 mb-2">
+                                            <div class="mb-3">
+                                                {{-- <div class="form-check custom-checkbox mb-0">
+                                                    <input type="checkbox" class="form-check-input"
+                                                        id="customCheckBox1">
+                                                    <label class="form-check-label" for="customCheckBox1">Remember my
+                                                        preference</label>
+                                                </div> --}}
+                                            </div>
+                                            <div class="mb-4">
+                                                <a href="" class="btn-link text-primary">Forgot
+                                                    Password?</a>
                                             </div>
                                         </div>
-                                        <div class="mb-4">
-                                            <a href="" class="btn-link text-primary">Forgot
-                                                Password?</a>
-                                        </div>
-                                    </div>
-                                    <button type="submit" id="submitBtn" class="btn btn-block btn-primary" name="submit">Sign
-                                        In</button>
+                                        <button type="button" onclick="onLogin()" id="submitBtn"
+                                            class="btn btn-block btn-primary" name="submit">Sign
+                                            In</button>
 
-                                </form>
-                                <!-- <div class="new-account mt-3 text-center">
-         <p class="font-w500">Already have an account? <a class="text-primary" href="page-login.html" data-toggle="tab">Sign in</a></p>
-        </div> -->
+                                    </form>
+                                    <div class="new-account mt-3 text-center">
+                                        <p class="font-w500">Don't have an account? <a class="text-primary" href="#"
+                                                onclick="window.location.href='{{ route('register') }}'"
+                                                data-toggle="tab">Register</a></p>
+                                    </div>
                             </div>
                             <!-- <div class="d-flex align-items-center justify-content-center">
          <a href="javascript:void(0);" class="text-primary">Terms</a>
@@ -135,16 +143,89 @@
 
     <?php include_once 'includes/footer.php'; ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <script>
-        $(document).ready(function(){
-            $('#loginForm').on('submit', function(){
-                let btn = $('#submitBtn');
-                btn.text('Please Wait...').prop('disabled', true).fadeTo(500, 0.5);
+        function onLogin() {
+            let loginInfo = document.getElementById('exampleFormControlInput1').value.trim();
+            let passwordInfo = document.getElementById('dlab-password').value.trim();
+    
+            if (loginInfo === '' && passwordInfo === '') {
+                Toastify({
+                    text: "User Info and Password are required!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    backgroundColor: "#ff5e57",
+                }).showToast();
+                return;
+            } else if (loginInfo === '') {
+                Toastify({
+                    text: "User Info is required!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    backgroundColor: "#ff5e57",
+                }).showToast();
+                return;
+            } else if (passwordInfo === '') {
+                Toastify({
+                    text: "Password is required!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    backgroundColor: "#ff5e57",
+                }).showToast();
+                return;
+            }
+    
+            // Make AJAX call to your backend
+            $.ajax({
+                url: "{{ route('login') }}", // Make sure this is correctly routed in Laravel
+                type: "POST",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    loginInfo: loginInfo,
+                    password: passwordInfo
+                },
+                success: function(response) {
+                    // console.log(response);
+                    
+                    if (response.success) {
+                        Toastify({
+                            text: "Login successful! Redirecting...",
+                            duration: 2000,
+                            gravity: "top",
+                            position: "center",
+                            backgroundColor: "#28a745",
+                        }).showToast();
+                        setTimeout(() => {
+                            window.location.href = response.redirect_url || "/";
+                        }, 2000);
+                    } else {
+                        Toastify({
+                            text: response.message || "Login failed!",
+                            duration: 3000,
+                            gravity: "top",
+                            position: "center",
+                            backgroundColor: "#ff5e57",
+                        }).showToast();
+                    }
+                },
+                error: function(xhr) {
+                    Toastify({
+                        text: "Something went wrong!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "center",
+                        backgroundColor: "#ff5e57",
+                    }).showToast();
+                }
             });
-        });
+        }
     </script>
+    
 </body>
 
-<!-- Mirrored from jiade.dexignlab.com/xhtml/page-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:05:14 GMT -->
 
 </html>
