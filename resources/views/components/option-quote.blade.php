@@ -1,15 +1,23 @@
 @php
     $user = Auth::user();
 @endphp
-
+<script>
+    console.log({{ $user->id }});
+</script>
 <div>
 
     <div class="row">
         <div class="col-xl-12">
             @php
-                 $fetch = DB::table('watchlist')->where('userId', $user->id)->where('instrumentType','CE')->orWhere('instrumentType','PE')->get();
-            @endphp
+                 $fetch = DB::table('watchlist')
+    ->where('userid', $user->id)
+    ->where(function ($query) {
+        $query->where('instrumentType', 'CE')
+              ->orWhere('instrumentType', 'PE');
+    })
+    ->get();
 
+            @endphp
             @if($fetch->isEmpty())
             <div class="error-page" style="height: 50vh;">
                 <div class="error-inner text-center">

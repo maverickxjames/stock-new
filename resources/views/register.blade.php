@@ -151,8 +151,8 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-       const refer_code = @json($refer_code??'');
-       const validCode=@json($valid_code??'');
+       const refer_code = @json($refer_code??null);
+       const validCode=@json($valid_code??null);
        console.log("refer_code", refer_code);
        console.log("validCode", validCode);
        
