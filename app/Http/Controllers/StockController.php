@@ -79,8 +79,7 @@ class StockController extends Controller
     //     // return view('components.quotes', compact('fetch'));
     // }
 
-    public function quoteRefresh($id)
-{
+    public function quoteRefresh($id){
     $userId = Auth::id();
     $cacheKey = "user_{$userId}_watchlist";
 

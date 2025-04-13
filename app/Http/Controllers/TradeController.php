@@ -619,7 +619,7 @@ class TradeController extends Controller
                   $end_time = strtotime('23:30:00');
                   $current_time = strtotime(date('H:i:s'));
   
-                  if (false) {
+                if (false) {
                   // if ($current_time < $start_time || $current_time > $end_time) {
                       echo json_encode(['status' => 'error', 'message' => 'Market is closed']);
                       exit;
@@ -636,13 +636,15 @@ class TradeController extends Controller
 
 
 
-                    }
+                        }
 
-                  }
-            }
+                    }
+                }
         } else {
             return response()->json(['status' => 'error', 'message' => 'Stock not found']);
         }
+        }
+
     }
 
     public function placeSellOrder(Request $r)
