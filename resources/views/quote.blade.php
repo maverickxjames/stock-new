@@ -44,6 +44,44 @@ $user = Auth::user();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
+
+.stock-box {
+      background-color: #ffffff;
+      border-top: 3px solid #f48c06;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      width: max-content;
+    }
+    .divider {
+      border-left: 1px solid #ccc;
+      height: 2.5rem;
+    }
+    .stock-label {
+      font-weight: bold;
+      color: #343a40;
+    }
+    .stock-success-value {
+      color: #198754;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .stock-success-change {
+      color: #198754;
+      font-size: 0.875rem;
+    }
+
+    .stock-danger-value {
+        color: #dc3545;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    .stock-danger-change {
+        color: #dc3545;
+        font-size: 0.875rem;
+    }
+
         .wallet-balance {
             font-size: 2rem;
             font-weight: bold;
@@ -211,7 +249,6 @@ $user = Auth::user();
     .button.active {
         background-color: #d1e7ff;
     }
- 
 </style>
 
 <body>
@@ -280,11 +317,13 @@ $user = Auth::user();
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="future" role="tabpanel">
                                                         @php
-                                                            $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 'NSE_FO')->where('is_watchlist',1)->get();
+                                                        $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment',
+                                                        'NSE_FO')->where('is_watchlist',1)->get();
 
-                                                            
+
                                                         @endphp
-                                                        <div class="input-group mt-4 search-area-2" onclick="showWatchlist('future',{{ $data }})"
+                                                        <div class="input-group mt-4 search-area-2"
+                                                            onclick="showWatchlist('future',{{ $data }})"
                                                             data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                                                             aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
@@ -323,16 +362,17 @@ $user = Auth::user();
                                                     <div class="tab-pane fade" id="option" role="tabpanel">
                                                         @php
                                                         $data1 = DB::table('future_temp')
-                                                            ->where(function ($query) {
-                                                                $query->where('instrumentType', 'PE')
-                                                                    ->orWhere('instrumentType', 'CE');
-                                                            })
-                                                            ->where('is_watchlist', 1)
-                                                            ->get();
-                                                    @endphp
-                                                        <div class="input-group mt-4 search-area-2" onclick="showWatchlist('option',{{ $data1 }})"
-                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                                        aria-controls="offcanvasRight">
+                                                        ->where(function ($query) {
+                                                        $query->where('instrumentType', 'PE')
+                                                        ->orWhere('instrumentType', 'CE');
+                                                        })
+                                                        ->where('is_watchlist', 1)
+                                                        ->get();
+                                                        @endphp
+                                                        <div class="input-group mt-4 search-area-2"
+                                                            onclick="showWatchlist('option',{{ $data1 }})"
+                                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                            aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
                                                                 placeholder="Search & Add Option Future ">
                                                             <span class="input-group-text"><a href="javascript:void(0)">
@@ -369,13 +409,14 @@ $user = Auth::user();
                                                         @php
                                                         $data2 = DB::table('future_temp')
                                                         ->where('instrumentType', 'FUT')
-                                                            ->where('segment', 'MCX_FO')
-                                                            ->where('is_watchlist', 1)
-                                                            ->get();
-                                                    @endphp
-                                                        <div class="input-group mt-4 search-area-2" onclick="showWatchlist('mcx',{{ $data2 }})"
-                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                                        aria-controls="offcanvasRight">
+                                                        ->where('segment', 'MCX_FO')
+                                                        ->where('is_watchlist', 1)
+                                                        ->get();
+                                                        @endphp
+                                                        <div class="input-group mt-4 search-area-2"
+                                                            onclick="showWatchlist('mcx',{{ $data2 }})"
+                                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                            aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
                                                                 placeholder="Search & Add MCX Future/Option">
                                                             <span class="input-group-text"><a href="javascript:void(0)">
@@ -409,14 +450,15 @@ $user = Auth::user();
                                                         </div>
                                                     </div>
                                                     @php
-                                                            $data3=DB::table('future_temp')->where('instrumentType','INDEX')->where('is_watchlist',1)->get();
+                                                    $data3=DB::table('future_temp')->where('instrumentType','INDEX')->where('is_watchlist',1)->get();
 
-                                                            
-                                                        @endphp
+
+                                                    @endphp
                                                     <div class="tab-pane fade" id="indcies">
-                                                        <div class="input-group mt-4 search-area-2 "  onclick="showWatchlist('indices',{{ $data3 }})"
-                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                                        aria-controls="offcanvasRight">
+                                                        <div class="input-group mt-4 search-area-2 "
+                                                            onclick="showWatchlist('indices',{{ $data3 }})"
+                                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                            aria-controls="offcanvasRight">
                                                             <input type="text" class="form-control"
                                                                 placeholder="Search & Add Indice Future/Option ">
                                                             <span class="input-group-text"><a href="javascript:void(0)">
@@ -443,7 +485,7 @@ $user = Auth::user();
 
 
                                                         <div class="pt-4">
-                                                            <div id="indciesRefresh" >
+                                                            <div id="indciesRefresh">
                                                                 @include('components.indices-quote', ['fetch' =>
                                                                 $fetch])
                                                             </div>
@@ -463,82 +505,84 @@ $user = Auth::user();
 
                     </div>
                     <!-- /row -->
-                {{-- </div> --}}
-            </div>
-        </div>
-
-   
-
-
-
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
-        style="width: 1200px">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel">Add Your Script</h5>
-            <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
-                style="border: none">
-                <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt="" onclick="hideSearch()">
-            </button>
-
-        </div>
-        <div class="offcanvas-body">
-
-            <div class="filter cm-content-box box-primary">
-                {{-- <div class="content-title SlideToolHeader">
-                    <div class="cpa">
-                        <i class="fa fa-list-alt me-2"></i>Add Script
-                    </div>
-                    <div class="tools">
-                        <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
-                    </div>
+                    {{--
                 </div> --}}
-                <div class="cm-content-body form excerpt">
-                    <div class="card-body">
-                        <div class="row align-items-center mb-3">
-
-                            <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0">
-                                <input type="text" class="form-control" id="searchinp" placeholder="Search Script"
-                                    onkeyup="searchScript(this)" autofocus>
-
-                            </div>
-
-
-                       
-
-                        </div>
-                       
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="filter cm-content-box box-primary">
-                        <div class="content-title SlideToolHeader">
-                            <div class="cpa">
-                                Menus
-                            </div>
-                            
-                        </div>
-                        <div id="scrollR" class=" cm-content-body card-body pt-4 pb-0 height800 dlab-scroll">
-                            <div class="contacts-list" id="RecentActivityContent">
-                                <p id="msg" class="text-center">Enter at least 2 characters in the Search
-                                    box above to see results here.</p>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </div>
+
+
+
+
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
+            style="width: 1200px">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel">Add Your Script</h5>
+                <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
+                    style="border: none">
+                    <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt=""
+                        onclick="hideSearch()">
+                </button>
+
+            </div>
+            <div class="offcanvas-body">
+
+                <div class="filter cm-content-box box-primary">
+                    {{-- <div class="content-title SlideToolHeader">
+                        <div class="cpa">
+                            <i class="fa fa-list-alt me-2"></i>Add Script
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:void(0);" class="expand handle"><i class="fal fa-angle-down"></i></a>
+                        </div>
+                    </div> --}}
+                    <div class="cm-content-body form excerpt">
+                        <div class="card-body">
+                            <div class="row align-items-center mb-3">
+
+                                <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0">
+                                    <input type="text" class="form-control" id="searchinp" placeholder="Search Script"
+                                        onkeyup="searchScript(this)" autofocus>
+
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="filter cm-content-box box-primary">
+                            <div class="content-title SlideToolHeader">
+                                <div class="cpa">
+                                    Menus
+                                </div>
+
+                            </div>
+                            <div id="scrollR" class=" cm-content-body card-body pt-4 pb-0 height800 dlab-scroll">
+                                <div class="contacts-list" id="RecentActivityContent">
+                                    <p id="msg" class="text-center">Enter at least 2 characters in the Search
+                                        box above to see results here.</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
     </div>
 
-    
+
     <script>
         // Trade Start
 
@@ -822,7 +866,15 @@ $user = Auth::user();
                 // Iterate through the received WebSocket data
                 for (const key in feeds) {
                     if (feeds.hasOwnProperty(key)) {
-                        const feedData = feeds[key].ff.marketFF; // Data from WebSocket
+                        let feedData = feeds[key].ff.marketFF;
+                        if(!feedData){
+                            feedData = feeds[key].ff.indexFF;  
+                            feedData.marketLevel = null; // Set marketLevel to null if not present
+                        } // Data from WebSocket
+
+                        if (!feedData) continue;
+
+
                         const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
 
                         const isinElement1 = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el
@@ -861,8 +913,8 @@ $user = Auth::user();
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
 
                             const percentageChange = cp > 0 
-    ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
-    : 0;
+                                ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
+                                : 0;
 
                           
 
@@ -1096,7 +1148,6 @@ $user = Auth::user();
 
 
     <script>
-    
         function showOrderForm(row,index) {
             const offcanvasId = `orderoffcanvasBottom${row}${index}`;
             const offcanvasElement = document.getElementById(offcanvasId);
@@ -1955,7 +2006,9 @@ $user = Auth::user();
     
                 // Extracting stock data from the event
                 let sensexData = e.stocks?.feeds?.["BSE_INDEX|SENSEX"]?.ff?.indexFF;
-                let niftyData = e.stocks?.feeds?.["NSE_INDEX|NIFTY 50"]?.ff?.marketFF;
+                let niftyData = e.stocks?.feeds?.["NSE_INDEX|Nifty 50"]?.ff?.indexFF;
+
+                console.log(niftyData);
 
                
     
@@ -1965,33 +2018,45 @@ $user = Auth::user();
                     let sensexChange = sensexLtp - sensexCP;
                     
                     let sensexChangePercent = ((sensexChange / sensexCP) * 100).toFixed(2);
-    
-                    document.getElementById('sensexLtp').textContent = sensexLtp.toFixed(2);
-                    document.getElementById('sensexChange').innerHTML = `
-                        <p class="${sensexChange >= 0 ? 'text-success' : 'text-danger'} fw-bold mb-1">
-                            ${sensexChangePercent}%
-                        </p>
-                        <p class="${sensexChange >= 0 ? 'text-success' : 'text-danger'} fs-5 fw-semibold">
-                            ${sensexChange.toFixed(2)}
-                        </p>
+
+                    const sensexLtpElement=document.getElementById('sensexLtp');
+                    sensexLtpElement.textContent = sensexLtp.toFixed(2);
+                    sensexLtpElement.classList.remove('stock-success-value','stock-danger-value');
+                    sensexLtpElement.classList.add(sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
+
+                    const sensexChangeElement=document.getElementById('sensexChange');
+                    sensexChangeElement.classList.remove('stock-success-value','stock-danger-value');
+                    sensexChangeElement.classList.add(sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
+
+                    sensexChangeElement.innerHTML=`
+                      <div>${sensexChange>=0?'+':'-'}${Math.abs(sensexChangePercent)}%</div>
+                      <div>${sensexChange>=0?'+':'-'}${Math.abs(sensexChange.toFixed(2))}</div>
                     `;
+    
+                  
                 }
     
-                if (niftyData && niftyData.ltpc.length > 0) {
-                    let niftyLtp = niftyData.ltpc[0].ltp;
-                    let niftyPrevClose = niftyData.ltpc[0].cp;
-                    let niftyChange = niftyLtp - niftyPrevClose;
-                    let niftyChangePercent = ((niftyChange / niftyPrevClose) * 100).toFixed(2);
+                if (niftyData) {
+                    let niftyLtp = niftyData.ltpc.ltp;
+                    let niftyCP = niftyData.ltpc.cp;
+                    let niftyChange = niftyLtp - niftyCP;
+                    let niftyChangePercent = ((niftyChange / niftyCP) * 100).toFixed(2);
     
-                    document.getElementById('niftyLtp').textContent = niftyLtp.toFixed(2);
-                    document.getElementById('niftyChange').innerHTML = `
-                        <p class="${niftyChange >= 0 ? 'text-success' : 'text-danger'} fw-bold mb-1">
-                            ${niftyChangePercent}%
-                        </p>
-                        <p class="${niftyChange >= 0 ? 'text-success' : 'text-danger'} fs-5 fw-semibold">
-                            ${niftyChange.toFixed(2)}
-                        </p>
+                    const niftyLtpElement=document.getElementById('niftyLtp');
+                    niftyLtpElement.textContent = niftyLtp.toFixed(2);
+
+                    niftyLtpElement.classList.remove('stock-success-value','stock-danger-value');
+                    niftyLtpElement.classList.add(niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
+
+                    const niftyChangeElement=document.getElementById('niftyChange');
+                    niftyChangeElement.classList.remove('stock-success-value','stock-danger-value');
+                    niftyChangeElement.classList.add(niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
+
+                    niftyChangeElement.innerHTML=`
+                      <div>${niftyChange>=0?'+':'-'}${Math.abs(niftyChangePercent)}%</div>
+                      <div>${niftyChange>=0?'+':'-'}${Math.abs(niftyChange.toFixed(2))}</div>
                     `;
+
                 }
             });
     </script>

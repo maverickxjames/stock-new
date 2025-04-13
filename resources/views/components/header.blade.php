@@ -206,31 +206,63 @@ $user = auth()->user();
             </div>
         </nav>
     </div>
-    <div class="page-titles ps-lg-[10rem] p-3 rounded shadow" style="background-color: #0c0101">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex flex-column text-center px-3">
-                <h2 class="text-white fw-bold mb-1">Nifty 50</h2>
-                <p class="text-warning fs-5 fw-semibold" id="niftyLtp">22,290</p>
-            </div>
-            <div class="d-flex flex-column text-center px-3" id="niftyChange">
-                <p class="text-danger fw-bold mb-1">-05%</p>
-                <p class="text-danger fs-5 fw-semibold">-12.40</p>
-            </div>
+    @php
+        $sensexData=DB::table('future_temp')->where('instrumentKey','BSE_INDEX|SENSEX')->first();
+        $niftyData=DB::table('future_temp')->where('instrumentKey','NSE_INDEX|Nifty 50')->first();
+
+        // print_r($sensexData);
+        // print_r($niftyData);
+
+        $sensexChange=$sensexData->ltp-$sensexData->cp;
+        $niftyChange=$niftyData->ltp-$niftyData->cp;
+
+        $sensexChangePercentage=($sensexChange/$sensexData->cp)*100;
+        $niftyChangePercentage=($niftyChange/$niftyData->cp)*100;
+
+        $sensexChangePercentage=number_format($sensexChangePercentage,2);
+        $niftyChangePercentage=number_format($niftyChangePercentage,2);
+        $sensexChange=number_format($sensexChange,2);
+        $niftyChange=number_format($niftyChange,2);
+        $sensexLtp=number_format($sensexData->ltp,2);
+        $niftyLtp=number_format($niftyData->ltp,2);
+
+    @endphp
+   <div class="stock-box page-titles" style="width: 100%;magrin-right: 0px;margin-left: 0px;">  
+    <!-- NIFTY -->
+
+    {{-- <div class="d-flex w-25 justify-content-between align-items-center gap-5" > --}}
+        <div class="d-flex flex-column">
+        <div class="stock-label">NIFTY</div>
+        <div class="{{ $niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value' }}" id="niftyLtp">
+            {{ $niftyLtp }}
         </div>
-        <hr class="text-white opacity-50">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex flex-column text-center px-3">
-                <h2 class="text-white fw-bold mb-1">Sensex</h2>
-                <p class="text-warning fs-5 fw-semibold" id="sensexLtp">22,290</p>
-            </div>
-            <div class="d-flex flex-column text-center px-3" id="sensexChange">
-                <p class="text-success fw-bold mb-1">-05%</p>
-                <p class="text-danger fs-5 fw-semibold">-12.40</p>
-            </div>
-        </div>
-        {{-- <div class="text-center mt-3">
-            <button onclick="history.back()" type="button" class="btn btn-outline-light btn-lg rounded-pill shadow">⬅ Back</button>
-        </div> --}}
     </div>
+    <div class="d-flex flex-column {{ $niftyChange >= 0 ? 'stock-success-change' : 'stock-danger-value' }}" id="niftyChange">
+        <div>{{ $niftyChange >= 0 ? '+' : '' }}{{ $niftyChangePercentage }}%</div>
+        <div>{{ $niftyChange >= 0 ? '+' : '' }}{{ $niftyChange }}</div>
+    </div>
+    {{-- </div> --}}
+    
+
+    <!-- Divider -->
+    <div class="divider mx-2"></div>
+
+    <!-- SENSEX -->
+
+    {{-- <div class="d-flex w-25 justify-content-between align-items-center gap-5"> --}}
+        <div class="d-flex flex-column">
+        <div class="stock-label">SENSEX</div>
+        <div class="{{ $sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value' }}" id="sensexLtp">
+            {{ $sensexLtp }}
+        </div>
+    </div>
+    <div class="d-flex flex-column {{ $sensexChange >= 0 ? 'stock-success-change' : 'stock-danger-value' }}" id="sensexChange">
+        <div>{{ $sensexChange >= 0 ? '+' : '' }}{{ $sensexChangePercentage }}%</div>
+        <div>{{ $sensexChange >= 0 ? '+' : '' }}{{ $sensexChange }}</div>
+    </div>
+    {{-- </div> --}}
+    
+</div>
+    
     
 </div>

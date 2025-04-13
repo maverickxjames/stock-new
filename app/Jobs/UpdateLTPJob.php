@@ -34,6 +34,20 @@ class UpdateLTPJob implements ShouldQueue
         foreach ($datas as $instrumentKey => $data) {
            
           $ltp = $data['ff']['marketFF']['ltpc']['ltp'] ?? null;
+          $cp = $data['ff']['marketFF']['ltpc']['cp'] ?? null;
+          $high = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['high'] ?? null;
+          $low = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['low'] ?? null;
+          $open = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['open'] ?? null;
+            $close = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['close'] ?? null;
+
+          if($ltp == null){
+            $ltp = $data['ff']['indexFF']['ltpc']['ltp'] ?? null;
+            $cp = $data['ff']['indexFF']['ltpc']['cp'] ?? null;
+            $high = $data['ff']['indexFF']['marketOHLC']['ohlc'][0]['high'] ?? null;
+            $low = $data['ff']['indexFF']['marketOHLC']['ohlc'][0]['low'] ?? null;
+            $open = $data['ff']['indexFF']['marketOHLC']['ohlc'][0]['open'] ?? null;
+            $close = $data['ff']['indexFF']['marketOHLC']['ohlc'][0]['close'] ?? null;
+          }
 
         if (is_array($ltp)) {
             Log::error("Unexpected array in LTP", ['instrumentKey' => $instrumentKey, 'ltp' => json_encode($ltp)]);
@@ -42,10 +56,31 @@ class UpdateLTPJob implements ShouldQueue
 
 // Convert LTP to float
         $ltp = (float) $ltp;
+        $cp = (float) $cp;
+        $high = (float) $high;
+        $low = (float) $low;
+        $open = (float) $open;
+        $close = (float) $close;
 
-        DB::table('future_temp')
+
+        $query = DB::table('future_temp')
             ->where('instrumentKey', $instrumentKey)
-            ->update(['ltp' => $ltp]);
+            ->update([
+                'ltp' => $ltp,
+                'cp' => $cp,
+                'high' => $high,
+                'low' => $low,
+                'open' => $open,
+                'close' => $close,
+                'updated_at' => now(),
+
+            ]);
+
+            if($query){
+                Log::info("LTP updated successfully", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp]);
+            }else{
+                Log::error("Failed to update LTP", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp]);
+            }
 
         }
     }
