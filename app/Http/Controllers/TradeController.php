@@ -254,7 +254,7 @@ class TradeController extends Controller
                         }
                     } elseif ($stockData[0]->instrumentType == 'CE' || $stockData[0]->instrumentType == 'PE') {
                         if ($orderType == 'market') {
-                            $margin = 7;
+                            $margin = 7; 
                             $quantity = $lotSize * $stockData[0]->lotSize;
                             $cost = $quantity * $price;
                             $total_cost = $cost / $margin;
