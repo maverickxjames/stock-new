@@ -32,8 +32,8 @@ $user = auth()->user();
                     {{-- <li class="nav-item dropdown notification_dropdown" title="Change Theme">
                         <a class="nav-link bell dz-theme-mode" href="javascript:void(0);">
                             <svg id="icon-light" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32"
-                                viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 24 24"
+                                version="1.1" class="svg-main-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
                                     <path
@@ -45,8 +45,8 @@ $user = auth()->user();
                                 </g>
                             </svg>
                             <svg id="icon-dark" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32"
-                                viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 24 24"
+                                version="1.1" class="svg-main-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
                                     <path
@@ -60,8 +60,7 @@ $user = auth()->user();
                     {{-- <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                width="32px" height="32px" viewBox="0 0 24 24" version="1.1"
-                                class="svg-main-icon">
+                                width="32px" height="32px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <path
                                         d="M17,12 L18.5,12 C19.3284271,12 20,12.6715729 20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 C4,12.6715729 4.67157288,12 5.5,12 L7,12 L7.5582739,6.97553494 C7.80974924,4.71225688 9.72279394,3 12,3 C14.2772061,3 16.1902508,4.71225688 16.4417261,6.97553494 L17,12 Z"
@@ -71,8 +70,7 @@ $user = auth()->user();
                             </svg>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <div id="DZ_W_Notification3" class="widget-media dlab-scroll p-3"
-                                style="height:380px;">
+                            <div id="DZ_W_Notification3" class="widget-media dlab-scroll p-3" style="height:380px;">
                                 <ul class="timeline">
                                     <li>
                                         <div class="timeline-panel">
@@ -150,8 +148,7 @@ $user = auth()->user();
                     {{-- <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link " href="javascript:void(0);" data-bs-toggle="dropdown">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                width="32px" height="32px" viewBox="0 0 24 24" version="1.1"
-                                class="svg-main-icon">
+                                width="32px" height="32px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
                                     <path
@@ -195,8 +192,7 @@ $user = auth()->user();
                                 </a>
                                 <a onclick="window.location.href='{{ route('logoutt') }}'" class="dropdown-item ai-icon"
                                     style="cursor: pointer;">
-                                    <img src="https://cdn-icons-png.flaticon.com/128/12795/12795397.png"
-                                        alt="">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/12795/12795397.png" alt="">
                                     <span class="ms-2 text-danger">Logout </span>
                                 </a>
                             </div>
@@ -207,62 +203,62 @@ $user = auth()->user();
         </nav>
     </div>
     @php
-        $sensexData=DB::table('future_temp')->where('instrumentKey','BSE_INDEX|SENSEX')->first();
-        $niftyData=DB::table('future_temp')->where('instrumentKey','NSE_INDEX|Nifty 50')->first();
+    $sensexData=DB::table('future_temp')->where('instrumentKey','BSE_INDEX|SENSEX')->first();
+    $niftyData=DB::table('future_temp')->where('instrumentKey','NSE_INDEX|Nifty 50')->first();
 
-        // print_r($sensexData);
-        // print_r($niftyData);
+    // print_r($sensexData);
+    // print_r($niftyData);
 
-        $sensexChange=$sensexData->ltp-$sensexData->cp;
-        $niftyChange=$niftyData->ltp-$niftyData->cp;
+    $sensexChange=$sensexData->ltp-$sensexData->cp;
+    $niftyChange=$niftyData->ltp-$niftyData->cp;
 
-        $sensexChangePercentage=($sensexChange/$sensexData->cp)*100;
-        $niftyChangePercentage=($niftyChange/$niftyData->cp)*100;
+    $sensexChangePercentage=($sensexChange/$sensexData->cp)*100;
+    $niftyChangePercentage=($niftyChange/$niftyData->cp)*100;
 
-        $sensexChangePercentage=number_format($sensexChangePercentage,2);
-        $niftyChangePercentage=number_format($niftyChangePercentage,2);
-        $sensexChange=number_format($sensexChange,2);
-        $niftyChange=number_format($niftyChange,2);
-        $sensexLtp=number_format($sensexData->ltp,2);
-        $niftyLtp=number_format($niftyData->ltp,2);
+    $sensexChangePercentage=number_format($sensexChangePercentage,2);
+    $niftyChangePercentage=number_format($niftyChangePercentage,2);
+    $sensexChange=number_format($sensexChange,2);
+    $niftyChange=number_format($niftyChange,2);
+    $sensexLtp=number_format($sensexData->ltp,2);
+    $niftyLtp=number_format($niftyData->ltp,2);
 
     @endphp
-   <div class="stock-box page-titles" style="width: 100%;magrin-right: 0px;margin-left: 0px;">  
-    <!-- NIFTY -->
+    
+    <div class="stock-box page-titles" style="width: 100%;magrin-right: 0px;margin-left: 0px;">
+        <!-- NIFTY -->
 
-    {{-- <div class="d-flex w-25 justify-content-between align-items-center gap-5" > --}}
         <div class="d-flex flex-column">
-        <div class="stock-label">NIFTY</div>
-        <div class="{{ $niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value' }}" id="niftyLtp">
-            {{ $niftyLtp }}
+            <div class="stock-label">NIFTY</div>
+            <div class="{{ $niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value' }}" id="niftyLtp">
+                {{ $niftyLtp }}
+            </div>
         </div>
-    </div>
-    <div class="d-flex flex-column {{ $niftyChange >= 0 ? 'stock-success-change' : 'stock-danger-value' }}" id="niftyChange">
-        <div>{{ $niftyChange >= 0 ? '+' : '' }}{{ $niftyChangePercentage }}%</div>
-        <div>{{ $niftyChange >= 0 ? '+' : '' }}{{ $niftyChange }}</div>
-    </div>
-    {{-- </div> --}}
-    
+        <div class="d-flex flex-column {{ $niftyChange >= 0 ? 'stock-success-change' : 'stock-danger-value' }}"
+            id="niftyChange">
+            <div>{{ $niftyChange >= 0 ? '+' : '' }}{{ $niftyChangePercentage }}%</div>
+            <div>{{ $niftyChange >= 0 ? '+' : '' }}{{ $niftyChange }}</div>
+        </div>
 
-    <!-- Divider -->
-    <div class="divider mx-2"></div>
 
-    <!-- SENSEX -->
+        <!-- Divider -->
+        <div class="divider mx-2"></div>
 
-    {{-- <div class="d-flex w-25 justify-content-between align-items-center gap-5"> --}}
+        <!-- SENSEX -->
+
         <div class="d-flex flex-column">
-        <div class="stock-label">SENSEX</div>
-        <div class="{{ $sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value' }}" id="sensexLtp">
-            {{ $sensexLtp }}
+            <div class="stock-label">SENSEX</div>
+            <div class="{{ $sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value' }}" id="sensexLtp">
+                {{ $sensexLtp }}
+            </div>
         </div>
+        <div class="d-flex flex-column {{ $sensexChange >= 0 ? 'stock-success-change' : 'stock-danger-value' }}"
+            id="sensexChange">
+            <div>{{ $sensexChange >= 0 ? '+' : '' }}{{ $sensexChangePercentage }}%</div>
+            <div>{{ $sensexChange >= 0 ? '+' : '' }}{{ $sensexChange }}</div>
+        </div>
+
+
     </div>
-    <div class="d-flex flex-column {{ $sensexChange >= 0 ? 'stock-success-change' : 'stock-danger-value' }}" id="sensexChange">
-        <div>{{ $sensexChange >= 0 ? '+' : '' }}{{ $sensexChangePercentage }}%</div>
-        <div>{{ $sensexChange >= 0 ? '+' : '' }}{{ $sensexChange }}</div>
-    </div>
-    {{-- </div> --}}
-    
-</div>
-    
-    
+
+
 </div>

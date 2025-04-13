@@ -100,6 +100,7 @@ $user = Auth::user();
                 padding-left: 10rem !important;
             }
         }
+        
     </style>
 
     <!-- FAVICONS ICON -->
@@ -309,10 +310,10 @@ $user = Auth::user();
                                                         <a class="nav-link" data-bs-toggle="tab" href="#mcx"
                                                             onclick="changeQuote('mcx')">MCX</a>
                                                     </li>
-                                                    <li class="nav-item">
+                                                    {{-- <li class="nav-item">
                                                         <a class="nav-link" data-bs-toggle="tab" href="#indcies"
                                                             onclick="changeQuote('indices')">Indices</a>
-                                                    </li>
+                                                    </li> --}}
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="future" role="tabpanel">
@@ -449,7 +450,7 @@ $user = Auth::user();
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @php
+                                                    {{-- @php
                                                     $data3=DB::table('future_temp')->where('instrumentType','INDEX')->where('is_watchlist',1)->get();
 
 
@@ -490,7 +491,7 @@ $user = Auth::user();
                                                                 $fetch])
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
 
                                             </div>
