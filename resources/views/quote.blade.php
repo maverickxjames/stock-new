@@ -44,43 +44,70 @@ $user = Auth::user();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
+        .stock-marquee-wrapper {
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
 
-.stock-box {
-      background-color: #ffffff;
-      border-top: 3px solid #f48c06;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      width: max-content;
-    }
-    .divider {
-      border-left: 1px solid #ccc;
-      height: 2.5rem;
-    }
-    .stock-label {
-      font-weight: bold;
-      color: #343a40;
-    }
-    .stock-success-value {
-      color: #198754;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-    .stock-success-change {
-      color: #198754;
-      font-size: 0.875rem;
-    }
+        .stock-marquee {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+        }
 
-    .stock-danger-value {
-        color: #dc3545;
-        font-weight: 600;
-        font-size: 1.1rem;
-    }
-    .stock-danger-change {
-        color: #dc3545;
-        font-size: 0.875rem;
-    }
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .stock-box {
+            background-color: #ffffff;
+            border-top: 3px solid #f48c06;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            width: max-content;
+        }
+
+        .divider {
+            border-left: 1px solid #ccc;
+            height: 2.5rem;
+        }
+
+        .stock-label {
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .stock-success-value {
+            color: #198754;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .stock-success-change {
+            color: #198754;
+            font-size: 0.875rem;
+        }
+
+        .stock-danger-value {
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .stock-danger-change {
+            color: #dc3545;
+            font-size: 0.875rem;
+        }
 
         .wallet-balance {
             font-size: 2rem;
@@ -100,7 +127,6 @@ $user = Auth::user();
                 padding-left: 10rem !important;
             }
         }
-        
     </style>
 
     <!-- FAVICONS ICON -->
@@ -2001,65 +2027,108 @@ $user = Auth::user();
             });
         }
 
-        window.Echo.channel('stocks')
-            .listen('Stock', (e) => {
-                console.log("Stock event received:", e);
+        // window.Echo.channel('stocks')
+        //     .listen('Stock', (e) => {
+        //         console.log("Stock event received:", e);
     
-                // Extracting stock data from the event
-                let sensexData = e.stocks?.feeds?.["BSE_INDEX|SENSEX"]?.ff?.indexFF;
-                let niftyData = e.stocks?.feeds?.["NSE_INDEX|Nifty 50"]?.ff?.indexFF;
+        //         // Extracting stock data from the event
+        //         let sensexData = e.stocks?.feeds?.["BSE_INDEX|SENSEX"]?.ff?.indexFF;
+        //         let niftyData = e.stocks?.feeds?.["NSE_INDEX|Nifty 50"]?.ff?.indexFF;
 
-                console.log(niftyData);
+        //         console.log(niftyData);
 
                
     
-                if (sensexData) {
-                    let sensexLtp = sensexData.ltpc.ltp;
-                    let sensexCP = sensexData.ltpc.cp;
-                    let sensexChange = sensexLtp - sensexCP;
+        //         if (sensexData) {
+        //             let sensexLtp = sensexData.ltpc.ltp;
+        //             let sensexCP = sensexData.ltpc.cp;
+        //             let sensexChange = sensexLtp - sensexCP;
                     
-                    let sensexChangePercent = ((sensexChange / sensexCP) * 100).toFixed(2);
+        //             let sensexChangePercent = ((sensexChange / sensexCP) * 100).toFixed(2);
 
-                    const sensexLtpElement=document.getElementById('sensexLtp');
-                    sensexLtpElement.textContent = sensexLtp.toFixed(2);
-                    sensexLtpElement.classList.remove('stock-success-value','stock-danger-value');
-                    sensexLtpElement.classList.add(sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
+        //             const sensexLtpElement=document.getElementById('sensexLtp');
+        //             sensexLtpElement.textContent = sensexLtp.toFixed(2);
+        //             sensexLtpElement.classList.remove('stock-success-value','stock-danger-value');
+        //             sensexLtpElement.classList.add(sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
 
-                    const sensexChangeElement=document.getElementById('sensexChange');
-                    sensexChangeElement.classList.remove('stock-success-value','stock-danger-value');
-                    sensexChangeElement.classList.add(sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
+        //             const sensexChangeElement=document.getElementById('sensexChange');
+        //             sensexChangeElement.classList.remove('stock-success-value','stock-danger-value');
+        //             sensexChangeElement.classList.add(sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
 
-                    sensexChangeElement.innerHTML=`
-                      <div>${sensexChange>=0?'+':'-'}${Math.abs(sensexChangePercent)}%</div>
-                      <div>${sensexChange>=0?'+':'-'}${Math.abs(sensexChange.toFixed(2))}</div>
-                    `;
+        //             sensexChangeElement.innerHTML=`
+        //               <div>${sensexChange>=0?'+':'-'}${Math.abs(sensexChangePercent)}%</div>
+        //               <div>${sensexChange>=0?'+':'-'}${Math.abs(sensexChange.toFixed(2))}</div>
+        //             `;
     
                   
-                }
+        //         }
     
-                if (niftyData) {
-                    let niftyLtp = niftyData.ltpc.ltp;
-                    let niftyCP = niftyData.ltpc.cp;
-                    let niftyChange = niftyLtp - niftyCP;
-                    let niftyChangePercent = ((niftyChange / niftyCP) * 100).toFixed(2);
+        //         if (niftyData) {
+        //             let niftyLtp = niftyData.ltpc.ltp;
+        //             let niftyCP = niftyData.ltpc.cp;
+        //             let niftyChange = niftyLtp - niftyCP;
+        //             let niftyChangePercent = ((niftyChange / niftyCP) * 100).toFixed(2);
     
-                    const niftyLtpElement=document.getElementById('niftyLtp');
-                    niftyLtpElement.textContent = niftyLtp.toFixed(2);
+        //             const niftyLtpElement=document.getElementById('niftyLtp');
+        //             niftyLtpElement.textContent = niftyLtp.toFixed(2);
 
-                    niftyLtpElement.classList.remove('stock-success-value','stock-danger-value');
-                    niftyLtpElement.classList.add(niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
+        //             niftyLtpElement.classList.remove('stock-success-value','stock-danger-value');
+        //             niftyLtpElement.classList.add(niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
 
-                    const niftyChangeElement=document.getElementById('niftyChange');
-                    niftyChangeElement.classList.remove('stock-success-value','stock-danger-value');
-                    niftyChangeElement.classList.add(niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
+        //             const niftyChangeElement=document.getElementById('niftyChange');
+        //             niftyChangeElement.classList.remove('stock-success-value','stock-danger-value');
+        //             niftyChangeElement.classList.add(niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
 
-                    niftyChangeElement.innerHTML=`
-                      <div>${niftyChange>=0?'+':'-'}${Math.abs(niftyChangePercent)}%</div>
-                      <div>${niftyChange>=0?'+':'-'}${Math.abs(niftyChange.toFixed(2))}</div>
+        //             niftyChangeElement.innerHTML=`
+        //               <div>${niftyChange>=0?'+':'-'}${Math.abs(niftyChangePercent)}%</div>
+        //               <div>${niftyChange>=0?'+':'-'}${Math.abs(niftyChange.toFixed(2))}</div>
+        //             `;
+
+        //         }
+        //     });
+
+        const indicesConfig = [
+    { key: "NSE_INDEX|Nifty 50", ltpId: "niftyLtp", changeId: "niftyChange" },
+    { key: "BSE_INDEX|SENSEX", ltpId: "sensexLtp", changeId: "sensexChange" },
+    { key: "NSE_INDEX|Nifty Bank", ltpId: "bankniftyLtp", changeId: "bankniftyChange" },
+    { key: "NSE_INDEX|Nifty Next 50", ltpId: "niftynext50Ltp", changeId: "niftynext50Change" },
+    { key: "NSE_INDEX|NIFTY MID SELECT", ltpId: "midcapselectLtp", changeId: "midcapselectChange" },
+    { key: "NSE_INDEX|Nifty Fin Service", ltpId: "finniftyLtp", changeId: "finniftyChange" },
+    { key: "BSE_INDEX|SENSEX50", ltpId: "sensex50Ltp", changeId: "sensex50Change" },
+    { key: "BSE_INDEX|BANKEX", ltpId: "bankexLtp", changeId: "bankexChange" }
+];
+window.Echo.channel('stocks')
+    .listen('Stock', (e) => {
+        console.log("Stock event received:", e);
+
+        indicesConfig.forEach(({ key, ltpId, changeId }) => {
+            const data = e.stocks?.feeds?.[key]?.ff?.indexFF;
+
+            if (data) {
+                const ltp = data.ltpc.ltp;
+                const cp = data.ltpc.cp;
+                const change = ltp - cp;
+                const changePercent = ((change / cp) * 100).toFixed(2);
+
+                const ltpElement = document.getElementById(ltpId);
+                const changeElement = document.getElementById(changeId);
+
+                if (ltpElement && changeElement) {
+                    ltpElement.textContent = ltp.toFixed(2);
+                    ltpElement.classList.remove('stock-success-value', 'stock-danger-value');
+                    ltpElement.classList.add(change >= 0 ? 'stock-success-value' : 'stock-danger-value');
+
+                    changeElement.classList.remove('stock-success-value', 'stock-danger-value');
+                    changeElement.classList.add(change >= 0 ? 'stock-success-value' : 'stock-danger-value');
+                    changeElement.innerHTML = `
+                        <div>${change >= 0 ? '+' : '-'}${Math.abs(changePercent)}%</div>
+                        <div>${change >= 0 ? '+' : '-'}${Math.abs(change.toFixed(2))}</div>
                     `;
-
                 }
-            });
+            }
+        });
+    });
+
     </script>
 
 
