@@ -39,6 +39,8 @@ class UpdateLTPJob implements ShouldQueue
           $low = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['low'] ?? null;
           $open = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['open'] ?? null;
             $close = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['close'] ?? null;
+            $bid=$data['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['bid'] ?? null;
+            $ask=$data['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['ask'] ?? null;
 
           if($ltp == null){
             $ltp = $data['ff']['indexFF']['ltpc']['ltp'] ?? null;
@@ -47,6 +49,8 @@ class UpdateLTPJob implements ShouldQueue
             $low = $data['ff']['indexFF']['marketOHLC']['ohlc'][0]['low'] ?? null;
             $open = $data['ff']['indexFF']['marketOHLC']['ohlc'][0]['open'] ?? null;
             $close = $data['ff']['indexFF']['marketOHLC']['ohlc'][0]['close'] ?? null;
+            $bid=null;
+            $ask=null;
           }
 
         if (is_array($ltp)) {
@@ -61,6 +65,8 @@ class UpdateLTPJob implements ShouldQueue
         $low = (float) $low;
         $open = (float) $open;
         $close = (float) $close;
+        $bid = (float) $bid;
+        $ask = (float) $ask;
 
 
         $query = DB::table('future_temp')
@@ -72,6 +78,8 @@ class UpdateLTPJob implements ShouldQueue
                 'low' => $low,
                 'open' => $open,
                 'close' => $close,
+                'bid' => $bid,
+                'ask' => $ask,
                 'updated_at' => now(),
 
             ]);

@@ -1,6 +1,92 @@
 <?php
 $user = auth()->user();
 ?>
+ <style>
+    .stock-marquee-wrapper {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        background: #f9f9f9;
+    }
+
+    .stock-marquee {
+        display: inline-block;
+        padding-left: 100%;
+        animation: marquee 20s linear infinite;
+    }
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .stock-box {
+        background-color: #ffffff;
+        border-top: 3px solid #f48c06;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        width: max-content;
+    }
+
+    .divider {
+        border-left: 1px solid #ccc;
+        height: 2.5rem;
+    }
+
+    .stock-label {
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .stock-success-value {
+        color: #198754;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .stock-success-change {
+        color: #198754;
+        font-size: 0.875rem;
+    }
+
+    .stock-danger-value {
+        color: #dc3545;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .stock-danger-change {
+        color: #dc3545;
+        font-size: 0.875rem;
+    }
+
+    .wallet-balance {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .btn-deposit,
+    .btn-withdraw {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    @media (min-width: 992px) {
+
+        /* Large screen (lg) breakpoint in Bootstrap */
+        .pl-lg-custom {
+            padding-left: 10rem !important;
+        }
+    }
+</style>
+
 
 
 <div class="header">
@@ -202,3 +288,49 @@ $user = auth()->user();
 
 
 </div>
+
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+       const indicesConfig = [
+    { key: "NSE_INDEX|Nifty 50", ltpId: "niftyLtp", changeId: "niftyChange" },
+    { key: "BSE_INDEX|SENSEX", ltpId: "sensexLtp", changeId: "sensexChange" },
+    { key: "NSE_INDEX|Nifty Bank", ltpId: "bankniftyLtp", changeId: "bankniftyChange" },
+    { key: "NSE_INDEX|Nifty Next 50", ltpId: "niftynext50Ltp", changeId: "niftynext50Change" },
+    { key: "NSE_INDEX|NIFTY MID SELECT", ltpId: "midcapselectLtp", changeId: "midcapselectChange" },
+    { key: "NSE_INDEX|Nifty Fin Service", ltpId: "finniftyLtp", changeId: "finniftyChange" },
+    { key: "BSE_INDEX|SENSEX50", ltpId: "sensex50Ltp", changeId: "sensex50Change" },
+    { key: "BSE_INDEX|BANKEX", ltpId: "bankexLtp", changeId: "bankexChange" }
+];
+window.Echo.channel('stocks')
+    .listen('Stock', (e) => {
+        console.log("Stock event received:", e);
+
+        indicesConfig.forEach(({ key, ltpId, changeId }) => {
+            const data = e.stocks?.feeds?.[key]?.ff?.indexFF;
+
+            if (data) {
+                const ltp = data.ltpc.ltp;
+                const cp = data.ltpc.cp;
+                const change = ltp - cp;
+                const changePercent = ((change / cp) * 100).toFixed(2);
+
+                const ltpElement = document.getElementById(ltpId);
+                const changeElement = document.getElementById(changeId);
+
+                if (ltpElement && changeElement) {
+                    ltpElement.textContent = ltp.toFixed(2);
+                    ltpElement.classList.remove('stock-success-value', 'stock-danger-value');
+                    ltpElement.classList.add(change >= 0 ? 'stock-success-value' : 'stock-danger-value');
+
+                    changeElement.classList.remove('stock-success-value', 'stock-danger-value');
+                    changeElement.classList.add(change >= 0 ? 'stock-success-value' : 'stock-danger-value');
+                    changeElement.innerHTML = `
+                        <div>${change >= 0 ? '+' : '-'}${Math.abs(changePercent)}%</div>
+                        <div>${change >= 0 ? '+' : '-'}${Math.abs(change.toFixed(2))}</div>
+                    `;
+                }
+            }
+        });
+    });
+
+</script>

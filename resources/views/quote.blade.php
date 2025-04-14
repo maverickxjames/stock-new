@@ -309,7 +309,7 @@ $user = Auth::user();
         <!--Sidebar end-->
 
 
-        <div class="content-body">
+        <div class="content-body" style="padding-bottom: 50px;">
             <div class="container-fluid">
                 {{-- <div class="container-fluid pt-0 ps-0 pe-lg-4 pe-0"> --}}
                     <!-- row -->
