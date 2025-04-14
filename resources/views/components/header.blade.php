@@ -191,7 +191,7 @@ $user = auth()->user();
         }
     }
 @endphp
-<div class="stock-box page-titles stock-marquee-wrapper overflow-hidden" style="width: 100%;magrin-right: 0px;margin-left: 0px;">
+<div class="stock-box page-titles stock-marquee-wrapper overflow-hidden" style="width: 100%;margin-right: 0px;margin-left: 0px;">
     <div class="stock-marquee d-flex align-items-center">
 
         @foreach($indexData as $data)
