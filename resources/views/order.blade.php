@@ -189,12 +189,8 @@ use App\Models\Stockdata;
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header border-0">
-                                {{-- <h4 class="card-title">Buy & Sell Bitcoin</h4> --}}
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
-                                        {{-- <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab"
-                                            data-bs-target="#nav-all" type="button" role="tab"
-                                            aria-controls="nav-all" aria-selected="false">ALL</button> --}}
                                         <button class="nav-link active" id="nav-open-tab" data-bs-toggle="tab"
                                             data-bs-target="#nav-open" type="button" role="tab"
                                             aria-controls="nav-open" aria-selected="true">PENDING</button>
@@ -212,9 +208,11 @@ use App\Models\Stockdata;
                             </div>
                            
 
-                            <?php 
-                            $count = DB::table('trades')->where('user_id', $user->id)->where('status', 'executed')->count();
-                            ?>
+                            @php
+                                 $count = DB::table('trades')->where('user_id', $user->id)->where('status', 'executed')->count();
+                            @endphp 
+                           
+                         
 
                             <div style="margin: 0 14px"
                                 class="alert alert-warning alert-dismissible alert-alt solid fade show">
@@ -228,14 +226,13 @@ use App\Models\Stockdata;
 
                             <div class="card-body">
                                 <div class="tab-content" id="nav-tabContent1">
-                
                                     <div class="tab-pane fade show active" id="nav-open" role="tabpanel"
                                         aria-labelledby="nav-open-tab">
                                         <div class="tab-content" id="nav-tabContent3">
                                             <div class="tab-pane fade show active" id="nav-order2" role="tabpanel">
                                                 <div class="d-flex align-items-center justify-content-between"
                                                     style="margin-bottom: 20px">
-                                                    <h4 class="card-title">Stocks : OPEN</h4>
+                                                    <h4 class="card-title">Stocks : PENDING</h4>
                                                 </div>
 
                                                 @php
@@ -261,16 +258,12 @@ use App\Models\Stockdata;
                                                     <div class="row">
 
                                                         <?php
-                                                       
                                                         $i = 1;
-                                               
-
                                                         foreach ($stocks as $stock){
                                                             $foisin = $stock->instrumentKey;
                                                         ?>
 
-                                                        <div class="offcanvas offcanvas-bottom" tabindex="-1"
-                                                            id="orderoffcanvasBottom2{{ $i }}"
+                                                        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="orderoffcanvasBottom2{{ $i }}"
                                                             aria-labelledby="offcanvasBottomLabel"
                                                             style="height: fit-content">
                                                             <div class="offcanvas-header">
@@ -473,13 +466,10 @@ use App\Models\Stockdata;
 
 
 
-                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"  data-bs-toggle="modal"
-                                                        onclick="showOrderForm(2,{{ $i }})">
-                                                            <div class="card pull-up"
-                                                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"  data-bs-toggle="modal" onclick="showOrderForm(2,{{ $i }})">
+                                                            <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
                                                                 <div class="card-body align-items-center flex-wrap">
-                                                                    <p
-                                                                        class="mb-0 fs-5 font-w500 d-flex align-items-center">
+                                                                    <p class="mb-0 fs-5 font-w500 d-flex align-items-center">
                                                                         @if ($stock->action == 'BUY')
                                                                             <span class="badge badge-success me-2">
                                                                                 {{ $stock->action }}</span>
@@ -494,8 +484,7 @@ use App\Models\Stockdata;
                                                                             <span class="badge badge-dark ml-1">
                                                                                 Intraday</span>
                                                                         @endif
-                                                                        <span
-                                                                            class="badge badge-primary light">{{ $stock->tradeType }}</span>
+                                                                        <span class="badge badge-primary light">{{ $stock->tradeType }}</span>
                                                                     </p>
                                                                     <div class="d-flex align-items-center mb-4 mt-2">
 
@@ -511,14 +500,7 @@ use App\Models\Stockdata;
 
                                                                                 </h4>
                                                                                 <span>
-                                                                                    @if ($stock->order_type == 'market') Market Order
-                                                                                    @elseif($stock->order_type == 'limit')
-                                                                                        Limit Order
-                                                                                        @elseif($stock->order_type == 'stoplossMarket')
-                                                                                        Stoploss Market Order
-                                                                                        @elseif($stock->order_type == 'stoplossLimit')
-                                                                                        Stoploss Limit Order
-                                                                                    @endif
+                                                                                   
                                                                                 </span>
                                                                             </a>
                                                                             <div class="text-end"
@@ -1124,28 +1106,7 @@ use App\Models\Stockdata;
 
             </div>
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-
-
-
-        <!--**********************************
-            Footer start
-        ***********************************-->
-
-        <!--**********************************
-            Footer end
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
+  
 
     </div>
     <!--**********************************
@@ -1172,7 +1133,7 @@ use App\Models\Stockdata;
     </script>
 
 
-    <script>
+    {{-- <script>
         window.Echo.channel('stocks')
             .listen('Stock', (e) => {
                 console.log("Stock event received:", e);
@@ -1218,7 +1179,7 @@ use App\Models\Stockdata;
                     `;
                 }
             });
-    </script>
+    </script> --}}
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
