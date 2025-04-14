@@ -41,5 +41,12 @@ class MarketDataController extends Controller
 
         return response()->json(['message' => 'Stocks fetched successfully.']);
     }
+    public function fetchTradeOnlyLtp()
+    {
+        $data = $this->marketDataService->fetchTradeOnlyLtp();
+        // broadcast(new \App\Events\Stock($data));
+
+        return response()->json(['message' => 'Stocks fetched successfully.']);
+    }
 
 }

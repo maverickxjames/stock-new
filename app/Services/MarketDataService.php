@@ -9,6 +9,7 @@ use Upstox\Client\Api\WebsocketApi;
 use Com\Upstox\Marketdatafeeder\Rpc\Proto\FeedResponse;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\UpdateLTPJob;
+use App\Jobs\ValidateLtpc;
 use Illuminate\Support\Facades\Queue;
 
 class MarketDataService
@@ -231,6 +232,70 @@ class MarketDataService
                 UpdateLTPJob::dispatch($data2);
                 // Broadcast the processed data to the client
                 broadcast(new \App\Events\Stock($data2))->toOthers();
+            }
+        }
+    }
+    public function fetchTradeOnlyLtp()
+    {
+
+        $apiVersion = '2.0';
+        $accessToken = DB::table('upstocks')->where('id', 1)->value('token');
+
+        $configuration = Configuration::getDefaultConfiguration();
+        $configuration->setAccessToken($accessToken);
+
+        $response = $this->getMarketDataFeedAuthorize($apiVersion, $configuration);
+        $connection = connect($response['data']['authorized_redirect_uri']);
+
+        echo "Connection successful!\n";
+       
+
+        $nsefo = DB::table('trades')
+        ->select('instrumentKey') // Select only the 'exchangeToken' column
+        ->distinct()              // Ensure the results are distinct
+        ->get();                  // Retrieve the data
+
+    // Convert the collection to an array of 'exchangeToken' values
+        $tokens = $nsefo->pluck('instrumentKey')->toArray();
+
+        // Prepare the final array
+        $finalArray = ["instrumentKeys" => $tokens];
+
+        $data = [
+            "guid" => "someguid",
+            "method" => "sub",
+            "data" => [
+                "mode" => "ltpc",
+                // "instrumentKeys" => ["NSE_FO|35674"]
+                "instrumentKeys" => $finalArray['instrumentKeys']
+            ]
+        ];
+
+
+
+        $binaryData = json_encode($data);
+        $connection->sendBinary($binaryData);
+
+        foreach ($connection as $message) {
+            $payload = $message->buffer();
+
+            if ($payload === '100') {
+                $connection->close();
+                break;
+            }
+
+            if (!empty($payload)) {
+                $decodedData = $this->decodeProtobuf($payload);
+                $apidata = $decodedData->serializeToJsonString();
+
+                $data2 = json_decode($apidata, true);
+                var_dump($data2);
+                ValidateLtpc::dispatch($data2);
+                return 0;
+
+                // UpdateLTPJob::dispatch($data2);
+                // // Broadcast the processed data to the client
+                // broadcast(new \App\Events\Stock($data2))->toOthers();
             }
         }
     }
