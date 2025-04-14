@@ -39,8 +39,8 @@ class UpdateLTPJob implements ShouldQueue
           $low = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['low'] ?? null;
           $open = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['open'] ?? null;
             $close = $data['ff']['marketFF']['marketOHLC']['ohlc'][0]['close'] ?? null;
-            $bid=$data['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['bid'] ?? null;
-            $ask=$data['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['ask'] ?? null;
+            $bid=$data['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['bidQ'] ?? null;
+            $ask=$data['ff']['marketFF']['marketLevel']['bidAskQuote'][0]['askQ'] ?? null;
 
           if($ltp == null){
             $ltp = $data['ff']['indexFF']['ltpc']['ltp'] ?? null;
@@ -85,9 +85,9 @@ class UpdateLTPJob implements ShouldQueue
             ]);
 
             if($query){
-                Log::info("LTP updated successfully", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp]);
+                Log::info("LTP updated successfully", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp, 'cp' => $cp, 'high' => $high, 'low' => $low, 'open' => $open, 'close' => $close, 'bid' => $bid, 'ask' => $ask]);
             }else{
-                Log::error("Failed to update LTP", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp]);
+                Log::error("Failed to update LTP", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp , 'cp' => $cp, 'high' => $high, 'low' => $low, 'open' => $open, 'close' => $close, 'bid' => $bid, 'ask' => $ask]);
             }
 
         }

@@ -18,7 +18,7 @@ class MarketDataController extends Controller
        $data2 = $this->marketDataService->fetchMarketUpdates();
             broadcast(new \App\Events\Watchlist($data2));
 
-            return $data2;
+            // return $data2;
 
 
         return response()->json(['message' => 'Market updates fetched successfully.']);
