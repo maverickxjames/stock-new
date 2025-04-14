@@ -234,22 +234,37 @@
                                 $total_current_value = 0;
                                 $change_percentage = 0;
 
-                                $trades = DB::table('trades')
-                                    ->where('trades.user_id', $user->id)
-                                    ->where('trades.status', 'executed')
-                                    ->leftJoin('future_temp', 'future_temp.instrumentKey', '=', 'trades.instrumentKey') // Join future_temp
-                                    ->selectRaw(
-                                        '
-                                    trades.instrumentKey as instrumentKey,
-                                    SUM(trades.quantity) as quantity,
-                                    AVG(trades.price) as avg_price,
-                                    SUM(trades.cost) as total_cost,
-                                    COALESCE(future_temp.ltp, 0) as ltp
-                                ',
-                                    )
-                                    ->groupBy('trades.instrumentKey', 'future_temp.ltp') // Group by instrumentKey and ltp
-                                    ->get();
+                                $futureSub = DB::table('future_temp')
+    ->select('instrumentKey', DB::raw('MAX(ltp) as ltp'))
+    ->groupBy('instrumentKey');
 
+$trades = DB::table(DB::raw('(
+        SELECT 
+            instrumentKey,
+            SUM(quantity) as quantity,
+            AVG(price) as avg_price,
+            SUM(cost) as total_cost,
+            SUM(total_cost) as marginUsed
+        FROM trades
+        WHERE user_id = ' . $user->id . '
+            AND status = "executed"
+        GROUP BY instrumentKey
+    ) as aggregated_trades'))
+    ->leftJoinSub($futureSub, 'future_temp', function ($join) {
+        $join->on('future_temp.instrumentKey', '=', 'aggregated_trades.instrumentKey');
+    })
+    ->selectRaw('
+        aggregated_trades.instrumentKey,
+        aggregated_trades.quantity,
+        aggregated_trades.avg_price,
+        aggregated_trades.total_cost,
+        aggregated_trades.marginUsed,
+        COALESCE(future_temp.ltp, 0) as ltp
+    ')
+    ->get();
+
+                                Log::info($trades); // Log the trades data
+                            
                                 foreach ($trades as $trade) {
                                     $total_investment += $trade->total_cost;
                                     $total_current_value += $trade->quantity * $trade->ltp;
@@ -296,7 +311,7 @@
                                             <hr class="border-white opacity-25 mb-3">
                                             <div class="d-flex justify-content-between mb-4">
                                                 <div class="d-flex flex-column align-items-center">
-                                                    <span id="marginWallet" class="text-light fs-4 font-w600">₹ 0</span>
+                                                    <span id="marginWallet" class="text-light fs-4 font-w600">₹ {{ number_format($trade->marginUsed,2) }}</span>
                                                     <span class="text-light fw-medium font-w300">Margin Used</span>
                                                     {{-- <span class="text-white">₹ {{ number_format($margin_used, 2) }}</span> --}}
                                                 </div>
@@ -392,40 +407,40 @@
                                         <div class="col-xl-12">
 
                                             @php
-                                                $trades = DB::table('trades')
-                                                    ->where('trades.user_id', $user->id)
-                                                    ->where('trades.status', 'executed')
-                                                    ->leftJoin(
-                                                        'future_temp',
-                                                        'future_temp.instrumentKey',
-                                                        '=',
-                                                        'trades.instrumentKey',
-                                                    ) // Join future_temp table
-                                                    ->selectRaw(
-                                                        '
-                                                            trades.instrumentKey,
-                                                            SUM(trades.quantity) as quantity,
-                                                            AVG(trades.price) as avg_price,
-                                                            MIN(trades.stock_name) as stock_name,
-                                                            MIN(trades.stock_symbol) as stock_symbol,
-                                                            MIN(trades.action) as action,
-                                                            MIN(trades.tradeType) as tradeType,
-                                                            MIN(trades.duration) as duration,
-                                                            SUM(trades.total_cost) as total_cost,
-                                                            SUM(trades.cost) as cost,
-                                                            SUM(trades.lotSize) as lotSize,
-                                                            MIN(trades.created_at) as created_at,
-                                                            MIN(trades.tradeType) as tradeType,
-                                                            MIN(future_temp.ltp) as ltp,
-                                                            MIN(future_temp.cp) as cp,
-                                                            MIN(trades.margin) as margin,
-                                                            MIN(trades.price) as price,
-                                                            MIN(trades.order_type) as order_type
+                                                $futureSub = DB::table('future_temp')
+    ->select('instrumentKey', DB::raw('MIN(ltp) as ltp'), DB::raw('MIN(cp) as cp'))
+    ->groupBy('instrumentKey');
 
-                                                        ',
-                                                    )
-                                                    ->groupBy('trades.instrumentKey', 'trades.duration')
-                                                    ->get();
+$trades = DB::table('trades')
+    ->where('trades.user_id', $user->id)
+    ->where('trades.status', 'executed')
+    ->leftJoinSub($futureSub, 'future_temp', function ($join) {
+        $join->on('future_temp.instrumentKey', '=', 'trades.instrumentKey');
+    })
+    ->selectRaw('
+        trades.instrumentKey,
+        SUM(trades.quantity) as quantity,
+        AVG(trades.price) as avg_price,
+        MIN(trades.stock_name) as stock_name,
+        MIN(trades.stock_symbol) as stock_symbol,
+        MIN(trades.action) as action,
+        MIN(trades.tradeType) as tradeType,
+        MIN(trades.duration) as duration,
+        SUM(trades.total_cost) as total_cost,
+        SUM(trades.cost) as cost,
+        SUM(trades.lotSize) as lotSize,
+        MIN(trades.created_at) as created_at,
+        MIN(trades.tradeType) as tradeType,
+        future_temp.ltp,
+        future_temp.cp,
+        MIN(trades.margin) as margin,
+        MIN(trades.price) as price,
+        MIN(trades.order_type) as order_type
+    ')
+    ->groupBy('trades.instrumentKey', 'trades.duration', 'future_temp.ltp', 'future_temp.cp')
+    ->get();
+
+                                                    Log::info($trades); // Log the trades data
                                             @endphp
 
                                             @if ($trades->isEmpty())
@@ -906,8 +921,8 @@
                                                                             Current : ₹
                                                                             {{ number_format($profitAmount, 2) }}
                                                                         </p>
-                                                                        <span class="fs-12">Invest : ₹
-                                                                            {{ number_format($investedValue, 2) }}</span>
+                                                                        <span class="fs-12">Margin Used : ₹
+                                                                            {{ number_format($stock->total_cost, 2) }}</span>
                                                                         {{-- <span class="fs-12">Delivery</span>
                                                                     --}}
                                                                     </div>
@@ -1447,6 +1462,7 @@
                                                                 // $currentValue = ($stock->ltp * $stock->quantity) / $margin;
                                                                 
                                                                 $investedValue = $stock->cost;
+                                                                // $stock->total_cost = $stock->total_cost;
                                                                 // $investedValue = $stock->total_cost;
                                                                 $change = $currentValue - $investedValue;
                                                                 
@@ -1467,8 +1483,8 @@
                                                                             Current : ₹
                                                                             {{ number_format($profitAmount, 2) }}
                                                                         </p>
-                                                                        <span class="fs-12">Invest : ₹
-                                                                            {{ number_format($investedValue, 2) }}</span>
+                                                                        <span class="fs-12">Margin Used : ₹
+                                                                            {{ number_format($stock->total_cost, 2) }}</span>
                                                                         {{-- <span class="fs-12">Delivery</span>
                                                                         --}}
                                                                     </div>
@@ -2027,8 +2043,8 @@
                                                                             Current : ₹
                                                                             {{ number_format($profitAmount, 2) }}
                                                                         </p>
-                                                                        <span class="fs-12">Invest : ₹
-                                                                            {{ number_format($investedValue, 2) }}</span>
+                                                                        <span class="fs-12">Margin Used : ₹
+                                                                            {{ number_format($stock->total_cost, 2) }}</span>
                                                                         {{-- <span class="fs-12">Delivery</span>
                                                                         --}}
                                                                     </div>
@@ -2581,8 +2597,8 @@
                                                                             Current : ₹
                                                                             {{ number_format($profitAmount, 2) }}
                                                                         </p>
-                                                                        <span class="fs-12">Invest : ₹
-                                                                            {{ number_format($investedValue, 2) }}</span>
+                                                                        <span class="fs-12">Margin Used : ₹
+                                                                            {{ number_format($stock->total_cost, 2) }}</span>
                                                                         {{-- <span class="fs-12">Delivery</span>
                                                                         --}}
                                                                     </div>
@@ -3134,8 +3150,8 @@
                                                                             Current : ₹
                                                                             {{ number_format($profitAmount, 2) }}
                                                                         </p>
-                                                                        <span class="fs-12">Invest : ₹
-                                                                            {{ number_format($investedValue, 2) }}</span>
+                                                                        <span class="fs-12">Margin Used : ₹
+                                                                            {{ number_format($stock->total_cost, 2) }}</span>
                                                                         {{-- <span class="fs-12">Delivery</span>
                                                                         --}}
                                                                     </div>

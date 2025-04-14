@@ -88,6 +88,7 @@ class TradeController extends Controller
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
+                                    $trade->ltp = $price;
                                     $trade->quantity = $quantity;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
@@ -140,6 +141,7 @@ class TradeController extends Controller
                                     $trade->duration = $tradeType;
                                     $trade->segment=$stockData[0]->segment;
                                     $trade->price = $limitPrice;
+                                    $trade->ltp = $price;
                                     $trade->quantity = $quantity;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
@@ -182,6 +184,7 @@ class TradeController extends Controller
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
+                                    $trade->ltp = $price;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
                                     $trade->quantity = $quantity;
@@ -235,6 +238,7 @@ class TradeController extends Controller
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
+                                    $trade->ltp = $price;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
                                     $trade->quantity = $quantity;
@@ -278,6 +282,7 @@ class TradeController extends Controller
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
+                                    $trade->ltp = $price;
                                     $trade->quantity = $quantity;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
@@ -330,6 +335,7 @@ class TradeController extends Controller
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
+                                    $trade->ltp = $price;
                                     $trade->quantity = $quantity;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
@@ -376,6 +382,7 @@ class TradeController extends Controller
                                     // echo json_encode($targetPrice);
                                     // exit;
                                     $trade->price = $price;
+                                    $trade->ltp = $price;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
                                     $trade->quantity = $quantity;
@@ -445,6 +452,7 @@ class TradeController extends Controller
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
+                                    $trade->ltp = $price;
                                     $trade->quantity = $quantity;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
@@ -497,6 +505,7 @@ class TradeController extends Controller
                                     $trade->tradeType = 'FUT';
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
+                                    $trade->ltp = $price;
                                     $trade->quantity = $quantity;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
@@ -540,6 +549,7 @@ class TradeController extends Controller
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $price;
+                                    $trade->ltp = $price;
                                     $trade->quantity = $quantity;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
@@ -592,6 +602,7 @@ class TradeController extends Controller
                                     $trade->tradeType = $stockData[0]->instrumentType;
                                     $trade->duration = $tradeType;
                                     $trade->price = $limitPrice;
+                                    $trade->ltp = $price;
                                     $trade->stop_loss = $stoploss;
                                     $trade->target_price = $targetPrice;
                                     $trade->quantity = $quantity;
