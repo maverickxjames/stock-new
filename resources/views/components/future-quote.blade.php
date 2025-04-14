@@ -259,12 +259,12 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                     onclick="handleOrderTypeChange(1,{{ $i }}, 'limit', 'buy')">Limit</button> --}}
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
-                                                                                    id="stoplossMarketBtn11{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'stoplossMarket', 'buy')">Market</button>
+                                                                                    id="marketBtn11{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'market', 'buy')">Market</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="stoplossLimitBtn11{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'stoplossLimit', 'buy')">Limit</button>
+                                                                                    id="limitBtn11{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'limit', 'buy')">Limit</button>
                                                                             </div>
                                                                         </div>
 
@@ -515,12 +515,12 @@ $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment', 
                                                                                     onclick="handleOrderTypeChange(1,{{ $i }}, 'limit', 'sell')">Limit</button> --}}
                                                                                 <button type="button"
                                                                                     class="btn btn-primary"
-                                                                                    id="stoplossMarketBtn12{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'stoplossMarket', 'sell')">Market</button>
+                                                                                    id="marketBtn12{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'market', 'sell')">Market</button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-primary"
-                                                                                    id="stoplossLimitBtn12{{ $i }}"
-                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'stoplossLimit', 'sell')">Limit</button>
+                                                                                    id="limitBtn12{{ $i }}"
+                                                                                    onclick="handleOrderTypeChange(1,{{ $i }}, 'limit', 'sell')">Limit</button>
                                                                             </div>
                                                                         </div>
 

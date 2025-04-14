@@ -264,12 +264,12 @@
                                                                                 onclick="handleOrderTypeChange(2,{{ $i }}, 'limit', 'buy')">Limit</button> --}}
                                                                             <button type="button"
                                                                                 class="btn btn-primary"
-                                                                                id="stoplossMarketBtn21{{ $i }}"
-                                                                                onclick="handleOrderTypeChange(2,{{ $i }}, 'stoplossMarket', 'buy')">Market</button>
+                                                                                id="marketBtn21{{ $i }}"
+                                                                                onclick="handleOrderTypeChange(2,{{ $i }}, 'market', 'buy')">Market</button>
                                                                             <button type="button"
                                                                                 class="btn btn-outline-primary"
-                                                                                id="stoplossLimitBtn21{{ $i }}"
-                                                                                onclick="handleOrderTypeChange(2,{{ $i }}, 'stoplossLimit', 'buy')">Limit</button>
+                                                                                id="limitBtn21{{ $i }}"
+                                                                                onclick="handleOrderTypeChange(2,{{ $i }}, 'limit', 'buy')">Limit</button>
                                                                         </div>
                                                                     </div>
 
@@ -302,18 +302,30 @@
                                                                         <span class="input-group-text">₹</span>
                                                                     </div>
 
-                                                                    {{-- marketstoploss input --}}
-                                                                    <div id="targetpriceblock21{{ $i }}"
-                                                                        class="input-group mb-3">
-                                                                        <span class="input-group-text">Target Price
-                                                                        </span>
-                                                                        <input id="targetprice21{{ $i }}"
-                                                                            name="targetprice21{{ $i }}"
-                                                                            type="text" class="form-control"
-                                                                            placeholder="Enter price">
+                                                                    <div id="stoplossblock21{{ $i }}"
+                                                                    class="input-group mb-3">
+                                                                    <span class="input-group-text">Stop Loss
+                                                                    </span>
+                                                                    <input id="stoploss21{{ $i }}"
+                                                                        name="stoploss21{{ $i }}"
+                                                                        type="text" class="form-control"
+                                                                        placeholder="Enter price">
 
-                                                                        <span class="input-group-text">₹</span>
-                                                                    </div>
+                                                                    <span class="input-group-text">₹</span>
+                                                                </div>
+
+                                                                {{-- marketstoploss input --}}
+                                                                <div id="targetpriceblock21{{ $i }}"
+                                                                    class="input-group mb-3">
+                                                                    <span class="input-group-text">Target Price
+                                                                    </span>
+                                                                    <input id="targetprice21{{ $i }}"
+                                                                        name="targetprice21{{ $i }}"
+                                                                        type="text" class="form-control"
+                                                                        placeholder="Enter price">
+
+                                                                    <span class="input-group-text">₹</span>
+                                                                </div>
 
 
 
@@ -500,12 +512,12 @@
                                                                                 onclick="handleOrderTypeChange(2,{{ $i }}, 'limit', 'sell')">Limit</button> --}}
                                                                             <button type="button"
                                                                                 class="btn btn-primary"
-                                                                                id="stoplossMarketBtn22{{ $i }}"
-                                                                                onclick="handleOrderTypeChange(2,{{ $i }}, 'stoplossMarket', 'sell')">Market</button>
+                                                                                id="marketBtn22{{ $i }}"
+                                                                                onclick="handleOrderTypeChange(2,{{ $i }}, 'market', 'sell')">Market</button>
                                                                             <button type="button"
                                                                                 class="btn btn-outline-primary"
-                                                                                id="stoplossLimitBtn22{{ $i }}"
-                                                                                onclick="handleOrderTypeChange(2,{{ $i }}, 'stoplossLimit', 'sell')">Limit</button>
+                                                                                id="limitBtn22{{ $i }}"
+                                                                                onclick="handleOrderTypeChange(2,{{ $i }}, 'limit', 'sell')">Limit</button>
                                                                         </div>
                                                                     </div>
 
@@ -538,18 +550,30 @@
                                                                         <span class="input-group-text">₹</span>
                                                                     </div>
 
-                                                                    {{-- marketstoploss input --}}
-                                                                    <div id="targetpriceblock22{{ $i }}"
-                                                                        class="input-group mb-3">
-                                                                        <span class="input-group-text">Target Price
-                                                                        </span>
-                                                                        <input id="targetprice22{{ $i }}"
-                                                                            name="targetprice22{{ $i }}"
-                                                                            type="text" class="form-control"
-                                                                            placeholder="Enter price">
+                                                                    <div id="stoplossblock22{{ $i }}"
+                                                                            class="input-group mb-3">
+                                                                            <span class="input-group-text">Stop Loss
+                                                                            </span>
+                                                                            <input id="stoploss22{{ $i }}"
+                                                                                name="stoploss22{{ $i }}"
+                                                                                type="text" class="form-control"
+                                                                                placeholder="Enter price">
 
-                                                                        <span class="input-group-text">₹</span>
-                                                                    </div>
+                                                                            <span class="input-group-text">₹</span>
+                                                                        </div>
+
+                                                                        {{-- marketstoploss input --}}
+                                                                        <div id="targetpriceblock22{{ $i }}"
+                                                                            class="input-group mb-3">
+                                                                            <span class="input-group-text">Target Price
+                                                                            </span>
+                                                                            <input id="targetprice22{{ $i }}"
+                                                                                name="targetprice22{{ $i }}"
+                                                                                type="text" class="form-control"
+                                                                                placeholder="Enter price">
+
+                                                                            <span class="input-group-text">₹</span>
+                                                                        </div>
 
                                                                     <div class=""
                                                                         style="display: flex; justify-content:space-between; gap:20px;">

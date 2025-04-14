@@ -1,5 +1,5 @@
 @php
-$user = Auth::user();
+    $user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -312,171 +312,180 @@ $user = Auth::user();
         <div class="content-body" style="padding-bottom: 50px;">
             <div class="container-fluid">
                 {{-- <div class="container-fluid pt-0 ps-0 pe-lg-4 pe-0"> --}}
-                    <!-- row -->
-                    <div class="row">
-                        <!-- Column  -->
-                        <div class="col-xl-12">
-                            <div class="card dz-card" id="custom-tab">
-                                <div class="tab-content pt-3" id="myTabContent1">
-                                    <div class="tab-pane fade show active" id="DefaultTab1" role="tabpanel"
-                                        aria-labelledby="home-tab1">
-                                        <div class="card-body pt-0">
-                                            <!-- Nav tabs -->
-                                            <div class="custom-tab-1">
-                                                <ul class="nav nav-tabs gap-4">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" data-bs-toggle="tab" href="#future"
-                                                            role="tab" onclick="changeQuote('future')">Future</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" data-bs-toggle="tab" href="#option"
-                                                            role="tab" onclick="changeQuote('option')">Option</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" data-bs-toggle="tab" href="#mcx"
-                                                            onclick="changeQuote('mcx')">MCX</a>
-                                                    </li>
-                                                    {{-- <li class="nav-item">
+                <!-- row -->
+                <div class="row">
+                    <!-- Column  -->
+                    <div class="col-xl-12">
+                        <div class="card dz-card" id="custom-tab">
+                            <div class="tab-content pt-3" id="myTabContent1">
+                                <div class="tab-pane fade show active" id="DefaultTab1" role="tabpanel"
+                                    aria-labelledby="home-tab1">
+                                    <div class="card-body pt-0">
+                                        <!-- Nav tabs -->
+                                        <div class="custom-tab-1">
+                                            <ul class="nav nav-tabs gap-4">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" data-bs-toggle="tab" href="#future"
+                                                        role="tab" >Future</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-bs-toggle="tab" href="#option"
+                                                        role="tab">Option</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-bs-toggle="tab" href="#mcx"
+                                                       >Commodities</a>
+                                                </li>
+                                                {{-- <li class="nav-item">
                                                         <a class="nav-link" data-bs-toggle="tab" href="#indcies"
                                                             onclick="changeQuote('indices')">Indices</a>
                                                     </li> --}}
-                                                </ul>
-                                                <div class="tab-content">
-                                                    <div class="tab-pane fade show active" id="future" role="tabpanel">
-                                                        @php
-                                                        $data=DB::table('future_temp')->where('instrumentType','FUT')->where('segment',
-                                                        'NSE_FO')->where('is_watchlist',1)->get();
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="future" role="tabpanel">
+                                                    @php
+                                                        $data = DB::table('future_temp')
+                                                            ->where('instrumentType', 'FUT')
+                                                            ->where('segment', 'NSE_FO')
+                                                            ->where('is_watchlist', 1)
+                                                            ->get();
 
-
-                                                        @endphp
-                                                        <div class="input-group mt-4 search-area-2"
-                                                            onclick="showWatchlist('future',{{ $data }})"
-                                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                                            aria-controls="offcanvasRight">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Search & Add NSE Future ">
-                                                            <span class="input-group-text"><a href="javascript:void(0)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                        width="24px" height="24px" viewBox="0 0 24 24"
-                                                                        version="1.1" class="svg-main-icon">
-                                                                        <g stroke="none" stroke-width="1" fill="none"
-                                                                            fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24">
-                                                                            </rect>
-                                                                            <path
-                                                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                                                                                fill="#000000" fill-rule="nonzero"
-                                                                                opacity="0.3"></path>
-                                                                            <path
-                                                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                                                                                fill="#000000" fill-rule="nonzero">
-                                                                            </path>
-                                                                        </g>
-                                                                    </svg>
-                                                                </a></span>
-                                                        </div>
-
-
-                                                        <div class="pt-4">
-                                                            <div id="futureRefresh">
-                                                                @include('components.future-quote', ['fetch' =>
-                                                                $fetch])
-                                                            </div>
-
-                                                        </div>
+                                                    @endphp
+                                                    <div class="input-group mt-4 search-area-2"
+                                                        onclick="showWatchlist('future',{{ $data }})"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                        aria-controls="offcanvasRight">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Search & Add NSE Future ">
+                                                        <span class="input-group-text"><a href="javascript:void(0)">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                    width="24px" height="24px" viewBox="0 0 24 24"
+                                                                    version="1.1" class="svg-main-icon">
+                                                                    <g stroke="none" stroke-width="1" fill="none"
+                                                                        fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24"
+                                                                            height="24">
+                                                                        </rect>
+                                                                        <path
+                                                                            d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                                                            fill="#000000" fill-rule="nonzero"
+                                                                            opacity="0.3"></path>
+                                                                        <path
+                                                                            d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                                                            fill="#000000" fill-rule="nonzero">
+                                                                        </path>
+                                                                    </g>
+                                                                </svg>
+                                                            </a></span>
                                                     </div>
-                                                    <div class="tab-pane fade" id="option" role="tabpanel">
-                                                        @php
+
+
+                                                    <div class="pt-4">
+                                                        <div id="futureRefresh">
+                                                            @include('components.future-quote', [
+                                                                'fetch' => $fetch,
+                                                            ])
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="option" role="tabpanel">
+                                                    @php
                                                         $data1 = DB::table('future_temp')
-                                                        ->where(function ($query) {
-                                                        $query->where('instrumentType', 'PE')
-                                                        ->orWhere('instrumentType', 'CE');
-                                                        })
-                                                        ->where('is_watchlist', 1)
-                                                        ->get();
-                                                        @endphp
-                                                        <div class="input-group mt-4 search-area-2"
-                                                            onclick="showWatchlist('option',{{ $data1 }})"
-                                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                                            aria-controls="offcanvasRight">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Search & Add Option Future ">
-                                                            <span class="input-group-text"><a href="javascript:void(0)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                        width="24px" height="24px" viewBox="0 0 24 24"
-                                                                        version="1.1" class="svg-main-icon">
-                                                                        <g stroke="none" stroke-width="1" fill="none"
-                                                                            fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24">
-                                                                            </rect>
-                                                                            <path
-                                                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                                                                                fill="#000000" fill-rule="nonzero"
-                                                                                opacity="0.3"></path>
-                                                                            <path
-                                                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                                                                                fill="#000000" fill-rule="nonzero">
-                                                                            </path>
-                                                                        </g>
-                                                                    </svg>
-                                                                </a></span>
-                                                        </div>
+                                                            ->where(function ($query) {
+                                                                $query
+                                                                    ->where('instrumentType', 'PE')
+                                                                    ->orWhere('instrumentType', 'CE');
+                                                            })
+                                                            ->where('is_watchlist', 1)
+                                                            ->get();
+                                                    @endphp
+                                                    <div class="input-group mt-4 search-area-2"
+                                                        onclick="showWatchlist('option',{{ $data1 }})"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                        aria-controls="offcanvasRight">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Search & Add Option Future ">
+                                                        <span class="input-group-text"><a href="javascript:void(0)">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                    width="24px" height="24px" viewBox="0 0 24 24"
+                                                                    version="1.1" class="svg-main-icon">
+                                                                    <g stroke="none" stroke-width="1" fill="none"
+                                                                        fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24"
+                                                                            height="24">
+                                                                        </rect>
+                                                                        <path
+                                                                            d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                                                            fill="#000000" fill-rule="nonzero"
+                                                                            opacity="0.3"></path>
+                                                                        <path
+                                                                            d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                                                            fill="#000000" fill-rule="nonzero">
+                                                                        </path>
+                                                                    </g>
+                                                                </svg>
+                                                            </a></span>
+                                                    </div>
 
 
-                                                        <div class="pt-4">
-                                                            <div id="optionRefresh">
-                                                                @include('components.option-quote', ['fetch' =>
-                                                                $fetch])
-                                                            </div>
+                                                    <div class="pt-4">
+                                                        <div id="optionRefresh">
+                                                            @include('components.option-quote', [
+                                                                'fetch' => $fetch,
+                                                            ])
                                                         </div>
                                                     </div>
-                                                    <div class="tab-pane fade" id="mcx">
-                                                        @php
+                                                </div>
+                                                <div class="tab-pane fade" id="mcx">
+                                                    @php
                                                         $data2 = DB::table('future_temp')
-                                                        ->where('instrumentType', 'FUT')
-                                                        ->where('segment', 'MCX_FO')
-                                                        ->where('is_watchlist', 1)
-                                                        ->get();
-                                                        @endphp
-                                                        <div class="input-group mt-4 search-area-2"
-                                                            onclick="showWatchlist('mcx',{{ $data2 }})"
-                                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                                            aria-controls="offcanvasRight">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Search & Add MCX Future/Option">
-                                                            <span class="input-group-text"><a href="javascript:void(0)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                        width="24px" height="24px" viewBox="0 0 24 24"
-                                                                        version="1.1" class="svg-main-icon">
-                                                                        <g stroke="none" stroke-width="1" fill="none"
-                                                                            fill-rule="evenodd">
-                                                                            <rect x="0" y="0" width="24" height="24">
-                                                                            </rect>
-                                                                            <path
-                                                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                                                                                fill="#000000" fill-rule="nonzero"
-                                                                                opacity="0.3"></path>
-                                                                            <path
-                                                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                                                                                fill="#000000" fill-rule="nonzero">
-                                                                            </path>
-                                                                        </g>
-                                                                    </svg>
-                                                                </a></span>
-                                                        </div>
+                                                            ->where('instrumentType', 'FUT')
+                                                            ->where('segment', 'MCX_FO')
+                                                            ->where('is_watchlist', 1)
+                                                            ->get();
+                                                    @endphp
+                                                    <div class="input-group mt-4 search-area-2"
+                                                        onclick="showWatchlist('mcx',{{ $data2 }})"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                                        aria-controls="offcanvasRight">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Search & Add MCX Future/Option">
+                                                        <span class="input-group-text"><a href="javascript:void(0)">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                    width="24px" height="24px" viewBox="0 0 24 24"
+                                                                    version="1.1" class="svg-main-icon">
+                                                                    <g stroke="none" stroke-width="1" fill="none"
+                                                                        fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24"
+                                                                            height="24">
+                                                                        </rect>
+                                                                        <path
+                                                                            d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                                                            fill="#000000" fill-rule="nonzero"
+                                                                            opacity="0.3"></path>
+                                                                        <path
+                                                                            d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                                                            fill="#000000" fill-rule="nonzero">
+                                                                        </path>
+                                                                    </g>
+                                                                </svg>
+                                                            </a></span>
+                                                    </div>
 
 
-                                                        <div class="pt-4">
-                                                            <div id="mcxRefresh">
-                                                                @include('components.mcx-quote', ['fetch' =>
-                                                                $fetch])
-                                                            </div>
+                                                    <div class="pt-4">
+                                                        <div id="mcxRefresh">
+                                                            @include('components.mcx-quote', [
+                                                                'fetch' => $fetch,
+                                                            ])
                                                         </div>
                                                     </div>
-                                                    {{-- @php
+                                                </div>
+                                                {{-- @php
                                                     $data3=DB::table('future_temp')->where('instrumentType','INDEX')->where('is_watchlist',1)->get();
 
 
@@ -518,21 +527,21 @@ $user = Auth::user();
                                                             </div>
                                                         </div>
                                                     </div> --}}
-                                                </div>
-
                                             </div>
+
                                         </div>
                                     </div>
-
                                 </div>
+
                             </div>
                         </div>
-                        <!-- /Column  -->
-
-
                     </div>
-                    <!-- /row -->
-                    {{--
+                    <!-- /Column  -->
+
+
+                </div>
+                <!-- /row -->
+                {{--
                 </div> --}}
             </div>
         </div>
@@ -541,8 +550,8 @@ $user = Auth::user();
 
 
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
-            style="width: 1200px">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel" style="width: 1200px">
             <div class="offcanvas-header">
                 <h5 id="offcanvasRightLabel">Add Your Script</h5>
                 <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
@@ -568,8 +577,8 @@ $user = Auth::user();
                             <div class="row align-items-center mb-3">
 
                                 <div class="col-xl-6 col-xxl-5 col-lg-4 mb-lg-0">
-                                    <input type="text" class="form-control" id="searchinp" placeholder="Search Script"
-                                        onkeyup="searchScript(this)" autofocus>
+                                    <input type="text" class="form-control" id="searchinp"
+                                        placeholder="Search Script" onkeyup="searchScript(this)" autofocus>
 
                                 </div>
 
@@ -623,7 +632,7 @@ $user = Auth::user();
 
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
             console.log(formData);
-            
+
 
 
             const id = formData.id;
@@ -636,9 +645,9 @@ $user = Auth::user();
                 // quantity:formData[`quantity1${id}`],
                 price: formData[`realprice${row}1${id}`],
                 limitPrice: formData[`limitprice${row}1${id}`],
-                targetPrice:formData[`targetprice${row}1${id}`],
-                stoploss:formData[`stoploss${row}1${id}`],
-                lotSize: formData[`lotSize${row}1${id}`], 
+                targetPrice: formData[`targetprice${row}1${id}`],
+                stoploss: formData[`stoploss${row}1${id}`],
+                lotSize: formData[`lotSize${row}1${id}`],
                 // costPrice:document.getElementById(`costPrice1${id}`).textContent,
                 tradeType: formData[`tradeMode${row}1${id}`],
                 _token: formData._token,
@@ -754,7 +763,7 @@ $user = Auth::user();
 
             var formData = Object.fromEntries(new URLSearchParams(form.serialize()));
             console.log(formData);
-            
+
 
 
             const id = formData.id2;
@@ -768,8 +777,8 @@ $user = Auth::user();
                 price: formData[`realprice${row}2${id}`],
                 limitPrice: formData[`limitprice${row}2${id}`],
                 lotSize: formData[`lotSize${row}2${id}`],
-                targetPrice:formData[`targetprice${row}2${id}`],
-                stoploss:formData[`stoploss${row}2${id}`],
+                targetPrice: formData[`targetprice${row}2${id}`],
+                stoploss: formData[`stoploss${row}2${id}`],
                 // costPrice:document.getElementById(`costPrice1${id}`).textContent,
                 tradeType: formData[`tradeMode${row}2${id}`],
                 _token: formData._token,
@@ -809,7 +818,7 @@ $user = Auth::user();
                 success: function(response) {
                     loadingToast.hideToast();
                     console.log(response); // Log the response for debugging
-                    
+
                     response = JSON.parse(response);
 
                     if (response.status === 'success') {
@@ -889,20 +898,19 @@ $user = Auth::user();
             .listen('Watchlist', (event) => {
                 console.log(event);
                 const feeds = event.watchlist.feeds;
-                
-                // Iterate through the received WebSocket data
+
                 for (const key in feeds) {
                     if (feeds.hasOwnProperty(key)) {
                         let feedData = feeds[key].ff.marketFF;
-                        if(!feedData){
-                            feedData = feeds[key].ff.indexFF;  
-                            feedData.marketLevel = null; // Set marketLevel to null if not present
-                        } // Data from WebSocket
+                        if (!feedData) {
+                            feedData = feeds[key].ff.indexFF;
+                            feedData.marketLevel = null; 
+                        } 
 
                         if (!feedData) continue;
 
 
-                        const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
+                        const receivedIsin = key; 
 
                         const isinElement1 = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el
                             .textContent === receivedIsin);
@@ -916,10 +924,8 @@ $user = Auth::user();
                         const isinElement4 = Array.from(document.querySelectorAll("p[id^='isin4']")).find(el => el
                             .textContent === receivedIsin);
 
-                        // const isinElement = Array.from(document.querySelectorAll("p[id^='isin']")).find(el => el.textContent === receivedIsin);
                         if (isinElement1) {
                             const rowId = isinElement1.id.replace('isin1', '');
-                            // console.log(rowId);
 
                             const ltp = feedData?.ltpc?.ltp || 1;
                             const cp = feedData?.ltpc?.cp || 0;
@@ -929,23 +935,10 @@ $user = Auth::user();
                             document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice11${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice12${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
-                                '0' +
-                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose1${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
-                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`highlow1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||'0' +'/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
-                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-
-                            const percentageChange = cp > 0 
-                                ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
-                                : 0;
-
-                          
-
-
+                            const percentageChange = cp > 0 ?parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) :0;
 
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
@@ -953,15 +946,8 @@ $user = Auth::user();
                             document.getElementById(`change1${rowId}`).innerHTML = `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc1'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc1'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc1'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc1'+rowId+'">  ('+badgeValue+' pts)</span>'}
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc1'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc1'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
-
-                                `;
-
-
-
-
-                            // bid and ask
                             document.getElementById(`bid1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
                                 .bidQ || '0';
                             document.getElementById(`ask1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
@@ -969,35 +955,18 @@ $user = Auth::user();
                         }
                         if (isinElement2) {
                             const rowId = isinElement2.id.replace('isin2', '');
-                            
+
 
                             const ltp = feedData?.ltpc?.ltp || 1;
                             const cp = feedData?.ltpc?.cp || 0;
 
-                            console.log(rowId);
-
-
-
                             document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice21${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice22${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
-                                '0' +
-                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose2${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
-                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`highlow2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||'0' +'/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
-                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-
-                            const percentageChange = cp > 0 
-                                ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
-                                : 0;
-
-                          
-
-
+                            const percentageChange = cp > 0 ?parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) :0;
 
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
@@ -1005,13 +974,7 @@ $user = Auth::user();
                             document.getElementById(`change2${rowId}`).innerHTML = `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc2'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc2'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc2'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc2'+rowId+'">  ('+badgeValue+' pts)</span>'}
-
-
-                                `;
-
-
-
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc2'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc2'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
                             // bid and ask
                             document.getElementById(`bid2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
@@ -1021,7 +984,6 @@ $user = Auth::user();
                         }
                         if (isinElement3) {
                             const rowId = isinElement3.id.replace('isin3', '');
-                            // console.log(rowId);
 
                             const ltp = feedData?.ltpc?.ltp || 1;
                             const cp = feedData?.ltpc?.cp || 0;
@@ -1031,23 +993,10 @@ $user = Auth::user();
                             document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice31${rowId}`).value = feedData.ltpc.ltp || '0';
                             document.getElementById(`realprice32${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
-                            // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
-                                '0' +
-                                '/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose3${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
-                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`highlow3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||'0' +'/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
-                            // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
-
-                            const percentageChange = cp > 0 
-                                ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
-                                : 0;
-
-                          
-
-
+                            const percentageChange = cp > 0 ?parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) :0;
 
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
@@ -1055,13 +1004,7 @@ $user = Auth::user();
                             document.getElementById(`change3${rowId}`).innerHTML = `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc3'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc3'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc3'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc3'+rowId+'">  ('+badgeValue+' pts)</span>'}
-
-
-                                `;
-
-
-
+                                         ${percentageChange>0 ? '<span class="text-success" id="perc3'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc3'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
                             // bid and ask
                             document.getElementById(`bid3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
@@ -1083,7 +1026,8 @@ $user = Auth::user();
                             document.getElementById(`realprice42${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice1${rowId}`).value = feedData.ltpc.ltp || '0';
                             // document.getElementById(`limitprice2${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow4${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||
+                            document.getElementById(`highlow4${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .high ||
                                 '0' +
                                 '/' + feedData.marketOHLC.ohlc[0].low || '0';
                             document.getElementById(`openclose4${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
@@ -1091,11 +1035,11 @@ $user = Auth::user();
 
                             // const percentageChange = ((ltp - cp) / ltp * 100).toFixed(2) || '0';
 
-                            const percentageChange = cp > 0 
-                                            ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) 
-                                            : 0;
+                            const percentageChange = cp > 0 ?
+                                parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) :
+                                0;
 
-                          
+
 
 
 
@@ -1123,30 +1067,31 @@ $user = Auth::user();
                     }
                 }
             });
-    
-            const userId = '{{ $user->id }}';
-            // Echo Private Channel for User
-            Echo.channel('quote-channel')
-                .listen('QuoteChannel', (data) => {
-                    console.log("New quote received:", data);
-                    let sendId = getActiveFilter();
-                    if(sendId == 'Future') {
-                        sendId = '1';
-                    } else if (sendId == 'Option') {
-                        sendId = '2';
-                    } else if (sendId == 'MCX') {
-                        sendId = '3';
-                    } else {
-                        sendId = '4';
-                    }
-                    if (data.userId == userId) {
 
-                        $.ajax({
-                        url: '{{ route("quoteRefresh", ":sendId") }}'.replace(':sendId', sendId), // Properly passing the sendId
+        const userId = '{{ $user->id }}';
+        // Echo Private Channel for User
+        Echo.channel('quote-channel')
+            .listen('QuoteChannel', (data) => {
+                console.log("New quote received:", data);
+                let sendId = getActiveFilter();
+                if (sendId == 'Future') {
+                    sendId = '1';
+                } else if (sendId == 'Option') {
+                    sendId = '2';
+                } else if (sendId == 'MCX') {
+                    sendId = '3';
+                } else {
+                    sendId = '4';
+                }
+                if (data.userId == userId) {
+
+                    $.ajax({
+                        url: '{{ route('quoteRefresh', ':sendId') }}'.replace(':sendId',
+                        sendId), // Properly passing the sendId
                         type: 'GET',
                         success: function(response) {
                             // delete quotesRefresh old data and replace with new data
-                            if(sendId == '1') {
+                            if (sendId == '1') {
                                 $('#futureRefresh').html(response);
                             } else if (sendId == '2') {
                                 $('#optionRefresh').html(response);
@@ -1155,27 +1100,23 @@ $user = Auth::user();
                             } else {
                                 $('#indciesRefresh').html(response);
                             }
-                            
 
-                            
+
+
                         }
                     });
 
-                    }
-                    // Refresh the component
-                    
-                });
-    
-    
-    
-    
+                }
+                // Refresh the component
+
+            });
     </script>
 
 
 
 
     <script>
-        function showOrderForm(row,index) {
+        function showOrderForm(row, index) {
             const offcanvasId = `orderoffcanvasBottom${row}${index}`;
             const offcanvasElement = document.getElementById(offcanvasId);
             const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
@@ -1201,10 +1142,13 @@ $user = Auth::user();
                 fetchResults(true);
             }, 500);
         }
+
         function getActiveFilter() {
-    let activeTab = document.querySelector('.nav-tabs .nav-link.active');
-    return activeTab ? activeTab.innerText.trim() : 'all';
-}
+            let activeTab = document.querySelector('.nav-tabs .nav-link.active');
+            let active=activeTab.innerText.trim();
+            if(active == 'Commodities') active = 'MCX';
+            return active;
+        }
 
         function hideSearch() {
             document.getElementById("searchinp").value = "";
@@ -1216,8 +1160,8 @@ $user = Auth::user();
             if (isFetching || !hasMoreData) return;
             isFetching = true;
             console.log(getActiveFilter());
-            
-           
+
+
             let type;
             switch (getActiveFilter()) {
                 case 'Future':
@@ -1234,7 +1178,7 @@ $user = Auth::user();
                     break;
             }
 
-            
+
 
             showLoading();
 
@@ -1271,7 +1215,7 @@ $user = Auth::user();
 
         function updateContactsList(responseData) {
             console.log(responseData);
-            
+
             const container = document.getElementById("RecentActivityContent");
 
             // Clear existing content
@@ -1361,171 +1305,108 @@ $user = Auth::user();
             loadingIndicator.style.display = "block";
         }
 
-        // Buy Sell Feature Start 
-
-        // function handleOrderTypeChange(id, orderType, tradeType) {
-
-        //     if (tradeType === 'sell') {
-        //         const priceInput = document.getElementById("realprice2" + id);
-        //         const limitprice = document.getElementById("limitprice2" + id);
-        //         const limitblock = document.getElementById("limitblock2" + id);
-        //         if (orderType === 'limit') {
-        //             // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-        //             limitblock.style.display = 'flex';
-        //             limitprice.setAttribute("type", "text");
-        //             limitprice.value = priceInput.value; // Copy the value
-        //             priceInput.disabled = false; // Enable input
-        //             limitprice.disabled = false; // Enable input
-        //         } else if (orderType === 'market') {
-        //             // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-        //             priceInput.setAttribute("type", "text");
-        //             limitprice.setAttribute("type", "hidden");
-        //             limitblock.style.display = 'none';
-        //             priceInput.disabled = true; // Disable input
-        //             limitprice.disabled = true; // Disable input
-        //         } else if (orderType === 'stoploss') {
-        //             // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-        //             priceInput.setAttribute("type", "text");
-        //             limitprice.setAttribute("type", "hidden");
-        //             priceInput.disabled = false; // Enable input
-        //             limitprice.disabled = true; // Disable input
-        //         }
-        //     } else {
-        //         const priceInput = document.getElementById("realprice1" + id);
-        //         const limitprice = document.getElementById("limitprice1" + id);
-        //         const limitblock = document.getElementById("limitblock1" + id);
-
-        //         if (orderType === 'limit') {
-        //             // Change `priceInput` type to 'hidden' and `limitprice` type to 'text'
-        //             // priceInput.setAttribute("type", "hidden");
-        //             limitprice.setAttribute("type", "text");
-        //             limitblock.style.display = 'flex';
-        //             limitprice.value = priceInput.value; // Copy the value
-        //             priceInput.disabled = false; // Enable input
-        //             limitprice.disabled = false; // Enable input
-        //         } else if (orderType === 'market') {
-        //             // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-        //             // priceInput.setAttribute("type", "text");
-        //             limitprice.setAttribute("type", "hidden");
-        //             limitblock.style.display = 'none';
-        //             priceInput.disabled = true; // Disable input
-        //             limitprice.disabled = true; // Disable input
-        //         } else if (orderType === 'stoploss') {
-        //             // Change `priceInput` type to 'text' and `limitprice` type to 'hidden'
-        //             // priceInput.setAttribute("type", "text");
-        //             limitprice.setAttribute("type", "hidden");
-        //             priceInput.disabled = false; // Enable input
-        //             limitprice.disabled = true; // Disable input
-        //         }
-        //     }
-        // }
-
-    function changeQuote(type){
-     
-
-    }
+        
 
 
-    function handleOrderTypeChange(rowId,id, orderType, tradeType) {
-    // Define all button IDs dynamically
-    let orderT, buttons, selectedBtn;
 
-    if (tradeType === "buy") {
-        orderT = document.getElementById(`orderType${rowId}1${id}`);
-        buttons = [
-            `marketBtn${rowId}1${id}`,
-            `limitBtn${rowId}1${id}`,
-            `stoplossMarketBtn${rowId}1${id}`,
-            `stoplossLimitBtn${rowId}1${id}`
-        ];
-    } else {
-        orderT = document.getElementById(`orderType${rowId}2${id}`);
-        buttons = [
-            `marketBtn${rowId}2${id}`,
-            `limitBtn${rowId}2${id}`,
-            `stoplossMarketBtn${rowId}2${id}`,
-            `stoplossLimitBtn${rowId}2${id}`
-        ];
-    }
+        function handleOrderTypeChange(rowId, id, orderType, tradeType) {
+            // Define all button IDs dynamically
+            let orderT, buttons, selectedBtn;
+
+            if (tradeType === "buy") {
+                orderT = document.getElementById(`orderType${rowId}1${id}`);
+                buttons = [
+                    `marketBtn${rowId}1${id}`,
+                    `limitBtn${rowId}1${id}`,
+                    `stoplossMarketBtn${rowId}1${id}`,
+                    `stoplossLimitBtn${rowId}1${id}`
+                ];
+            } else {
+                orderT = document.getElementById(`orderType${rowId}2${id}`);
+                buttons = [
+                    `marketBtn${rowId}2${id}`,
+                    `limitBtn${rowId}2${id}`,
+                    // `stoplossMarketBtn${rowId}2${id}`,
+                    // `stoplossLimitBtn${rowId}2${id}`
+                ];
+            }
 
 
-    
 
-     // Reset all buttons
-    buttons.forEach(btnId => {
-        const btn = document.getElementById(btnId);
-        if (btn) {
-            btn.classList.remove("btn-primary", "active");
-            btn.classList.add("btn-outline-primary");
+
+            // Reset all buttons
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    btn.classList.remove("btn-primary", "active");
+                    btn.classList.add("btn-outline-primary");
+                }
+            });
+
+            // Highlight selected button
+            selectedBtn = document.getElementById(`${orderType}Btn${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+            if (selectedBtn) {
+                selectedBtn.classList.remove("btn-outline-primary");
+                selectedBtn.classList.add("btn-primary", "active");
+            }
+            if (orderT) {
+                orderT.value = orderType;
+            }
+
+            // Get relevant input fields
+            let priceInput = document.getElementById(`realprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+            let limitprice = document.getElementById(`limitprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+            let limitblock = document.getElementById(`limitblock${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+            let targetpriceInput = document.getElementById(`targetprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+            let targetpriceblock = document.getElementById(
+                `targetpriceblock${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
+
+
+            if (limitblock) limitblock.style.display = 'none';
+            // if (targetpriceblock) targetpriceblock.style.display = 'none';
+
+            // Handle different order types
+            if (orderType === 'limit') {
+                if (limitblock) limitblock.style.display = 'flex';
+                if (limitprice) {
+                    limitprice.setAttribute("type", "text");
+                    limitprice.value = priceInput ? priceInput.value : ""; // Copy value
+                    limitprice.disabled = false;
+                }
+                if (priceInput) priceInput.disabled = false;
+            } else if (orderType === 'market') {
+                if (priceInput) {
+                    priceInput.setAttribute("type", "text");
+                    priceInput.disabled = true;
+                }
+                if (limitprice) {
+                    limitprice.setAttribute("type", "hidden");
+                    limitprice.disabled = true;
+                }
+            } else if (orderType === 'stoplossMarket') {
+                if (targetpriceblock) targetpriceblock.style.display = 'flex';
+                if (targetpriceInput) {
+                    targetpriceInput.setAttribute("type", "text");
+                    targetpriceInput.disabled = false;
+                }
+                if (priceInput) priceInput.disabled = false;
+                if (limitprice) limitprice.disabled = true;
+            } else if (orderType === 'stoplossLimit') {
+                if (targetpriceblock) targetpriceblock.style.display = 'flex';
+                if (targetpriceInput) {
+                    targetpriceInput.setAttribute("type", "text");
+                    targetpriceInput.disabled = false;
+                }
+                if (limitblock) limitblock.style.display = 'flex';
+                if (limitprice) {
+                    limitprice.setAttribute("type", "text");
+                    limitprice.value = priceInput ? priceInput.value : ""; // Copy value
+                    limitprice.disabled = false;
+                }
+                if (priceInput) priceInput.disabled = false;
+            }
         }
-    });
 
-    // Highlight selected button
-    selectedBtn = document.getElementById(`${orderType}Btn${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
-    if (selectedBtn) {
-        selectedBtn.classList.remove("btn-outline-primary");
-        selectedBtn.classList.add("btn-primary", "active");
-    }
-    // Update the hidden input value correctly
-    if (orderT) {
-        orderT.value = orderType;
-    }
-
-     // Get relevant input fields
-    let priceInput = document.getElementById(`realprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
-    let limitprice = document.getElementById(`limitprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
-    let limitblock = document.getElementById(`limitblock${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
-    let targetpriceInput = document.getElementById(`targetprice${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
-    let targetpriceblock = document.getElementById(`targetpriceblock${rowId}${tradeType === "buy" ? "1" : "2"}${id}`);
-    
-
-    // Ensure elements exist before modifying them
-    if (limitblock) limitblock.style.display = 'none';
-    if (targetpriceblock) targetpriceblock.style.display = 'none';
-
-    // Handle different order types
-    if (orderType === 'limit') {
-        if (limitblock) limitblock.style.display = 'flex';
-        if (limitprice) {
-            limitprice.setAttribute("type", "text");
-            limitprice.value = priceInput ? priceInput.value : ""; // Copy value
-            limitprice.disabled = false;
-        }
-        if (priceInput) priceInput.disabled = false;
-        if (targetpriceInput) targetpriceInput.disabled = true;
-    } else if (orderType === 'market') {
-        if (priceInput) {
-            priceInput.setAttribute("type", "text");
-            priceInput.disabled = true;
-        }
-        if (limitprice) {
-            limitprice.setAttribute("type", "hidden");
-            limitprice.disabled = true;
-        }
-        if (targetpriceInput) targetpriceInput.disabled = true;
-    } else if (orderType === 'stoplossMarket') {
-        if (targetpriceblock) targetpriceblock.style.display = 'flex';
-        if (targetpriceInput) {
-            targetpriceInput.setAttribute("type", "text");
-            targetpriceInput.disabled = false;
-        }
-        if (priceInput) priceInput.disabled = false;
-        if (limitprice) limitprice.disabled = true;
-    } else if (orderType === 'stoplossLimit') {
-        if (targetpriceblock) targetpriceblock.style.display = 'flex';
-        if (targetpriceInput) {
-            targetpriceInput.setAttribute("type", "text");
-            targetpriceInput.disabled = false;
-        }
-        if (limitblock) limitblock.style.display = 'flex';
-        if (limitprice) {
-            limitprice.setAttribute("type", "text");
-            limitprice.value = priceInput ? priceInput.value : ""; // Copy value
-            limitprice.disabled = false;
-        }
-        if (priceInput) priceInput.disabled = false;
-    }
-}
         function getMarginValue(instrumentType, selectedMode) {
             if (instrumentType == 'FUT' && selectedMode == 'intraday') {
                 return 500;
@@ -1554,14 +1435,17 @@ $user = Auth::user();
             }
         }
 
-        function handleTradeModeChange(uniqueId, selectedMode, tradeType,rowId) {
-            const lotInput = document.getElementById('lotSize'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const instrumentType = document.getElementById('instrumentType'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId).value;
+        function handleTradeModeChange(uniqueId, selectedMode, tradeType, rowId) {
+            const lotInput = document.getElementById('lotSize' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + rowId + (tradeType === 'sell' ? '2' : '1') +
+            uniqueId);
+            const realPrice = document.getElementById('realprice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginUsed = document.getElementById('marginUsed' + rowId + (tradeType === 'sell' ? '2' : '1') +
+            uniqueId);
+            const instrumentType = document.getElementById('instrumentType' + rowId + (tradeType === 'sell' ? '2' : '1') +
+                uniqueId).value;
 
             let margin = getMarginValue(instrumentType, selectedMode);
             let realPriceValue = parseFloat(realPrice.value) || 0;
@@ -1574,31 +1458,35 @@ $user = Auth::user();
 
                 marginCost.innerHTML = `₹ ${mcp}`;
                 costPrice.innerHTML = `₹ ${cp}`;
-                marginUsed.innerHTML=`(${margin}x)`;
+                marginUsed.innerHTML = `(${margin}x)`;
             }
         }
 
 
-        function handleQuantityChange(quantityPerLot, uniqueId, wallet, tradeType,rowId){
-            const lotInput = document.getElementById('lotSize'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const maxPrice = document.getElementById('maxPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const selectedMode = document.querySelector(`input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
+        function handleQuantityChange(quantityPerLot, uniqueId, wallet, tradeType, rowId) {
+            const lotInput = document.getElementById('lotSize' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const maxPrice = document.getElementById('maxPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + rowId + (tradeType === 'sell' ? '2' : '1') +
+            uniqueId);
+            const selectedMode = document.querySelector(
+                `input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
 
-            const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginUsed = document.getElementById('marginUsed' + rowId + (tradeType === 'sell' ? '2' : '1') +
+            uniqueId);
 
-            const instrumentType = document.getElementById('instrumentType'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId).value;
+            const instrumentType = document.getElementById('instrumentType' + rowId + (tradeType === 'sell' ? '2' : '1') +
+                uniqueId).value;
 
             let margin = 0;
 
             if (instrumentType == 'FUT' && selectedMode == 'intraday') {
                 margin = 500;
-            } else if(instrumentType == 'FUT' && selectedMode == 'delivery'){ 
+            } else if (instrumentType == 'FUT' && selectedMode == 'delivery') {
                 margin = 50;
-            }else if (instrumentType == 'CE' || instrumentType == 'PE') {
+            } else if (instrumentType == 'CE' || instrumentType == 'PE') {
                 margin = 7;
             } else {
                 margin = 0;
@@ -1616,11 +1504,11 @@ $user = Auth::user();
 
 
             marginCost.innerHTML = `₹ ${mcp}`;
-                costPrice.innerHTML = `₹ ${cp}`;
-                marginUsed.innerHTML=`(${margin}x)`;
+            costPrice.innerHTML = `₹ ${cp}`;
+            marginUsed.innerHTML = `(${margin}x)`;
 
-             // Update color logic
-             if (wallet >= mcp) {
+            // Update color logic
+            if (wallet >= mcp) {
                 maxPrice.style.color = 'rgba(113, 117, 121, 0.75)';
                 // costPrice.style.color = 'green';
                 marginCost.style.color = 'green';
@@ -1636,30 +1524,34 @@ $user = Auth::user();
 
         }
 
-        
-        function incrementLot(quantityPerLot, uniqueId, wallet, tradeType,rowId) {
 
-            const lotInput = document.getElementById('lotSize'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const maxPrice = document.getElementById('maxPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const selectedMode = document.querySelector(`input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
+        function incrementLot(quantityPerLot, uniqueId, wallet, tradeType, rowId) {
 
-            const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
-            
-           
+            const lotInput = document.getElementById('lotSize' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const maxPrice = document.getElementById('maxPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + rowId + (tradeType === 'sell' ? '2' : '1') +
+            uniqueId);
+            const selectedMode = document.querySelector(
+                `input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
 
-            const instrumentType = document.getElementById('instrumentType'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId).value;
+            const marginUsed = document.getElementById('marginUsed' + rowId + (tradeType === 'sell' ? '2' : '1') +
+            uniqueId);
+
+
+
+            const instrumentType = document.getElementById('instrumentType' + rowId + (tradeType === 'sell' ? '2' : '1') +
+                uniqueId).value;
 
             let margin = 0;
 
             if (instrumentType == 'FUT' && selectedMode == 'intraday') {
                 margin = 500;
-            } else if(instrumentType == 'FUT' && selectedMode == 'delivery'){ 
+            } else if (instrumentType == 'FUT' && selectedMode == 'delivery') {
                 margin = 50;
-            }else if (instrumentType == 'CE' || instrumentType == 'PE') {
+            } else if (instrumentType == 'CE' || instrumentType == 'PE') {
                 margin = 7;
             } else {
                 margin = 0;
@@ -1680,8 +1572,8 @@ $user = Auth::user();
 
 
             marginCost.innerHTML = `₹ ${mcp}`;
-                costPrice.innerHTML = `₹ ${cp}`;
-                marginUsed.innerHTML=`(${margin}x)`;
+            costPrice.innerHTML = `₹ ${cp}`;
+            marginUsed.innerHTML = `(${margin}x)`;
 
             // Update color logic
             if (wallet >= mcp) {
@@ -1701,27 +1593,31 @@ $user = Auth::user();
 
         }
 
-        function decrementLot(quantityPerLot, uniqueId, wallet, tradeType,rowId) {
+        function decrementLot(quantityPerLot, uniqueId, wallet, tradeType, rowId) {
 
-            const lotInput = document.getElementById('lotSize'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const quantity = document.getElementById('quantity'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const costPrice = document.getElementById('costPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const maxPrice = document.getElementById('maxPrice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const realPrice = document.getElementById('realprice'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginCost = document.getElementById('marginCost'+rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
-            const marginUsed=document.getElementById('marginUsed'+rowId+(tradeType === 'sell' ? '2' : '1') + uniqueId);
-           const selectedMode = document.querySelector(`input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
+            const lotInput = document.getElementById('lotSize' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const quantity = document.getElementById('quantity' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const costPrice = document.getElementById('costPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const maxPrice = document.getElementById('maxPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const realPrice = document.getElementById('realprice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
+            const marginCost = document.getElementById('marginCost' + rowId + (tradeType === 'sell' ? '2' : '1') +
+            uniqueId);
+            const marginUsed = document.getElementById('marginUsed' + rowId + (tradeType === 'sell' ? '2' : '1') +
+            uniqueId);
+            const selectedMode = document.querySelector(
+                `input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
 
 
-            const instrumentType = document.getElementById('instrumentType'+rowId +(tradeType === 'sell' ? '2' : '1')+ uniqueId).value;
+            const instrumentType = document.getElementById('instrumentType' + rowId + (tradeType === 'sell' ? '2' : '1') +
+                uniqueId).value;
 
             let margin = 0;
 
             if (instrumentType == 'FUT' && selectedMode == 'intraday') {
                 margin = 500;
-            } else if(instrumentType == 'FUT' && selectedMode == 'delivery'){ 
+            } else if (instrumentType == 'FUT' && selectedMode == 'delivery') {
                 margin = 50;
-            }else if (instrumentType == 'CE' || instrumentType == 'PE') {
+            } else if (instrumentType == 'CE' || instrumentType == 'PE') {
                 margin = 7;
             } else {
                 margin = 0;
@@ -1741,7 +1637,7 @@ $user = Auth::user();
 
                 marginCost.innerHTML = `₹ ${mcp}`;
                 costPrice.innerHTML = `₹ ${cp}`;
-                marginUsed.innerHTML=`(${margin}x)`;
+                marginUsed.innerHTML = `(${margin}x)`;
 
                 // Update color logic
                 if (wallet >= mcp) {
@@ -1763,166 +1659,154 @@ $user = Auth::user();
         }
 
 
-        // Buy Sell Feature End 
-
-
-        // Add Watch List  Start
-
-
         function addWatchlist(item) {
-       //use ajax and swel fire to add watchlist  using of post method
-
-       const loadingToast = Toastify({
-           text: "Processing your order...",
-           duration: -1, // Keep it visible until manually closed
-           gravity: "top",
-           offset: {
-               y: "90px" // Moves it 60px down from the top
-           },
-           position: "center",
-           backgroundColor: "#3498db", // Blue for loading
-       }).showToast();
+            const loadingToast = Toastify({
+                text: "Processing your order...",
+                duration: -1, 
+                gravity: "top",
+                offset: {
+                    y: "90px" 
+                },
+                position: "center",
+                backgroundColor: "#3498db",
+            }).showToast();
 
 
-       $.ajax({
-           url: "{{ route('add-watchlist') }}",
-           type: "POST",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-           },
-           data: item,
+            $.ajax({
+                url: "{{ route('add-watchlist') }}",
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+                },
+                data: item,
 
-           success: function(response) {
-               loadingToast.hideToast();
-               // response = JSON.parse(response);
-               if (response.success) {
-                   Toastify({
-                       text: "✅ Script Added to Watchlist",
-                       duration: 1500,
-                       gravity: "top",
-                       offset: {
-                           y: "90px" // Moves it 60px down from the top
-                       },
-                       position: "center",
-                       backgroundColor: "#3ab67a",
-                   }).showToast();
-               } else {
-                
-                   Toastify({
-                       text: response.message || "An error occurred.",
-                       duration: 1500,
-                       close: true,
-                       gravity: "top",
-                       offset: {
-                           y: "90px" // Moves it 60px down from the top
-                       },
-                       position: "center",
-                       backgroundColor: "#dc3545"
-                   }).showToast();
-               }
-           },
-           error: function(xhr) {
-            loadingToast.hideToast();
-               Toastify({
-                   text: xhr.responseJSON?.message || "An error occurred while adding the script.",
-                   duration: 3000,
-                   close: true,
-                   gravity: "top",
-                   offset: {
-                       y: "90px" // Moves it 60px down from the top
-                   },
-                   position: "center",
-                   backgroundColor: "#dc3545"
-               }).showToast();
-               console.error(xhr.responseJSON);
-           }
-       });
+                success: function(response) {
+                    loadingToast.hideToast();
+                    if (response.success) {
+                        Toastify({
+                            text: "✅ Script Added to Watchlist",
+                            duration: 1500,
+                            gravity: "top",
+                            offset: {
+                                y: "90px" 
+                            },
+                            position: "center",
+                            backgroundColor: "#3ab67a",
+                        }).showToast();
+                    } else {
 
-
-   }
+                        Toastify({
+                            text: response.message || "An error occurred.",
+                            duration: 1500,
+                            close: true,
+                            gravity: "top",
+                            offset: {
+                                y: "90px" 
+                            },
+                            position: "center",
+                            backgroundColor: "#dc3545"
+                        }).showToast();
+                    }
+                },
+                error: function(xhr) {
+                    loadingToast.hideToast();
+                    Toastify({
+                        text: xhr.responseJSON?.message || "An error occurred while adding the script.",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        offset: {
+                            y: "90px" 
+                        },
+                        position: "center",
+                        backgroundColor: "#dc3545"
+                    }).showToast();
+                    console.error(xhr.responseJSON);
+                }
+            });
 
 
-
-   function removeWatchlist(id) {
-
-       const loadingToast = Toastify({
-           text: "Processing your order...",
-           duration: -1, // Keep it visible until manually closed
-           gravity: "top",
-           offset: {
-               y: "90px" // Moves it 60px down from the top
-           },
-           position: "center",
-           backgroundColor: "#3498db", // Blue for loading
-       }).showToast();
-
-       $.ajax({
-           url: "{{ route('remove-watchlist') }}",
-           type: "POST",
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-           },
-           data: {
-               id: id
-           },
-           success: function(response) {
-               loadingToast.hideToast();
-               if (response.success) {
-                   Toastify({
-                       text: "✅ Script Removed from Watchlist",
-                       duration: 1500,
-                       gravity: "top",
-                       offset: {
-                           y: "90px" // Moves it 60px down from the top
-                       },
-                       position: "center",
-                       backgroundColor: "#3ab67a"
-                   }).showToast();
-               } else {
-                   Toastify({
-                       text: response.message || "An error occurred.",
-                       duration: 3000,
-                       gravity: "top",
-                       offset: {
-                           y: "90px" // Moves it 60px down from the top
-                       },
-                       position: "center",
-                       backgroundColor: "#dc3545"
-                   }).showToast();
-               }
-           },
-           error: function(xhr) {
-            loadingToast.hideToast();
-               Toastify({
-                   text: xhr.responseJSON?.message || "An error occurred while removing the script.",
-                   duration: 3000,
-                   gravity: "top",
-                   offset: {
-                       y: "90px" // Moves it 60px down from the top
-                   },
-                   position: "center",
-                   backgroundColor: "#dc3545"
-               }).showToast();
-               console.error(xhr.responseJSON);
-           }
-       });
-
-   }
-
-
-       
-        // Remove Watchlist End
-
-
-
-        function showWatchlist(type,data){
-            console.log(type);
-            console.log(data);
-            updateContactsList(data);
-            
         }
 
-        function handleChartClick(foisin,rowId, modalId) {
+
+
+        function removeWatchlist(id) {
+
+            const loadingToast = Toastify({
+                text: "Processing your order...",
+                duration: -1, 
+                gravity: "top",
+                offset: {
+                    y: "90px" 
+                },
+                position: "center",
+                backgroundColor: "#3498db", 
+            }).showToast();
+
+            $.ajax({
+                url: "{{ route('remove-watchlist') }}",
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+                },
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                    loadingToast.hideToast();
+                    if (response.success) {
+                        Toastify({
+                            text: "✅ Script Removed from Watchlist",
+                            duration: 1500,
+                            gravity: "top",
+                            offset: {
+                                y: "90px" 
+                            },
+                            position: "center",
+                            backgroundColor: "#3ab67a"
+                        }).showToast();
+                    } else {
+                        Toastify({
+                            text: response.message || "An error occurred.",
+                            duration: 3000,
+                            gravity: "top",
+                            offset: {
+                                y: "90px" 
+                            },
+                            position: "center",
+                            backgroundColor: "#dc3545"
+                        }).showToast();
+                    }
+                },
+                error: function(xhr) {
+                    loadingToast.hideToast();
+                    Toastify({
+                        text: xhr.responseJSON?.message ||
+                            "An error occurred while removing the script.",
+                        duration: 3000,
+                        gravity: "top",
+                        offset: {
+                            y: "90px"
+                        },
+                        position: "center",
+                        backgroundColor: "#dc3545"
+                    }).showToast();
+                    console.error(xhr.responseJSON);
+                }
+            });
+
+        }
+
+
+
+        function showWatchlist(type, data) {
+            // console.log(type);
+            // console.log(data);
+            updateContactsList(data);
+
+        }
+
+        function handleChartClick(foisin, rowId, modalId) {
             console.log("Clicked on chart for:", foisin, modalId);
 
             var offcanvas = new bootstrap.Offcanvas(document.getElementById(`offcanvasBottom${rowId}${modalId}`));
@@ -2027,109 +1911,8 @@ $user = Auth::user();
             });
         }
 
-        // window.Echo.channel('stocks')
-        //     .listen('Stock', (e) => {
-        //         console.log("Stock event received:", e);
     
-        //         // Extracting stock data from the event
-        //         let sensexData = e.stocks?.feeds?.["BSE_INDEX|SENSEX"]?.ff?.indexFF;
-        //         let niftyData = e.stocks?.feeds?.["NSE_INDEX|Nifty 50"]?.ff?.indexFF;
-
-        //         console.log(niftyData);
-
-               
-    
-        //         if (sensexData) {
-        //             let sensexLtp = sensexData.ltpc.ltp;
-        //             let sensexCP = sensexData.ltpc.cp;
-        //             let sensexChange = sensexLtp - sensexCP;
-                    
-        //             let sensexChangePercent = ((sensexChange / sensexCP) * 100).toFixed(2);
-
-        //             const sensexLtpElement=document.getElementById('sensexLtp');
-        //             sensexLtpElement.textContent = sensexLtp.toFixed(2);
-        //             sensexLtpElement.classList.remove('stock-success-value','stock-danger-value');
-        //             sensexLtpElement.classList.add(sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
-
-        //             const sensexChangeElement=document.getElementById('sensexChange');
-        //             sensexChangeElement.classList.remove('stock-success-value','stock-danger-value');
-        //             sensexChangeElement.classList.add(sensexChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
-
-        //             sensexChangeElement.innerHTML=`
-        //               <div>${sensexChange>=0?'+':'-'}${Math.abs(sensexChangePercent)}%</div>
-        //               <div>${sensexChange>=0?'+':'-'}${Math.abs(sensexChange.toFixed(2))}</div>
-        //             `;
-    
-                  
-        //         }
-    
-        //         if (niftyData) {
-        //             let niftyLtp = niftyData.ltpc.ltp;
-        //             let niftyCP = niftyData.ltpc.cp;
-        //             let niftyChange = niftyLtp - niftyCP;
-        //             let niftyChangePercent = ((niftyChange / niftyCP) * 100).toFixed(2);
-    
-        //             const niftyLtpElement=document.getElementById('niftyLtp');
-        //             niftyLtpElement.textContent = niftyLtp.toFixed(2);
-
-        //             niftyLtpElement.classList.remove('stock-success-value','stock-danger-value');
-        //             niftyLtpElement.classList.add(niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
-
-        //             const niftyChangeElement=document.getElementById('niftyChange');
-        //             niftyChangeElement.classList.remove('stock-success-value','stock-danger-value');
-        //             niftyChangeElement.classList.add(niftyChange >= 0 ? 'stock-success-value' : 'stock-danger-value');
-
-        //             niftyChangeElement.innerHTML=`
-        //               <div>${niftyChange>=0?'+':'-'}${Math.abs(niftyChangePercent)}%</div>
-        //               <div>${niftyChange>=0?'+':'-'}${Math.abs(niftyChange.toFixed(2))}</div>
-        //             `;
-
-        //         }
-        //     });
-
-        const indicesConfig = [
-    { key: "NSE_INDEX|Nifty 50", ltpId: "niftyLtp", changeId: "niftyChange" },
-    { key: "BSE_INDEX|SENSEX", ltpId: "sensexLtp", changeId: "sensexChange" },
-    { key: "NSE_INDEX|Nifty Bank", ltpId: "bankniftyLtp", changeId: "bankniftyChange" },
-    { key: "NSE_INDEX|Nifty Next 50", ltpId: "niftynext50Ltp", changeId: "niftynext50Change" },
-    { key: "NSE_INDEX|NIFTY MID SELECT", ltpId: "midcapselectLtp", changeId: "midcapselectChange" },
-    { key: "NSE_INDEX|Nifty Fin Service", ltpId: "finniftyLtp", changeId: "finniftyChange" },
-    { key: "BSE_INDEX|SENSEX50", ltpId: "sensex50Ltp", changeId: "sensex50Change" },
-    { key: "BSE_INDEX|BANKEX", ltpId: "bankexLtp", changeId: "bankexChange" }
-];
-window.Echo.channel('stocks')
-    .listen('Stock', (e) => {
-        console.log("Stock event received:", e);
-
-        indicesConfig.forEach(({ key, ltpId, changeId }) => {
-            const data = e.stocks?.feeds?.[key]?.ff?.indexFF;
-
-            if (data) {
-                const ltp = data.ltpc.ltp;
-                const cp = data.ltpc.cp;
-                const change = ltp - cp;
-                const changePercent = ((change / cp) * 100).toFixed(2);
-
-                const ltpElement = document.getElementById(ltpId);
-                const changeElement = document.getElementById(changeId);
-
-                if (ltpElement && changeElement) {
-                    ltpElement.textContent = ltp.toFixed(2);
-                    ltpElement.classList.remove('stock-success-value', 'stock-danger-value');
-                    ltpElement.classList.add(change >= 0 ? 'stock-success-value' : 'stock-danger-value');
-
-                    changeElement.classList.remove('stock-success-value', 'stock-danger-value');
-                    changeElement.classList.add(change >= 0 ? 'stock-success-value' : 'stock-danger-value');
-                    changeElement.innerHTML = `
-                        <div>${change >= 0 ? '+' : '-'}${Math.abs(changePercent)}%</div>
-                        <div>${change >= 0 ? '+' : '-'}${Math.abs(change.toFixed(2))}</div>
-                    `;
-                }
-            }
-        });
-    });
-
-    </script>
+</script>
 
 
 
