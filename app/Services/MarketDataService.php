@@ -10,6 +10,7 @@ use Com\Upstox\Marketdatafeeder\Rpc\Proto\FeedResponse;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\UpdateLTPJob;
 use App\Jobs\ValidateLtpc;
+use App\Jobs\CheckLimitOrdersJob;
 use Illuminate\Support\Facades\Queue;
 
 class MarketDataService
@@ -293,7 +294,8 @@ class MarketDataService
                 $data2 = json_decode($apidata, true);
                 // var_dump($data2);
                 ValidateLtpc::dispatch($data2);
-                // return 0;
+                CheckLimitOrdersJob::dispatch($data2);
+               
 
                 // UpdateLTPJob::dispatch($data2);
                 // // Broadcast the processed data to the client

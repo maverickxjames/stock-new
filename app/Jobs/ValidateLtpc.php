@@ -54,49 +54,74 @@ class ValidateLtpc implements ShouldQueue
 
         $trade = DB::table('trades')
             ->where('instrumentKey', $instrumentKey)
-            ->where(function ($query) use ($ltp) {
-                $query->where('stop_loss', '!=', null)
-                    ->orWhere('target_price', '!=', null)
-                    ->orWhere('order_type','limit');
+            ->where('status', 'executed')
+            ->where(function ($q) {
+                $q->whereNotNull('stop_loss')
+                  ->orWhereNotNull('target_price');
             })
             ->first();
 
             Log::info("Trade data fetched", ['instrumentKey' => $instrumentKey, 'trade' => $trade]);
 
             if ($trade) {
-                $shouldExecute = false;
-                $executionType = null;
+                $shouldExit = false;
+                $exitType = null;
             
-                if ($trade->stop_loss && $ltp <= $trade->stop_loss) {
-                    $shouldExecute = true;
-                    $executionType = 'Stop Loss Hit';
-                } elseif ($trade->target_price && $ltp >= $trade->target_price) {
-                    $shouldExecute = true;
-                    $executionType = 'Target Price Hit';
-                } elseif ($trade->order_type === 'limit' && $ltp <= $trade->limit_price) {
-                    $shouldExecute = true;
-                    $executionType = 'Limit Order Executed';
-                    Log::info("Limit Order Executed", ['trade' => $trade, 'ltp' => $ltp]);
+                if ($trade->status === 'executed') {
+                    if ($trade->action === 'BUY') {
+                        if ($trade->stop_loss && $ltp <= $trade->stop_loss) {
+                            $shouldExit = true;
+                            $exitType = 'Buy Stop Loss Hit';
+                        } elseif ($trade->target_price && $ltp >= $trade->target_price) {
+                            $shouldExit = true;
+                            $exitType = 'Buy Target Hit';
+                        }
+                    } elseif ($trade->action === 'SELL') {
+                        if ($trade->stop_loss && $ltp >= $trade->stop_loss) {
+                            $shouldExit = true;
+                            $exitType = 'Sell Stop Loss Hit';
+                        } elseif ($trade->target_price && $ltp <= $trade->target_price) {
+                            $shouldExit = true;
+                            $exitType = 'Sell Target Hit';
+                        }
+                    }
                 }
             
-                if ($shouldExecute) {
+                if ($shouldExit) {
                     // Transaction-safe execution
-                    DB::transaction(function () use ($trade, $executionType, $ltp) {
-                        // Update trade status
+                    DB::transaction(function () use ($trade, $exitType, $ltp) {
+                        // Determine PnL
+                        $entryPrice = $trade->price; // original order price
+                        $exitPrice = $ltp;
+                        $quantity = $trade->quantity ?? 1; // default to 1 if not defined
+                    
+                        if ($trade->action === 'BUY') {
+                            $pnl = ($exitPrice - $entryPrice) * $quantity;
+                        } elseif ($trade->action === 'SELL') {
+                            $pnl = ($entryPrice - $exitPrice) * $quantity;
+                        } else {
+                            $pnl = 0;
+                        }
+                    
+                        // Update the trade
                         DB::table('trades')->where('id', $trade->id)->update([
-                            'status' => 'executed',
-                            // 'executed_price' => $ltp,
+                            'status' => 'closed',
+                            'exit_price' => $exitPrice,
+                            'take_profit' => $pnl,
+                            'remark' => $exitType,
                             'updated_at' => now()
                         ]);
-            
-                        // Deduct/add funds or update user portfolio logic here
+                    
+                        // Optionally update user's balance or portfolio (example)
+                        // DB::table('users')->where('id', $trade->user_id)->increment('balance', $pnl);
+                    
+                        Log::info("Trade Closed", [
+                            'trade_id' => $trade->id,
+                            'type' => $exitType,
+                            'ltp' => $ltp,
+                            'pnl' => $pnl
+                        ]);
                     });
-            
-                    Log::info("Trade Executed", [
-                        'trade_id' => $trade->id,
-                        'type' => $executionType,
-                        'ltp' => $ltp
-                    ]);
                 }
             }else{
                 Log::info("No trade found for instrumentKey", ['instrumentKey' => $instrumentKey]);
