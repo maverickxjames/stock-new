@@ -291,9 +291,9 @@ class MarketDataService
                 $apidata = $decodedData->serializeToJsonString();
 
                 $data2 = json_decode($apidata, true);
-                var_dump($data2);
+                // var_dump($data2);
                 ValidateLtpc::dispatch($data2);
-                return 0;
+                // return 0;
 
                 // UpdateLTPJob::dispatch($data2);
                 // // Broadcast the processed data to the client
