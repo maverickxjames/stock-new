@@ -85,9 +85,8 @@ class ValidateLtpc implements ShouldQueue
                         // Update trade status
                         DB::table('trades')->where('id', $trade->id)->update([
                             'status' => 'executed',
-                            'executed_price' => $ltp,
-                            'executed_at' => now(),
-                            'execution_reason' => $executionType,
+                            // 'executed_price' => $ltp,
+                            'updated_at' => now()
                         ]);
             
                         // Deduct/add funds or update user portfolio logic here
