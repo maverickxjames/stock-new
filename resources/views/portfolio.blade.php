@@ -544,8 +544,7 @@ $trades = DB::table('trades')
                                                                             <!-- </div> -->
                                                                         </div>
                                                                         <div class="card-body pt-2">
-                                                                            <div
-                                                                                class="table-responsive dataTabletrade">
+                                                                           
                                                                                 <input type="text" name="id"
                                                                                     value="{{ $i }}"
                                                                                     id="id" hidden>
@@ -554,8 +553,7 @@ $trades = DB::table('trades')
                                                                                     value="{{ $foisin }}"
                                                                                     id="instrumentKey1{{ $i }}"
                                                                                     hidden>
-                                                                                <div class="col-xl-4"
-                                                                                    style="width: 100%;">
+                                                                              
                                                                                     <div class="card">
                                                                                         <div class="card-body pt-2">
                                                                                             <?php
@@ -643,22 +641,21 @@ $trades = DB::table('trades')
                                                                                                 class="d-flex gap-3 mb-3 align-items-center justify-content-between">
                                                                                                 <p
                                                                                                     class="mb-0 w-100 fs-14 text-dark font-w600 d-flex 
-                                                                                                        align-items-center px-3 py-2 bg-light">
+                                                                                                        align-items-center gap-2 px-3 py-2 bg-light">
                                                                                                     Initial
                                                                                                     Investment:
-                                                                                                    ₹
-                                                                                                    {{ number_format($stock->cost, 2) }}
+                                                                                                    <span>₹ {{ number_format($stock->cost, 2) }}</span>
+                                                                                                    
                                                                                                 </p>
                                                                                             </div>
                                                                                             <div
                                                                                                 class="d-flex gap-3 mb-3 align-items-center justify-content-between">
                                                                                                 <p
                                                                                                     class="mb-0 w-100 fs-14 text-dark font-w600 d-flex 
-                                                                                                        align-items-center px-3 py-2 bg-light">
-                                                                                                    Margin Utilized:
-                                                                                                    ₹
-                                                                                                    {{ number_format($stock->cost - $stock->total_cost, 2) }}
-                                                                                                    ({{ $margin }}x)
+                                                                                                        align-items-center gap-2 px-3 py-2 bg-light">
+                                                                                                    Margin Utilized :
+                                                                                                    <span>₹{{ number_format($stock->cost - $stock->total_cost, 2) }}
+                                                                                                        ({{ $margin }}x)</span>
                                                                                                 </p>
                                                                                             </div>
 
@@ -669,8 +666,9 @@ $trades = DB::table('trades')
                                                                                                             align-items-center px-3 py-2 bg-light">
                                                                                                     Adjusted
                                                                                                     Investment:
-                                                                                                    ₹
-                                                                                                    {{ number_format($stock->total_cost, 2) }}
+                                                                                                    <span>₹ {{ number_format($stock->total_cost, 2) }}</span>
+                                                                                                    
+                                                                                                    
                                                                                                 </p>
                                                                                             </div>
                                                                                             <!-- Lot & Quantity -->
@@ -750,11 +748,10 @@ $trades = DB::table('trades')
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
+                                                                               
 
 
 
-                                                                            </div>
 
                                                                         </div>
                                                                         {{--
