@@ -95,6 +95,13 @@
                                 <p>Add User</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="javascript:void(0);" class="nav-link"
+                                onclick="window.location.href='{{ route('admin.new-user') }}'">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New User</p>
+                            </a>
+                        </li>
 
                     </ul>
                 </li>

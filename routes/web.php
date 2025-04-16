@@ -97,6 +97,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/add-watchlist/{id}', [AdminController::class, 'addToWatchlist'])->name('admin.add-to-watchlist');
     Route::post('/admin/remove-watchlist/{id}', [AdminController::class, 'removeFromWatchlist'])->name('admin.remove-watchlist');
     Route::post('/admin/update-trade-field', [AdminController::class, 'updateTradeField'])->name('admin.updateTradeField');
+    Route::get('admin/new-user', [AdminController::class, 'newUser'])->name('admin.new-user');
+    Route::post('/admin/validate-user', [AdminController::class, 'validateUser'])->name('admin.validateUser');
 
 
 

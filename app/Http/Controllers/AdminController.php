@@ -346,5 +346,28 @@ class AdminController extends Controller
 
     return response()->json(['message' => ucfirst($field) . ' updated successfully!']);
 }
+
+public function newUser(Request $request): View
+{
+    $users = DB::table('users')->where('is_dummy', 1)->get();
+    return view('admin.newUser', ['users' => $users]);
    
+}
+
+public function validateUser(Request $request)
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,user_id', 
+    ]);
+
+    $user = User::where('user_id', $request->user_id)->first();
+    if ($user) {
+        $user->is_dummy = 0;
+        $user->save();
+        return response()->json(['success' => true, 'message' => 'User updated successfully']);
+    } else {
+        return response()->json(['success' => false, 'message' => 'User not found']);
+    }
+
+}
 }

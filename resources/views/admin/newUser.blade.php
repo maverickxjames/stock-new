@@ -6,33 +6,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
- <!-- Google Font: Source Sans Pro -->
- <link rel="stylesheet"
- href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
-<!-- Ionicons -->
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-<!-- iCheck -->
-<link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-<!-- JQVMap -->
-<link rel="stylesheet" href="/plugins/jqvmap/jqvmap.min.css">
-<!-- Theme style -->
-<link rel="stylesheet" href="/dist/css/adminlte.min.css">
-<!-- overlayScrollbars -->
-<link rel="stylesheet" href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-<!-- Daterange picker -->
-<link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
-<!-- summernote -->
-<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
 
-<!-- DataTables -->
-<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-
-<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
   {{-- meta csrf --}}
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -238,7 +232,7 @@
                
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example3" class="table table-bordered table-striped">
+                  <table id="example1" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                       <th>S. No</th>
@@ -246,9 +240,9 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Username</th>
-                      <th>Wallet</th>
+                      <th>Referred By</th>
+                      <th>Refer Code</th>
                       <th>Created At</th>
-                      <th>Is Dummy</th>
                       <th>Action</th>
                     </tr>
                     </thead>
@@ -260,20 +254,15 @@
                       <td>{{$user->name}}</td>
                       <td>{{$user->email}}</td>
                       <td>{{$user->username}}</td>
-                      <td class="wallet-container">
-                        ₹<span class="wallet-balance" >{{$user->real_wallet}}</span>
-                        <button class="add-fund-button" onclick="addFund({{ $user->id }})">Add Fund</button>
-                      </td>
-                      <td>{{$user->created_at}}</td>
                       <td>
-                        @if($user->is_dummy == 1)
-                        <span class="badge badge-success">Yes</span>
-                        @else
-                        <span class="badge badge-danger">No</span>
-                        @endif
+                        {{ $user->referred_by ? $user->referred_by : 'N/A' }}
+                      </td>
+                      <td>{{$user->refer_code ? $user->refer_code : 'N/A'}}</td>
+                      <td>
+                        {{ $user->created_at }}
                       </td>
                       <td>
-                        <a href="{{route('admin.viewUser', $user->id)}}" class="btn btn-warning">View</a>
+                        <a href="#" onclick="validate('{{ $user->user_id }}')" class="btn btn-warning">Validate It</a>
                         </td>
                     </tr>
                     @endforeach
@@ -309,136 +298,134 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-  <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="/plugins/jquery/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
-    <!-- Bootstrap 4 -->
-    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- ChartJS -->
-    <script src="/plugins/chart.js/Chart.min.js"></script>
-    <!-- Sparkline -->
-    <script src="/plugins/sparklines/sparkline.js"></script>
-    <!-- JQVMap -->
-    <script src="/plugins/jqvmap/jquery.vmap.min.js"></script>
-    <script src="/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
-    <!-- daterangepicker -->
-    <script src="/plugins/moment/moment.min.js"></script>
-    <script src="/plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    <!-- Summernote -->
-    <script src="/plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="/dist/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="/dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="/dist/js/pages/dashboard.js"></script>
-
-    <!-- DataTables -->
-    <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="/plugins/jszip/jszip.min.js"></script>
-    <script src="/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="/plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $("#example2").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-            $("#example3").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
-
-        });
-    </script>
-
-
-
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-{{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-  function addFund(userId) {
-  Swal.fire({
-    title: 'Add Funds',
-    input: 'number',
-    inputLabel: 'Enter the amount you want to add:',
-    inputPlaceholder: 'Amount',
-    showCancelButton: true,
-    confirmButtonText: 'Add',
-    cancelButtonText: 'Cancel',
-    inputValidator: (value) => {
-      if (!value || value <= 0) {
-        return 'Please enter a valid amount';
-      }
-    }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const amount = parseFloat(result.value);
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="/plugins/moment/moment.min.js"></script>
+<script src="/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/dist/js/pages/dashboard.js"></script>
 
-      // Use AJAX to send the request
-      $.ajax({
-        url: `/admin/add-fund/${userId}`, // Laravel route
-        type: 'POST',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: { amount: amount },
-        beforeSend: function () {
-					Swal.fire({ icon: 'info', title: 'Processing', text: 'Please wait...', showConfirmButton: false });
-				},
-        success: function (response) {
-          console.log(response);
-          if (response.success) {
-            Swal.fire('Success', `Successfully added ₹${amount} to the wallet.`, 'success').then(() => {
-                location.reload();
-            });
-           
-          } else {
-            Swal.fire('Error', response.message || 'Something went wrong!', 'error');
-          }
-        },
-        error: function (error) {
-          console.error('Error:', error);
-          Swal.fire('Error', 'Unable to process the request.', 'error');
-        }
-      });
-    }
+<!-- DataTables  & Plugins -->
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/plugins/jszip/jszip.min.js"></script>
+<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- Page specific script -->
+
+
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
   });
+
+
+
+  
+</script>
+\
+
+
+<script>
+  function validate(userId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to validate this user!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, validate it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '{{ route('admin.validateUser') }}', // Update with your route
+          type: 'POST',
+          data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            user_id: userId
+          },
+          success: function(response) {
+            
+            if(response.success){
+                Swal.fire(
+                    'Validated!',
+                    'User has been validated.',
+                    'success'
+                ).then(() => {
+                    location.reload(); // Reload the page after validation
+                });
+                } else {
+                Swal.fire(
+                    'Error!',
+                    response.message,
+                    'error'
+                );
+            }
+           
+          },
+          error: function(xhr, status, error) {
+            Swal.fire(
+              'Error!',
+              'Something went wrong. Please try again.',
+              'error'
+            );
+          }
+        });
+      }
+    });
 }
 
 </script>
