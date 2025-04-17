@@ -130,7 +130,9 @@ class ProfileController extends Controller
         $uid = $user->id;
         $user = User::find($uid);
         $referral_code = $user->referral_code;
-        return view('referral', ['referral_code' => $referral_code]);
+
+        $referral_users=DB::table('users')->where('referred_by',$user->user_id)->get();
+        return view('referral', ['referral_code' => $referral_code, 'referral_users' => $referral_users]);
     }
 
 

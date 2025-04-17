@@ -71,6 +71,97 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link class="main-css" href="css/style.css" rel="stylesheet">
 
+    <style>
+        
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #777;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+button:hover, .button:hover {
+  border-color: #cdd;
+}
+
+.share-button, .copy-link {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+
+.share-dialog {
+  display: none;
+  position: relative; /* or absolute if needed */
+  z-index: 1000; /* ✅ Make sure it's on top */
+  box-shadow: 0 8px 16px rgba(0,0,0,.15);
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.share-dialog.is-open {
+  display: block;
+}
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.targets {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  margin-bottom: 20px;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #eee;
+}
+
+.pen-url {
+  margin-right: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+    </style>
+
+    <!-- Include Animate.css for animation (optional but nice) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
 </head>
 
 <body>
@@ -97,23 +188,25 @@
                 <!-- row -->
                 <div class="row">
                     <!-- column -->
-                    <div class="col-xl-12">
+                    {{-- <div class="col-xl-12">
                         <div class="card rounded-4 p-4">
                             <h1 class="text-center fw-bold fs-2 mb-4">Referral System</h1>
 
                             <div class="d-flex flex-wrap justify-content-center align-items-center gap-5 ">
-                                <!-- Left Logo & Referrals -->
-                                <div class="d-flex align-items-center py-3 px-5 rounded-2 " style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;">
-                                    <img src="https://cdn-icons-png.flaticon.com/128/4121/4121044.png" alt="logo" width="40" class="me-3" />
+                                <div class="d-flex align-items-center py-3 px-5 rounded-2 "
+                                    style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/4121/4121044.png" alt="logo"
+                                        width="40" class="me-3" />
                                     <div>
-                                        <h5 class="mb-1" >TOTAL REFERRALS</h5>
+                                        <h5 class="mb-1">TOTAL REFERRALS</h5>
                                         <h3 class="text-primary fw-bold">32</h3>
                                     </div>
                                 </div>
 
-                                <!-- Earnings -->
-                                <div class="d-flex align-items-center px-5 py-3 rounded-2 " style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;">
-                                    <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo" width="40" class="me-3" />
+                                <div class="d-flex align-items-center px-5 py-3 rounded-2 "
+                                    style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo"
+                                        width="40" class="me-3" />
                                     <div>
                                         <h5 class="mb-1">TOTAL EARNED</h5>
                                         <h3 class="text-info fw-bold">250.0</h3>
@@ -121,26 +214,134 @@
                                 </div>
                             </div>
 
-                            <!-- Referral Link Section -->
+                           
+
                             <div class="mt-5">
                                 <label class="mb-2 fw-semibold">YOUR REFERRAL LINK</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-controlgg"
+                                <div class="input-group mb-3 gap-2">
+                                    <input type="text" class="form-control"
                                         value="http://127.0.0.1:8000/{{ $user->refer_code }}" readonly>
-                                    <button onclick="copy()" class="btn btn-outline-light" type="button">Copy link</button>
-                                    <button onclick="share()" class="btn btn-primary ms-2" type="button">Share</button>
+                                    <button onclick="copy()" class="btn btn-dark rounded-3" type="button">Copy
+                                        link</button>
+
+                                    <button class="share-button bg-info" type="button" title="Share this article">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/16323/16323181.png" alt="logo" width="20">
+                                        <span>Share</span>
+                                      </button>
+                                </div>
+                                <div class="share-dialog">
+                                    <header>
+                                        <h3 class="dialog-title">Share</h3>
+                                        <button class="close-button">
+                                            <span class="material-symbols-outlined">close</span>
+                                        </button>
+                                    </header>
+                                    <div class="targets">
+                                        <a class="button">
+                                           
+                                            <span>Facebook</span>
+                                        </a>
+    
+                                        <a class="button">
+                                            
+                                            <span>Twitter</span>
+                                        </a>
+    
+                                        <a class="button">
+                                          
+                                            <span>LinkedIn</span>
+                                        </a>
+    
+                                        <a class="button">
+                                           
+                                            <span>Email</span>
+                                        </a>
+                                    </div>
+                                   
                                 </div>
                                 <p class="text-muted">Get <span class="text-info fw-bold">100.0 </span> for each
                                     invited user</p>
                             </div>
                         </div>
+                    </div> --}}
+                    <div class="col-xl-12">
+                       <div class="row">
+                        <div class="card rounded-4 p-4 shadow-lg border-0">
+                            <h1 class="text-center fw-bold fs-2 mb-4 text-primary">Referral System</h1>
+                    
+                            <!-- Stats Section -->
+                            <div class="row justify-content-center gy-4">
+                                <div class="col-md-5">
+                                    <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/4121/4121044.png" alt="logo" width="50" />
+                                        <div>
+                                            <p class="mb-1 text-muted fw-semibold">TOTAL REFERRALS</p>
+                                            <h3 class="mb-0 text-primary fw-bold">32</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="col-md-5">
+                                    <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo" width="50" />
+                                        <div>
+                                            <p class="mb-1 text-muted fw-semibold">TOTAL EARNED</p>
+                                            <h3 class="mb-0 text-info fw-bold">₹250.00</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Referral Link -->
+                            <div class="mt-5">
+                                <label class="mb-2 fw-semibold fs-5">Your Referral Link</label>
+                                <div class="input-group mb-3 gap-2">
+                                    <input type="text" class="form-control" id="referralInput" value="http://127.0.0.1:8000/{{ $user->refer_code }}" readonly>
+                                    <button onclick="copyReferral()" class="btn btn-dark copy-link">Copy Link</button>
+                                    <button onclick="toggleShare()" class="btn btn-info text-white share-button" type="button">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/16323/16323181.png" alt="logo" width="18" class="me-1">
+                                        Share
+                                    </button>
+                                </div>
+                                <p class="text-muted">Get <span class="text-info fw-bold">₹100.00</span> for each invited user</p>
+                            </div>
+                    
+                            <!-- Share Dialog -->
+                            <div id="shareDialog" class="share-dialog mt-3 border rounded-3 p-3 shadow-sm animate__animated">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="mb-0 fw-bold">Share</h5>
+                                    <button class="btn-close" onclick="toggleShare()">&times;</button>
+                                </div>
+                                <div class="d-flex flex-wrap gap-3">
+                                    <a href="#" class="btn btn-outline-primary">Facebook</a>
+                                    <a href="#" class="btn btn-outline-info">Twitter</a>
+                                    <a href="#" class="btn btn-outline-secondary">LinkedIn</a>
+                                    <a href="#" class="btn btn-outline-danger">Email</a>
+                                </div>
+                            </div>
+                    
+                            <!-- Toast -->
+                            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
+                                <div id="copyToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+                                    <div class="d-flex">
+                                        <div class="toast-body">
+                                            Referral link copied!
+                                        </div>
+                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       </div>
                     </div>
+                    
+                    
                     <div class="col-xl-12">
                         <!-- row -->
                         <div class="row">
                             <div class="card">
                                 <div class="card-header justify-content-between border-0">
-                                    <h2 class="card-title mb-0">Latest Sold Transaction</h2>
+                                    <h2 class="card-title mb-0">My Referral</h2>
                                 </div>
                                 <div class="card-body px-3 py-0">
                                     <div class="table-responsive">
@@ -149,228 +350,31 @@
                                             id="example6">
                                             <thead>
                                                 <tr>
-                                                    <th class="border-bottom">
-                                                        <input type="checkbox" class="form-check-input" id="checkAll"
-                                                            required="">
-                                                    </th>
-                                                    <th class="border-bottom ps-0">Currency</th>
                                                     <th class="border-bottom">Date</th>
-                                                    <th class="border-bottom">Email</th>
-                                                    <th class="border-bottom">Price</th>
-                                                    <th class="text-end">Status</th>
+                                                    <th class="border-bottom">User</th>
+                                                    <th class="border-bottom">Referral User</th>
+                                                    <th class="text-end">Profit</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                @foreach ($referral_users as $user)
+                                                      <tr>
+                                                    <td class="fs-14 font-w400">{{ \Carbon\Carbon::parse($user->created_at)->format('d M Y, h:i A') }}</td>
                                                     <td>
-                                                        <div class="checkbox me-0 align-self-center">
-                                                            <div class="custom-control custom-checkbox ">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="check8" required="">
-                                                                <label class="custom-control-label"
-                                                                    for="check8"></label>
-                                                            </div>
+                                                        <div class="d-flex flex-column">
+                                                            <strong>{{ $user->name }}</strong>
+                                                            <small class="text-muted">{{ $user->user_id }}</small>
                                                         </div>
                                                     </td>
-                                                    <td class="ps-0">
-                                                        <span class="font-w600 fs-14"> #TCK-01-12344 </span>
-                                                        <h5 class="mb-0">BTC</h5>
-                                                    </td>
-                                                    <td class="fs-14 font-w400">Jan 12, 2022</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <a href="email-inbox.html">
-                                                                <div class="icon-box icon-box-sm bg-primary">
-                                                                    <svg width="24" height="24"
-                                                                        viewBox="0 0 24 24" fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path
-                                                                            d="M19 4H5C4.20435 4 3.44129 4.31607 2.87868 4.87868C2.31607 5.44129 2 6.20435 2 7V17C2 17.7956 2.31607 18.5587 2.87868 19.1213C3.44129 19.6839 4.20435 20 5 20H19C19.7956 20 20.5587 19.6839 21.1213 19.1213C21.6839 18.5587 22 17.7956 22 17V7C22 6.20435 21.6839 5.44129 21.1213 4.87868C20.5587 4.31607 19.7956 4 19 4ZM18.427 6L12.6 10.8C12.4335 10.9267 12.2312 10.9976 12.022 11.0026C11.8129 11.0077 11.6074 10.9465 11.435 10.828L5.573 6H18.427ZM19 18H5C4.73478 18 4.48043 17.8946 4.29289 17.7071C4.10536 17.5196 4 17.2652 4 17V7.3L10.2 12.4C10.7159 12.7863 11.3435 12.9944 11.988 12.993C12.6551 12.992 13.3037 12.774 13.836 12.372L20 7.3V17C20 17.2652 19.8946 17.5196 19.7071 17.7071C19.5196 17.8946 19.2652 18 19 18Z"
-                                                                            fill="white" />
-                                                                    </svg>
-                                                                </div>
-                                                            </a>
-                                                            <div class="ms-3">
-                                                                <h5 class="mb-0"><a href="app-profile.html">Samanta
-                                                                        William</a></h5>
-                                                                <span class="fs-14 text-muted">samantha@mail.com</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$75,00
+                                                    <td>{{ $user->refer_count }}
                                                     </td>
                                                     <td class="text-end">
-                                                        <span class="badge badge-sm badge-success">Paid</span>
+                                                        <span class="badge badge-sm badge-success">₹{{ $user->refer_wallet }}</span>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="checkbox me-0 align-self-center">
-                                                            <div class="custom-control custom-checkbox ">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="check81" required="">
-                                                                <label class="custom-control-label"
-                                                                    for="check8"></label>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="ps-0">
-                                                        <span class="font-w600 fs-14"> #TCK-01-12344 </span>
-                                                        <h5 class="mb-0">BCTD</h5>
-                                                    </td>
-                                                    <td class="fs-14 font-w400">Jan 12, 2022</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <a href="email-inbox.html">
-                                                                <div class="icon-box icon-box-sm bg-primary">
-                                                                    <svg width="24" height="24"
-                                                                        viewBox="0 0 24 24" fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path
-                                                                            d="M19 4H5C4.20435 4 3.44129 4.31607 2.87868 4.87868C2.31607 5.44129 2 6.20435 2 7V17C2 17.7956 2.31607 18.5587 2.87868 19.1213C3.44129 19.6839 4.20435 20 5 20H19C19.7956 20 20.5587 19.6839 21.1213 19.1213C21.6839 18.5587 22 17.7956 22 17V7C22 6.20435 21.6839 5.44129 21.1213 4.87868C20.5587 4.31607 19.7956 4 19 4ZM18.427 6L12.6 10.8C12.4335 10.9267 12.2312 10.9976 12.022 11.0026C11.8129 11.0077 11.6074 10.9465 11.435 10.828L5.573 6H18.427ZM19 18H5C4.73478 18 4.48043 17.8946 4.29289 17.7071C4.10536 17.5196 4 17.2652 4 17V7.3L10.2 12.4C10.7159 12.7863 11.3435 12.9944 11.988 12.993C12.6551 12.992 13.3037 12.774 13.836 12.372L20 7.3V17C20 17.2652 19.8946 17.5196 19.7071 17.7071C19.5196 17.8946 19.2652 18 19 18Z"
-                                                                            fill="white" />
-                                                                    </svg>
-                                                                </div>
-                                                            </a>
-                                                            <div class="ms-3">
-                                                                <h5 class="mb-0"><a href="app-profile.html">Tony
-                                                                        Soap</a></h5>
-                                                                <span class="fs-14 text-muted">demo@mail.com</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$80,00
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-sm badge-success">Paid</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="checkbox me-0 align-self-center">
-                                                            <div class="custom-control custom-checkbox ">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="check813" required="">
-                                                                <label class="custom-control-label"
-                                                                    for="check8"></label>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="ps-0">
-                                                        <span class="font-w600 fs-14"> #TCK-01-12344 </span>
-                                                        <h5 class="mb-0">ETH</h5>
-                                                    </td>
-                                                    <td class="fs-14 font-w400">Jan 12, 2022</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <a href="email-inbox.html">
-                                                                <div class="icon-box icon-box-sm bg-primary">
-                                                                    <svg width="24" height="24"
-                                                                        viewBox="0 0 24 24" fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path
-                                                                            d="M19 4H5C4.20435 4 3.44129 4.31607 2.87868 4.87868C2.31607 5.44129 2 6.20435 2 7V17C2 17.7956 2.31607 18.5587 2.87868 19.1213C3.44129 19.6839 4.20435 20 5 20H19C19.7956 20 20.5587 19.6839 21.1213 19.1213C21.6839 18.5587 22 17.7956 22 17V7C22 6.20435 21.6839 5.44129 21.1213 4.87868C20.5587 4.31607 19.7956 4 19 4ZM18.427 6L12.6 10.8C12.4335 10.9267 12.2312 10.9976 12.022 11.0026C11.8129 11.0077 11.6074 10.9465 11.435 10.828L5.573 6H18.427ZM19 18H5C4.73478 18 4.48043 17.8946 4.29289 17.7071C4.10536 17.5196 4 17.2652 4 17V7.3L10.2 12.4C10.7159 12.7863 11.3435 12.9944 11.988 12.993C12.6551 12.992 13.3037 12.774 13.836 12.372L20 7.3V17C20 17.2652 19.8946 17.5196 19.7071 17.7071C19.5196 17.8946 19.2652 18 19 18Z"
-                                                                            fill="white" />
-                                                                    </svg>
-                                                                </div>
-                                                            </a>
-                                                            <div class="ms-3">
-                                                                <h5 class="mb-0"><a href="app-profile.html">Nela
-                                                                        Vita</a></h5>
-                                                                <span class="fs-14 text-muted">demo@mail.com</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$80,00
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-sm badge-warning">Pending</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="checkbox me-0 align-self-center">
-                                                            <div class="custom-control custom-checkbox ">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="check814" required="">
-                                                                <label class="custom-control-label"
-                                                                    for="check8"></label>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="ps-0">
-                                                        <span class="font-w600 fs-14"> #TCK-01-12344 </span>
-                                                        <h5 class="mb-0">USD</h5>
-                                                    </td>
-                                                    <td class="fs-14 font-w400">Jan 12, 2022</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <a href="email-inbox.html">
-                                                                <div class="icon-box icon-box-sm bg-primary">
-                                                                    <svg width="24" height="24"
-                                                                        viewBox="0 0 24 24" fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path
-                                                                            d="M19 4H5C4.20435 4 3.44129 4.31607 2.87868 4.87868C2.31607 5.44129 2 6.20435 2 7V17C2 17.7956 2.31607 18.5587 2.87868 19.1213C3.44129 19.6839 4.20435 20 5 20H19C19.7956 20 20.5587 19.6839 21.1213 19.1213C21.6839 18.5587 22 17.7956 22 17V7C22 6.20435 21.6839 5.44129 21.1213 4.87868C20.5587 4.31607 19.7956 4 19 4ZM18.427 6L12.6 10.8C12.4335 10.9267 12.2312 10.9976 12.022 11.0026C11.8129 11.0077 11.6074 10.9465 11.435 10.828L5.573 6H18.427ZM19 18H5C4.73478 18 4.48043 17.8946 4.29289 17.7071C4.10536 17.5196 4 17.2652 4 17V7.3L10.2 12.4C10.7159 12.7863 11.3435 12.9944 11.988 12.993C12.6551 12.992 13.3037 12.774 13.836 12.372L20 7.3V17C20 17.2652 19.8946 17.5196 19.7071 17.7071C19.5196 17.8946 19.2652 18 19 18Z"
-                                                                            fill="white" />
-                                                                    </svg>
-                                                                </div>
-                                                            </a>
-                                                            <div class="ms-3">
-                                                                <h5 class="mb-0"><a href="app-profile.html">Nadia
-                                                                        Edja</a></h5>
-                                                                <span class="fs-14 text-muted">demo@mail.com</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$75,00
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-sm badge-danger">Unpaid</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="checkbox me-0 align-self-center">
-                                                            <div class="custom-control custom-checkbox ">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="check815" required="">
-                                                                <label class="custom-control-label"
-                                                                    for="check8"></label>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="ps-0">
-                                                        <span class="font-w600 fs-14"> #TCK-01-12344 </span>
-                                                        <h5 class="mb-0">USD</h5>
-                                                    </td>
-                                                    <td class="fs-14 font-w400">Jan 12, 2022</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <a href="email-inbox.html">
-                                                                <div class="icon-box icon-box-sm bg-primary">
-                                                                    <svg width="24" height="24"
-                                                                        viewBox="0 0 24 24" fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path
-                                                                            d="M19 4H5C4.20435 4 3.44129 4.31607 2.87868 4.87868C2.31607 5.44129 2 6.20435 2 7V17C2 17.7956 2.31607 18.5587 2.87868 19.1213C3.44129 19.6839 4.20435 20 5 20H19C19.7956 20 20.5587 19.6839 21.1213 19.1213C21.6839 18.5587 22 17.7956 22 17V7C22 6.20435 21.6839 5.44129 21.1213 4.87868C20.5587 4.31607 19.7956 4 19 4ZM18.427 6L12.6 10.8C12.4335 10.9267 12.2312 10.9976 12.022 11.0026C11.8129 11.0077 11.6074 10.9465 11.435 10.828L5.573 6H18.427ZM19 18H5C4.73478 18 4.48043 17.8946 4.29289 17.7071C4.10536 17.5196 4 17.2652 4 17V7.3L10.2 12.4C10.7159 12.7863 11.3435 12.9944 11.988 12.993C12.6551 12.992 13.3037 12.774 13.836 12.372L20 7.3V17C20 17.2652 19.8946 17.5196 19.7071 17.7071C19.5196 17.8946 19.2652 18 19 18Z"
-                                                                            fill="white" />
-                                                                    </svg>
-                                                                </div>
-                                                            </a>
-                                                            <div class="ms-3">
-                                                                <h5 class="mb-0"><a href="app-profile.html">Nadia
-                                                                        Edja</a></h5>
-                                                                <span class="fs-14 text-muted">demo@mail.com</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>$75,00
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-sm badge-danger">Unpaid</span>
-                                                    </td>
-                                                </tr>
+                                                @endforeach
+                                              
+                                               
                                             </tbody>
                                         </table>
                                     </div>
@@ -413,6 +417,26 @@
         <script src="js/custom.min.js"></script>
         <script src="js/dlabnav-init.js"></script>
         <script src="js/demo.js"></script>
+
+     
+
+        <script>
+            function copyReferral() {
+                const input = document.getElementById("referralInput");
+                input.select();
+                document.execCommand("copy");
+        
+                const toast = new bootstrap.Toast(document.getElementById("copyToast"));
+                toast.show();
+            }
+        
+            function toggleShare() {
+                const dialog = document.getElementById("shareDialog");
+                dialog.classList.toggle("is-open");
+            }
+        </script>
+        
+
 </body>
 
 
