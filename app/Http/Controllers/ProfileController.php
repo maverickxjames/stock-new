@@ -124,5 +124,14 @@ class ProfileController extends Controller
         return response()->json(['message' => 'Profile updated successfully']);
     }
 
+    public function referral(Request $request)
+    {
+        $user = Auth::user();
+        $uid = $user->id;
+        $user = User::find($uid);
+        $referral_code = $user->referral_code;
+        return view('referral', ['referral_code' => $referral_code]);
+    }
+
 
 }

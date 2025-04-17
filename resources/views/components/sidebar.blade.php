@@ -75,7 +75,7 @@ $user=Auth::user();
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0);">
+                    <a href="javascript:void(0);" onclick="window.location.href='{{ route('referral') }}'">
                         <i class="material-symbols-outlined">Share</i>
                         <span class="nav-text">Share</span>
                     </a>

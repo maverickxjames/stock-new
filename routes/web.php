@@ -155,6 +155,8 @@ Route::middleware('auth')->group(function () {
     Route::get('quoteRefresh/{id}', [StockController::class, 'quoteRefresh'])->name('quoteRefresh');
     Route::post('updatePortfolio', [TradeController::class, 'updatePortfolio'])->name('updatePortfolio');
 
+    Route::get('referral', [ProfileController::class, 'referral'])->name('referral');
+
 
 
     Route::get('ww', function(){
