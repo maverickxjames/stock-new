@@ -271,7 +271,7 @@ $upstock=Upstock::where('id',1)->first();
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Refferal Settings</h1>
+                            <h1 class="m-0">Referral Settings</h1>
                         </div>
                         <div class="col-sm-6"></div>
                     </div>
