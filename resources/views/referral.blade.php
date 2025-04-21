@@ -276,7 +276,7 @@ header {
                                         <img src="https://cdn-icons-png.flaticon.com/128/4121/4121044.png" alt="logo" width="50" />
                                         <div>
                                             <p class="mb-1 text-muted fw-semibold">TOTAL REFERRALS</p>
-                                            <h3 class="mb-0 text-primary fw-bold">32</h3>
+                                            <h3 class="mb-0 text-primary fw-bold">{{ $user->refer_count }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -286,17 +286,17 @@ header {
                                         <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo" width="50" />
                                         <div>
                                             <p class="mb-1 text-muted fw-semibold">TOTAL EARNED</p>
-                                            <h3 class="mb-0 text-info fw-bold">₹250.00</h3>
+                                            <h3 class="mb-0 text-info fw-bold">₹ {{ $user->refer_wallet }}</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-lg-10 col-md-5">
                                     <div class="d-flex align-items-center justify-content-between gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
                                         <div class="d-flex align-items-center gap-3">
                                             <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo" width="50" />
                                             <div>
                                                 <p class="mb-1 text-muted fw-semibold">AVAILABLE TO WITHDRAW</p>
-                                                <h3 class="mb-0 text-primary fw-bold">₹100.00</h3>
+                                                <h3 class="mb-0 text-primary fw-bold">₹ {{ $user->total_refer_wallet }}</h3>
                                             </div>
                                         </div>
                                         <div>
