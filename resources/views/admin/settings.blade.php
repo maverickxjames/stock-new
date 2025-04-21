@@ -266,6 +266,59 @@ $upstock=Upstock::where('id',1)->first();
                 </form>
 
             </div>
+            <!-- Adjust Refferal -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Refferal Settings</h1>
+                        </div>
+                        <div class="col-sm-6"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <!-- Recharge Status -->
+                <form id="rechargeStatusForm">
+                    @csrf
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4" for="recharge_status">Recharge Status</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" style="
+                            background-color: #D3D3D3;
+                           " id="client_id" name="client_id" value="{{ $upstock['client_id'] ?? '' }}">
+                            <button type="button" class="btn btn-primary ml-2" onclick="updateCleintID()">Update</button>
+
+                            
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Withdraw Status -->
+                <form id="withdrawStatusForm">
+                    @csrf
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4" for="withdraw_status">Withdraw Status</label>
+                        <div class="col-sm-8">
+                            <input type="checkbox" id="withdraw_status" {{ $settings->withdraw_status == 'on' ?
+                            'checked' : '' }} data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="primary" data-offstyle="light">
+                        </div>
+                    </div>
+                </form>
+
+                {{-- upi status --}}
+                <form id="upiStatusForm">
+                    @csrf
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4" for="upi_status">UPI Status</label>
+                        <div class="col-sm-8">
+                            <input type="checkbox" id="upi_status" {{ $settings->upi_status == 'on' ? 'checked' : '' }} data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="primary" data-offstyle="light">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
 
             <!-- Content Header (Page header) -->
             <div class="content-header">

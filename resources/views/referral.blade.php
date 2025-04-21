@@ -290,20 +290,34 @@ header {
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-5">
+                                    <div class="d-flex align-items-center justify-content-between gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo" width="50" />
+                                            <div>
+                                                <p class="mb-1 text-muted fw-semibold">AVAILABLE TO WITHDRAW</p>
+                                                <h3 class="mb-0 text-primary fw-bold">₹100.00</h3>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button onclick="window.location.href='{{ route('withdraw') }}'" class="btn btn-outline-primary">Withdraw</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                     
                             <!-- Referral Link -->
                             <div class="mt-5">
                                 <label class="mb-2 fw-semibold fs-5">Your Referral Link</label>
                                 <div class="input-group mb-3 gap-2">
-                                    <input type="text" class="form-control" id="referralInput" value="http://127.0.0.1:8000/{{ $user->refer_code }}" readonly>
+                                    <input type="text" class="form-control" id="referralInput" value="{{ url('/register/' . Auth::user()->refer_code) }}" readonly>
                                     <button onclick="copyReferral()" class="btn btn-dark copy-link">Copy Link</button>
                                     <button onclick="toggleShare()" class="btn btn-info text-white share-button" type="button">
                                         <img src="https://cdn-icons-png.flaticon.com/128/16323/16323181.png" alt="logo" width="18" class="me-1">
                                         Share
                                     </button>
                                 </div>
-                                <p class="text-muted">Get <span class="text-info fw-bold">₹100.00</span> for each invited user</p>
+                                <p class="text-muted">Get <span class="text-info fw-bold">₹{{ $referral_bonus }}</span> for each invited user</p>
                             </div>
                     
                             <!-- Share Dialog -->
