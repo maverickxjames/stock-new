@@ -376,6 +376,98 @@ public function updateDepositMsg(Request $request)
 
     }
 
+    public function updateBonus(Request $request)
+    {
+        $request->validate([
+            'value' => 'required|numeric',
+        ]);
+
+        // Update the specific column directly
+        $updated = DB::table('settings')->update(['referral_bonus' => $request->value]);
+
+        if ($updated) {
+            return response()->json(['success' => true, 'message' => 'Bonus updated successfully.']);
+        } elseif($request->value===DB::table('settings')->value('bonus')){
+            return response()->json(['success' => false, 'message' => 'This Bonus is already set.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Failed to update Bonus.']);
+    }
+    public function updateBonusLimit(Request $request)
+    {
+        $request->validate([
+            'value' => 'required|numeric',
+        ]);
+
+        // Update the specific column directly
+        $updated = DB::table('settings')->update(['referral_bonus_limit' => $request->value]);
+
+        if ($updated) {
+            return response()->json(['success' => true, 'message' => 'Bonus Limit updated successfully.']);
+        } elseif($request->value===DB::table('settings')->value('bonus_limit')){
+            return response()->json(['success' => false, 'message' => 'This Bonus Limit is already set.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Failed to update Bonus Limit.']);
+    }
+
+    public function updateOptMargin(Request $request)
+    {
+        $request->validate([
+            'value' => 'required|numeric',
+        ]);
+
+        // Update the specific column directly
+        $updated = DB::table('settings')->update(['option_margin' => $request->value]);
+
+        if ($updated) {
+            return response()->json(['success' => true, 'message' => 'Option Margin updated successfully.']);
+        } elseif($request->value===DB::table('settings')->value('opt_margin')){
+            return response()->json(['success' => false, 'message' => 'This Opt Margin is already set.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Failed to update Opt Margin.']);
+
+    }
+
+    public function updateFutureIntraMargin(Request $request)
+    {
+        $request->validate([
+            'value' => 'required|numeric',
+        ]);
+
+        // Update the specific column directly
+        $updated = DB::table('settings')->update(['fut_intraday_margin' => $request->value]);
+
+        if ($updated) {
+            return response()->json(['success' => true, 'message' => 'Future Intraday Margin updated successfully.']);
+        } elseif($request->value===DB::table('settings')->value('future_intra_margin')){
+            return response()->json(['success' => false, 'message' => 'This Future Intra Margin is already set.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Failed to update Future Intra Margin.']);
+
+    }
+
+    public function updateFutureDelMargin(Request $request)
+    {
+        $request->validate([
+            'value' => 'required|numeric',
+        ]);
+
+        // Update the specific column directly
+        $updated = DB::table('settings')->update(['fut_delivery_margin' => $request->value]);
+
+        if ($updated) {
+            return response()->json(['success' => true, 'message' => 'Future Delivery Margin updated successfully.']);
+        } elseif($request->value===DB::table('settings')->value('future_del_margin')){
+            return response()->json(['success' => false, 'message' => 'This Future Delivery Margin is already set.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Failed to update Future Delivery Margin.']);
+
+    }
+
 
     
 }

@@ -118,6 +118,12 @@ Route::middleware('auth')->group(function () {
     Route::post('update-token', [SettingsController::class, 'updateToken'])->name('settings.generateToken');
     Route::post('update-cookie', [SettingsController::class, 'updateCookie'])->name('settings.updateCookie');
     Route::post('test-cookie', [SettingsController::class, 'testCookie'])->name('settings.testCookie');
+    Route::post('update-bonus', [SettingsController::class, 'updateBonus'])->name('settings.updateBonus');
+    Route::post('update-bonus-limit', [SettingsController::class, 'updateBonusLimit'])->name('settings.updateBonusLimit');
+    Route::post('update-opt-margin', [SettingsController::class, 'updateOptMargin'])->name('settings.updateOptMargin');
+    Route::post('update-future-intra-margin', [SettingsController::class, 'updateFutureIntraMargin'])->name('settings.updateFutIntraMargin');
+    Route::post('update-future-del-margin', [SettingsController::class, 'updateFutureDelMargin'])->name('settings.updateFutDelMargin');
+
 
     Route::post('admin/approve-deposit', [AdminController::class, 'approveDeposit'])->name('approve-deposit');
     Route::post('admin/approve-withdraw', [AdminController::class, 'approveWithdraw'])->name('approve-withdraw');

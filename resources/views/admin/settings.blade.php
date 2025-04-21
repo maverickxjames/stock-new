@@ -280,15 +280,13 @@ $upstock=Upstock::where('id',1)->first();
 
             <div class="card-body">
                 <!-- Recharge Status -->
-                <form id="rechargeStatusForm">
+                <form id="referralBonus">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-form-label col-sm-4" for="recharge_status">Recharge Status</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" style="
-                            background-color: #D3D3D3;
-                           " id="client_id" name="client_id" value="{{ $upstock['client_id'] ?? '' }}">
-                            <button type="button" class="btn btn-primary ml-2" onclick="updateCleintID()">Update</button>
+                        <label class="col-form-label col-sm-4" for="recharge_status">Referral Bonus</label>
+                        <div class="col-sm-8 d-flex">
+                            <input type="text" class="form-control" id="referral_bonus" name="referral_bonus" value="{{ $settings->referral_bonus ?? '' }}">
+                            <button type="button" class="btn btn-primary ml-2" onclick="updateReferralBonus()">Update</button>
 
                             
                         </div>
@@ -296,27 +294,68 @@ $upstock=Upstock::where('id',1)->first();
                 </form>
 
                 <!-- Withdraw Status -->
-                <form id="withdrawStatusForm">
+                <form id="referralBonusLimit">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-form-label col-sm-4" for="withdraw_status">Withdraw Status</label>
-                        <div class="col-sm-8">
-                            <input type="checkbox" id="withdraw_status" {{ $settings->withdraw_status == 'on' ?
-                            'checked' : '' }} data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="primary" data-offstyle="light">
+                        <label class="col-form-label col-sm-4" for="withdraw_status">Referral Bonus Limit</label>
+                        <div class="col-sm-8 d-flex">
+                            <input type="text" class="form-control" id="referral_bonus_limit" name="referral_bonus_limit" value="{{ $settings->referral_bonus_limit ?? '' }}">
+                            <button type="button" class="btn btn-primary ml-2" onclick="updateReferralBonusLimit()">Update</button>
                         </div>
                     </div>
                 </form>
 
-                {{-- upi status --}}
-                <form id="upiStatusForm">
+               
+
+            </div>
+
+            <!-- Adjust Refferal -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Margin Settings</h1>
+                        </div>
+                        <div class="col-sm-6"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <form id="optmargin">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-form-label col-sm-4" for="upi_status">UPI Status</label>
-                        <div class="col-sm-8">
-                            <input type="checkbox" id="upi_status" {{ $settings->upi_status == 'on' ? 'checked' : '' }} data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="primary" data-offstyle="light">
+                        <label class="col-form-label col-sm-4" for="recharge_status">Option Margin</label>
+                        <div class="col-sm-8 d-flex">
+                            <input type="text" class="form-control" id="opt_margin" name="opt_margin" value="{{ $settings->option_margin ?? '' }}">
+                            <button type="button" class="btn btn-primary ml-2" onclick="updateOptMargin()">Update</button>
                         </div>
                     </div>
                 </form>
+
+                <form id="referralBonus">
+                    @csrf
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4" for="recharge_status">Future Intraday Margin</label>
+                        <div class="col-sm-8 d-flex">
+                            <input type="text" class="form-control" id="fut_intra_margin" name="fut_intra_margin" value="{{ $settings->fut_intraday_margin ?? '' }}">
+                            <button type="button" class="btn btn-primary ml-2" onclick="updateFutIntraMargin()">Update</button>
+                        </div>
+                    </div>
+                </form>
+
+                <form id="referralBonusLimit">
+                    @csrf
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4" for="withdraw_status">Future Delivery Margin</label>
+                        <div class="col-sm-8 d-flex">
+                            <input type="text" class="form-control" id="fut_del_margin" name="fut_del_margin" value="{{ $settings->fut_delivery_margin ?? '' }}">
+                            <button type="button" class="btn btn-primary ml-2" onclick="updateFutDelMargin()">Update</button>
+                        </div>
+                    </div>
+                </form>
+
+               
 
             </div>
 
@@ -1057,7 +1096,262 @@ $upstock=Upstock::where('id',1)->first();
  
         
 
-    
+       function updateReferralBonusLimit() {
+            const value = document.getElementById('referral_bonus_limit').value;
+
+            $.ajax({
+                url: '{{ route('settings.updateBonusLimit') }}'
+                , method: 'POST'
+                , headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // CSRF token for security
+                }
+                , data: {
+                    value
+                }
+                , beforeSend: function() {
+                    Swal.fire({
+                        title: 'Updating...'
+                        , allowOutsideClick: false
+                        , didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    , });
+                }
+                , success: function(response) {
+                    Swal.close();
+
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success'
+                            , title: 'Updated Successfully'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    } else {
+                        Swal.fire({
+                            icon: 'error'
+                            , title: 'Update Failed'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    }
+                }
+                , error: function(error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error'
+                        , title: 'Error Occurred'
+                        , text: 'Something went wrong. Please try again later.'
+                        , confirmButtonText: 'OK'
+                    , });
+                }
+            , });
+        }
+
+        function updateReferralBonus() {
+            const value = document.getElementById('referral_bonus').value;
+
+            $.ajax({
+                url: '{{ route('settings.updateBonus') }}'
+                , method: 'POST'
+                , headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // CSRF token for security
+                }
+                , data: {
+                    value
+                }
+                , beforeSend: function() {
+                    Swal.fire({
+                        title: 'Updating...'
+                        , allowOutsideClick: false
+                        , didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    , });
+                }
+                , success: function(response) {
+                    Swal.close();
+
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success'
+                            , title: 'Updated Successfully'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    } else {
+                        Swal.fire({
+                            icon: 'error'
+                            , title: 'Update Failed'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    }
+                }
+                , error: function(error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error'
+                        , title: 'Error Occurred'
+                        , text: 'Something went wrong. Please try again later.'
+                        , confirmButtonText: 'OK'
+                    , });
+                }
+            , });
+        }
+
+        function updateOptMargin(){
+            const value = document.getElementById('opt_margin').value;
+            $.ajax({
+                url: '{{ route('settings.updateOptMargin') }}'
+                , method: 'POST'
+                , headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // CSRF token for security
+                }
+                , data: {
+                    value
+                }
+                , beforeSend: function() {
+                    Swal.fire({
+                        title: 'Updating...'
+                        , allowOutsideClick: false
+                        , didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    , });
+                }
+                , success: function(response) {
+                    Swal.close();
+
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success'
+                            , title: 'Updated Successfully'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    } else {
+                        Swal.fire({
+                            icon: 'error'
+                            , title: 'Update Failed'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    }
+                }
+                , error: function(error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error'
+                        , title: 'Error Occurred'
+                        , text: 'Something went wrong. Please try again later.'+error
+                        , confirmButtonText: 'OK'
+                    , });
+                }
+            , });
+        }
+
+        function updateFutIntraMargin(){
+            const value = document.getElementById('fut_intra_margin').value;
+            $.ajax({
+                url: '{{ route('settings.updateFutIntraMargin') }}'
+                , method: 'POST'
+                , headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // CSRF token for security
+                }
+                , data: {
+                    value
+                }
+                , beforeSend: function() {
+                    Swal.fire({
+                        title: 'Updating...'
+                        , allowOutsideClick: false
+                        , didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    , });
+                }
+                , success: function(response) {
+                    Swal.close();
+
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success'
+                            , title: 'Updated Successfully'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    } else {
+                        Swal.fire({
+                            icon: 'error'
+                            , title: 'Update Failed'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    }
+                }
+                , error: function(error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error'
+                        , title: 'Error Occurred'
+                        , text: 'Something went wrong. Please try again later.'+error
+                        , confirmButtonText: 'OK'
+                    , });
+                }
+            , });
+        }
+
+        function updateFutDelMargin(){
+            const value = document.getElementById('fut_del_margin').value;
+            $.ajax({
+                url: '{{ route('settings.updateFutDelMargin') }}'
+                , method: 'POST'
+                , headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // CSRF token for security
+                }
+                , data: {
+                    value
+                }
+                , beforeSend: function() {
+                    Swal.fire({
+                        title: 'Updating...'
+                        , allowOutsideClick: false
+                        , didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    , });
+                }
+                , success: function(response) {
+                    Swal.close();
+
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success'
+                            , title: 'Updated Successfully'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    } else {
+                        Swal.fire({
+                            icon: 'error'
+                            , title: 'Update Failed'
+                            , text: response.message
+                            , confirmButtonText: 'OK'
+                        , });
+                    }
+                }
+                , error: function(error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error'
+                        , title: 'Error Occurred'
+                        , text: 'Something went wrong. Please try again later.'+error
+                        , confirmButtonText: 'OK'
+                    , });
+                }
+            , });
+        }
 
         
 
