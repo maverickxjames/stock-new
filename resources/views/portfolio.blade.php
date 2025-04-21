@@ -3236,24 +3236,24 @@ $trades = DB::table('trades')
 
     <script>
         function updateCard(investValue, currentValue) {
-            console.log(investValue, currentValue);
+            // console.log(investValue, currentValue);
 
-            let profitLoss = currentValue - investValue;
-            let profitLossPercentage = ((profitLoss / investValue) * 100).toFixed(2);
+            // let profitLoss = currentValue - investValue;
+            // let profitLossPercentage = ((profitLoss / investValue) * 100).toFixed(2);
 
-            document.getElementById('investValue').textContent = investValue.toLocaleString('en-IN', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            });
-            document.getElementById('currentValue').textContent = currentValue.toLocaleString('en-IN', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            });
-            document.getElementById('profitAndLoss').textContent = profitLoss.toLocaleString('en-IN', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            });
-            document.getElementById('profitAndLossPercentage').textContent = profitLossPercentage + '%';
+            // document.getElementById('investValue').textContent = investValue.toLocaleString('en-IN', {
+            //     minimumFractionDigits: 2,
+            //     maximumFractionDigits: 2
+            // });
+            // document.getElementById('currentValue').textContent = currentValue.toLocaleString('en-IN', {
+            //     minimumFractionDigits: 2,
+            //     maximumFractionDigits: 2
+            // });
+            // document.getElementById('profitAndLoss').textContent = profitLoss.toLocaleString('en-IN', {
+            //     minimumFractionDigits: 2,
+            //     maximumFractionDigits: 2
+            // });
+            // document.getElementById('profitAndLossPercentage').textContent = profitLossPercentage + '%';
         }
 
         let tradeQueue = [];
