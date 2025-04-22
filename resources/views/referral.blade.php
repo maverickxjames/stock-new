@@ -161,6 +161,9 @@ header {
 
     <!-- Include Animate.css for animation (optional but nice) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
@@ -187,87 +190,11 @@ header {
             <div class="container-fluid">
                 <!-- row -->
                 <div class="row">
-                    <!-- column -->
-                    {{-- <div class="col-xl-12">
-                        <div class="card rounded-4 p-4">
-                            <h1 class="text-center fw-bold fs-2 mb-4">Referral System</h1>
-
-                            <div class="d-flex flex-wrap justify-content-center align-items-center gap-5 ">
-                                <div class="d-flex align-items-center py-3 px-5 rounded-2 "
-                                    style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;">
-                                    <img src="https://cdn-icons-png.flaticon.com/128/4121/4121044.png" alt="logo"
-                                        width="40" class="me-3" />
-                                    <div>
-                                        <h5 class="mb-1">TOTAL REFERRALS</h5>
-                                        <h3 class="text-primary fw-bold">32</h3>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center px-5 py-3 rounded-2 "
-                                    style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;">
-                                    <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo"
-                                        width="40" class="me-3" />
-                                    <div>
-                                        <h5 class="mb-1">TOTAL EARNED</h5>
-                                        <h3 class="text-info fw-bold">250.0</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                           
-
-                            <div class="mt-5">
-                                <label class="mb-2 fw-semibold">YOUR REFERRAL LINK</label>
-                                <div class="input-group mb-3 gap-2">
-                                    <input type="text" class="form-control"
-                                        value="http://127.0.0.1:8000/{{ $user->refer_code }}" readonly>
-                                    <button onclick="copy()" class="btn btn-dark rounded-3" type="button">Copy
-                                        link</button>
-
-                                    <button class="share-button bg-info" type="button" title="Share this article">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/16323/16323181.png" alt="logo" width="20">
-                                        <span>Share</span>
-                                      </button>
-                                </div>
-                                <div class="share-dialog">
-                                    <header>
-                                        <h3 class="dialog-title">Share</h3>
-                                        <button class="close-button">
-                                            <span class="material-symbols-outlined">close</span>
-                                        </button>
-                                    </header>
-                                    <div class="targets">
-                                        <a class="button">
-                                           
-                                            <span>Facebook</span>
-                                        </a>
-    
-                                        <a class="button">
-                                            
-                                            <span>Twitter</span>
-                                        </a>
-    
-                                        <a class="button">
-                                          
-                                            <span>LinkedIn</span>
-                                        </a>
-    
-                                        <a class="button">
-                                           
-                                            <span>Email</span>
-                                        </a>
-                                    </div>
-                                   
-                                </div>
-                                <p class="text-muted">Get <span class="text-info fw-bold">100.0 </span> for each
-                                    invited user</p>
-                            </div>
-                        </div>
-                    </div> --}}
+                 
                     <div class="col-xl-12">
                        <div class="row">
                         <div class="card rounded-4 p-4 shadow-lg border-0">
-                            <h1 class="text-center fw-bold fs-2 mb-4 text-primary">Referral System</h1>
+                            <h1 class="text-center fw-bold fs-2 mb-4 text-dark">Referral System</h1>
                     
                             <!-- Stats Section -->
                             <div class="row justify-content-center gy-4">
@@ -286,7 +213,7 @@ header {
                                         <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo" width="50" />
                                         <div>
                                             <p class="mb-1 text-muted fw-semibold">TOTAL EARNED</p>
-                                            <h3 class="mb-0 text-info fw-bold">₹ {{ $user->refer_wallet }}</h3>
+                                            <h3 class="mb-0 text-success fw-bold">₹ {{ $user->refer_wallet }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -431,6 +358,9 @@ header {
         <script src="js/custom.min.js"></script>
         <script src="js/dlabnav-init.js"></script>
         <script src="js/demo.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
+        {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
      
 
@@ -440,8 +370,17 @@ header {
                 input.select();
                 document.execCommand("copy");
         
-                const toast = new bootstrap.Toast(document.getElementById("copyToast"));
-                toast.show();
+                // const toast = new bootstrap.Toast(document.getElementById("copyToast"));
+                // toast.show();
+
+                Toastify({
+                    text: "Referral link copied!",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#4CAF50",
+                }).showToast();
             }
         
             function toggleShare() {

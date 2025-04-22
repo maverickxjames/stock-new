@@ -172,7 +172,7 @@ $user = Auth::user();
 
 
         <div class="content-body">
-            {{-- <div class="container-fluid"> --}}
+            <div class="container-fluid">
                
                 <div class="row">
                     <div class="col-xl-12">
@@ -376,7 +376,7 @@ $user = Auth::user();
                     </div>
                 </div>
               
-            {{-- </div> --}}
+            </div>
         </div>
         <!--**********************************
             Content body end

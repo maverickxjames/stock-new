@@ -179,7 +179,7 @@ use App\Models\Stockdata;
         ***********************************-->
         <div class="content-body">
             <!-- row -->
-            {{-- <div class="container-fluid"> --}}
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="card">
@@ -379,7 +379,7 @@ use App\Models\Stockdata;
                         </div>
                     </div>
                 </div>
-            {{-- </div> --}}
+            </div>
         </div>
         <!--**********************************
             Content body end
