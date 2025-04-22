@@ -147,6 +147,7 @@ class MarketDataService
         // Prepare the final array
         $finalArray = ["instrumentKeys" => $tokens];
 
+        
         $data = [
             "guid" => "someguid",
             "method" => "sub",
