@@ -52,7 +52,7 @@ class StartProject extends Command
         // $commands = [
         //     'php artisan optimize',
         //     'docker-compose up -d',
-        //     'php artisan queue:listen > /dev/null 2>&1 &',
+        //     // 'php artisan queue:listen > /dev/null 2>&1 &',
         //     'php artisan queue:work > /dev/null 2>&1 &',
         //     'sudo supervisorctl restart markettradedata > /dev/null 2>&1 &',
         //     'sudo supervisorctl restart marketdata > /dev/null 2>&1 &',
@@ -67,7 +67,11 @@ class StartProject extends Command
             'start /b php artisan websockets:serve',
             'start /b php artisan serve',
             'start /b php artisan queue:listen',
-            'start /b php artisan queue:work'
+            'start /b php artisan market:fetch-trade-updates',
+            'start /b php artisan market:fetch-updates',
+            'start /b php artisan market:fetch-indices',
+
+            // 'start /b php artisan queue:work'
         ];
 
         foreach ($commands as $command) {

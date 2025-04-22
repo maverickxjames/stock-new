@@ -476,8 +476,8 @@
                         <h4 class="fw-semibold title-color">Notice:</h4>
                         <ul class="list-unstyled">
                             <li>
-                                <h5>Minimum Recharge</h5>
-                                <p>Minimum Recharge is <?= $settings['minRecharge'] ?> INR</p>
+                                <h5>Minimum Deposit</h5>
+                                <p>Minimum Deposit is <?= $settings['minRecharge'] ?> INR</p>
                             </li>
                             <li>
                                 <h5>Fill UTR</h5>
