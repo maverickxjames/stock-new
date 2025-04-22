@@ -1,5 +1,5 @@
 @php
-$user = Auth::user();
+    $user = Auth::user();
 @endphp
 
 <!DOCTYPE html>
@@ -97,6 +97,241 @@ $user = Auth::user();
         } */
     </style>
 
+    <style>
+        .tg {
+            --bg-primary: #3736af;
+            --text-primary: #3736af;
+        }
+
+        .tg-account .account-banner {
+            background: var(--bg-primary);
+            width: 100%;
+            float: left;
+            /* padding: 100px 0 0; */
+            border-radius:16px
+        }
+
+        .tg-account .account-banner .inner-banner .detail * {
+            color: #fff;
+        }
+
+        .tg-account .account-banner .inner-banner .profile {
+            text-align: center;
+        }
+
+        .tg-account .account-banner .inner-banner .profile span.image img {
+            width: 130px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px -10px #000;
+        }
+
+        .tg-account .account-banner .inner-banner .detail h3.user-name {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .tg-account .account-banner .inner-banner .nav-area {
+            /* width: 100%; */
+            float: left;
+            /* margin-top: 45px; */
+        }
+
+        .tg-account .account-banner .inner-banner .nav-area ul li a {
+            background: rgba(255, 255, 255, .4);
+            color: #fff;
+            font-weight: 500;
+            border-radius: 0px;
+            font-size: 16px;
+            border: none;
+            padding: 5px 26px;
+            display: block;
+            transition: .4s;
+            text-align: center;
+            border-radius: 6px
+        }
+
+        .tg-account .account-banner .inner-banner .nav-area ul li {
+            margin-right: 7px;
+        }
+
+        .tg-account .account-banner .inner-banner .nav-area ul li a.active,
+        .tg-account .account-banner .inner-banner .nav-area ul li a:hover {
+            color: var(--text-primary);
+            background: #fff;
+        }
+
+        .tg-tabs-content-wrapp {
+            width: 100%;
+            float: left;
+            padding: 30px 20px;
+        }
+
+        div#account-status_length {
+            width: fit-content;
+            float: left;
+        }
+
+        div#account-status_filter {
+            width: fit-content;
+            float: right;
+        }
+
+        div#account-status_length select,
+        div#account-status_filter input {
+            border: 1px solid #207ba1;
+            padding: 5px 15px;
+        }
+
+        div#account-status_length,
+        div#account-status_filter {
+            margin-bottom: 22px;
+        }
+
+        .tg-tabs-content-wrapp form.tg-form {
+            width: 100%;
+            float: left;
+            background: #f7f7f7;
+            padding: 30px 30px 60px;
+            border: 1px solid #eaeaea;
+        }
+
+        .tg-tabs-content-wrapp form.tg-form button {
+            background: var(--bg-primary);
+            border: none;
+            padding: 10px 32px;
+            cursor: pointer;
+            margin: 13px 0 0;
+        }
+
+        .tg-tabs-content-wrapp .my-account-personal-info .card img {
+            max-width: 80px;
+        }
+
+        .tg-tabs-content-wrapp .my-account-personal-info .card {
+            text-align: center;
+        }
+
+        .tg-tabs-content-wrapp .my-account-personal-info .card h2 {
+            font-size: 20px;
+            margin-top: 14px;
+        }
+
+        .tg-tabs-content-wrapp .my-account-personal-info .card p {
+            font-size: 15px;
+        }
+
+        div#account-status_info {
+            float: left;
+        }
+
+        div#account-status_paginate {
+            float: right;
+        }
+
+        .page-item.active .page-link {
+            background-color: lightgrey !important;
+            border: 1px solid black;
+        }
+
+        .page-link {
+            color: black !important;
+        }
+
+        div#account-status_paginate a {
+            background: #e6e6e6;
+            margin: 0 2px;
+            padding: 3px 11px;
+            display: inline-block;
+            cursor: pointer;
+            text-decoration: none;
+            color: #000;
+        }
+
+        div#account-status_paginate {
+            margin-top: 8px;
+        }
+
+        div#account-status_paginate span a.current {
+            color: #fff !important;
+            background: var(--primary);
+        }
+
+        .tg-tabs-content-wrapp .my-account-personal-info .card {
+            cursor: pointer;
+        }
+
+        .tg-tabs-content-wrapp .my-account-personal-info .card:hover,
+        .tg-tabs-content-wrapp .my-account-personal-info .card.active {
+            background: var(--text-primary);
+        }
+
+        .tg-tabs-content-wrapp .my-account-personal-info .card:hover *,
+        .tg-tabs-content-wrapp .my-account-personal-info .card.active * {
+            color: #fff;
+        }
+
+        .tg-tabs-content-wrapp .my-account-personal-info .card {
+            transition: .4s;
+            border-radius: 0px;
+            box-shadow: 0px 2px 7px -5px;
+        }
+
+        table#account-status a.view-order {
+            background: var(--text-primary);
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            padding: 4px 11px;
+            border-radius: 3px;
+        }
+
+        @media(min-width:768px) {
+
+            table#account-status td.action,
+            table#account-status th.action {
+                text-align: center;
+            }
+        }
+
+        @media(max-width:768px) {
+            .tg-account .account-banner .inner-banner .nav-area ul li a {
+                padding: 4px 18px;
+            }
+        }
+
+        @media(max-width:600px) {
+            .tg-account .account-banner .inner-banner .nav-area ul li a span {
+                display: none;
+            }
+
+            .tg-account .account-banner .inner-banner .nav-area ul li a {
+                /* min-width: auto; */
+                padding: 4px 18px;
+            }
+
+            .tg-account .account-banner .inner-banner .nav-area ul {
+                text-align: center;
+                margin: 0 auto;
+                width: fit-content;
+            }
+
+            .tg-account .detail {
+                text-align: center;
+            }
+
+            div#account-status_length select,
+            div#account-status_filter input {
+                max-width: 120px;
+                font-size: 14px;
+            }
+
+            div#account-status_length label,
+            div#account-status_filter label {
+                font-size: 0px;
+            }
+        }
+    </style>
+
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
@@ -165,7 +400,7 @@ $user = Auth::user();
 
         {{-- fetch login user detail --}}
         @php
-        $user = Auth::user();
+            $user = Auth::user();
         @endphp
 
 
@@ -173,8 +408,8 @@ $user = Auth::user();
 
         <div class="content-body">
             <div class="container-fluid">
-               
-                <div class="row">
+
+                {{-- <div class="row">
                     <div class="col-xl-12">
                         <div class="card h-auto">
                             <div class="card-body">
@@ -217,7 +452,7 @@ $user = Auth::user();
                                         <button class="btn btn-success w-50 fs-5" onclick="updateProfile()">Update
                                             Profile</button>
                                     </div>
-                                   
+
                                 </div>
                                 <hr>
 
@@ -228,7 +463,7 @@ $user = Auth::user();
                                             <h5 class="f-w-500">Account Type <span class="pull-end">:</span>
                                             </h5>
                                         </div>
-                                        <div class="col-sm-9 col-7"><span>{{ $user->is_dummy ? "DEMO" : "REAL" }}</span>
+                                        <div class="col-sm-9 col-7"><span>{{ $user->is_dummy ? 'DEMO' : 'REAL' }}</span>
                                         </div>
                                     </div>
                                     <div class="row mb-2">
@@ -236,17 +471,19 @@ $user = Auth::user();
                                             <h5 class="f-w-500">Account Created <span class="pull-end">:</span>
                                             </h5>
                                         </div>
-                                        <div class="col-sm-9 col-7"><span>{{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}</span>
+                                        <div class="col-sm-9 col-7">
+                                            <span>{{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}</span>
                                         </div>
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-sm-3 col-5">
                                             <h5 class="f-w-500">Last Updated <span class="pull-end">:</span></h5>
                                         </div>
-                                        <div class="col-sm-9 col-7"><span>{{ \Carbon\Carbon::parse($user->updated_at)->format('Y-m-d') }}</span>
+                                        <div class="col-sm-9 col-7">
+                                            <span>{{ \Carbon\Carbon::parse($user->updated_at)->format('Y-m-d') }}</span>
                                         </div>
                                     </div>
-                                   
+
                                 </div>
                                 <hr>
 
@@ -276,106 +513,451 @@ $user = Auth::user();
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
-                                        <button class="btn btn-secondary w-50 fs-4" onclick="window.location.href='{{ route('deposit') }}'">
+                                    <div
+                                        class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                        <button class="btn btn-secondary w-50 fs-4"
+                                            onclick="window.location.href='{{ route('deposit') }}'">
                                             Deposit Fund</button>
-                                        <button class="btn btn-info w-50 fs-4" onclick="window.location.href='{{ route('withdraw') }}'">
+                                        <button class="btn btn-info w-50 fs-4"
+                                            onclick="window.location.href='{{ route('withdraw') }}'">
                                             Withdraw</button>
-                                    </div>   
+                                    </div>
 
-                                 
-                                   
+
+
                                 </div>
-                              
+
                                 <hr>
 
                                 @php
-                                $user = Auth::user();
-                                $bank=DB::table('bankDetails')->where('userid',$user->id)->first();
+                                    $user = Auth::user();
+                                    $bank = DB::table('bankDetails')->where('userid', $user->id)->first();
                                 @endphp
 
-                                {{-- if bank data found --}}
-                                @if($bank)
-                                <div class="bank-info mt-4">
-                                    <h4 class="text-primary mb-4 fs-2">Bank Info</h4>
-                                    <div class="row mb-2">
-                                        <div class="col-sm-3 col-5">
-                                            <h5 class="f-w-500">Bank Name <span class="pull-end">:</span>
-                                            </h5>
+                                @if ($bank)
+                                    <div class="bank-info mt-4">
+                                        <h4 class="text-primary mb-4 fs-2">Bank Info</h4>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-3 col-5">
+                                                <h5 class="f-w-500">Bank Name <span class="pull-end">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9 col-7"><span>{{ $bank->bank_name }}</span>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_name }}</span>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-3 col-5">
+                                                <h5 class="f-w-500">Bank Account <span class="pull-end">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9 col-7"><span>{{ $bank->bank_acc }}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col-sm-3 col-5">
-                                            <h5 class="f-w-500">Bank Account <span class="pull-end">:</span>
-                                            </h5>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-3 col-5">
+                                                <h5 class="f-w-500">Bank IFSC Code <span class="pull-end">:</span>
+                                                </h5>
+                                            </div>
+                                            <div class="col-sm-9 col-7"><span>{{ $bank->bank_ifsc }}</span>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_acc }}</span>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-3 col-5">
+                                                <h5 class="f-w-500">Bank Holder <span class="pull-end">:</span></h5>
+                                            </div>
+                                            <div class="col-sm-9 col-7"><span>{{ $bank->bank_holder }}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col-sm-3 col-5">
-                                            <h5 class="f-w-500">Bank IFSC Code <span class="pull-end">:</span></h5>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-3 col-5">
+                                                <h5 class="f-w-500">Bank Branch <span class="pull-end">:</span></h5>
+                                            </div>
+                                            <div class="col-sm-9 col-7"><span>{{ $bank->bank_branch }}</span>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_ifsc }}</span>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-3 col-5">
+                                                <h5 class="f-w-500">UPI <span class="pull-end">:</span></h5>
+                                            </div>
+                                            <div class="col-sm-9 col-7"><span>{{ $bank->upi }}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col-sm-3 col-5">
-                                            <h5 class="f-w-500">Bank Holder <span class="pull-end">:</span></h5>
-                                        </div>
-                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_holder }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col-sm-3 col-5">
-                                            <h5 class="f-w-500">Bank Branch <span class="pull-end">:</span></h5>
-                                        </div>
-                                        <div class="col-sm-9 col-7"><span>{{ $bank->bank_branch }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col-sm-3 col-5">
-                                            <h5 class="f-w-500">UPI <span class="pull-end">:</span></h5>
-                                        </div>
-                                        <div class="col-sm-9 col-7"><span>{{ $bank->upi }}</span>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
-                                        <button class="btn btn-dark w-100 fs-4" onclick="window.location.href='{{ route('bank-details') }}'">
-                                            Update Bank Details</button>
-                                        
-                                    </div>   
+                                        <div
+                                            class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                            <button class="btn btn-dark w-100 fs-4"
+                                                onclick="window.location.href='{{ route('bank-details') }}'">
+                                                Update Bank Details</button>
 
-                                 
-                                   
-                                </div>
+                                        </div>
+
+
+
+                                    </div>
                                 @else
-                                <div class="bank-info mt-4">
-                                    <h4 class="text-primary mb-4 fs-2">Bank Info</h4>
-                                    <div class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
-                                        <button class="btn btn-dark w-100 fs-4" onclick="window.location.href='{{ route('bank-details') }}'">
-                                            Add Bank Details</button>
-                                        
-                                    </div>   
+                                    <div class="bank-info mt-4">
+                                        <h4 class="text-primary mb-4 fs-2">Bank Info</h4>
+                                        <div
+                                            class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                            <button class="btn btn-dark w-100 fs-4"
+                                                onclick="window.location.href='{{ route('bank-details') }}'">
+                                                Add Bank Details</button>
 
-                                 
-                                   
-                                </div>
+                                        </div>
+
+
+
+                                    </div>
                                 @endif
 
-                               
 
 
-                              
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div> --}}
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card h-auto">
+                            <div class="card-body">
+
+                                <section class="tg-may-account-wrapp tg">
+                                    <div class="inner">
+                                        <div class="tg-account">
+
+                                            <!-- Accont banner start -->
+                                            <div class="account-banner">
+                                                <div class="inner-banner">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-8 detail">
+                                                                <div class="inner">
+                                                                    {{-- <h1 class="page-title">My Account</h1> --}}
+                                                                    <h3 class="user-name">Hello {{ $user->name }} !
+                                                                    </h3>
+
+                                                                    <p class="description">Client ID :
+                                                                        {{ $user->user_id }}</p>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <!-- Row end -->
+
+                                                        <!-- Navbar Start -->
+                                                        <div class="nav-area d-flex justify-content-center">
+                                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active" id="personal-info-tab"
+                                                                        data-toggle="tab" href="#personal-info-content"
+                                                                        role="tab"
+                                                                        aria-controls="personal-info-content"
+                                                                        aria-selected="true">
+                                                                        <i class="fas fa-user"></i>
+                                                                        <span>Personal Info</span>
+                                                                        </a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" id="account-status-tab"
+                                                                        data-toggle="tab" href="#account-status-content"
+                                                                        role="tab"
+                                                                        aria-controls="account-status-content"
+                                                                        aria-selected="false">
+                                                                        <i class="fas fa-user-shield"></i>
+                                                                       <span>Account Status</span> </a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" id="wallet-info-tab"
+                                                                        data-toggle="tab" href="#wallet-info-content"
+                                                                        role="tab"
+                                                                        aria-controls="wallet-info-content"
+                                                                        aria-selected="false">
+                                                                        <i class="fas fa-wallet"></i> <span>Wallet
+                                                                            Info</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" id="bank-detail-tab"
+                                                                        data-toggle="tab" href="#bank-details-content"
+                                                                        role="tab"
+                                                                        aria-controls="bank-details-content"
+                                                                        aria-selected="false">
+                                                                        <i class="fas fa-university"></i> <span>Bank
+                                                                            Info</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" id="logout-tab"
+                                                                        data-toggle="tab" href="#logout-content"
+                                                                        role="tab" aria-controls="logout-content"
+                                                                        aria-selected="false">
+                                                                        <i class="fas fa-sign-out-alt"></i>
+                                                                        <span>Logout</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+
+                                                        </div>
+                                                        <!-- Navbar End -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Banner end   -->
+
+                                            <!-- Tabs Content start -->
+                                            <div class="tabs tg-tabs-content-wrapp">
+                                                <div class="tab-content" id="myTabContent">
+                                                    <div class="tab-pane fade show active"
+                                                        id="personal-info-content" role="tabpanel"
+                                                        aria-labelledby="personal-info-tab">
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Name <span
+                                                                        class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ $user->name }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Email <span
+                                                                        class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ $user->email }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Username <span
+                                                                        class="pull-end">:</span></h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ $user->username }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Account ID <span
+                                                                        class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ $user->user_id }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 d-flex flex-column flex-md-row gap-3 align-items-center justify-content-between">
+                                                            <button class="btn btn-primary w-100 w-md-50 fs-5" onclick="changePassword()">
+                                                                Change Password
+                                                            </button>
+                                                            <button class="btn btn-success w-100 w-md-50 fs-5" onclick="updateProfile()">
+                                                                Update Profile
+                                                            </button>
+                                                        </div>
+                                                        
+
+
+                                                    </div>
+                                                    <div class="tab-pane fade" id="account-status-content"
+                                                        role="tabpanel"
+                                                        aria-labelledby="account-status-tab">
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Account Type <span
+                                                                        class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ $user->is_dummy ? 'DEMO' : 'REAL' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Account Created <span
+                                                                        class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Last Updated <span
+                                                                        class="pull-end">:</span></h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ \Carbon\Carbon::parse($user->updated_at)->format('Y-m-d') }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="wallet-info-content"
+                                                        role="tabpanel" aria-labelledby="wallet-info-tab">
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Demo Wallet <span
+                                                                        class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7"><span>₹
+                                                                    {{ $user->demo_wallet }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Real Wallet <span
+                                                                        class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7"><span>₹
+                                                                    {{ $user->real_wallet }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Withraw Wallet <span
+                                                                        class="pull-end">:</span></h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7"><span>₹
+                                                                    {{ $user->withdraw_wallet }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div
+                                                            class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                                            <button class="btn btn-secondary w-50 fs-4"
+                                                                onclick="window.location.href='{{ route('deposit') }}'">
+                                                                Deposit Fund</button>
+                                                            <button class="btn btn-info w-50 fs-4"
+                                                                onclick="window.location.href='{{ route('withdraw') }}'">
+                                                                Withdraw</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="bank-details-content"
+                                                        role="tabpanel" aria-labelledby="bank-detail-tab">
+                                                        @php
+                                                            $user = Auth::user();
+                                                            $bank = DB::table('bankDetails')
+                                                                ->where('userid', $user->id)
+                                                                ->first();
+                                                        @endphp
+
+                                                        @if ($bank)
+                                                            <div class="bank-info mt-4">
+                                                                <h4 class="text-primary mb-4 fs-2">Bank
+                                                                    Info</h4>
+                                                                <div class="row mb-2">
+                                                                    <div class="col-sm-3 col-5">
+                                                                        <h5 class="f-w-500">Bank Name <span
+                                                                                class="pull-end">:</span>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="col-sm-9 col-7">
+                                                                        <span>{{ $bank->bank_name }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-2">
+                                                                    <div class="col-sm-3 col-5">
+                                                                        <h5 class="f-w-500">Bank Account
+                                                                            <span class="pull-end">:</span>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="col-sm-9 col-7">
+                                                                        <span>{{ $bank->bank_acc }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-2">
+                                                                    <div class="col-sm-3 col-5">
+                                                                        <h5 class="f-w-500">Bank IFSC Code
+                                                                            <span class="pull-end">:</span>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="col-sm-9 col-7">
+                                                                        <span>{{ $bank->bank_ifsc }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-2">
+                                                                    <div class="col-sm-3 col-5">
+                                                                        <h5 class="f-w-500">Bank Holder
+                                                                            <span class="pull-end">:</span>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="col-sm-9 col-7">
+                                                                        <span>{{ $bank->bank_holder }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-2">
+                                                                    <div class="col-sm-3 col-5">
+                                                                        <h5 class="f-w-500">Bank Branch
+                                                                            <span class="pull-end">:</span>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="col-sm-9 col-7">
+                                                                        <span>{{ $bank->bank_branch }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-2">
+                                                                    <div class="col-sm-3 col-5">
+                                                                        <h5 class="f-w-500">UPI <span
+                                                                                class="pull-end">:</span>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="col-sm-9 col-7">
+                                                                        <span>{{ $bank->upi }}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div
+                                                                    class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                                                    <button class="btn btn-dark w-100 fs-4"
+                                                                        onclick="window.location.href='{{ route('bank-details') }}'">
+                                                                        Update Bank Details</button>
+
+                                                                </div>
+
+
+
+                                                            </div>
+                                                        @else
+                                                            <div class="bank-info mt-4">
+                                                                <h4 class="text-primary mb-4 fs-2">Bank
+                                                                    Info</h4>
+                                                                <div
+                                                                    class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
+                                                                    <button class="btn btn-dark w-100 fs-4"
+                                                                        onclick="window.location.href='{{ route('bank-details') }}'">
+                                                                        Add Bank Details</button>
+
+                                                                </div>
+
+
+
+                                                            </div>
+                                                        @endif
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+
                             </div>
 
                         </div>
                     </div>
                 </div>
-              
+
             </div>
         </div>
         <!--**********************************
@@ -384,9 +966,9 @@ $user = Auth::user();
         {{-- laravel flash message --}}
 
         @if (session('success'))
-        <script>
-            Swal.fire('Success', '{{ session('success') }}', 'success');
-        </script>
+            <script>
+                Swal.fire('Success', '{{ session('success') }}', 'success');
+            </script>
         @endif
 
 
@@ -552,6 +1134,24 @@ $user = Auth::user();
     <!-- Chart piety plugin files -->
     <script src="vendor/peity/jquery.peity.min.js"></script>
     <script src="js/dashboard/trading-market.js"></script>
+
+    <script>
+        $('#myTab a').on('click', function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+        $(document).ready(function() {
+            $('#account-status-table').DataTable(); // Use a unique ID here too
+        });
+
+        $(document).ready(function() {
+            $('.my-account-personal-info .card').click(function() {
+                var tabId = $(this).data('toggle-tab');
+                $('#myTab a#' + tabId).tab('show');
+            });
+        });
+    </script>
 
 </body>
 
