@@ -9,11 +9,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-
-
+use Predis\Command\Redis\SAVE;
 
 class RegisteredUserController extends Controller
 {
@@ -36,50 +36,7 @@ class RegisteredUserController extends Controller
     }
 
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'fullname' => ['required', 'string', 'max:255'],
-    //         'username' => ['required', 'string', 'max:255', 'unique:users'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required'],
-    //         'refer_code' => ['nullable', 'string'],
-    //     ]);
-
-    //     $referrer = null;
-    //     if ($request->refer_code) {
-    //         $referrer = User::where('refer_code', $request->refer_code)->first();
-    //         if (!$referrer) {
-    //             return response()->json([
-    //                 'status' => 400,
-    //                 'message' => 'Invalid referral code.',
-    //             ]);
-    //         }
-
-    //         $user = User::create([
-    //             'name' => $request->fullname,
-    //             'username' => $request->username,
-    //             'email' => $request->email,
-    //             'password' => Hash::make($request->password),
-    //             'referred_by' => $referrer ? $referrer->id : null, // Optional: track who referred
-    //         ]);
-
-    //         event(new Registered($user));
-    //         Auth::login($user);
-
-    //         return response()->json([
-    //             'status' => 200,
-    //             'message' => 'Registered successfully.',
-    //         ]);
-    //     }
-
-    //     // return redirect(route('quotes', absolute: false));
-    // }
+   
     private function generateUserId()
     {
         $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -93,7 +50,7 @@ class RegisteredUserController extends Controller
         $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $numbers = '0123456789';
 
-        $referCode = substr(str_shuffle($letters), 0, 2) . substr(str_shuffle($numbers), 0, 4);
+        $referCode = substr(str_shuffle($letters), 0, 2) . substr(str_shuffle($numbers), 0, 4) . substr(str_shuffle($letters), 0, 2);
         return $referCode;
     }
     public function store(Request $request)
@@ -115,6 +72,16 @@ class RegisteredUserController extends Controller
                 'status' => 400,
                 'message' => 'Invalid referral code.',
             ]);
+        }else{
+            $referrer->increment('refer_count'); // Increment the referral count for the referrer
+            $referral_bonus = DB::table('settings')->first()->referral_bonus; // Get the referral bonus from settings
+            $referrer->increment('refer_wallet', $referral_bonus); // Add the referral bonus to the referrer's balance
+            
+
+
+
+
+            $referrer->save(); 
         }
     }
     //  random create user_id 
