@@ -638,59 +638,63 @@ $trades = DB::table('trades')
 
                                                                                             </div>
 
-
-
-                                                                                            <!-- Stock Details -->
                                                                                             <div
-                                                                                                class="d-flex gap-3 mb-3 align-items-center justify-content-between">
-                                                                                                <p
-                                                                                                    class="mb-0 w-100 fs-14 text-dark font-w600 d-flex 
-                                                                                                        align-items-center gap-2 px-3 py-2 bg-light">
-                                                                                                    Initial
-                                                                                                    Investment:
-                                                                                                    <span>₹ {{ number_format($stock->cost, 2) }}</span>
-                                                                                                    
-                                                                                                </p>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="d-flex gap-3 mb-3 align-items-center justify-content-between">
-                                                                                                <p
-                                                                                                    class="mb-0 w-100 fs-14 text-dark font-w600 d-flex 
-                                                                                                        align-items-center gap-2 px-3 py-2 bg-light">
-                                                                                                    Margin Utilized :
-                                                                                                    <span>₹{{ number_format($stock->cost - $stock->total_cost, 2) }}
-                                                                                                        ({{ $margin }}x)</span>
-                                                                                                </p>
-                                                                                            </div>
-
-                                                                                            <div
-                                                                                                class="d-flex gap-3 mb-3 align-items-center justify-content-between">
-                                                                                                <p
-                                                                                                    class="mb-0 w-100 fs-14 text-dark font-w600 d-flex 
-                                                                                                            align-items-center px-3 py-2 bg-light">
-                                                                                                    Adjusted
-                                                                                                    Investment:
-                                                                                                    <span>₹ {{ number_format($stock->total_cost, 2) }}</span>
-                                                                                                    
-                                                                                                    
-                                                                                                </p>
-                                                                                            </div>
-                                                                                            <!-- Lot & Quantity -->
-                                                                                            <div
-                                                                                                class="d-flex gap-3 mb-3 align-items-center justify-content-between">
-                                                                                                <p
-                                                                                                    class="mb-0 w-50 fs-14 text-dark font-w600 d-flex 
-                                                                                                        align-items-center px-3 py-2 bg-light">
-                                                                                                    Lot Size:
-                                                                                                    {{ $stock->lotSize }}
-                                                                                                </p>
-                                                                                                <p
-                                                                                                    class="mb-0 w-50 fs-14 text-dark font-w600 d-flex 
-                                                                                                        align-items-center px-3 py-2 bg-light">
-                                                                                                    Quantity:
-                                                                                                    {{ number_format($stock->quantity, 2) }}
-                                                                                                </p>
-                                                                                            </div>
+                                                                                            class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                            <p
+                                                                                                class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                        align-items-center gap-2 px-3 py-2 bg-light">
+                                                                                                Initial Investment:
+                                                                                                <span>₹{{ number_format($stock->cost, 2) }}</span>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                            <p
+                                                                                                class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                        align-items-center gap-2 px-3 py-2 bg-light">
+                                                                                                Margin
+                                                                                                Utilized:
+                                                                                                <span>₹{{ number_format($stock->cost - $stock->total_cost, 2) }}({{ $stock->margin }}x)</span>
+                                                                                            </p>
+                                                                                        </div>
+    
+                                                                                        <div
+                                                                                            class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                            <p
+                                                                                                class="mb-0 w-100 fs-12 text-dark font-w600 d-flex 
+                                                                                            align-items-center gap-2 px-3 py-2 bg-light">
+                                                                                                Adjusted
+                                                                                                Investment:
+                                                                                                <span>₹ {{ number_format($stock->total_cost, 2) }}</span>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                          
+                                                                                            <p
+                                                                                                class="mb-0 w-100 fs-12 text-dark font-w600 d-flex
+                                                                                                align-items-center gap-2 px-3 py-2 bg-light">
+                                                                                                Limit Price: 
+                                                                                                <span>₹ {{ number_format($stock->price, 2) }}</span>
+                                                                                            </p>
+    
+                                                                                        </div>
+                                                                                       
+                                                                                        <div
+                                                                                            class="d-flex gap-3 mb-3 align-items-center justify-content-between">
+                                                                                            <p
+                                                                                                class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                        align-items-center gap-2 px-3 py-2 bg-light">
+                                                                                                Lot Size: 
+                                                                                                <span>{{ $stock->lotSize }}</span>
+                                                                                            </p>
+                                                                                            <p
+                                                                                                class="mb-0 w-50 fs-12 text-dark font-w600 d-flex 
+                                                                                        align-items-center gap-2 px-3 py-2 bg-light">
+                                                                                                Quantity:
+                                                                                                <span>{{ number_format($stock->quantity, 2) }}</span>
+                                                                                            </p>
+                                                                                        </div>
 
 
                                                                                             <!-- Price Details -->
@@ -884,6 +888,13 @@ $trades = DB::table('trades')
                                                                             style="position: absolute;top: 10px;right: 14px;">
                                                                             <p class="text-muted mb-1 fs-13">
                                                                                 {{ \Carbon\Carbon::parse($stock->created_at)->diffForHumans() }}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-between ">
+                                                                            <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
+                                                                                LTP:
+                                                                                <span id="ltp1{{ $i }}" class="font-w600 text-primary fs-4">
+                                                                                    {{ $stock->ltp }}</span>
                                                                             </p>
                                                                         </div>
 
@@ -1449,6 +1460,14 @@ $trades = DB::table('trades')
                                                                             </p>
                                                                         </div>
 
+                                                                        <div class="d-flex justify-content-between ">
+                                                                            <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
+                                                                                LTP:
+                                                                                <span id="ltp2{{ $i }}" class="font-w600 text-primary fs-4">
+                                                                                    {{ $stock->ltp }}</span>
+                                                                            </p>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                                 <?php
@@ -2010,6 +2029,14 @@ $trades = DB::table('trades')
                                                                             </p>
                                                                         </div>
 
+                                                                        <div class="d-flex justify-content-between ">
+                                                                            <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
+                                                                                LTP:
+                                                                                <span id="ltp3{{ $i }}" class="font-w600 text-primary fs-4">
+                                                                                    {{ $stock->ltp }}</span>
+                                                                            </p>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                                 <?php
@@ -2564,6 +2591,14 @@ $trades = DB::table('trades')
                                                                             </p>
                                                                         </div>
 
+                                                                        <div class="d-flex justify-content-between ">
+                                                                            <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
+                                                                                LTP:
+                                                                                <span id="ltp4{{ $i }}" class="font-w600 text-primary fs-4">
+                                                                                    {{ $stock->ltp }}</span>
+                                                                            </p>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                                 <?php
@@ -2867,6 +2902,8 @@ var csrfToken = "{{ csrf_token() }}";
                                     .trim(); // Trade type
                                 const action = document.getElementById(`action1${rowId}`).innerText
                                     .trim(); // Trade type
+                                document.getElementById(`ltp1${rowId}`).textContent = `${price}`;
+                                // document.getElementById(`ltp1${rowId}`).textContent = `₹ ${price}`;
 
                                 total_investValue += isNaN(invest) ? 0 : parseFloat(invest);
                                 total_currentValue += isNaN(price * quantity) ? 0 : parseFloat(price) *
@@ -3024,6 +3061,8 @@ var csrfToken = "{{ csrf_token() }}";
                                 const action = document.getElementById(`action2${rowId}`).innerText
                                     .trim(); // Trade type
 
+                                    document.getElementById(`ltp2${rowId}`).textContent = `${price}`;
+
 
                                 console.log("price", price, "invest", invest, "quanrity", quantity, "tradeType",
                                     tradeType, "action", action);
@@ -3163,6 +3202,7 @@ var csrfToken = "{{ csrf_token() }}";
                                 const action = document.getElementById(`action3${rowId}`).innerText
                                     .trim(); // Trade type
 
+                                document.getElementById(`ltp3${rowId}`).textContent = `${price}`;
 
                                 // console.log("price", price, "invest", invest, "quanrity", quantity, "tradeType",
                                 //     tradeType, "action", action);
@@ -3301,6 +3341,8 @@ var csrfToken = "{{ csrf_token() }}";
                                     .trim(); // Trade type
                                 const action = document.getElementById(`action4${rowId}`).innerText
                                     .trim(); // Trade type
+
+                                document.getElementById(`ltp4${rowId}`).textContent = `${price}`;
 
 
                                 // console.log("price", price, "invest", invest, "quanrity", quantity, "tradeType",

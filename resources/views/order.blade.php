@@ -400,11 +400,6 @@ use App\Models\Stockdata;
                                                             </div>
                                                         </div>
 
-
-
-
-
-
                                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6"  data-bs-toggle="modal" onclick="showOrderForm(2,{{ $i }})">
                                                             <div class="card pull-up" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
                                                                 <div class="card-body align-items-center flex-wrap">
@@ -490,7 +485,7 @@ use App\Models\Stockdata;
                                                                         <div>
                                                                             <p
                                                                                 class="mb-0 fs-5 font-w500 d-flex align-items-center">
-                                                                                <span class='text-info'><i class='fas fa-spinner fa-spin'></i> Processing</span>
+                                                                                <span class='text-info'><i class='fas fa-spinner fa-spin'></i> Pending</span>
                                                                             </p>
                                                                             <span class="fs-12">Qty:
                                                                                 <?= $stock->lotSize ?>
