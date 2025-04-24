@@ -312,7 +312,7 @@ class StockController extends Controller
         $today = Carbon::now(); // Get current date
     
         $query = DB::table('future_temp')
-            ->where('assetSymbol', 'like', "%" . $search . "%")
+            ->where('tradingSymbol', 'like', "%" . $search . "%")
             ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') >= ?", [$today]); // Filter expired contracts
     
         if ($type == 'future') {
@@ -325,7 +325,7 @@ class StockController extends Controller
             });
         } elseif ($type == 'indices') {
             $query = DB::table('future_temp')
-            ->where('assetSymbol', 'like', "%" . $search . "%");
+            ->where('tradingSymbol', 'like', "%" . $search . "%");
             $query->where('instrumentType', 'INDEX');
         } elseif ($type == "mcx") {
             $query->where(function ($q) {

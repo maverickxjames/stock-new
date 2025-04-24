@@ -233,6 +233,8 @@
                                 $total_investment = 0;
                                 $total_current_value = 0;
                                 $change_percentage = 0;
+                                $margin_used = 0;
+                                $margin_available = 0;
 
                                 $futureSub = DB::table('future_temp')
     ->select('instrumentKey', DB::raw('MAX(ltp) as ltp'))
@@ -264,14 +266,15 @@ $trades = DB::table(DB::raw('(
     ->get();
 
                                 Log::info($trades); // Log the trades data
-                            
                                 foreach ($trades as $trade) {
                                     $total_investment += $trade->total_cost;
                                     $total_current_value += $trade->quantity * $trade->ltp;
+                                    $margin_used += $trade->marginUsed;
                                 }
 
                                 $gain_loss = $total_current_value - $total_investment;
                                 $change_percentage = $total_investment > 0 ? ($gain_loss / $total_investment) * 100 : 0;
+                                $margin_available = $user->real_wallet - $margin_used + $gain_loss;
                             @endphp
                             <div class="col-xl-12">
                                 <div class="card trad-card wallet-wrapper shadow-lg">
@@ -281,7 +284,7 @@ $trades = DB::table(DB::raw('(
                                                 ₹ {{ number_format($gain_loss, 2) }}
                                             </h2>
                                             <div class="d-flex align-items-center justify-content-between gap-2">
-                                                <h6 class="text-light mb-1 fs-14">Overall Gain</h6>
+                                                <h6 class="text-light mb-1 fs-14">P / L</h6>
                                                 <span class="font-w600 mb-0 fs-14 {{ $change_percentage>=0?'text-success':'text-danger' }}" id="profitAndLossPercentage">
                                                     ({{ number_format($change_percentage, 2) }}%)
                                                 </span>
@@ -311,13 +314,14 @@ $trades = DB::table(DB::raw('(
                                             <hr class="border-white opacity-25 mb-3">
                                             <div class="d-flex justify-content-between mb-4">
                                                 <div class="d-flex flex-column align-items-center">
-                                                    <span id="marginWallet" class="text-light fs-4 font-w600">₹ {{ number_format($trade->marginUsed,2) }}</span>
+                                                    <span id="marginUsed" class="text-light fs-4 font-w600">₹ {{ number_format($margin_used,2) }}</span>
                                                     <span class="text-light fw-medium font-w300">Margin Used</span>
                                                     {{-- <span class="text-white">₹ {{ number_format($margin_used, 2) }}</span> --}}
                                                 </div>
+                                                <p id="wallet" style="display: none">{{ $user->real_wallet }}</p>
                                                 <div class="d-flex flex-column align-items-center">
-                                                    <span class="text-light fs-4 font-w600">₹ 0</span>
-                                                    <span class="text-light fw-medium font-w300">Margin Available</span>
+                                                    <span class="text-light fs-4 font-w600" id="marginAvail">₹ {{ number_format($margin_available,2) }}</span>
+                                                    <span class="text-light fw-medium font-w300" >Margin Available</span>
                                                     {{-- <span class="text-white">₹ {{ number_format($margin_available, 2) }}</span> --}}
                                                 </div>
                                             </div>
@@ -358,7 +362,7 @@ $trades = DB::table(DB::raw('(
 
 
                     <div class="col-xl-12">
-                        <div class="card">
+                        <div class="card" style="padding-bottom: 40px;">
                             <div class="card-header border-0">
                                 <nav>
                                     <div class="nav nav-pills light" id="nav-tab-p2p" role="tablist">
@@ -834,6 +838,7 @@ $trades = DB::table('trades')
                                                                                         ?>
                                                                                 <span
                                                                                     class="text-success me-1">▲</span>
+                                                                                    
                                                                                 <span class="text-success"
                                                                                     id="perc{{ $i }}">
                                                                                     <?php echo number_format(($change / $stock->cp) * 100, 2); ?>%
@@ -910,6 +915,7 @@ $trades = DB::table('trades')
                                                                 $profitAmount = $investedValue + $change;
                                                                 
                                                                 ?>
+                                                                <p style="display: none" id="ch1{{ $i }}">{{ $change }}</p>
                                                                 <div
                                                                     class="d-flex align-items-center justify-content-between">
                                                                     <div>
@@ -918,7 +924,7 @@ $trades = DB::table('trades')
                                                                             Current : ₹
                                                                             {{ number_format($profitAmount, 2) }}
                                                                         </p>
-                                                                        <span class="fs-12">Margin Used : ₹
+                                                                        <span class="fs-12" id="marginUsed1{{ $i }}">Margin Used : ₹
                                                                             {{ number_format($stock->total_cost, 2) }}</span>
                                                                         {{-- <span class="fs-12">Delivery</span>
                                                                     --}}
@@ -2685,6 +2691,10 @@ $trades = DB::table('trades')
             function sumAllChangeValues() {
     let sum = 0;
     let rowId = 1;
+    let sumPercentage = 0;
+    let totalCurrentPrice=0;
+    let totalMarginUsed=0;
+    let totalProfitAndLoss=0;
 
     while (true) {
         const el = document.getElementById(`change1${rowId}`);
@@ -2695,12 +2705,48 @@ $trades = DB::table('trades')
         // Detect if negative or positive
         const isNegative = text.includes('-');
         const match = text.match(/₹\s*([\d,]+\.\d{2})/);
+                // Extract % value inside ( ... %)
+                const percentMatch = text.match(/\(([\d,]+\.\d{2})%\)/);
 
         if (match && match[1]) {
             let value = parseFloat(match[1].replace(/,/g, ''));
             if (isNegative) value *= -1;
             sum += value;
         }
+
+        if (percentMatch && percentMatch[1]) {
+            let percent = parseFloat(percentMatch[1].replace(/,/g, ''));
+            if (isNegative) percent *= -1;
+            sumPercentage += percent;
+        }
+
+        const priceEl = document.getElementById("price1" + rowId);
+        const priceMatch = priceEl.innerText.match(/₹\s*([\d,]+\.\d{2})/);
+        let currentPrice = 0;
+        if (priceMatch && priceMatch[1]) {
+            currentPrice = parseFloat(priceMatch[1].replace(/,/g, ''));
+            totalCurrentPrice+= currentPrice;
+        }
+
+        const marginUsedEl = document.getElementById("marginUsed1" + rowId);
+        const marginUsedMatch = marginUsedEl.innerText.match(/₹\s*([\d,]+\.\d{2})/);
+        let marginUsed = 0;
+        if (marginUsedMatch && marginUsedMatch[1]) {
+            marginUsed = parseFloat(marginUsedMatch[1].replace(/,/g, ''));
+            totalMarginUsed+= marginUsed;
+        }
+
+        const profitAndLossEl = document.getElementById("ch1" + rowId);
+        // const profitAndLossMatch = profitAndLossEl.innerText.match(/₹\s*([\d,]+\.\d{2})/);
+        const profitAndLossMatch = profitAndLossEl.innerText;        
+        let profitAndLoss = 0;
+        if (profitAndLossMatch && profitAndLossMatch[1]) {
+            profitAndLoss = parseFloat(profitAndLossMatch);
+            totalProfitAndLoss+= profitAndLoss;
+        }
+
+
+
 
         rowId++;
     }
@@ -2709,6 +2755,42 @@ $trades = DB::table('trades')
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     });
+    document.getElementById("profitAndLossPercentage").textContent = sumPercentage.toLocaleString('en-IN', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }) + "%";
+
+    document.getElementById("current").textContent = totalCurrentPrice.toLocaleString('en-IN', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+
+    document.getElementById("marginUsed").textContent ='₹ ' + totalMarginUsed.toLocaleString('en-IN', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+
+    const wallet=document.getElementById("wallet").textContent.replace(/,/g, '');
+
+    let totalMarginAvailable = wallet-totalMarginUsed+totalProfitAndLoss;
+    
+
+    document.getElementById("marginAvail").textContent = '₹ ' + totalMarginAvailable.toLocaleString('en-IN', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+
+   
+
+    // const originalPriceEl = document.getElementById("current");
+    // if (originalPriceEl) {
+    //     originalPriceEl.textContent = '₹' + originalPrice.toLocaleString('en-IN', {
+    //         minimumFractionDigits: 2,
+    //         maximumFractionDigits: 2
+    //     });
+    // }
+
+    // console.log("Net % Change:", sumPercentage.toFixed(2) + "%");
 }
 
 
@@ -2877,6 +2959,8 @@ var csrfToken = "{{ csrf_token() }}";
                                ${profitAndLoss > 0 
                                 ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + formatprofitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
                                 : '<span class="text-danger" id="perc' + rowId + '">- ₹' + formatprofitAndLoss+ ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
+
+                                document.getElementById(`ch1${ rowId }`).innerHTML =profitAndLoss;
 
                                 // Determine status (Net Gain, Net Loss, or No Change)
                                 let statusClass = "";

@@ -84,11 +84,11 @@ class UpdateLTPJob implements ShouldQueue
 
             ]);
 
-            if($query){
-                Log::info("LTP updated successfully", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp, 'cp' => $cp, 'high' => $high, 'low' => $low, 'open' => $open, 'close' => $close, 'bid' => $bid, 'ask' => $ask]);
-            }else{
-                Log::error("Failed to update LTP", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp , 'cp' => $cp, 'high' => $high, 'low' => $low, 'open' => $open, 'close' => $close, 'bid' => $bid, 'ask' => $ask]);
-            }
+            // if($query){
+            //     Log::info("LTP updated successfully", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp, 'cp' => $cp, 'high' => $high, 'low' => $low, 'open' => $open, 'close' => $close, 'bid' => $bid, 'ask' => $ask]);
+            // }else{
+            //     Log::error("Failed to update LTP", ['instrumentKey' => $instrumentKey, 'ltp' => $ltp , 'cp' => $cp, 'high' => $high, 'low' => $low, 'open' => $open, 'close' => $close, 'bid' => $bid, 'ask' => $ask]);
+            // }
 
         }
     }
