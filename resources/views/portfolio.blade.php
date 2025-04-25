@@ -237,33 +237,33 @@
                                 $margin_available = 0;
 
                                 $futureSub = DB::table('future_temp')
-    ->select('instrumentKey', DB::raw('MAX(ltp) as ltp'))
-    ->groupBy('instrumentKey');
+                                ->select('instrumentKey', DB::raw('MAX(ltp) as ltp'))
+                                ->groupBy('instrumentKey');
 
-$trades = DB::table(DB::raw('(
-        SELECT 
-            instrumentKey,
-            SUM(quantity) as quantity,
-            AVG(price) as avg_price,
-            SUM(cost) as total_cost,
-            SUM(total_cost) as marginUsed
-        FROM trades
-        WHERE user_id = ' . $user->id . '
-            AND status = "executed"
-        GROUP BY instrumentKey
-    ) as aggregated_trades'))
-    ->leftJoinSub($futureSub, 'future_temp', function ($join) {
-        $join->on('future_temp.instrumentKey', '=', 'aggregated_trades.instrumentKey');
-    })
-    ->selectRaw('
-        aggregated_trades.instrumentKey,
-        aggregated_trades.quantity,
-        aggregated_trades.avg_price,
-        aggregated_trades.total_cost,
-        aggregated_trades.marginUsed,
-        COALESCE(future_temp.ltp, 0) as ltp
-    ')
-    ->get();
+                            $trades = DB::table(DB::raw('(
+                                    SELECT 
+                                        instrumentKey,
+                                        SUM(quantity) as quantity,
+                                        AVG(price) as avg_price,
+                                        SUM(cost) as total_cost,
+                                        SUM(total_cost) as marginUsed
+                                    FROM trades
+                                    WHERE user_id = ' . $user->id . '
+                                        AND status = "executed"
+                                    GROUP BY instrumentKey
+                                ) as aggregated_trades'))
+                                ->leftJoinSub($futureSub, 'future_temp', function ($join) {
+                                    $join->on('future_temp.instrumentKey', '=', 'aggregated_trades.instrumentKey');
+                                })
+                                ->selectRaw('
+                                    aggregated_trades.instrumentKey,
+                                    aggregated_trades.quantity,
+                                    aggregated_trades.avg_price,
+                                    aggregated_trades.total_cost,
+                                    aggregated_trades.marginUsed,
+                                    COALESCE(future_temp.ltp, 0) as ltp
+                                ')
+                                ->get();
 
                                 Log::info($trades); // Log the trades data
                                 foreach ($trades as $trade) {
@@ -412,37 +412,37 @@ $trades = DB::table(DB::raw('(
 
                                             @php
                                                 $futureSub = DB::table('future_temp')
-    ->select('instrumentKey', DB::raw('MIN(ltp) as ltp'), DB::raw('MIN(cp) as cp'))
-    ->groupBy('instrumentKey');
+                                                ->select('instrumentKey', DB::raw('MIN(ltp) as ltp'), DB::raw('MIN(cp) as cp'))
+                                                ->groupBy('instrumentKey');
 
-$trades = DB::table('trades')
-    ->where('trades.user_id', $user->id)
-    ->where('trades.status', 'executed')
-    ->leftJoinSub($futureSub, 'future_temp', function ($join) {
-        $join->on('future_temp.instrumentKey', '=', 'trades.instrumentKey');
-    })
-    ->selectRaw('
-        trades.instrumentKey,
-        SUM(trades.quantity) as quantity,
-        AVG(trades.price) as avg_price,
-        MIN(trades.stock_name) as stock_name,
-        MIN(trades.stock_symbol) as stock_symbol,
-        MIN(trades.action) as action,
-        MIN(trades.tradeType) as tradeType,
-        MIN(trades.duration) as duration,
-        SUM(trades.total_cost) as total_cost,
-        SUM(trades.cost) as cost,
-        SUM(trades.lotSize) as lotSize,
-        MIN(trades.created_at) as created_at,
-        MIN(trades.tradeType) as tradeType,
-        future_temp.ltp,
-        future_temp.cp,
-        MIN(trades.margin) as margin,
-        MIN(trades.price) as price,
-        MIN(trades.order_type) as order_type
-    ')
-    ->groupBy('trades.instrumentKey', 'trades.duration', 'future_temp.ltp', 'future_temp.cp')
-    ->get();
+                                                $trades = DB::table('trades')
+                                                    ->where('trades.user_id', $user->id)
+                                                    ->where('trades.status', 'executed')
+                                                    ->leftJoinSub($futureSub, 'future_temp', function ($join) {
+                                                        $join->on('future_temp.instrumentKey', '=', 'trades.instrumentKey');
+                                                    })
+                                                    ->selectRaw('
+                                                        trades.instrumentKey,
+                                                        SUM(trades.quantity) as quantity,
+                                                        AVG(trades.price) as avg_price,
+                                                        MIN(trades.stock_name) as stock_name,
+                                                        MIN(trades.stock_symbol) as stock_symbol,
+                                                        MIN(trades.action) as action,
+                                                        MIN(trades.tradeType) as tradeType,
+                                                        MIN(trades.duration) as duration,
+                                                        SUM(trades.total_cost) as total_cost,
+                                                        SUM(trades.cost) as cost,
+                                                        SUM(trades.lotSize) as lotSize,
+                                                        MIN(trades.created_at) as created_at,
+                                                        MIN(trades.tradeType) as tradeType,
+                                                        future_temp.ltp,
+                                                        future_temp.cp,
+                                                        MIN(trades.margin) as margin,
+                                                        MIN(trades.price) as price,
+                                                        MIN(trades.order_type) as order_type
+                                                    ')
+                                                    ->groupBy('trades.instrumentKey', 'trades.duration', 'future_temp.ltp', 'future_temp.cp')
+                                                    ->get();
 
                                                     Log::info($trades); // Log the trades data
                                             @endphp
