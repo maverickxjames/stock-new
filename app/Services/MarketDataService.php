@@ -98,6 +98,9 @@ class MarketDataService
 
         $binaryData = json_encode($data);
         $connection->sendBinary($binaryData);
+        $ltpBuffer = [];
+$lastFlush = microtime(true);
+$interval = 1.0; // flush every 1 second
 
         foreach ($connection as $message) {
             $payload = $message->buffer();

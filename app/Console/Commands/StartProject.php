@@ -66,10 +66,10 @@ class StartProject extends Command
             'docker-compose up -d',
             'start /b php artisan websockets:serve',
             'start /b php artisan serve',
-            'start /b php artisan queue:listen',
+            'start /b php artisan queue:work',
             'start /b php artisan market:fetch-trade-updates',
             'start /b php artisan market:fetch-updates',
-            'start /b php artisan market:fetch-indices',
+            // 'start /b php artisan market:fetch-indices',
 
             // 'start /b php artisan queue:work'
         ];
