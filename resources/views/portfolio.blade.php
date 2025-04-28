@@ -2839,7 +2839,7 @@ var csrfToken = "{{ csrf_token() }}";
             .listen('Trade', (event) => {
                 const feeds = event.trade.feeds;
 
-                console.log(feeds);
+                console.log("portfolio event received:", feeds);
 
 
                 // Iterate through the received WebSocket data
@@ -3694,7 +3694,7 @@ setInterval(processQueue, 5000);
     {{-- swal fire cdn --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
+    {{-- <script>
         window.Echo.channel('stocks')
             .listen('Stock', (e) => {
                 console.log("Stock event received:", e);
@@ -3828,7 +3828,7 @@ setInterval(processQueue, 5000);
             // close using ajax 
 
         }
-    </script>
+    </script> --}}
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>

@@ -303,7 +303,7 @@ $user = auth()->user();
 ];
 window.Echo.channel('stocks')
     .listen('Stock', (e) => {
-        console.log("Stock event received:", e);
+        // console.log("Stock event received:", e);
 
         indicesConfig.forEach(({ key, ltpId, changeId }) => {
             const data = e.stocks?.feeds?.[key]?.ff?.indexFF;

@@ -1611,17 +1611,19 @@ swalWithBootstrapButtons.fire({
 }
 
 
+
+
         
         Echo.channel('trades')
             .listen('Trade', (event) => {
                 const feeds = event.trade.feeds;
 
-                console.log(feeds);
+                console.log("order", feeds);
 
 
                 // Iterate through the received WebSocket data
                 for (const key in feeds) {
-                    tradeQueue.push(feeds[key]);
+                    // tradeQueue.push(feeds[key]);
                     if (feeds.hasOwnProperty(key)) {
                         const feedData = feeds[key].ff.marketFF; // Data from WebSocket
                         const receivedIsin = key; // Full ISIN, e.g., "NSE_EQ|IN02837383"
@@ -1664,9 +1666,9 @@ swalWithBootstrapButtons.fire({
                                 document.getElementById(`ltp1${rowId}`).textContent = `${price}`;
                                 // document.getElementById(`ltp1${rowId}`).textContent = `₹ ${price}`;
 
-                                total_investValue += isNaN(invest) ? 0 : parseFloat(invest);
-                                total_currentValue += isNaN(price * quantity) ? 0 : parseFloat(price) *
-                                    parseFloat(quantity);
+                                // total_investValue += isNaN(invest) ? 0 : parseFloat(invest);
+                                // total_currentValue += isNaN(price * quantity) ? 0 : parseFloat(price) *
+                                //     parseFloat(quantity);
 
                             
 
@@ -1795,7 +1797,7 @@ swalWithBootstrapButtons.fire({
                                         </div>
                                     </div>
                                 `;
-                                sumAllChangeValues();
+                                // sumAllChangeValues();
 
                             });
 
@@ -1804,147 +1806,6 @@ swalWithBootstrapButtons.fire({
 
 
 
-                        } else if (futureElement) {
-                            futureElement.forEach(el => {
-                                const rowId = el.id.replace('isin2', '');
-
-                                const price = parseFloat(feedData?.ltpc?.ltp) || 0; // Last traded price
-                                const cp = parseFloat(feedData?.ltpc?.cp) || 0; // Cost price
-
-                                const invest = parseFloat(document.getElementById(`invest2${rowId}`)
-                                    .textContent) || 0; // Investment amount
-                                const quantity = parseFloat(document.getElementById(`quantity2${rowId}`)
-                                    .textContent) || 0; // Quantity
-                                const tradeType = document.getElementById(`tradeType2${rowId}`).innerText
-                                    .trim(); // Trade type
-                                const action = document.getElementById(`action2${rowId}`).innerText
-                                    .trim(); // Trade type
-
-                                    document.getElementById(`ltp2${rowId}`).textContent = `${price}`;
-
-
-                                console.log("price", price, "invest", invest, "quanrity", quantity, "tradeType",
-                                    tradeType, "action", action);
-
-
-
-                                let margin = 1;
-                                if (tradeType == 'FUT') {
-                                    margin = 500;
-                                } else if (tradeType == 'CE' || tradeType == 'PE') {
-                                    margin = 7;
-                                } else {
-                                    margin = 1;
-                                }
-
-                                const currentValue = ((price * parseFloat(
-                                    quantity))); // Actual investment amount
-
-                                let profitAndLoss = (currentValue - invest).toFixed(2);
-
-                                if (action == 'SELL') {
-                                    profitAndLoss *= -1;
-                                }
-
-                                const profitAndLossPercentage = invest ? ((profitAndLoss / invest) * 100)
-                                    .toFixed(2) : '0';
-
-
-                                const pandloss = (parseFloat(invest) + parseFloat(profitAndLoss)).toFixed(2);
-
-                                // console.log(rowId,"->price", price,"invest", invest,"quanrity", quantity,"currentValue", currentValue,"tradeType", tradeType,"action", action,"profitAndLoss", profitAndLoss,"profitAndLossPercentage", profitAndLossPercentage,"pandloss", pandloss);
-
-
-                                const formattedPandloss = Number(pandloss).toLocaleString('en-IN', {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2
-                                });
-
-                                const positiveProfitAndLoss = Math.abs(profitAndLoss);
-                                const formatprofitAndLoss = Number(positiveProfitAndLoss).toLocaleString(
-                                    'en-IN', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    });
-
-                                const gotPrice = parseFloat(invest) + parseFloat(profitAndLoss);
-                                const formattedGotPrice = Number(gotPrice).toLocaleString('en-IN', {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2
-                                });
-
-                                document.getElementById(`price2${rowId}`).textContent =
-                                    `Current : ₹${formattedPandloss || '0'}`;
-
-                                const badgeValue = (price - cp).toFixed(2) || '0';
-                                const percentageChange = price && cp ? (((price - cp) / cp) * 100).toFixed(2) :
-                                    '0';
-
-
-
-                                document.getElementById(`marketPrice2${rowId}`).textContent =
-                                    `Market Price : ₹ ${price || '0'}`;
-                                document.getElementById(`gotPrice2${rowId}`).textContent =
-                                    `₹ ${formattedGotPrice || '0'}`;
-                                document.getElementById(`stockChange2${rowId}`).innerHTML =
-                                    `
-                                        ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
-
-                                document.getElementById(`tradeStockChange2${rowId}`).innerHTML =
-                                    `
-                                        ${percentageChange > 0 ? '<span class="text-success">▲</span>' : '<span class="text-danger me-1">▼</span>'}
-                                         ${percentageChange>0 ? '<span class="text-success" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc'+rowId+'">'+percentageChange+'%</span>&nbsp'}
-                                         ${percentageChange>0 ? '<span class="text-muted" id="perc'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-muted" id="perc'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
-
-
-                                document.getElementById(`change2${rowId}`).innerHTML =
-                                    `
-                                ${profitAndLoss > 0 
-                                ? '<span class="text-success" id="perc' + rowId + '">+ ₹' + formatprofitAndLoss + ' (' + profitAndLossPercentage + '%)</span>' 
-                                : '<span class="text-danger" id="perc' + rowId + '">- ₹' + formatprofitAndLoss+ ' (' + Math.abs(profitAndLossPercentage) + '%)</span>'}`;
-
-                                // Determine status (Net Gain, Net Loss, or No Change)
-                                let statusClass = "";
-                                let textClass = "";
-                                let icon = "";
-                                let statusText = "";
-
-                                if (profitAndLoss > 0) {
-                                    statusClass = "badge-success";
-                                    textClass = "text-success";
-                                    icon = "▲";
-                                    statusText = "Net Gain";
-                                } else if (profitAndLoss < 0) {
-                                    statusClass = "badge-danger";
-                                    textClass = "text-danger";
-                                    icon = "▼";
-                                    statusText = "Net Loss";
-                                } else {
-                                    statusClass = "badge-warning";
-                                    textClass = "text-warning";
-                                    icon = "-";
-                                    statusText = "No Change";
-                                }
-
-                                // Update UI dynamically
-                                document.getElementById(`changeStatus2${rowId}`).innerHTML = `
-                                    <div class="d-flex align-items-center mt-3 mb-2">
-                                        <span class="badge ${statusClass} me-2">${icon}</span>
-                                        <div class="d-flex flex-column">
-                                            <h4 class="card-title mb-0" style="font-size:1rem; font-weight:900">${statusText}</h4>
-                                            <div class="d-flex">
-                                                <span class="${textClass}">
-                                                ₹ ${formatprofitAndLoss} (${Math.abs(profitAndLossPercentage)}%)
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
-
-
-                            });
                         } 
                     }
                 }
