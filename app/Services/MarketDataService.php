@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use App\Jobs\UpdateLTPJob;
 use App\Jobs\ValidateLtpc;
 use App\Jobs\CheckLimitOrdersJob;
+use App\Jobs\UpdateStockJob;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
 
 class MarketDataService
@@ -99,8 +101,8 @@ class MarketDataService
         $binaryData = json_encode($data);
         $connection->sendBinary($binaryData);
         $ltpBuffer = [];
-$lastFlush = microtime(true);
-$interval = 1.0; // flush every 1 second
+        $lastFlush = microtime(true);
+        $interval = 1.0; // flush every 1 second
 
         foreach ($connection as $message) {
             $payload = $message->buffer();
@@ -117,8 +119,8 @@ $interval = 1.0; // flush every 1 second
                 $data2 = json_decode($apidata, true);
 
                 var_dump($data2);
-                
-                UpdateLTPJob::dispatch($data2);
+
+                // UpdateLTPJob::dispatch($data2);
                 // Broadcast the processed data to the client
                 broadcast(new \App\Events\Watchlist($data2))->toOthers();
             }
@@ -150,7 +152,7 @@ $interval = 1.0; // flush every 1 second
         // Prepare the final array
         $finalArray = ["instrumentKeys" => $tokens];
 
-        
+
         $data = [
             "guid" => "someguid",
             "method" => "sub",
@@ -197,9 +199,9 @@ $interval = 1.0; // flush every 1 second
         $connection = connect($response['data']['authorized_redirect_uri']);
 
         echo "Connection successful!\n";
-       
 
-        $tokens=["BSE_INDEX|SENSEX","NSE_INDEX|Nifty 50","NSE_INDEX|Nifty Next 50","NSE_INDEX|Nifty Bank","NSE_INDEX|NIFTY MID SELECT","NSE_INDEX|Nifty Fin Service","BSE_INDEX|SENSEX50","BSE_INDEX|BANKEX"];
+
+        $tokens = ["BSE_INDEX|SENSEX", "NSE_INDEX|Nifty 50", "NSE_INDEX|Nifty Next 50", "NSE_INDEX|Nifty Bank", "NSE_INDEX|NIFTY MID SELECT", "NSE_INDEX|Nifty Fin Service", "BSE_INDEX|SENSEX50", "BSE_INDEX|BANKEX"];
         // $toekns=["BSE_INDEX|SENSEX","NSE_INDEX|NIFTY 50","NSE_INDEX|NIFTY BANK","NSE_INDEX|NIFTY AUTO","NSE_INDEX|NIFTY IT","NSE_INDEX|NIFTY PHARMA","NSE_INDEX|NIFTY FMCG","NSE_INDEX|NIFTY METAL","NSE_INDEX|NIFTY PSU BANK","NSE_INDEX|NIFTY REALTY","NSE_INDEX|NIFTY MEDIA","NSE_INDEX|NIFTY ENERGY","NSE_INDEX|NIFTY INFRA","NSE_INDEX|NIFTY PVT BANK","NSE_INDEX|NIFTY COMMODITIES","NSE_INDEX|NIFTY CONSUMPTION","NSE_INDEX|NIFTY CPSE","NSE_INDEX|NIFTY DIV OPPS 50","NSE_INDEX|NIFTY GROWSECT 15","NSE_INDEX|NIFTY50 VALUE 20","NSE_INDEX|NIFTY50 TR 2X LEV","NSE_INDEX|NIFTY50 TR 1X INV","NSE_INDEX|NIFTY50 PR 2X LEV","NSE_INDEX|NIFTY50 PR 1X INV","NSE_INDEX|NIFTY50 DIV POINT","NSE_INDEX|NIFTY50 PR 1X INV","NSE_INDEX|NIFTY50 PR 2X LEV","NSE_INDEX|NIFTY50 TR 1X INV","NSE_INDEX|NIFTY50 TR 2X LEV","NSE_INDEX|NIFTY50 VALUE 20","NSE_INDEX|NIFTY GROWSECT 15","NSE_INDEX|NIFTY DIV OPPS 50","NSE_INDEX|NIFTY CPSE","NSE_INDEX|NIFTY CONSUMPTION","NSE_INDEX|NIFTY COMMODITIES","NSE_INDEX|NIFTY PVT BANK","NSE_INDEX|NIFTY INFRA","NSE_INDEX|NIFTY ENERGY","NSE_INDEX|NIFTY MEDIA","NSE_INDEX|NIFTY REALTY","NSE_INDEX|NIFTY PSU BANK","NSE_INDEX|NIFTY METAL","NSE_INDEX|NIFTY FMCG","NSE_INDEX|NIFTY PHARMA","NSE_INDEX|NIFTY IT","NSE_INDEX|NIFTY AUTO","NSE_INDEX|NIFTY BANK","NSE_INDEX|NIFTY 50","BSE_INDEX|SENSEX"];
 
 
@@ -236,7 +238,7 @@ $interval = 1.0; // flush every 1 second
                 $data2 = json_decode($apidata, true);
                 // var_dump($data2);
 
-                UpdateLTPJob::dispatch($data2);
+                // UpdateLTPJob::dispatch($data2);
                 // Broadcast the processed data to the client
                 broadcast(new \App\Events\Stock($data2))->toOthers();
             }
@@ -255,14 +257,14 @@ $interval = 1.0; // flush every 1 second
         $connection = connect($response['data']['authorized_redirect_uri']);
 
         echo "Connection successful!\n";
-       
+
 
         $nsefo = DB::table('trades')
-        ->select('instrumentKey') // Select only the 'exchangeToken' column
-        ->distinct()              // Ensure the results are distinct
-        ->get();                  // Retrieve the data
+            ->select('instrumentKey') // Select only the 'exchangeToken' column
+            ->distinct()              // Ensure the results are distinct
+            ->get();                  // Retrieve the data
 
-    // Convert the collection to an array of 'exchangeToken' values
+        // Convert the collection to an array of 'exchangeToken' values
         $tokens = $nsefo->pluck('instrumentKey')->toArray();
 
         // Prepare the final array
@@ -299,11 +301,89 @@ $interval = 1.0; // flush every 1 second
                 // var_dump($data2);
                 ValidateLtpc::dispatch($data2);
                 CheckLimitOrdersJob::dispatch($data2);
-               
+
 
                 // UpdateLTPJob::dispatch($data2);
                 // // Broadcast the processed data to the client
                 // broadcast(new \App\Events\Stock($data2))->toOthers();
+            }
+        }
+    }
+
+
+    public function fetchAllStocks()
+    {
+
+        $apiVersion = '2.0';
+        $accessToken = DB::table('upstocks')->where('id', 1)->value('token');
+
+        $configuration = Configuration::getDefaultConfiguration();
+        $configuration->setAccessToken($accessToken);
+
+        $response = $this->getMarketDataFeedAuthorize($apiVersion, $configuration);
+        $connection = connect($response['data']['authorized_redirect_uri']);
+
+        echo "Connection successful!\n";
+
+        $nsefo = DB::table('allstocks')
+            ->select('instrumentKey') // Select only the 'exchangeToken' column
+            ->distinct()
+            ->get();                  // Retrieve the data
+
+        // Convert the collection to an array of 'exchangeToken' values
+        $tokens = $nsefo->pluck('instrumentKey')->toArray();
+
+
+        // Prepare the final array
+        $finalArray = ["instrumentKeys" => $tokens];
+
+        $data = [
+            "guid" => "someguid",
+            "method" => "sub",
+            "data" => [
+                "mode" => "full",
+                // "instrumentKeys" => ["NSE_FO|35674"]
+                "instrumentKeys" => $finalArray['instrumentKeys']
+            ]
+        ];
+
+        $binaryData = json_encode($data);
+        $connection->sendBinary($binaryData);
+        $ltpBuffer = [];
+        $lastFlush = microtime(true);
+        $interval = 1.0; // flush every 1 second
+
+        foreach ($connection as $message) {
+            $payload = $message->buffer();
+
+            if ($payload === '100') {
+                $connection->close();
+                break;
+            }
+
+            if (!empty($payload)) {
+                $decodedData = $this->decodeProtobuf($payload);
+                $apidata = $decodedData->serializeToJsonString();
+
+                $data2 = json_decode($apidata, true);
+
+                // Log message to file
+
+                // Log ::info('Market Data', ['data' => $data2]);
+
+                // var_dump($data2);
+                $batchSize = 500;
+                $chunks = array_chunk($data2, $batchSize);
+                Log::info('Market Data', ['chunks' => $data2]);
+
+                foreach ($chunks as $chunk) {
+                    Log ::info('Market Data');
+                    UpdateStockJob::dispatch($chunk);
+                }
+
+                // UpdateStockJob::dispatch($data2);
+                // Broadcast the processed data to the client
+                broadcast(new \App\Events\AllStocks($data2))->toOthers();
             }
         }
     }

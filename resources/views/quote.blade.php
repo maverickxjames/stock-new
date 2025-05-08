@@ -894,6 +894,11 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> --}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
+
+Echo.channel('all-stocks')  // Keep the name consistent here
+    .listen('AllStocks', (event) => {
+        console.log("kjn",event);  // Logs the event data
+    });
         Echo.channel('watchlists')
             .listen('Watchlist', (event) => {
                 console.log(event);
@@ -1230,11 +1235,13 @@
                                             <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
                                             <div class="ms-3">
                                                 <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
-                                                <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
+                                                <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span><br>
+                                                <span class="fs-14" id="" style="font-weight:bold;font-size:16px">LTP : <span style="color:green">${item.ltp}</span> , High: ${item.high}</span> <br>
+                                                <span class="fs-14" id="" style="font-weight:bold;font-size:16px">Open : <span style="">${item.open}</span> , Close: ${item.close}</span>
                                             </div>
                                         </div>
                                         
-                                            <a href="javascript:void(0)" id="add_script">
+                                            <a href="javascript:void(0)" id="add_script" style="display: flex;align-items: center;">
 											<div class="form-check custom-checkbox mb-3 checkbox-success">
 											<input type="checkbox" class="form-check-input" ${item.is_watchlist? 'checked':''} id="customCheckBox3" required="" style="
                                                         height: 30px;

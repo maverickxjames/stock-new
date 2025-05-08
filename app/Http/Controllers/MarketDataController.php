@@ -49,4 +49,17 @@ class MarketDataController extends Controller
         return response()->json(['message' => 'Stocks fetched successfully.']);
     }
 
+    public function fetchStocks()
+    {
+       $data2 = $this->marketDataService->fetchAllStocks();
+       broadcast(new \App\Events\AllStocks($data2));
+
+            // return $data2;
+
+
+        return response()->json(['message' => 'Market Data fetched successfully.']);
+
+
+    }
+
 }
