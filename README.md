@@ -24,7 +24,7 @@ A Laravel-based web application simulating real-time stock trading and portfolio
 
 ## 🔗 Live Demo
 
-<!-- [View Demo](https://your-demo-link.com) -->
+[View Demo](https://stockx.getsource.codes)
 
 ## 📁 Installation
 
