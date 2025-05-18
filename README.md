@@ -12,12 +12,7 @@ A Laravel-based web application simulating real-time stock trading and portfolio
 ## 🖼️ Screenshot
 
 ![Dashboard Screenshot](./public/screenshot/ss1.png)
-(./public/screenshot/ss2.png)
-(./public/screenshot/ss3.png)
-(./public/screenshot/ss4.png)
-(./public/screenshot/ss5.png)
-(./public/screenshot/ss6.png)
-(./public/screenshot/ss7.png)
+
 
 
 ## 🔗 Live Demo
