@@ -20,8 +20,8 @@ A Laravel-based web application simulating real-time stock trading and portfolio
 ## 📁 Installation
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/maverickxjames/stock-new.git
+cd stock-new
 composer install
 cp .env.example .env
 php artisan key:generate
