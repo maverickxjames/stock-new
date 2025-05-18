@@ -11,7 +11,7 @@ A Laravel-based web application simulating real-time stock trading and portfolio
 
 ## 🖼️ Screenshot
 
-![Dashboard Screenshot](./public/screenshot/ss1.png)
+![Dashboard Screenshot](./public/screenshots/ss1.png)
 
 
 
