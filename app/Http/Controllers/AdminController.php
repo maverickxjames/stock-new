@@ -370,4 +370,14 @@ public function validateUser(Request $request)
     }
 
 }
+
+public function getReferralTeam($userId)
+{
+    $referrals = DB::table('users')
+                    ->where('referred_by', $userId)
+                    ->get();
+
+    return view('admin.referral_team_table', compact('referrals'));
+}
+
 }

@@ -239,7 +239,7 @@ use App\Models\User;
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('user', $user->id) }}"
+                                                    <a href="{{route('admin.viewUser', $user->id)}}"
                                                         class="btn btn-primary">View</a>
                                                 </td>
                                             </tr>

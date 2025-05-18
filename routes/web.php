@@ -128,6 +128,9 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/approve-deposit', [AdminController::class, 'approveDeposit'])->name('approve-deposit');
     Route::post('admin/approve-withdraw', [AdminController::class, 'approveWithdraw'])->name('approve-withdraw');
 
+    Route::get('/admin/referrals/{userId}', [AdminController::class, 'getReferralTeam'])->name('admin.referrals');
+
+
     Route::post('/payment-link', [PaymentController::class, 'generatePaymentLink'])->name('payment-link');
     Route::get('deposit', [PaymentController::class, 'deposit'])->name('deposit');
     Route::get('recharge/{txn_id}', [PaymentController::class, 'recharge'])->name('recharge');
