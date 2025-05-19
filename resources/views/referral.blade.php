@@ -40,6 +40,13 @@
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {{-- swel --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    {{-- csrf  token --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <style>
         .card {
             border: none;
@@ -217,7 +224,8 @@
                                                 alt="logo" width="50" />
                                             <div>
                                                 <p class="mb-1 text-muted fw-semibold">TOTAL EARNED</p>
-                                                <h3 class="mb-0 text-success fw-bold">₹ {{ $user->refer_wallet }}</h3>
+                                                <h3 class="mb-0 text-success fw-bold">₹ {{ $user->total_refer_wallet }}
+                                                </h3>
                                             </div>
                                         </div>
                                     </div>
@@ -230,11 +238,11 @@
                                                 <div>
                                                     <p class="mb-1 text-muted fw-semibold">AVAILABLE TO WITHDRAW</p>
                                                     <h3 class="mb-0 text-primary fw-bold">₹
-                                                        {{ $user->total_refer_wallet }}</h3>
+                                                        {{ $user->refer_wallet }}</h3>
                                                 </div>
                                             </div>
                                             <div>
-                                                <button onclick="window.location.href='{{ route('withdraw') }}'"
+                                                <button onclick="handleWithdraw({{ $user->refer_wallet }})"
                                                     class="btn btn-outline-primary">Withdraw</button>
                                             </div>
                                         </div>
@@ -382,6 +390,10 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+        {{-- swel --}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
@@ -407,6 +419,107 @@
             function toggleShare() {
                 const dialog = document.getElementById("shareDialog");
                 dialog.classList.toggle("is-open");
+            }
+
+
+
+            const withdraw_status = "{{ $settings->refer_withdraw_status }}";
+
+
+            function handleWithdraw(refer_wallet) {
+                if (withdraw_status == 'off') {
+                    Toastify({
+                        text: "Withdraw is currently disabled.",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#FF5733",
+                    }).showToast();
+                    return;
+                }
+
+                if (refer_wallet == 0) {
+                    Toastify({
+                        text: "You have no amount to withdraw.",
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#FF5733",
+                    }).showToast();
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Enter Amount',
+                    input: 'number',
+                    inputLabel: 'Amount to withdraw',
+                    inputPlaceholder: 'Enter amount',
+                    inputAttributes: {
+                        min: 1
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Proceed',
+                    cancelButtonText: 'Cancel',
+                    preConfirm: (amount) => {
+                        if (!amount || amount <= 0) {
+                            Swal.showValidationMessage('Please enter a valid amount');
+                            return false;
+                        }
+
+                        if (amount > refer_wallet) {
+                            Swal.showValidationMessage('Amount exceeds available balance');
+                            return false;
+                        }
+
+                        // AJAX call to process withdrawal
+                        $.ajax({
+                            url: "{{ route('referWithdraw') }}",
+                            type: "POST",
+                            data: {
+                                amount: amount,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.icon === 'success') {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.title,
+                                        text: response.message,
+                                        timer: 2000,
+                                        showConfirmButton: false,
+                                    }).then(() => {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    if (response.icon == 'info') {
+                                        Swal.fire({
+                                            icon: response.icon,
+                                            title: response.title,
+                                            text: response.message,
+                                        }).then(() => {
+                                            window.location.href = '/bank-details';
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: response.icon,
+                                            title: response.title,
+                                            text: response.message,
+                                        });
+                                    }
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Something went wrong while processing the request.',
+                                });
+                            }
+                        });
+                    }
+                });
             }
         </script>
 

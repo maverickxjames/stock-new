@@ -134,7 +134,7 @@ class ProfileController extends Controller
         $referral_users=DB::table('users')->where('referred_by',$user->user_id)->get();
 
         $settings = DB::table('settings')->first();
-        return view('referral', ['user'=>$user,'referral_code' => $referral_code, 'referral_users' => $referral_users,'referral_bonus' => $settings->referral_bonus, 'referral_bonus_limit' => $settings->referral_bonus_limit]);
+        return view('referral', ['user'=>$user,'referral_code' => $referral_code, 'referral_users' => $referral_users,'referral_bonus' => $settings->referral_bonus, 'referral_bonus_limit' => $settings->referral_bonus_limit,'settings' => $settings]);
     }
 
 

@@ -351,6 +351,56 @@ class PaymentController extends Controller
         ]);
     }
 
+
+    public function referWithdraw(Request $request)
+    {
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        $bankDetails = bankDetail::where('userid', $user_id)->first();
+        
+        if (!$bankDetails) {
+            return response()->json(['icon' => 'info', 'title' => 'Error', 'message' => 'Bank details not found. Please update your bank details.']);
+        }
+        $settings = DB::table('settings')->where('id', 1)->first();
+        
+        if ($settings->withdraw_status == 'off') {
+            return response()->json(['icon' => 'error', 'title' => 'Error', 'message' => $settings->refer_withdraw_message]);
+        }
+
+       
+        $user->refer_wallet -= $request->amount;
+        $user->save();
+
+        $txn_id = uniqid('wd_');
+        $payment_info = [
+            'is_upi'=>false,
+            'is_bank'=>true,
+            'upi'=>null,
+            'bank'=>[
+                'ac'=>$bankDetails->bank_acc,
+                'ifsc'=>$bankDetails->bank_ifsc,
+            ]
+        ];
+        $withdraw = DB::table('refer_withdraws')->insert([
+            'userid' => $user_id,
+            'txnid' => $txn_id,
+            'amount' => $request->amount,
+            'status' => 0, // Pending status
+            'type' => 'bank',
+            'payment_info' => json_encode($payment_info),
+            'remark' => 'Pending Payment',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        return response()->json([
+            'icon' => 'success',
+            'title' => 'Success',
+            'message' => 'Withdrawal request submitted successfully.',
+        ]);
+
+    }
+
     public function bankDetails(Request $request): View
     {
         // $bankDetails = bankDetail::all();

@@ -76,6 +76,8 @@ class RegisteredUserController extends Controller
             $referrer->increment('refer_count'); // Increment the referral count for the referrer
             $referral_bonus = DB::table('settings')->first()->referral_bonus; // Get the referral bonus from settings
             $referrer->increment('refer_wallet', $referral_bonus); // Add the referral bonus to the referrer's balance
+            // Add the referral bonus to the total referrer's wallet
+            $referrer->increment('total_refer_wallet', $referral_bonus); // Add the referral bonus to the total referrer's wallet
             
 
 
