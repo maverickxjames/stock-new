@@ -72,98 +72,101 @@
     <link class="main-css" href="css/style.css" rel="stylesheet">
 
     <style>
-        
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: auto;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  color: #777;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: 2px;
-  text-transform: capitalize;
-  text-decoration: none;
-  white-space: nowrap;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-}
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: auto;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            color: #777;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: 2px;
+            text-transform: capitalize;
+            text-decoration: none;
+            white-space: nowrap;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
 
-button:hover, .button:hover {
-  border-color: #cdd;
-}
+        button:hover,
+        .button:hover {
+            border-color: #cdd;
+        }
 
-.share-button, .copy-link {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-
-.share-dialog {
-  display: none;
-  position: relative; /* or absolute if needed */
-  z-index: 1000; /* ✅ Make sure it's on top */
-  box-shadow: 0 8px 16px rgba(0,0,0,.15);
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 4px;
-  background-color: #fff;
-}
-
-.share-dialog.is-open {
-  display: block;
-}
+        .share-button,
+        .copy-link {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
 
 
-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
+        .share-dialog {
+            display: none;
+            position: relative;
+            /* or absolute if needed */
+            z-index: 1000;
+            /* ✅ Make sure it's on top */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, .15);
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 4px;
+            background-color: #fff;
+        }
 
-.targets {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  margin-bottom: 20px;
-}
-
-.close-button {
-  background-color: transparent;
-  border: none;
-  padding: 0;
-}
+        .share-dialog.is-open {
+            display: block;
+        }
 
 
+        header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
 
-.link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  border-radius: 4px;
-  background-color: #eee;
-}
+        .targets {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+            margin-bottom: 20px;
+        }
 
-.pen-url {
-  margin-right: 15px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+        .close-button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+
+
+
+        .link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #eee;
+        }
+
+        .pen-url {
+            margin-right: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     </style>
 
     <!-- Include Animate.css for animation (optional but nice) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
@@ -188,95 +191,110 @@ header {
 
         <div class="content-body">
             <div class="container-fluid">
-                <!-- row -->
                 <div class="row">
-                 
                     <div class="col-xl-12">
-                       <div class="row">
-                        <div class="card rounded-4 p-4 shadow-lg border-0">
-                            <h1 class="text-center fw-bold fs-2 mb-4 text-dark">Referral System</h1>
-                    
-                            <!-- Stats Section -->
-                            <div class="row justify-content-center gy-4">
-                                <div class="col-md-5">
-                                    <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/4121/4121044.png" alt="logo" width="50" />
-                                        <div>
-                                            <p class="mb-1 text-muted fw-semibold">TOTAL REFERRALS</p>
-                                            <h3 class="mb-0 text-primary fw-bold">{{ $user->refer_count }}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                    
-                                <div class="col-md-5">
-                                    <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo" width="50" />
-                                        <div>
-                                            <p class="mb-1 text-muted fw-semibold">TOTAL EARNED</p>
-                                            <h3 class="mb-0 text-success fw-bold">₹ {{ $user->refer_wallet }}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-10 col-md-5">
-                                    <div class="d-flex align-items-center justify-content-between gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png" alt="logo" width="50" />
+                        <div class="row">
+                            <div class="card rounded-4 p-4 shadow-lg border-0">
+                                <h1 class="text-center fw-bold fs-2 mb-4 text-dark">Referral System</h1>
+
+                                <div class="row justify-content-center gy-4">
+                                    <div class="col-md-5">
+                                        <div
+                                            class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
+                                            <img src="https://cdn-icons-png.flaticon.com/128/4121/4121044.png"
+                                                alt="logo" width="50" />
                                             <div>
-                                                <p class="mb-1 text-muted fw-semibold">AVAILABLE TO WITHDRAW</p>
-                                                <h3 class="mb-0 text-primary fw-bold">₹ {{ $user->total_refer_wallet }}</h3>
+                                                <p class="mb-1 text-muted fw-semibold">TOTAL REFERRALS</p>
+                                                <h3 class="mb-0 text-primary fw-bold">{{ $user->refer_count }}</h3>
                                             </div>
                                         </div>
-                                        <div>
-                                            <button onclick="window.location.href='{{ route('withdraw') }}'" class="btn btn-outline-primary">Withdraw</button>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div
+                                            class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
+                                            <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png"
+                                                alt="logo" width="50" />
+                                            <div>
+                                                <p class="mb-1 text-muted fw-semibold">TOTAL EARNED</p>
+                                                <h3 class="mb-0 text-success fw-bold">₹ {{ $user->refer_wallet }}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10 col-md-5">
+                                        <div
+                                            class="d-flex align-items-center justify-content-between gap-3 p-3 rounded-3 bg-light shadow-sm h-100">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <img src="https://cdn-icons-png.flaticon.com/128/11257/11257660.png"
+                                                    alt="logo" width="50" />
+                                                <div>
+                                                    <p class="mb-1 text-muted fw-semibold">AVAILABLE TO WITHDRAW</p>
+                                                    <h3 class="mb-0 text-primary fw-bold">₹
+                                                        {{ $user->total_refer_wallet }}</h3>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button onclick="window.location.href='{{ route('withdraw') }}'"
+                                                    class="btn btn-outline-primary">Withdraw</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                    
-                            <!-- Referral Link -->
-                            <div class="mt-5">
-                                <label class="mb-2 fw-semibold fs-5">Your Referral Link</label>
-                                <div class="input-group mb-3 gap-2">
-                                    <input type="text" class="form-control" id="referralInput" value="{{ url('/register/' . Auth::user()->refer_code) }}" readonly>
-                                    <button onclick="copyReferral()" class="btn btn-dark copy-link">Copy Link</button>
-                                    <button onclick="toggleShare()" class="btn btn-info text-white share-button" type="button">
-                                        <img src="https://cdn-icons-png.flaticon.com/128/16323/16323181.png" alt="logo" width="18" class="me-1">
-                                        Share
-                                    </button>
+
+                                <!-- Referral Link -->
+                                <div class="mt-5">
+                                    <label class="mb-2 fw-semibold fs-5">Your Referral Link</label>
+                                    <div class="input-group mb-3 gap-2">
+                                        <input type="text" class="form-control" id="referralInput"
+                                            value="{{ url('/register/' . Auth::user()->refer_code) }}" readonly>
+                                        <button onclick="copyReferral()" class="btn btn-dark copy-link">Copy
+                                            Link</button>
+                                        <button onclick="toggleShare()" class="btn btn-info text-white share-button"
+                                            type="button">
+                                            <img src="https://cdn-icons-png.flaticon.com/128/16323/16323181.png"
+                                                alt="logo" width="18" class="me-1">
+                                            Share
+                                        </button>
+                                    </div>
+                                    <p class="text-muted">Get <span
+                                            class="text-info fw-bold">₹{{ $referral_bonus }}</span> for each invited
+                                        user</p>
                                 </div>
-                                <p class="text-muted">Get <span class="text-info fw-bold">₹{{ $referral_bonus }}</span> for each invited user</p>
-                            </div>
-                    
-                            <!-- Share Dialog -->
-                            <div id="shareDialog" class="share-dialog mt-3 border rounded-3 p-3 shadow-sm animate__animated">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="mb-0 fw-bold">Share</h5>
-                                    <button class="btn-close" onclick="toggleShare()">&times;</button>
+
+                                <!-- Share Dialog -->
+                                <div id="shareDialog"
+                                    class="share-dialog mt-3 border rounded-3 p-3 shadow-sm animate__animated">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h5 class="mb-0 fw-bold">Share</h5>
+                                        <button class="btn-close" onclick="toggleShare()">&times;</button>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <a href="#" class="btn btn-outline-primary">Facebook</a>
+                                        <a href="#" class="btn btn-outline-info">Twitter</a>
+                                        <a href="#" class="btn btn-outline-secondary">LinkedIn</a>
+                                        <a href="#" class="btn btn-outline-danger">Email</a>
+                                    </div>
                                 </div>
-                                <div class="d-flex flex-wrap gap-3">
-                                    <a href="#" class="btn btn-outline-primary">Facebook</a>
-                                    <a href="#" class="btn btn-outline-info">Twitter</a>
-                                    <a href="#" class="btn btn-outline-secondary">LinkedIn</a>
-                                    <a href="#" class="btn btn-outline-danger">Email</a>
-                                </div>
-                            </div>
-                    
-                            <!-- Toast -->
-                            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
-                                <div id="copyToast" class="toast align-items-center text-white bg-success border-0" role="alert">
-                                    <div class="d-flex">
-                                        <div class="toast-body">
-                                            Referral link copied!
+
+                                <!-- Toast -->
+                                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
+                                    <div id="copyToast"
+                                        class="toast align-items-center text-white bg-success border-0"
+                                        role="alert">
+                                        <div class="d-flex">
+                                            <div class="toast-body">
+                                                Referral link copied!
+                                            </div>
+                                            <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                data-bs-dismiss="toast"></button>
                                         </div>
-                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                       </div>
                     </div>
-                    
-                    
+
+
                     <div class="col-xl-12">
                         <!-- row -->
                         <div class="row">
@@ -299,23 +317,26 @@ header {
                                             </thead>
                                             <tbody>
                                                 @foreach ($referral_users as $user)
-                                                      <tr>
-                                                    <td class="fs-14 font-w400">{{ \Carbon\Carbon::parse($user->created_at)->format('d M Y, h:i A') }}</td>
-                                                    <td>
-                                                        <div class="d-flex flex-column">
-                                                            <strong>{{ $user->name }}</strong>
-                                                            <small class="text-muted">{{ $user->user_id }}</small>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{ $user->refer_count }}
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-sm badge-success">₹{{ $user->refer_wallet }}</span>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td class="fs-14 font-w400">
+                                                            {{ \Carbon\Carbon::parse($user->created_at)->format('d M Y, h:i A') }}
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column">
+                                                                <strong>{{ $user->name }}</strong>
+                                                                <small class="text-muted">{{ $user->user_id }}</small>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ $user->refer_count }}
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <span
+                                                                class="badge badge-sm badge-success">₹{{ $user->refer_wallet }}</span>
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
-                                              
-                                               
+
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -359,17 +380,17 @@ header {
         <script src="js/dlabnav-init.js"></script>
         <script src="js/demo.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
+
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
-     
+
 
         <script>
             function copyReferral() {
                 const input = document.getElementById("referralInput");
                 input.select();
                 document.execCommand("copy");
-        
+
                 // const toast = new bootstrap.Toast(document.getElementById("copyToast"));
                 // toast.show();
 
@@ -382,13 +403,13 @@ header {
                     backgroundColor: "#4CAF50",
                 }).showToast();
             }
-        
+
             function toggleShare() {
                 const dialog = document.getElementById("shareDialog");
                 dialog.classList.toggle("is-open");
             }
         </script>
-        
+
 
 </body>
 

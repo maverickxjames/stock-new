@@ -2,53 +2,57 @@
 <html lang="en">
 
 
-<!-- Mirrored from jiade.dexignlab.com/xhtml/page-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:06:01 GMT -->
 <head>
-     	<!--Title-->
-         <title>Stock-mantra : A Trading Plateform</title>
+    <!--Title-->
+    <title>Stock-mantra : A Trading Plateform</title>
 
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="Dexignlabs">
-	<meta name="robots" content="index, follow">
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Dexignlabs">
+    <meta name="robots" content="index, follow">
 
-	<meta name="keywords" content="Admin Dashboard, Bootstrap Template, FrontEnd, Web Application, Responsive Design, User Experience, Customizable, Modern UI, Dashboard Template, Admin Panel, Bootstrap 5, HTML5, CSS3, JavaScript, Admin Template, UI Kit, SASS, SCSS, Analytics, Responsive Dashboard, responsive admin dashboard, ui kit, web app, Admin Dashboard, Template, Admin, Authentication, FrontEnd Integration, Web Application UI, Bootstrap Framework, User Interface Kit, SASS Integration, Customizable Template, HTML5/CSS3, Analytics Dashboard, Admin Dashboard UI, Mobile-Friendly Design, UI Components, Dashboard Widgets, Dashboard Framework, Data Visualization, User Experience (UX), Dashboard Widgets, Real-time Analytics, Cross-Browser Compatibility, Interactive Charts, Performance Optimization, Multi-Purpose Template, Efficient Admin Tools, Modern Web Technologies, Responsive Tables, Dashboard Widgets, Invoice Management, Access Control, Modular Design, Trend Analysis, User-Friendly Interface, Crypto Trading UI, Cryptocurrency Dashboard, Trading Platform Interface, Responsive Crypto Admin, Financial Dashboard, UI Components for Crypto, Cryptocurrency Exchange, Blockchain , Crypto Portfolio Template, Crypto Market Analytics">
+    <meta name="keywords"
+        content="Admin Dashboard, Bootstrap Template, FrontEnd, Web Application, Responsive Design, User Experience, Customizable, Modern UI, Dashboard Template, Admin Panel, Bootstrap 5, HTML5, CSS3, JavaScript, Admin Template, UI Kit, SASS, SCSS, Analytics, Responsive Dashboard, responsive admin dashboard, ui kit, web app, Admin Dashboard, Template, Admin, Authentication, FrontEnd Integration, Web Application UI, Bootstrap Framework, User Interface Kit, SASS Integration, Customizable Template, HTML5/CSS3, Analytics Dashboard, Admin Dashboard UI, Mobile-Friendly Design, UI Components, Dashboard Widgets, Dashboard Framework, Data Visualization, User Experience (UX), Dashboard Widgets, Real-time Analytics, Cross-Browser Compatibility, Interactive Charts, Performance Optimization, Multi-Purpose Template, Efficient Admin Tools, Modern Web Technologies, Responsive Tables, Dashboard Widgets, Invoice Management, Access Control, Modular Design, Trend Analysis, User-Friendly Interface, Crypto Trading UI, Cryptocurrency Dashboard, Trading Platform Interface, Responsive Crypto Admin, Financial Dashboard, UI Components for Crypto, Cryptocurrency Exchange, Blockchain , Crypto Portfolio Template, Crypto Market Analytics">
 
-	<meta name="description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
+    <meta name="description"
+        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
 
-	<meta property="og:title" content="Jiade : Crypto Trading UI Admin  Bootstrap 5 Template | Dexignlabs">
-	<meta property="og:description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
-	
-	<meta property="og:image" content="social-image.png">
+    <meta property="og:title" content="Jiade : Crypto Trading UI Admin  Bootstrap 5 Template | Dexignlabs">
+    <meta property="og:description"
+        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
 
-	<meta name="format-detection" content="telephone=no">
+    <meta property="og:image" content="social-image.png">
 
-	<meta name="twitter:title" content="Jiade : Crypto Trading UI Admin  Bootstrap 5 Template | Dexignlabs">
-	<meta name="twitter:description" content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
-	
-	<meta name="twitter:image" content="social-image.png">
-	<meta name="twitter:card" content="summary_large_image">
+    <meta name="format-detection" content="telephone=no">
 
-	<!-- MOBILE SPECIFIC -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
-	<link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
-   <link class="main-css" href="{{ asset('css/style.css') }}" rel="stylesheet">
-   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="twitter:title" content="Jiade : Crypto Trading UI Admin  Bootstrap 5 Template | Dexignlabs">
+    <meta name="twitter:description"
+        content="Empower your cryptocurrency trading platform with Jiade, the ultimate Crypto Trading UI Admin Bootstrap 5 Template. Seamlessly combining sleek design with the power of Bootstrap 5, Jiade offers a sophisticated and user-friendly interface for managing your crypto assets. Packed with customizable components, responsive charts, and a modern dashboard, Jiade accelerates your development process. Crafted for efficiency and aesthetics, this template is your key to creating a cutting-edge crypto trading experience. Explore Jiade today and elevate your crypto trading platform to new heights with a UI that blends functionality and style effortlessly.">
+
+    <meta name="twitter:image" content="social-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link href="{{ asset('vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link class="main-css" href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
 <body class="body">
-	<div class="authincation d-flex flex-column flex-lg-row flex-column-fluid">
-		<div class="login-aside text-center  d-flex flex-column flex-row-auto">
-			<div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15 ">
+    <div class="authincation d-flex flex-column flex-lg-row flex-column-fluid">
+        <div class="login-aside text-center  d-flex flex-column flex-row-auto">
+            <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15 ">
                 <div class="text-center  mb-2 pt-5 logo">
                     <img src="{{ asset('images/logo-white.png') }}" alt="" width="400">
                 </div>
@@ -56,26 +60,21 @@
                 <h3 class="mb-2 text-white">Welcome to StockMantra!</h3>
                 <p class="mb-4">Real-Time Market Insights & Trading Tools <br>Secure. Fast. Reliable.</p>
             </div>
-			{{-- <div class="aside-image position-relative" style="background-image:url(images/background/pic-2.png);">
-				<img class="img1 move-1" src="images/background/pic3.png" alt="">
-				<img class="img2 move-2" src="images/background/pic4.png" alt="">
-				<img class="img3 move-3" src="images/background/pic5.png" alt="">
-				
-			</div> --}}
-		</div>
-		<div class="container flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
-			<div class="d-flex justify-content-center h-100 align-items-center">
-				<div class="authincation-content style-2">
-					<div class="row no-gutters">
-						<div class="col-xl-12 tab-content">
-							<div id="sign-up" class="auth-form tab-pane fade show active  form-validation">
-								<form>
+        </div>
+        <div
+            class="container flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
+            <div class="d-flex justify-content-center h-100 align-items-center">
+                <div class="authincation-content style-2">
+                    <div class="row no-gutters">
+                        <div class="col-xl-12 tab-content">
+                            <div id="sign-up" class="auth-form tab-pane fade show active  form-validation">
+                                <form>
                                     @csrf
-									<div class="text-center mb-4">
-										<h3 class="text-center mb-2 text-dark">Sign up</h3>
-										{{-- <span>Your Social Campaigns</span> --}}
-									</div>
-									{{-- <div class="row mb-4">
+                                    <div class="text-center mb-4">
+                                        <h3 class="text-center mb-2 text-dark">Sign up</h3>
+                                        {{-- <span>Your Social Campaigns</span> --}}
+                                    </div>
+                                    {{-- <div class="row mb-4">
 										<div class="col-xl-6 col-12">
 											<a href="javascript:void(0);" class="btn btn-outline-dark btn-block btn-sm">
 											<svg class="me-1" width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,32 +95,37 @@
 									<div class="sepertor">
 										<span class="d-block mb-4 fs-13">Or with email</span>
 									</div> --}}
-									<div class="mb-3">
-										<label for="fullname" class="form-label required">Full Name</label>
-									  <input type="text" class="form-control" id="fullname" placeholder="fullname">
-									</div>
-									<div class="mb-3">
-										<label for="username" class="form-label required">username</label>
-									  <input type="text" class="form-control" id="username" placeholder="username">
-									</div>
-									<div class="mb-3">
-										<label for="email" class="form-label required">Email address</label>
-									  <input type="email" class="form-control" id="email" placeholder="Email">
-									</div>
-									<div class="mb-3 position-relative">
-										<label class="form-label required">Password</label>
-										<input type="password" id="password" class="form-control" placeholder="password">
-										<span class="show-pass eye">
-											<i class="fa fa-eye-slash"></i>
-											<i class="fa fa-eye"></i>
-										
-										</span>
-									</div>
                                     <div class="mb-3">
-										<label for="refercode" class="form-label required">Refer Code</label>
-									  <input type="text" class="form-control" id="refercode" value="{{ $refer_code ?? '' }}" {{ $valid_code ?'readonly':'' }} placeholder="refer Code">
-									</div>
-									{{-- <div class="form-row d-flex justify-content-between mt-4 mb-2">
+                                        <label for="fullname" class="form-label required">Full Name</label>
+                                        <input type="text" class="form-control" id="fullname"
+                                            placeholder="fullname">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label required">username</label>
+                                        <input type="text" class="form-control" id="username"
+                                            placeholder="username">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label required">Email address</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Email">
+                                    </div>
+                                    <div class="mb-3 position-relative">
+                                        <label class="form-label required">Password</label>
+                                        <input type="password" id="password" class="form-control"
+                                            placeholder="password">
+                                        <span class="show-pass eye">
+                                            <i class="fa fa-eye-slash"></i>
+                                            <i class="fa fa-eye"></i>
+
+                                        </span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="refercode" class="form-label required">Refer Code</label>
+                                        <input type="text" class="form-control" id="refercode"
+                                            value="{{ $refer_code ?? '' }}" {{ $valid_code ? 'readonly' : '' }}
+                                            placeholder="refer Code">
+                                    </div>
+                                    {{-- <div class="form-row d-flex justify-content-between mt-4 mb-2">
 										<div class="mb-3">
 											<div class="form-check custom-checkbox mb-0">
 												<input type="checkbox" class="form-check-input" id="customCheckBox1" required="">
@@ -132,146 +136,143 @@
 											<a href="page-forgot-password.html" class="btn-link text-primary">Sign in</a>
 										</div>
 									</div> --}}
-									<button onclick="register()" type="button" class="btn btn-block btn-primary">Sign up</button>
-									
-								</form>
-								<div class="new-account mt-3 text-center">
-									<p class="font-w500">Already have an account? <a class="text-primary" href="/login">Sign in</a></p>
-								</div>
-							</div>
-								
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                    <button onclick="register()" type="button"
+                                        class="btn btn-block btn-primary">Sign up</button>
+
+                                </form>
+                                <div class="new-account mt-3 text-center">
+                                    <p class="font-w500">Already have an account? <a class="text-primary"
+                                            href="/login">Sign in</a></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-       const refer_code = @json($refer_code??null);
-       const validCode=@json($valid_code??null);
-       console.log("refer_code", refer_code);
-       console.log("validCode", validCode);
-       
-
-    if(refer_code!==null &&!validCode){
-        Toastify({
-            text: "Refer code is not valid",
-            duration: 3000,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: 'center', // `left`, `center` or `right`
-            backgroundColor: "#ff0000",
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-        }).showToast();
-    }
-    if(refer_code!==null &&validCode){
-        Toastify({
-            text: "Refer code is valid",
-            duration: 3000,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: 'center', // `left`, `center` or `right`
-            backgroundColor: "#00ff00",
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-        }).showToast();
-    }
+        const refer_code = @json($refer_code ?? null);
+        const validCode = @json($valid_code ?? null);
 
 
-       
-    function register(){
-        var fullname = document.getElementById('fullname').value;
-        var username = document.getElementById('username').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var refercode = document.getElementById('refercode').value;
-
-        if(fullname == '' || username == '' || email == '' || password == ''){
+        if (refer_code !== null && !validCode) {
             Toastify({
-                text: "Please fill all the fields",
+                text: "Refer code is not valid",
                 duration: 3000,
                 close: true,
-                gravity: "top", // `top` or `bottom`
-                position: 'center', // `left`, `center` or `right`
-                backgroundColor: "#ff0000",
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-            }).showToast();
-            return false;
-        }
-        if(password.length < 8){
-            Toastify({
-                text: "Password must be at least 8 characters",
-                duration: 3000,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: 'center', // `left`, `center` or `right`
-                backgroundColor: "#ff0000",
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-            }).showToast();
-            return false;
-        }
-
-        
-        if (refercode === '') {
-            Toastify({
-                text: "Please enter refer code",
-                duration: 3000,
-                close: true,
-                gravity: "top",
-                position: 'center',
+                gravity: "top", 
+                position: 'center', 
                 backgroundColor: "#ff0000",
                 stopOnFocus: true,
             }).showToast();
-            return false;
+        }
+        if (refer_code !== null && validCode) {
+            Toastify({
+                text: "Refer code is valid",
+                duration: 3000,
+                close: true,
+                gravity: "top", 
+                position: 'center', 
+                backgroundColor: "#00ff00",
+                stopOnFocus: true, 
+            }).showToast();
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/register",
-            data: {
-                fullname: fullname,
-                username: username,
-                email: email,
-                password: password,
-                refercode: refercode,
-                _token: $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                console.log("response", response);
-                if(response.status == 200){
-                    window.location.href = '/login';
-                }else{
-                    Toastify({
-                        text: response.message,
-                        duration: 3000,
-                        close: true,
-                        gravity: "top", // `top` or `bottom`
-                        position: 'center', // `left`, `center` or `right`
-                        backgroundColor: "#ff0000",
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                    }).showToast();
-                }
+
+
+        function register() {
+            var fullname = document.getElementById('fullname').value;
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var refercode = document.getElementById('refercode').value;
+
+            if (fullname == '' || username == '' || email == '' || password == '') {
+                Toastify({
+                    text: "Please fill all the fields",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", 
+                    position: 'center', 
+                    backgroundColor: "#ff0000",
+                    stopOnFocus: true, 
+                }).showToast();
+                return false;
             }
-        });
-    }
+            if (password.length < 8) {
+                Toastify({
+                    text: "Password must be at least 8 characters",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", 
+                    position: 'center', 
+                    backgroundColor: "#ff0000",
+                    stopOnFocus: true, 
+                }).showToast();
+                return false;
+            }
+
+
+            if (refercode === '') {
+                Toastify({
+                    text: "Please enter refer code",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: 'center',
+                    backgroundColor: "#ff0000",
+                    stopOnFocus: true,
+                }).showToast();
+                return false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/register",
+                data: {
+                    fullname: fullname,
+                    username: username,
+                    email: email,
+                    password: password,
+                    refercode: refercode,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        window.location.href = '/login';
+                    } else {
+                        Toastify({
+                            text: response.message,
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", 
+                            position: 'center',
+                            backgroundColor: "#ff0000",
+                            stopOnFocus: true, 
+                        }).showToast();
+                    }
+                }
+            });
+        }
     </script>
 
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
+
     <!-- Required vendors -->
     <script src="vendor/global/global.min.js"></script>
-	<script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
-	<script src="{{ asset('js/custom.min.js') }}"></script>
-	<script src="{{ asset('js/dlabnav-init.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('js/custom.min.js') }}"></script>
+    <script src="{{ asset('js/dlabnav-init.js') }}"></script>
     <script src="{{ asset('js/demo.js') }}"></script>
 
-    
+
 </body>
 
-<!-- Mirrored from jiade.dexignlab.com/xhtml/page-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 Aug 2024 08:06:01 GMT -->
+
 </html>

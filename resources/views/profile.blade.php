@@ -108,7 +108,7 @@
             width: 100%;
             float: left;
             /* padding: 100px 0 0; */
-            border-radius:16px
+            border-radius: 16px
         }
 
         .tg-account .account-banner .inner-banner .detail * {
@@ -409,7 +409,7 @@
         <div class="content-body">
             <div class="container-fluid">
 
-                {{-- <div class="row">
+                <div class="row">
                     <div class="col-xl-12">
                         <div class="card h-auto">
                             <div class="card-body">
@@ -446,12 +446,31 @@
                                         <div class="col-sm-9 col-7"><span>{{ $user->user_id }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 gap-4 d-flex flex align-items-center justify-content-between">
-                                        <button class="btn btn-primary w-50 fs-5" onclick="changePassword()">Change
-                                            Password</button>
-                                        <button class="btn btn-success w-50 fs-5" onclick="updateProfile()">Update
-                                            Profile</button>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Refer Code <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ $user->refer_code }}</span>
+                                        </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <button class="btn btn-primary btn-block fs-5 w-100"
+                                                onclick="changePassword()">
+                                                Change Password
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <button class="btn btn-success btn-block fs-5 w-100"
+                                                onclick="updateProfile()">
+                                                Update Profile
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+
 
                                 </div>
                                 <hr>
@@ -507,9 +526,16 @@
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-sm-3 col-5">
-                                            <h5 class="f-w-500">Withraw Wallet <span class="pull-end">:</span></h5>
+                                            <h5 class="f-w-500">Withraw Wallet<span class="pull-end">:</span></h5>
                                         </div>
                                         <div class="col-sm-9 col-7"><span>₹ {{ $user->withdraw_wallet }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Refer Wallet<span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>₹ {{ $user->refer_wallet }}</span>
                                         </div>
                                     </div>
 
@@ -618,9 +644,9 @@
 
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-xl-12">
                         <div class="card h-auto">
                             <div class="card-body">
@@ -629,14 +655,12 @@
                                     <div class="inner">
                                         <div class="tg-account">
 
-                                            <!-- Accont banner start -->
                                             <div class="account-banner">
                                                 <div class="inner-banner">
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="col-md-8 detail">
                                                                 <div class="inner">
-                                                                    {{-- <h1 class="page-title">My Account</h1> --}}
                                                                     <h3 class="user-name">Hello {{ $user->name }} !
                                                                     </h3>
 
@@ -646,9 +670,7 @@
                                                             </div>
                                                             
                                                         </div>
-                                                        <!-- Row end -->
 
-                                                        <!-- Navbar Start -->
                                                         <div class="nav-area d-flex justify-content-center">
                                                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                                 <li class="nav-item">
@@ -702,13 +724,10 @@
                                                             </ul>
 
                                                         </div>
-                                                        <!-- Navbar End -->
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Banner end   -->
 
-                                            <!-- Tabs Content start -->
                                             <div class="tabs tg-tabs-content-wrapp">
                                                 <div class="tab-content" id="myTabContent">
                                                     <div class="tab-pane fade show active"
@@ -956,7 +975,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -1063,8 +1082,14 @@
             Swal.fire({
                 title: 'Update Profile',
                 html: `
+                    <div class="swal2-input-group" style="text-align: left;">
+                    <label for="name" >Name</label>
                     <input type="text" id="name" class="swal2-input" placeholder="Name" value="{{ $user['name'] }}">
+                    </div>
+                    <div class="swal2-input-group" style="text-align: left;">
+                    <label for="email">Email</label>
                     <input type="email" id="email" class="swal2-input" placeholder="Email" value="{{ $user['email'] }}">
+                    </div>
                 `,
                 confirmButtonText: 'Update Profile',
                 focusConfirm: false,
