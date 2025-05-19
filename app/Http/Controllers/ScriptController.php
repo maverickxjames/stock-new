@@ -35,13 +35,17 @@ class ScriptController extends Controller
     $today = Carbon::today();
 
     // Delete expired stocks
-    DB::table('future_temp')
-        ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') < ?", [$today])
-        ->delete();
-    DB::table('watchlist')
-        ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') < ?", [$today])
-        ->delete();
+DB::table('future_temp')
+    ->where('expiry', '!=', 'N/A')
+    ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') < ?", [$today])
+    ->delete();
 
-    return response()->json(['message' => 'Expired stocks deleted successfully.']);
+DB::table('watchlist')
+    ->where('expiry', '!=', 'N/A')
+    ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') < ?", [$today])
+    ->delete();
+
+return response()->json(['message' => 'Expired stocks deleted successfully.']);
+
 }
 }
