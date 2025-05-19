@@ -47,6 +47,34 @@ class StartProject extends Command
         //     'php artisan queue:work'
         // ];
 
+        // if app.env is quual to production 
+
+        if(env('APP_ENV') == 'production') {
+            $this->info('Running in production mode');
+            $commands = [
+                'php artisan optimize',
+                'docker-compose up -d',
+                'php artisan queue:listen > /dev/null 2>&1 &',
+                'php artisan queue:work > /dev/null 2>&1 &',
+                'sudo supervisorctl restart markettradedata > /dev/null 2>&1 &',
+                'sudo supervisorctl restart marketdata > /dev/null 2>&1 &',
+                'sudo supervisorctl restart websockets > /dev/null 2>&1 &',
+            ];
+        }else{
+                 $commands = [
+            'php artisan optimize',
+            'docker-compose up -d',
+            'start /b php artisan websockets:serve',
+            'start /b php artisan serve',
+            'start /b php artisan queue:work',
+            'start /b php artisan market:fetch-trade-updates',
+            'start /b php artisan market:fetch-updates',
+            'start /b php artisan market:fetch-indices',
+
+            // 'start /b php artisan queue:work'
+        ];
+        }
+
         // for Linux 
 
         // $commands = [
@@ -61,18 +89,7 @@ class StartProject extends Command
 
         // for Windows 
 
-        $commands = [
-            'php artisan optimize',
-            'docker-compose up -d',
-            'start /b php artisan websockets:serve',
-            'start /b php artisan serve',
-            'start /b php artisan queue:work',
-            'start /b php artisan market:fetch-trade-updates',
-            'start /b php artisan market:fetch-updates',
-            'start /b php artisan market:fetch-indices',
-
-            // 'start /b php artisan queue:work'
-        ];
+   
 
         foreach ($commands as $command) {
             $this->info("Running: $command");
