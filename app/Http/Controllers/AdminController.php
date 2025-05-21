@@ -141,26 +141,43 @@ class AdminController extends Controller
         $txnId = $request->order_id;
         $rType = $request->r_type;
 
-        if ($rType === 'confirm') {
-            $updated = Deposit::where('order_id', $txnId)->where('status', 0)->update(['status' => 1], ['remark' => 'Deposit Request Approved']);
-            $deposit = Deposit::where('order_id', $txnId)->where('status', 1)->first();
+        $deposit = Deposit::where('order_id', $txnId)->where('status', 0)->first();
+        if (!$deposit) {
+            echo "error";
+            return;
+        }
 
+        if ($rType === 'confirm') {
             $user = User::find($deposit->userid);
-            $user->real_wallet += $deposit->amount;
+
+            if (!$user) {
+                echo "error";
+                return;
+            }
+
+            $amount = $deposit->amount;
+            $referAmountPercent = DB::table('settings')->first()->referral_bonus;
+            $referAmount = ($amount * $referAmountPercent) / 100;
+
+            $isFirstDeposit = Deposit::where('userid', $user->id)->where('status', 1)->first();
+            if (!$isFirstDeposit) {
+                $referUser= User::where('user_id', $user->referred_by)->first();
+                if ($referUser) {
+                    $referUser->refer_wallet += $referAmount;
+                    $referUser->total_refer_wallet += $referAmount;
+                    $referUser->save();
+                }
+            }
+            $deposit->status = 1;
+            $deposit->remark = 'Deposit Request Approved';
+            $deposit->save();
+           
+            $user->real_wallet += $amount;
             $user->save();
 
-            if ($updated) {
-                echo "success_confirm";
-            } else {
-                echo "error";
-            }
+            echo "success_confirm";
         } else {
-            $deposit = Deposit::where('order_id', $txnId)->where('status', 0)->first();
-
-            if (!$deposit) {
-                echo "error";
-            }
-
+           
             $deposit->status = 2;
             $deposit->remark = 'Deposit Request Declined : ' . $deposit->amount;
             $deposit->save();
@@ -233,12 +250,12 @@ class AdminController extends Controller
     {
         return view('admin.trades');
     }
-    
-
-   
 
 
-    
+
+
+
+
     public function addFund(Request $request, $userId)
     {
         $request->validate([
@@ -249,7 +266,7 @@ class AdminController extends Controller
         $user->real_wallet += $request->amount;
         $user->save();
 
-        return response()->json(['success'=>true,'message' => 'Fund added successfully']);
+        return response()->json(['success' => true, 'message' => 'Fund added successfully']);
     }
 
 
@@ -266,39 +283,38 @@ class AdminController extends Controller
         $page = (int) $request->query('page', 1);
         $limit = (int) $request->query('limit', 10);
         $offset = ($page - 1) * $limit;
-    
+
         $today = Carbon::now(); // Get current date
-    
+
         $query = DB::table('future_temp')
             ->where('assetSymbol', 'like', "%" . $search . "%")
             ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') >= ?", [$today]); // Filter expired contracts
-        if($type == 'all'){
+        if ($type == 'all') {
             $query->where('instrumentType', '!=', 'IDX');
-        }
-        elseif ($type == 'future') {
+        } elseif ($type == 'future') {
             $query->where('instrumentType', 'FUT')->where('segment', 'NSE_FO');
         } elseif ($type == 'option') {
             $query->where(function ($q) {
                 $q->where('instrumentType', 'CE')
-                  ->where('segment', 'NSE_FO')
-                  ->orWhere('instrumentType', 'PE');
+                    ->where('segment', 'NSE_FO')
+                    ->orWhere('instrumentType', 'PE');
             });
         } elseif ($type == 'indices') {
             $query->where('instrumentType', 'IDX');
         } elseif ($type == "mcx") {
             $query->where(function ($q) {
                 $q->where('instrumentType', 'FUT')
-                  ->where('segment', 'MCX_FO');
+                    ->where('segment', 'MCX_FO');
             });
         }
 
 
-    
+
         // Apply limit & offset for pagination
         // $data = $query->limit($limit)->offset($offset)->get();
         // $data = $query->orderBy('expiry', $sortOrder)->paginate($limit, ['*'], 'page', $page);
         $data = $query->orderBy('expiry', $sortOrder)->get();
-    
+
         return response()->json($data);
     }
 
@@ -323,61 +339,58 @@ class AdminController extends Controller
     }
 
     public function updateTradeField(Request $request)
-{
-    $request->validate([
-        'instrumentKey' => 'required',
-        'field' => 'required|string',
-        'value' => 'required'
-    ]);
-
-    $allowedFields = ['lotSize', 'quantity', 'stop_loss', 'cost', 'total_cost'];
-    $field = $request->field;
-
-    if (!in_array($field, $allowedFields)) {
-        return response()->json(['message' => 'Invalid field.'], 400);
-    }
-
-    // Update the field in the trades table
-    DB::table('trades')
-        ->where('instrumentKey', $request->instrumentKey)
-        ->update([
-            $field => $request->value
+    {
+        $request->validate([
+            'instrumentKey' => 'required',
+            'field' => 'required|string',
+            'value' => 'required'
         ]);
 
-    return response()->json(['message' => ucfirst($field) . ' updated successfully!']);
-}
+        $allowedFields = ['lotSize', 'quantity', 'stop_loss', 'cost', 'total_cost'];
+        $field = $request->field;
 
-public function newUser(Request $request): View
-{
-    $users = DB::table('users')->where('is_dummy', 1)->get();
-    return view('admin.newUser', ['users' => $users]);
-   
-}
+        if (!in_array($field, $allowedFields)) {
+            return response()->json(['message' => 'Invalid field.'], 400);
+        }
 
-public function validateUser(Request $request)
-{
-    $request->validate([
-        'user_id' => 'required|exists:users,user_id', 
-    ]);
+        // Update the field in the trades table
+        DB::table('trades')
+            ->where('instrumentKey', $request->instrumentKey)
+            ->update([
+                $field => $request->value
+            ]);
 
-    $user = User::where('user_id', $request->user_id)->first();
-    if ($user) {
-        $user->is_dummy = 0;
-        $user->save();
-        return response()->json(['success' => true, 'message' => 'User updated successfully']);
-    } else {
-        return response()->json(['success' => false, 'message' => 'User not found']);
+        return response()->json(['message' => ucfirst($field) . ' updated successfully!']);
     }
 
-}
+    public function newUser(Request $request): View
+    {
+        $users = DB::table('users')->where('is_dummy', 1)->get();
+        return view('admin.newUser', ['users' => $users]);
+    }
 
-public function getReferralTeam($userId)
-{
-    $referrals = DB::table('users')
-                    ->where('referred_by', $userId)
-                    ->get();
+    public function validateUser(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,user_id',
+        ]);
 
-    return view('admin.referral_team_table', compact('referrals'));
-}
+        $user = User::where('user_id', $request->user_id)->first();
+        if ($user) {
+            $user->is_dummy = 0;
+            $user->save();
+            return response()->json(['success' => true, 'message' => 'User updated successfully']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'User not found']);
+        }
+    }
 
+    public function getReferralTeam($userId)
+    {
+        $referrals = DB::table('users')
+            ->where('referred_by', $userId)
+            ->get();
+
+        return view('admin.referral_team_table', compact('referrals'));
+    }
 }

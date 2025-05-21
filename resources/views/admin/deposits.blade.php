@@ -104,15 +104,17 @@ use App\Models\User;
                     </div>
                 </div>
             </div>
-        
-        
+
+
             <div class="col-md">
                 <div class="card">
                     <div class="card-header p-2">
                         <!-- Navigation Tabs -->
                         <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link active" href="#pending" data-toggle="tab">Pending</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#complete" data-toggle="tab">Complete</a></li>
+                            <li class="nav-item"><a class="nav-link active" href="#pending"
+                                    data-toggle="tab">Pending</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#complete" data-toggle="tab">Complete</a>
+                            </li>
                             <li class="nav-item"><a class="nav-link" href="#failed" data-toggle="tab">Failed</a></li>
                         </ul>
                     </div>
@@ -133,33 +135,32 @@ use App\Models\User;
                                                 <!-- <th>Remark</th> -->
                                                 <th>UTR</th>
                                                 <th>Time</th>
-                                                
+
                                                 <th>Action</th>
-                                               
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @php
                                                 $deposit = Deposit::where('status', 0)->orderBy('id', 'DESC')->get();
-                                    
+
                                             @endphp
-                                           
+
                                             @foreach ($deposit as $row)
                                                 @php
                                                     $user = User::where('id', $row->userid)->first();
                                                 @endphp
-                                            
+
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $user->user_id }}</td>
                                                     <td>{{ $row->order_id }}</td>
                                                     <td>{{ $row->amount }}</td>
                                                     <td>
-                                                        <img 
-                                                            src="{{ asset('storage/payment_ss/'.$row->payment_ss) }}" 
-                                                            alt="proof" 
-                                                            style="width: 100px; height: 100px; cursor: pointer;" 
-                                                            onclick="showFullImage('{{ asset('storage/payment_ss/'.$row->payment_ss) }}')">
+                                                        <img src="{{ asset('storage/payment_ss/' . $row->payment_ss) }}"
+                                                            alt="proof"
+                                                            style="width: 100px; height: 100px; cursor: pointer;"
+                                                            onclick="showFullImage('{{ asset('storage/payment_ss/' . $row->payment_ss) }}')">
                                                     </td>
 
                                                     <td>{{ $row->upi }}</td>
@@ -167,7 +168,7 @@ use App\Models\User;
                                                     <td>{{ $row->utr }}</td>
                                                     <td>{{ $row->created_at }}</td>
                                                     <td>
-                                                        <form>
+                                                        <form onsubmit="event.preventDefault();">
                                                             @csrf
                                                             <button class="btn btn-success"
                                                                 onclick="depositApprove('{{ $row->order_id }}','confirm')">Approve</button>
@@ -178,13 +179,13 @@ use App\Models\User;
                                                 </tr>
                                             @endforeach
 
-                                        
+
                                         </tbody>
                                     </table>
-        
+
                                 </div>
                             </div>
-        
+
                             <!-- Deposit-Specific Transactions -->
                             <div class="tab-pane" id="complete">
                                 <div class="card">
@@ -197,50 +198,49 @@ use App\Models\User;
                                                 <th>Amount</th>
                                                 <th>Proof</th>
                                                 <th>UPI</th>
-                                                <th>Remark</th> 
+                                                <th>Remark</th>
                                                 <th>UTR</th>
                                                 <th>Time</th>
-                                               
+
                                             </tr>
                                         </thead>
-                                        
+
                                         <tbody>
                                             @php
                                                 $deposit = Deposit::where('status', 1)->orderBy('id', 'DESC')->get();
-                                    
+
                                             @endphp
-                                           
+
                                             @foreach ($deposit as $row)
                                                 @php
                                                     $user = User::where('id', $row->userid)->first();
                                                 @endphp
-                                            
+
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $user->user_id }}</td>
                                                     <td>{{ $row->order_id }}</td>
                                                     <td>{{ $row->amount }}</td>
                                                     <td>
-                                                        <img 
-                                                            src="{{ asset('storage/payment_ss/'.$row->payment_ss) }}" 
-                                                            alt="proof" 
-                                                            style="width: 100px; height: 100px; cursor: pointer;" 
-                                                            onclick="showFullImage('{{ asset('storage/payment_ss/'.$row->payment_ss) }}')">
+                                                        <img src="{{ asset('storage/payment_ss/' . $row->payment_ss) }}"
+                                                            alt="proof"
+                                                            style="width: 100px; height: 100px; cursor: pointer;"
+                                                            onclick="showFullImage('{{ asset('storage/payment_ss/' . $row->payment_ss) }}')">
                                                     </td>
 
                                                     <td>{{ $row->upi }}</td>
-                                                     <td>{{ $row->remark }}</td> 
+                                                    <td>{{ $row->remark }}</td>
                                                     <td>{{ $row->utr }}</td>
                                                     <td>{{ $row->created_at }}</td>
-                                                    
+
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-        
+
                                 </div>
                             </div>
-        
+
                             <!-- Withdrawal-Specific Transactions -->
                             <div class="tab-pane" id="failed">
                                 <div class="card">
@@ -253,7 +253,7 @@ use App\Models\User;
                                                 <th>Amount</th>
                                                 <th>Proof</th>
                                                 <th>UPI</th>
-                                                <th>Remark</th> 
+                                                <th>Remark</th>
                                                 <th>UTR</th>
                                                 <th>Time</th>
                                             </tr>
@@ -261,47 +261,46 @@ use App\Models\User;
                                         <tbody>
                                             @php
                                                 $deposit = Deposit::where('status', 2)->orderBy('id', 'DESC')->get();
-                                    
+
                                             @endphp
-                                           
+
                                             @foreach ($deposit as $row)
                                                 @php
                                                     $user = User::where('id', $row->userid)->first();
                                                 @endphp
-                                            
+
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $user->user_id }}</td>
                                                     <td>{{ $row->order_id }}</td>
                                                     <td>{{ $row->amount }}</td>
                                                     <td>
-                                                        <img 
-                                                            src="{{ asset('storage/payment_ss/'.$row->payment_ss) }}" 
-                                                            alt="proof" 
-                                                            style="width: 100px; height: 100px; cursor: pointer;" 
-                                                            onclick="showFullImage('{{ asset('storage/payment_ss/'.$row->payment_ss) }}')">
+                                                        <img src="{{ asset('storage/payment_ss/' . $row->payment_ss) }}"
+                                                            alt="proof"
+                                                            style="width: 100px; height: 100px; cursor: pointer;"
+                                                            onclick="showFullImage('{{ asset('storage/payment_ss/' . $row->payment_ss) }}')">
                                                     </td>
-                                                    
+
                                                     <td>{{ $row->upi }}</td>
-                                                  <td>{{ $row->remark }}</td> 
+                                                    <td>{{ $row->remark }}</td>
                                                     <td>{{ $row->utr }}</td>
                                                     <td>{{ $row->created_at }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-        
+
                                 </div>
                             </div>
-        
-        
+
+
                         </div>
-        
+
                     </div>
                 </div>
-        
+
             </div>
-        
+
         </div>
         <footer class="main-footer">
             <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
@@ -395,138 +394,143 @@ use App\Models\User;
     </script>
 
 
-<script>
-    function depositApprove(order_id, r_type) {
-        const actionTitle = r_type === 'confirm' ? 'Approving Deposit...' : 'Declining Deposit...';
-        const actionMessage = r_type === 'confirm' ? 'Please wait while the deposit is approved.' :
-            'Please wait while the deposit is declined.';
+    <script>
+        function depositApprove(order_id, r_type) {
+            const actionTitle = r_type === 'confirm' ? 'Approving Deposit...' : 'Declining Deposit...';
+            const actionMessage = r_type === 'confirm' ? 'Please wait while the deposit is approved.' :
+                'Please wait while the deposit is declined.';
 
-        // Approve request using AJAX and Swal.fire
-        $.ajax({
-            url: '{{ route('approve-deposit') }}',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-            },
-            data: {
-                order_id: order_id,
-                r_type: r_type
-            },
-            beforeSend: function() {
-                Swal.fire({
-                    title: actionTitle,
-                    text: actionMessage,
-                    allowOutsideClick: false,
-                    didOpen: () => Swal.showLoading(),
-                });
-            },
-
-            success: function(data) {
-                swal.close();
-
-                const response = data;
-
-
-                if (response === 'success') {
-                    const message = response.type === 'confirm' ? 'Transaction Approved Successfully' :
-                        'Transaction Declined Successfully';
-
+            // Approve request using AJAX and Swal.fire
+            $.ajax({
+                url: '{{ route('approve-deposit') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                },
+                data: {
+                    order_id: order_id,
+                    r_type: r_type
+                },
+                beforeSend: function() {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: message,
+                        title: actionTitle,
+                        text: actionMessage,
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading(),
+                    });
+                },
 
-                    })
-                } else {
+                success: function(data) {
+                    swal.close();
+
+                    const response = data;
+
+
+                    if (response === 'success_confirm') {
+
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Transaction Approved Successfully'
+
+                        }).then(() => location.reload());
+                    } else if (response === 'success_decline') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Transaction Declined Successfully'
+                        }).then(() => location.reload());
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Something went wrong. Try again.',
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.close();
+                    const errorMessage = xhr.responseJSON?.message || 'Something went wrong. Please try again.';
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: response.message,
+                        text: errorMessage,
                     });
                 }
-            },
-            error: function(xhr) {
-                Swal.close();
-                const errorMessage = xhr.responseJSON?.message || 'Something went wrong. Please try again.';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: errorMessage,
-                });
-            }
-        });
-    }
+            });
+        }
 
-    function withdrawApprove(txnid, r_type) {
-        const actionTitle = r_type === 'confirm' ? 'Approving Withdraw...' : 'Declining Withdraw...';
-        const actionMessage = r_type === 'confirm' ? 'Please wait while the withdraw is approved.' :
-            'Please wait while the withdraw is declined.';
-        // Approve request using AJAX and Swal.fire
-        $.ajax({
-            url: '{{ route('approve-withdraw') }}',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
-            },
-            data: {
-                txnid: txnid,
-                r_type: r_type
-            },
-            beforeSend: function() {
-                Swal.fire({
-                    title: actionTitle,
-                    text: actionMessage,
-                    allowOutsideClick: false,
-                    didOpen: () => Swal.showLoading(),
-                });
-            },
-            success: function(data) {
-                Swal.close();
-                const response = data;
-
-                if (response === 'success') {
-                    const message = r_type === 'confirm' ?
-                        'Withdraw Approved Successfully' :
-                        'Withdraw Declined Successfully';
-
+        function withdrawApprove(txnid, r_type) {
+            const actionTitle = r_type === 'confirm' ? 'Approving Withdraw...' : 'Declining Withdraw...';
+            const actionMessage = r_type === 'confirm' ? 'Please wait while the withdraw is approved.' :
+                'Please wait while the withdraw is declined.';
+            // Approve request using AJAX and Swal.fire
+            $.ajax({
+                url: '{{ route('approve-withdraw') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token for security
+                },
+                data: {
+                    txnid: txnid,
+                    r_type: r_type
+                },
+                beforeSend: function() {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: message,
-                    })
-                } else {
+                        title: actionTitle,
+                        text: actionMessage,
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading(),
+                    });
+                },
+                success: function(data) {
+                    Swal.close();
+                    const response = data;
+
+                    if (response === 'success') {
+                        const message = r_type === 'confirm' ?
+                            'Withdraw Approved Successfully' :
+                            'Withdraw Declined Successfully';
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: message,
+                         }).then(() => location.reload());
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message,
+                         }).then(() => location.reload());
+                    }
+                },
+                error: function(xhr) {
+                    Swal.close();
+                    const errorMessage = xhr.responseJSON?.message || 'Something went wrong. Please try again.';
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: response.message,
+                        text: errorMessage,
                     });
                 }
-            },
-            error: function(xhr) {
-                Swal.close();
-                const errorMessage = xhr.responseJSON?.message || 'Something went wrong. Please try again.';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: errorMessage,
-                });
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 
 
-<script>
-    function showFullImage(imageUrl) {
-        Swal.fire({
-            title: 'Proof Image',
-            imageUrl: imageUrl,
-            imageAlt: 'Proof Image',
-            width: 'auto',
-            confirmButtonText: 'Close',
-        });
-    }
-</script>
+    <script>
+        function showFullImage(imageUrl) {
+            Swal.fire({
+                title: 'Proof Image',
+                imageUrl: imageUrl,
+                imageAlt: 'Proof Image',
+                width: 'auto',
+                confirmButtonText: 'Close',
+            });
+        }
+    </script>
 
 
 </body>
