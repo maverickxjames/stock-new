@@ -762,7 +762,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between ">
                                     <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
-                                        LTP:
+                                     
                                         <span id="ltp2{{ $i }}" class="font-w600 text-primary fs-4">
                                             {{ $stock->ltp }}</span>
                                     </p>
