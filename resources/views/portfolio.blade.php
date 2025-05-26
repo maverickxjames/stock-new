@@ -3816,7 +3816,7 @@ setInterval(processQueue, 5000);
                                 }).showToast();
                             }
 
-
+                            window.location.reload(); // Reload the page to reflect changes
                         }
                     });
 

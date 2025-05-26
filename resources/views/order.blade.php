@@ -1595,8 +1595,10 @@ swalWithBootstrapButtons.fire({
                             }, 300);
                         }
                     }).showToast();
+
                 }
 
+                window.location.reload();
 
             }
         });

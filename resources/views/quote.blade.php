@@ -895,13 +895,43 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
 
-Echo.channel('all-stocks')  // Keep the name consistent here
-    .listen('AllStocks', (event) => {
-        console.log("kjn",event);  // Logs the event data
+Echo.channel('search-channel')  // Keep the name consistent here
+    .listen('SearchEvent', (event) => {
+        console.log(event);
+         const feeds = event.searchResult.feeds;
+         for (const key in feeds) {
+            if (feeds.hasOwnProperty(key)) {
+                let feedData = feeds[key];
+                if (!feedData) {
+                        feedData = feeds[key];
+                        
+                    } 
+
+                    if (!feedData) continue;
+                    const receivedIsin = key;
+                    
+                    const spanElement = document.querySelector(`span#${CSS.escape(receivedIsin)}`);
+
+                    if (spanElement) {
+                        // Do something with the found span, for example:
+                     
+                        // You can update its content or style here
+                        spanElement.style.color = 'green';
+                        spanElement.textContent = feedData['ltpc']['ltp']; // example
+                    } else {
+                        
+                    }
+            }
+         }
     });
+
+
+
+
+
         Echo.channel('watchlists')
             .listen('Watchlist', (event) => {
-                console.log(event);
+                // console.log(event);
                 const feeds = event.watchlist.feeds;
 
                 for (const key in feeds) {
@@ -1234,10 +1264,8 @@ Echo.channel('all-stocks')  // Keep the name consistent here
                                         <div class="d-flex align-items-center">
                                             <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
                                             <div class="ms-3">
-                                                <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
+                                                <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol} | <span id="${item.instrumentKey}" style="color:green">${item.ltp}</span></a></h5>
                                                 <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span><br>
-                                                <span class="fs-14" id="" style="font-weight:bold;font-size:16px">LTP : <span style="color:green">${item.ltp}</span> , High: ${item.high}</span> <br>
-                                                <span class="fs-14" id="" style="font-weight:bold;font-size:16px">Open : <span style="">${item.open}</span> , Close: ${item.close}</span>
                                             </div>
                                         </div>
                                         
@@ -1273,7 +1301,7 @@ Echo.channel('all-stocks')  // Keep the name consistent here
                                 <div class="d-flex align-items-center">
                                     <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
                                     <div class="ms-3">
-                                        <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol}</a></h5>
+                                        <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol} | <span id="${item.instrumentKey}" style="color:green">${item.ltp}</span></a></h5>
                                         <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
                                     </div>
                                 </div>

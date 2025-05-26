@@ -14,6 +14,9 @@ use App\Jobs\CheckLimitOrdersJob;
 use App\Jobs\UpdateStockJob;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
+// SearchEvent
+use App\Events\SearchEvent;
+use Illuminate\Support\Facades\Cache;
 
 class MarketDataService
 {
@@ -301,6 +304,7 @@ class MarketDataService
                 // var_dump($data2);
                 ValidateLtpc::dispatch($data2);
                 CheckLimitOrdersJob::dispatch($data2);
+                SearchEvent::dispatch($data2);
 
 
                 // UpdateLTPJob::dispatch($data2);
@@ -308,6 +312,84 @@ class MarketDataService
                 // broadcast(new \App\Events\Stock($data2))->toOthers();
             }
         }
+    }
+    public function fetchSearchOnlyLtp($requestData,$userId, $jobId)
+    {
+
+        $apiVersion = '2.0';
+        $accessToken = DB::table('upstocks')->where('id', 1)->value('token');
+
+        $configuration = Configuration::getDefaultConfiguration();
+        $configuration->setAccessToken($accessToken);
+
+        $response = $this->getMarketDataFeedAuthorize($apiVersion, $configuration);
+        $connection = connect($response['data']['authorized_redirect_uri']);
+
+        echo "Connection successful!\n";
+
+
+        // $nsefo = DB::table('future_temp')
+        //     ->select('instrumentKey') // Select only the 'exchangeToken' column
+        //     ->distinct()              // Ensure the results are distinct
+        //     ->get();                  // Retrieve the data
+
+        // // Convert the collection to an array of 'exchangeToken' values
+        // $tokens = $nsefo->pluck('instrumentKey')->toArray();
+
+        // Prepare the final array
+        $finalArray = ["instrumentKeys" => $requestData];
+       
+
+        $data = [
+            "guid" => "someguid",
+            "method" => "sub",
+            "data" => [
+                "mode" => "ltpc",
+                // "instrumentKeys" => ["NSE_FO|35674"]
+                "instrumentKeys" => $finalArray['instrumentKeys']
+            ]
+        ];
+
+      
+
+
+
+        $binaryData = json_encode($data);
+        $connection->sendBinary($binaryData);
+     
+
+        foreach ($connection as $message) {
+
+                $currentJobId = Cache::get("ltp_job_id_{$userId}");
+    if ($currentJobId !== $jobId) {
+        echo "Stopping stale WebSocket job...\n";
+        $connection->close(); // Gracefully close the connection
+        break;
+    }
+
+
+            $payload = $message->buffer();
+
+            if ($payload === '100') {
+                $connection->close();
+                break;
+            }
+
+            if (!empty($payload)) {
+                $decodedData = $this->decodeProtobuf($payload);
+                $apidata = $decodedData->serializeToJsonString();
+
+                $data2 = json_decode($apidata, true);
+                var_dump($data2);
+            
+                broadcast(new SearchEvent($data2))->toOthers();
+                // usleep(100 * 1000);
+                // UpdateLTPJob::dispatch($data2);
+                // // Broadcast the processed data to the client
+                // broadcast(new \App\Events\Stock($data2))->toOthers();
+            }
+        }
+
     }
 
 

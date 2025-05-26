@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Services\MarketDataService;
+// add marketdatacontroller 
+
+
 
 class MarketDataController extends Controller
 {
@@ -45,6 +48,14 @@ class MarketDataController extends Controller
     {
         $data = $this->marketDataService->fetchTradeOnlyLtp();
         // broadcast(new \App\Events\Stock($data));
+
+        return response()->json(['message' => 'Stocks fetched successfully.']);
+    }
+    public function fetchSearchOnlyLtp($requestData, $userId, $jobId)
+
+    {
+        $data = $this->marketDataService->fetchSearchOnlyLtp($requestData, $userId, $jobId);
+        // broadcast(new \App\Events\SearchEvent($data));
 
         return response()->json(['message' => 'Stocks fetched successfully.']);
     }
