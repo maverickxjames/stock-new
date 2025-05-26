@@ -264,9 +264,9 @@
                                             Share
                                         </button>
                                     </div>
-                                    <p class="text-muted">Get <span
-                                            class="text-info fw-bold">₹{{ $referral_bonus }}</span> for each invited
-                                        user</p>
+                                   <p class="text-muted">
+                                        Get <span class="text-info fw-bold">{{ $referral_bonus }} %</span> of your friend's first deposit as a bonus
+                                    </p>
                                 </div>
 
                                 <!-- Share Dialog -->
@@ -310,7 +310,13 @@
                                 <div class="card-header justify-content-between border-0">
                                     <h2 class="card-title mb-0">My Referral</h2>
                                 </div>
-                                <div class="card-body px-3 py-0">
+                                @if ($referral_users->isEmpty())
+                                    <div class="card-body text-center">
+                                        <p class="text-muted">No referral users found.</p>
+                                        <p class="text-muted">Share your referral link to invite users and earn rewards.</p>
+                                    </div>
+                                @else
+                                    <div class="card-body px-3 py-0">
                                     <div class="table-responsive">
                                         <table
                                             class="table-responsive table shadow-hover tickettable display mb-4 dataTablesCard dataTable no-footer"
@@ -324,22 +330,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($referral_users as $user)
+                                                @foreach ($referral_users as $refer_user)
                                                     <tr>
                                                         <td class="fs-14 font-w400">
-                                                            {{ \Carbon\Carbon::parse($user->created_at)->format('d M Y, h:i A') }}
+                                                            {{ \Carbon\Carbon::parse($refer_user->created_at)->format('d M Y, h:i A') }}
                                                         </td>
                                                         <td>
                                                             <div class="d-flex flex-column">
-                                                                <strong>{{ $user->name }}</strong>
+                                                                <strong>{{ $refer_user->name }}</strong>
                                                                 <small class="text-muted">{{ $user->user_id }}</small>
                                                             </div>
                                                         </td>
-                                                        <td>{{ $user->refer_count }}
+                                                        <td>{{ $refer_user->refer_count }}
                                                         </td>
                                                         <td class="text-end">
+                                                            @php
+                                                                $amount= DB::table('refer_profits')
+                                                                        ->where('referrer_id', $user->id)
+                                                                        ->where('used_user_id', $refer_user->id)
+                                                                        ->sum('amount');
+
+                                                                $amount = number_format($amount, 2, '.', '');
+
+                                                                   
+                                                            @endphp
                                                             <span
-                                                                class="badge badge-sm badge-success">₹{{ $user->refer_wallet }}</span>
+                                                                class="badge badge-sm badge-success">₹{{ $amount }}</span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -350,6 +366,9 @@
                                     </div>
 
                                 </div>
+                                    
+                                @endif
+                                
                             </div>
                         </div>
                     </div>
