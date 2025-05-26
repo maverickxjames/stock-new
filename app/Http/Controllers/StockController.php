@@ -490,13 +490,15 @@ class StockController extends Controller
         $instrumentKeys = $data->pluck('instrumentKey')->toArray();
         // return $instrumentKeys;
         $userId = auth()->id(); // or session()->getId();
+        
         Cache::put("ltp_job_id_{$userId}", 'stale_job_' . uniqid(), now()->addMinutes(1));
 
 // Sleep briefly to allow the old job to check and exit
 // usleep(500 * 1000); // 500 milliseconds
         $job = new FetchStockLtpJob($instrumentKeys, $userId);
         Cache::put("ltp_job_id_{$userId}", $job->jobId, now()->addMinutes(10));
-        dispatch($job);
+        $cmd = "php artisan run:ltp $userId '$instrumentKeys' > /dev/null 2>&1 &";
+        exec($cmd);
 
     
         return response()->json($data);
