@@ -19,5 +19,13 @@ class CronController extends Controller
     ]);
    }
 
+   public function foreCloseOnExpiry(){
+
+   }
+
+   public function foreCloseIntraday(){
+
+   }
+
     
 }

@@ -26,6 +26,8 @@ class UpdateLotSizeJob implements ShouldQueue
 
             $cookie = DB::table('upstocks')->where('id', 1)->value('cookie');
 
+            Log::info("Cookie fetched: " . $cookie);
+
         foreach ($getSymbol as $symbol) {
             $url = "https://service.upstox.com/instrument/v1/instruments?instrumentKeys=" . $symbol->instrumentKey . "&pageNo=1&pageSize=1";
             // $cookie = "access_token=your_access_token"; // Replace with a valid token
@@ -35,6 +37,9 @@ class UpdateLotSizeJob implements ShouldQueue
             ])->get($url);
 
             $data = $response->json();
+            // log here 
+
+            Log::info("Fetching lot size for instrumentKey: " . $symbol->instrumentKey, ['response' => $data]);
 
            
 
