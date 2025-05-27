@@ -17,6 +17,7 @@ use App\Models\trade;
 use App\Jobs\UpdateLotSizeJob;
 use App\Http\Controllers\MarketDataController;
 use App\Jobs\FetchStockLtpJob;
+use Illuminate\Support\Facades\Artisan;
 
 
 
@@ -376,8 +377,10 @@ class StockController extends Controller
             }
 
             if ($profit > 0) {
-                $profit -= $platformMargin;
-                $totalProfit += $profit;
+                // $profit -= $platformMargin;
+                $profitAmt=$profit;
+                $profitAmt -= $platformMargin;
+                $totalProfit += $profitAmt;
 
                 DB::table('trades')->where('id', $trade->id)->update([
                     'status' => 'closed',
@@ -386,8 +389,10 @@ class StockController extends Controller
                     'profit_loss_percentage' => ($profit / $userAmount) * 100,
                 ]);
             } else {
-                $loss += $platformMargin;
-                $totalLoss += $loss;
+                // $loss += $platformMargin;
+                $lossAmt=$loss;
+                $lossAmt += $platformMargin;
+                $totalLoss += $lossAmt;
 
                 DB::table('trades')->where('id', $trade->id)->update([
                     'status' => 'closed',
@@ -486,19 +491,23 @@ class StockController extends Controller
         $data = $query->limit($limit)->offset($offset)->get();
 
         // extract all instrumentKey from data and make an array of instrumentKeys 
-        
         $instrumentKeys = $data->pluck('instrumentKey')->toArray();
-        // return $instrumentKeys;
-        $userId = auth()->id(); // or session()->getId();
-        
-        Cache::put("ltp_job_id_{$userId}", 'stale_job_' . uniqid(), now()->addMinutes(1));
+        $userId = auth()->id();
+        $cacheKey = "ltp_instrument_keys_{$userId}";
 
-// Sleep briefly to allow the old job to check and exit
-// usleep(500 * 1000); // 500 milliseconds
-        $job = new FetchStockLtpJob($instrumentKeys, $userId);
-        Cache::put("ltp_job_id_{$userId}", $job->jobId, now()->addMinutes(10));
-        $cmd = "php artisan run:ltp $userId '$instrumentKeys' > /dev/null 2>&1 &";
-        exec($cmd);
+        Cache::put($cacheKey, $instrumentKeys, now()->addMinutes(10)); // Store keys for 10 minutes
+
+        // Run Artisan command manually (async or sync)
+        // $command = "php artisan run:ltp {$userId} > /dev/null 2>&1 &";
+        // for windows ('start /b php artisan run:ltp {$userId}');
+        chdir(base_path()); // Move to Laravel root
+
+        $command = "start /b php artisan run:ltp {$userId}";
+        // pclose(popen("start /B php artisan run:ltp {$userId}", "r"));
+
+
+
+        exec($command);
 
     
         return response()->json($data);

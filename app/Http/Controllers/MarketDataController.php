@@ -51,10 +51,10 @@ class MarketDataController extends Controller
 
         return response()->json(['message' => 'Stocks fetched successfully.']);
     }
-    public function fetchSearchOnlyLtp($requestData, $userId, $jobId)
+    public function fetchSearchOnlyLtp($userId)
 
     {
-        $data = $this->marketDataService->fetchSearchOnlyLtp($requestData, $userId, $jobId);
+        $data = $this->marketDataService->fetchSearchOnlyLtp($userId);
         // broadcast(new \App\Events\SearchEvent($data));
 
         return response()->json(['message' => 'Stocks fetched successfully.']);

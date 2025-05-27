@@ -313,7 +313,7 @@ class MarketDataService
             }
         }
     }
-    public function fetchSearchOnlyLtp($requestData,$userId, $jobId)
+    public function fetchSearchOnlyLtp($userId)
     {
 
         $apiVersion = '2.0';
@@ -337,7 +337,9 @@ class MarketDataService
         // $tokens = $nsefo->pluck('instrumentKey')->toArray();
 
         // Prepare the final array
-        $finalArray = ["instrumentKeys" => $requestData];
+        $cacheKey = "ltp_instrument_keys_{$userId}";
+        $instrumentKeys = Cache::get($cacheKey);
+        $finalArray = ["instrumentKeys" => $instrumentKeys];
        
 
         $data = [
@@ -360,13 +362,10 @@ class MarketDataService
 
         foreach ($connection as $message) {
 
-                $currentJobId = Cache::get("ltp_job_id_{$userId}");
-    if ($currentJobId !== $jobId) {
-        echo "Stopping stale WebSocket job...\n";
-        $connection->close(); // Gracefully close the connection
+              if (!Cache::has($cacheKey)) {
+        $connection->close();
         break;
     }
-
 
             $payload = $message->buffer();
 

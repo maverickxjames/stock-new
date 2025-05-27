@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Controllers\MarketDataController;
 
 class SearchScript extends Command
 {
@@ -11,7 +13,7 @@ class SearchScript extends Command
      *
      * @var string
      */
-    protected $signature = 'run:ltp {userId} {instrumentKeys}';
+    protected $signature = 'run:ltp {userId}';
 
     /**
      * The console command description.
@@ -37,11 +39,16 @@ class SearchScript extends Command
      */
 public function handle()
 {
-    $userId = $this->argument('userId');
-    $instrumentKeys = json_decode($this->argument('instrumentKeys'), true);
+        $userId = $this->argument('userId');
+        $cacheKey = "ltp_instrument_keys_{$userId}";
+        $instrumentKeys = Cache::get($cacheKey);
 
-    $job = new \App\Jobs\FetchStockLtpJob($instrumentKeys, $userId);
-    Cache::put("ltp_job_id_{$userId}", $job->jobId, now()->addMinutes(10));
-    $job->handle(); // Directly run the logic (not via queue)
+        if (!$instrumentKeys) {
+            $this->error("No instrument keys found for user ID: $userId");
+            return;
+        }
+
+            $controller = app(MarketDataController::class);
+            $controller->fetchSearchOnlyLtp($userId);
 }
 }
