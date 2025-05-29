@@ -455,7 +455,6 @@ class StockController extends Controller
     {
         
 
-
         $search = $request->search ?? '';
         $type = $request->type ?? 'all';
         $page = (int) ($request->page ?? 1);
@@ -465,8 +464,8 @@ class StockController extends Controller
         $today = Carbon::now(); // Get current date
     
         $query = DB::table('future_temp')
-            ->where('tradingSymbol', 'like', $search . "%")
-            ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') >= ?", [$today]); // Filter expired contracts
+            ->where('tradingSymbol', 'like', $search . "%");
+            // ->whereRaw("STR_TO_DATE(expiry, '%d %b %y') >= ?", [$today]); // Filter expired contracts
     
         if ($type == 'future') {
             $query->where('instrumentType', 'FUT')->where('segment', 'NSE_FO');
@@ -502,12 +501,28 @@ class StockController extends Controller
         // for windows ('start /b php artisan run:ltp {$userId}');
         chdir(base_path()); // Move to Laravel root
 
-        $command = "start /b php artisan run:ltp {$userId}";
-        // pclose(popen("start /B php artisan run:ltp {$userId}", "r"));
+        // $command = "start /b php artisan run:ltp {$userId}";
+        pclose(popen("start /B php artisan run:ltp {$userId}", "r"));
+
+        // Get instrumentKeys in user's watchlist
+$watchlistKeys = DB::table('watchlist')
+    ->where('userid', $userId)
+    ->whereIn('instrumentKey', $instrumentKeys)
+    ->pluck('instrumentKey')
+    ->toArray();
+
+// Add isWatchlist attribute to each record
+$data = $data->map(function ($item) use ($watchlistKeys) {
+    $item->isWatchlist = in_array($item->instrumentKey, $watchlistKeys);
+    return $item;
+});
 
 
 
-        exec($command);
+        // exec($command);
+
+
+        
 
     
         return response()->json($data);

@@ -34,83 +34,160 @@ class WatchlistController extends Controller
 
 
 
- 
+
+
+    // public function addWatchlist(Request $request)
+    // {
+    //     Helper::forgetCache(auth()->id(),'watchlist');
+    //     $isExists = Watchlist::where('userid', auth()->id())
+    //         ->where('instrumentKey', $request->instrumentKey)
+    //         ->exists();
+
+    //     if ($isExists) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Script already exists.',
+    //         ], 409);
+    //     }
+
+    //     $query = DB::table('watchlist')->insert([
+    //         'instrumentKey' => $request->instrumentKey,
+    //         'tradingSymbol' => $request->tradingSymbol,
+    //         'segment' => $request->segment,
+    //         'expiry' => $request->expiry,
+    //         'instrumentType' => $request->instrumentType,
+    //         'assetSymbol' => $request->assetSymbol,
+    //         'exchange' => $request->exchange,
+    //         'assetType' => $request->assetType,
+    //         'assetKey' => $request->assetKey,
+    //         'isIn' => $request->isIn,
+    //         'exchangeToken' => $request->exchangeToken,
+    //         'assetToken' => $request->assetToken,
+    //         'script_id' => $request->id,
+    //         'userid' => auth()->id(),
+    //         'created_at' => Carbon::now(),
+    //         'updated_at' => Carbon::now(),
+    //     ]);
+
+    //     if($request->instrumentType == 'FUT' && $request->segment == 'NSE_FO'){
+    //         $sendId = 1;
+    //     }elseif(($request->instrumentType == 'CE' || $request->instrumentType == 'PE') && $request->segment == 'NSE_FO'){
+    //         $sendId = 2;
+    //     }elseif($request->instrumentType == 'FUT' && $request->segment == 'MCX_FO'){
+    //         $sendId = 3;
+    //     }else{
+    //         $sendId = 4;
+    //     }
+    //     if ($query) {
+    //         // quote-channel event trigger
+    //         event(new QuoteChannel(auth()->id(), 'add', $sendId));
+
+    //     //    if app_env is production  
+
+    //         if (config('app.env') == 'production') {
+    //              // Restart Supervisor process
+    //                 $process = new Process(['sudo', 'supervisorctl', 'restart', 'marketdata']);
+    //                 $process->run();
+
+    //                     // Check if the process failed
+    //                 if (!$process->isSuccessful()) {
+    //                     throw new ProcessFailedException($process);
+    //                 }
+    //         }
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Script added successfully.',
+    //         ], 201);
+    //     } else {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Failed to add script.',
+    //         ], 500);
+    //     }
+    // }
 
     public function addWatchlist(Request $request)
     {
-        Helper::forgetCache(auth()->id(),'watchlist');
-        $isExists = Watchlist::where('userid', auth()->id())
+        Helper::forgetCache(auth()->id(), 'watchlist');
+
+        $existingScript = Watchlist::where('userid', auth()->id())
             ->where('instrumentKey', $request->instrumentKey)
-            ->exists();
+            ->first();
 
-        if ($isExists) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Script already exists.',
-            ], 409);
-        }
-
-        $query = DB::table('watchlist')->insert([
-            'instrumentKey' => $request->instrumentKey,
-            'tradingSymbol' => $request->tradingSymbol,
-            'segment' => $request->segment,
-            'expiry' => $request->expiry,
-            'instrumentType' => $request->instrumentType,
-            'assetSymbol' => $request->assetSymbol,
-            'exchange' => $request->exchange,
-            'assetType' => $request->assetType,
-            'assetKey' => $request->assetKey,
-            'isIn' => $request->isIn,
-            'exchangeToken' => $request->exchangeToken,
-            'assetToken' => $request->assetToken,
-            'script_id' => $request->id,
-            'userid' => auth()->id(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        if($request->instrumentType == 'FUT' && $request->segment == 'NSE_FO'){
+        // Determine sendId logic (can be reused below)
+        if ($request->instrumentType == 'FUT' && $request->segment == 'NSE_FO') {
             $sendId = 1;
-        }elseif(($request->instrumentType == 'CE' || $request->instrumentType == 'PE') && $request->segment == 'NSE_FO'){
+        } elseif (in_array($request->instrumentType, ['CE', 'PE']) && $request->segment == 'NSE_FO') {
             $sendId = 2;
-        }elseif($request->instrumentType == 'FUT' && $request->segment == 'MCX_FO'){
+        } elseif ($request->instrumentType == 'FUT' && $request->segment == 'MCX_FO') {
             $sendId = 3;
-        }else{
+        } else {
             $sendId = 4;
         }
-        if ($query) {
-            // quote-channel event trigger
-            event(new QuoteChannel(auth()->id(), 'add', $sendId));
-            
-        //    if app_env is production  
 
-            if (config('app.env') == 'production') {
-                 // Restart Supervisor process
+        if ($existingScript) {
+            // If script already exists, remove it (toggle off)
+            $existingScript->delete();
+            event(new QuoteChannel(auth()->id(), 'remove', $sendId));
+             
+            return response()->json([
+                'success' => true,
+                'message' => 'Script removed successfully .',
+                'action' => 'removed',
+            ], 200);
+        } else {
+            // Else insert it (toggle on)
+            $query = DB::table('watchlist')->insert([
+                'instrumentKey' => $request->instrumentKey,
+                'tradingSymbol' => $request->tradingSymbol,
+                'segment' => $request->segment,
+                'expiry' => $request->expiry,
+                'instrumentType' => $request->instrumentType,
+                'assetSymbol' => $request->assetSymbol,
+                'exchange' => $request->exchange,
+                'assetType' => $request->assetType,
+                'assetKey' => $request->assetKey,
+                'isIn' => $request->isIn,
+                'exchangeToken' => $request->exchangeToken,
+                'assetToken' => $request->assetToken,
+                'script_id' => $request->id,
+                'userid' => auth()->id(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+            if ($query) {
+                event(new QuoteChannel(auth()->id(), 'add', $sendId));
+
+                if (config('app.env') === 'production') {
                     $process = new Process(['sudo', 'supervisorctl', 'restart', 'marketdata']);
                     $process->run();
-                    
-                        // Check if the process failed
+
                     if (!$process->isSuccessful()) {
                         throw new ProcessFailedException($process);
                     }
-            }
+                }
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Script added successfully.',
-            ], 201);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to add script.',
-            ], 500);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Script added successfully ',
+                    'action' => 'added',
+                ], 201);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to add script.',
+                ], 500);
+            }
         }
     }
-    
+
+
 
     public function removeWatchlist(Request $request)
     {
-        Helper::forgetCache(auth()->id(),'watchlist');
+        Helper::forgetCache(auth()->id(), 'watchlist');
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer', // ID is required and must be an integer

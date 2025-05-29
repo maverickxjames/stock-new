@@ -304,7 +304,7 @@ class MarketDataService
                 // var_dump($data2);
                 ValidateLtpc::dispatch($data2);
                 CheckLimitOrdersJob::dispatch($data2);
-                SearchEvent::dispatch($data2);
+                // SearchEvent::dispatch($data2);
 
 
                 // UpdateLTPJob::dispatch($data2);
@@ -346,7 +346,7 @@ class MarketDataService
             "guid" => "someguid",
             "method" => "sub",
             "data" => [
-                "mode" => "ltpc",
+                "mode" => "full",
                 // "instrumentKeys" => ["NSE_FO|35674"]
                 "instrumentKeys" => $finalArray['instrumentKeys']
             ]

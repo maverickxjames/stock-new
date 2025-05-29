@@ -326,15 +326,15 @@
                                             <ul class="nav nav-tabs gap-4">
                                                 <li class="nav-item">
                                                     <a class="nav-link active" data-bs-toggle="tab" href="#future"
-                                                        role="tab" >Future</a>
+                                                        role="tab">Future</a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" data-bs-toggle="tab" href="#option"
                                                         role="tab">Option</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-bs-toggle="tab" href="#mcx"
-                                                       >Commodities</a>
+                                                    <a class="nav-link" data-bs-toggle="tab"
+                                                        href="#mcx">Commodities</a>
                                                 </li>
                                                 {{-- <li class="nav-item">
                                                         <a class="nav-link" data-bs-toggle="tab" href="#indcies"
@@ -894,36 +894,83 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> --}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
+        const previousValues = {};
+        Echo.channel('search-channel') // Keep the name consistent here
+            .listen('SearchEvent', (event) => {
+                console.log(event);
+                const feeds = event.searchResult.feeds;
+                for (const key in feeds) {
+                    if (feeds.hasOwnProperty(key)) {
+                        let feedData = feeds[key]?.ff?.marketFF;
+                        if (!feedData) {
+                            feedData = feeds[key];
 
-Echo.channel('search-channel')  // Keep the name consistent here
-    .listen('SearchEvent', (event) => {
-        console.log(event);
-         const feeds = event.searchResult.feeds;
-         for (const key in feeds) {
-            if (feeds.hasOwnProperty(key)) {
-                let feedData = feeds[key];
-                if (!feedData) {
-                        feedData = feeds[key];
-                        
-                    } 
+                        }
 
-                    if (!feedData) continue;
-                    const receivedIsin = key;
-                    
-                    const spanElement = document.querySelector(`span#${CSS.escape(receivedIsin)}`);
+                        if (!feedData) continue;
+                        console.log("feedData", feedData);
+                        const receivedIsin = key;
 
-                    if (spanElement) {
-                        // Do something with the found span, for example:
-                     
-                        // You can update its content or style here
-                        spanElement.style.color = 'green';
-                        spanElement.textContent = feedData['ltpc']['ltp']; // example
-                    } else {
-                        
+                        const ltp = Number(feedData?.ltpc?.ltp ?? 0);
+                        const bid = Number(feedData?.marketLevel?.bidAskQuote?.[0]?.bidQ ?? 0);
+                        const ask = Number(feedData?.marketLevel?.bidAskQuote?.[0]?.askQ ?? 0);
+                        const high = Number(feedData?.marketOHLC?.ohlc?.[0]?.high ?? 0);
+                        const low = Number(feedData?.marketOHLC?.ohlc?.[0]?.low ?? 0);
+
+                        console.log("bid", bid, "ask", ask, "ltp", ltp, "high", high, "low", low);
+
+
+                        const spanElement = document.querySelector(`span#${CSS.escape(receivedIsin)}`);
+                        const bidSpan = document.querySelector(`span#bid_${CSS.escape(receivedIsin)}`);
+                        const askSpan = document.querySelector(`span#ask_${CSS.escape(receivedIsin)}`);
+                        const highSpanElement = document.querySelector(`span#high_${CSS.escape(receivedIsin)}`);
+                        const lowSpanElement = document.querySelector(`span#low_${CSS.escape(receivedIsin)}`);
+
+
+                        if (spanElement) {
+                            spanElement.textContent = ltp.toFixed(2);
+                        }
+                        // Highlight bid changes
+                        if (bidSpan) {
+                            const prevBid = previousValues[receivedIsin]?.bid ?? bid;
+                            bidSpan.textContent = bid.toFixed(2);
+                            bidSpan.classList.remove("text-success", "text-danger");
+                            if (bid > prevBid) {
+                                bidSpan.classList.add("text-success");
+                            } else if (bid < prevBid) {
+                                bidSpan.classList.add("text-danger");
+                            }
+                        }
+
+                        // Highlight ask changes
+                        if (askSpan) {
+                            const prevAsk = previousValues[receivedIsin]?.ask ?? ask;
+                            askSpan.textContent = ask.toFixed(2);
+                            askSpan.classList.remove("text-success", "text-danger");
+                            if (ask > prevAsk) {
+                                askSpan.classList.add("text-success");
+                            } else if (ask < prevAsk) {
+                                askSpan.classList.add("text-danger");
+                            }
+                        }
+                        if (highSpanElement) {
+                            highSpanElement.textContent = high.toFixed(2);
+                        }
+                        if (lowSpanElement) {
+                            lowSpanElement.textContent = low.toFixed(2);
+                        }
+
+                        // Save current values
+                        previousValues[receivedIsin] = {
+                            bid,
+                            ask
+                        };
+
+
+
                     }
-            }
-         }
-    });
+                }
+            });
 
 
 
@@ -939,13 +986,13 @@ Echo.channel('search-channel')  // Keep the name consistent here
                         let feedData = feeds[key].ff.marketFF;
                         if (!feedData) {
                             feedData = feeds[key].ff.indexFF;
-                            feedData.marketLevel = null; 
-                        } 
+                            feedData.marketLevel = null;
+                        }
 
                         if (!feedData) continue;
 
 
-                        const receivedIsin = key; 
+                        const receivedIsin = key;
 
                         const isinElement1 = Array.from(document.querySelectorAll("p[id^='isin1']")).find(el => el
                             .textContent === receivedIsin);
@@ -965,20 +1012,24 @@ Echo.channel('search-channel')  // Keep the name consistent here
                             const ltp = feedData?.ltpc?.ltp || 1;
                             const cp = feedData?.ltpc?.cp || 0;
 
+                            
 
 
                             document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice11${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice12${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||'0' +'/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose1${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`realprice11${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bidQ || '0';
+                            document.getElementById(`realprice12${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.askQ || '0';
+                            document.getElementById(`highlow1${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .high || '0' + '/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose1${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
-                            const percentageChange = cp > 0 ?parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) :0;
+                            const percentageChange = cp > 0 ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) : 0;
 
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 
-                            document.getElementById(`change1${rowId}`).innerHTML = `
+                            document.getElementById(`change1${rowId}`).innerHTML =
+                                `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc1'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc1'+rowId+'">'+percentageChange+'%</span>&nbsp'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc1'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc1'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
@@ -996,17 +1047,20 @@ Echo.channel('search-channel')  // Keep the name consistent here
                             const cp = feedData?.ltpc?.cp || 0;
 
                             document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice21${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice22${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||'0' +'/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose2${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`realprice21${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bidQ || '0';
+                            document.getElementById(`realprice22${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.askQ || '0';
+                            document.getElementById(`highlow2${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .high || '0' + '/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose2${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
-                            const percentageChange = cp > 0 ?parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) :0;
+                            const percentageChange = cp > 0 ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) : 0;
 
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 
-                            document.getElementById(`change2${rowId}`).innerHTML = `
+                            document.getElementById(`change2${rowId}`).innerHTML =
+                                `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc2'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc2'+rowId+'">'+percentageChange+'%</span>&nbsp'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc2'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc2'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
@@ -1026,17 +1080,20 @@ Echo.channel('search-channel')  // Keep the name consistent here
 
 
                             document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice31${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice32${rowId}`).value = feedData.ltpc.ltp || '0';
-                            document.getElementById(`highlow3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].high ||'0' +'/' + feedData.marketOHLC.ohlc[0].low || '0';
-                            document.getElementById(`openclose3${rowId}`).textContent = feedData.marketOHLC.ohlc[0].open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
+                            document.getElementById(`realprice31${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bidQ || '0';
+                            document.getElementById(`realprice32${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.askQ || '0';
+                            document.getElementById(`highlow3${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .high || '0' + '/' + feedData.marketOHLC.ohlc[0].low || '0';
+                            document.getElementById(`openclose3${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
+                                .open || '0' + '/' + feedData.marketOHLC.ohlc[0].close || '0';
 
-                            const percentageChange = cp > 0 ?parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) :0;
+                            const percentageChange = cp > 0 ? parseFloat((((ltp - cp) / cp) * 100).toFixed(2)) : 0;
 
                             const badgeValue = (ltp - cp).toFixed(2) || '0';
 
 
-                            document.getElementById(`change3${rowId}`).innerHTML = `
+                            document.getElementById(`change3${rowId}`).innerHTML =
+                                `
                                         ${percentageChange > 0 ? '<span class="badge badge-success me-1">▲</span>' : '<span class="badge badge-danger me-1">▼</span>'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc3'+rowId+'">'+percentageChange+'%</span>&nbsp' : '<span class="text-danger" id="perc3'+rowId+'">'+percentageChange+'%</span>&nbsp'}
                                          ${percentageChange>0 ? '<span class="text-success" id="perc3'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc3'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
@@ -1122,7 +1179,7 @@ Echo.channel('search-channel')  // Keep the name consistent here
 
                     $.ajax({
                         url: '{{ route('quoteRefresh', ':sendId') }}'.replace(':sendId',
-                        sendId), // Properly passing the sendId
+                            sendId), // Properly passing the sendId
                         type: 'GET',
                         success: function(response) {
                             // delete quotesRefresh old data and replace with new data
@@ -1180,8 +1237,8 @@ Echo.channel('search-channel')  // Keep the name consistent here
 
         function getActiveFilter() {
             let activeTab = document.querySelector('.nav-tabs .nav-link.active');
-            let active=activeTab.innerText.trim();
-            if(active == 'Commodities') active = 'MCX';
+            let active = activeTab.innerText.trim();
+            if (active == 'Commodities') active = 'MCX';
             return active;
         }
 
@@ -1259,27 +1316,45 @@ Echo.channel('search-channel')  // Keep the name consistent here
             // Loop through API response and create new elements
             responseData.forEach((item) => {
 
+
                 const contentHTML = `
-                                    <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
-                                            <div class="ms-3">
-                                                <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol} | <span id="${item.instrumentKey}" style="color:green">${item.ltp}</span></a></h5>
-                                                <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span><br>
+                                    <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between align-items-center my-3 border-bottom pb-3">
+                                        <!-- Left side content -->
+                                       
+                                            <!-- Main stock info -->
+                                            <div>
+                                                <!-- Title and prices -->
+                                                <div class="d-flex flex-wrap align-items-center mb-1">
+                                                    <h5 class="fs-6 fw-bold mb-0 me-3" id="script_symbol">${item.tradingSymbol} |</h5>
+                                                    <span class="fs-6 text-success me-2" id="bid_${item.instrumentKey}">${item.bid}</span>
+                                                    <span class="fs-6 text-success" id="ask_${item.instrumentKey}">${item.ask}</span>
+                                                </div>
+
+                                                <!-- BID/ASK and HIGH/LOW -->
+                                                <div class="d-flex flex-wrap gap-3 mb-1">
+                                                    <span class="fs-6">HIGH : 
+                                                        <span id="high_${item.instrumentKey}">${item.high}</span>
+                                                    </span>
+                                                    <span class="fs-6">LOW : 
+                                                        <span id="low_${item.instrumentKey}">${item.low}</span>
+                                                    </span>
+                                                </div>
+
+                                                <!-- Expiry and Segment -->
+                                                <span class="fs-6 text-muted" id="script_description">
+                                                    Expiry: ${item.expiry}, Lot: ${item.lotSize}
+                                                </span>
                                             </div>
-                                        </div>
-                                        
-                                            <a href="javascript:void(0)" id="add_script" style="display: flex;align-items: center;">
-											<div class="form-check custom-checkbox mb-3 checkbox-success">
-											<input type="checkbox" class="form-check-input" ${item.is_watchlist? 'checked':''} id="customCheckBox3" required="" style="
-                                                        height: 30px;
-                                                        width: 30px;
-                                                    ">
-											
-										    </div>
-                                            </a>
+
+                                             <div class="me-3">
+                                                <!-- Checkbox -->
+                                                <div class="form-check custom-checkbox checkbox-success">
+                                                    <input type="checkbox" class="form-check-input" ${item.isWatchlist ? 'checked' : ''} id="customCheckBox${item.row}" style="height: 25px; width: 25px;">
+                                                </div>
+                                            </div>
                                       
                                     </div>
+
                                 `;
                 container.insertAdjacentHTML("beforeend", contentHTML);
             });
@@ -1293,30 +1368,48 @@ Echo.channel('search-channel')  // Keep the name consistent here
 
             // Hide loading indicator before adding new data
             loadingIndicator.style.display = "none";
+            //    <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
+
 
             // Loop through API response and create new elements
             responseData.forEach((item) => {
                 const contentHTML = `
-                            <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between my-3 border-bottom-dashed pb-3">
-                                <div class="d-flex align-items-center">
-                                    <img src="https://s3tv-symbol.dhan.co/symbols/${item.assetSymbol}.svg" alt="" class="avatar" id="avatar">
-                                    <div class="ms-3">
-                                        <h5 class="mb-1"><a href="#" id="script_symbol">${item.tradingSymbol} | <span id="${item.instrumentKey}" style="color:green">${item.ltp}</span></a></h5>
-                                        <span class="fs-14 text-muted" id="script_description">Expiry: ${item.expiry}, Segment: ${item.segment}</span>
+                             <div onclick='addWatchlist(${JSON.stringify(item)})' class="d-flex justify-content-between align-items-center my-3 border-bottom pb-3">
+                                        <!-- Left side content -->
+                                       
+                                            <!-- Main stock info -->
+                                            <div>
+                                                <!-- Title and prices -->
+                                                <div class="d-flex flex-wrap align-items-center mb-1">
+                                                    <h5 class="fs-6 fw-bold mb-0 me-3" id="script_symbol">${item.tradingSymbol} |</h5>
+                                                    <span class="fs-6 text-success me-2" id="ltp1_${item.row}">${item.bid}</span>
+                                                    <span class="fs-6 text-success" id="ltp2_${item.row}">${item.ask}</span>
+                                                </div>
+
+                                                <!-- BID/ASK and HIGH/LOW -->
+                                                <div class="d-flex flex-wrap gap-3 mb-1">
+                                                    <span class="fs-6">HIGH : 
+                                                        <span id="high${item.row}">${item.high}</span>
+                                                    </span>
+                                                    <span class="fs-6">LOW : 
+                                                        <span id="low${item.row}">${item.low}</span>
+                                                    </span>
+                                                </div>
+
+                                                <!-- Expiry and Segment -->
+                                                <span class="fs-6 text-muted" id="script_description">
+                                                    Expiry: ${item.expiry}, Lot: ${item.lotSize}
+                                                </span>
+                                            </div>
+
+                                             <div class="me-3">
+                                                <!-- Checkbox -->
+                                                <div class="form-check custom-checkbox checkbox-success">
+                                                    <input type="checkbox" class="form-check-input" ${item.isWatchlist ? 'checked' : ''} id="customCheckBox${item.row}" style="height: 25px; width: 25px;">
+                                                </div>
+                                            </div>
+                                      
                                     </div>
-                                </div>
-                                <div class="icon-box icon-box-sm bgl-primary">
-                                    <a href="javascript:void(0)" id="add_script">
-                                       <div class="form-check custom-checkbox mb-3 checkbox-success">
-											<input type="checkbox" class="form-check-input" ${item.is_watchlist? 'checked':''} id="customCheckBox3" required="" style="
-                                                                    height: 30px;
-                                                                    width: 30px;
-                                                                ">
-											
-										</div>
-                                    </a>
-                                </div>
-                            </div>
                         `;
                 container.insertAdjacentHTML("beforeend", contentHTML);
             });
@@ -1340,7 +1433,7 @@ Echo.channel('search-channel')  // Keep the name consistent here
             loadingIndicator.style.display = "block";
         }
 
-        
+
 
 
 
@@ -1475,10 +1568,10 @@ Echo.channel('search-channel')  // Keep the name consistent here
             const quantity = document.getElementById('quantity' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const costPrice = document.getElementById('costPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const marginCost = document.getElementById('marginCost' + rowId + (tradeType === 'sell' ? '2' : '1') +
-            uniqueId);
+                uniqueId);
             const realPrice = document.getElementById('realprice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const marginUsed = document.getElementById('marginUsed' + rowId + (tradeType === 'sell' ? '2' : '1') +
-            uniqueId);
+                uniqueId);
             const instrumentType = document.getElementById('instrumentType' + rowId + (tradeType === 'sell' ? '2' : '1') +
                 uniqueId).value;
 
@@ -1505,12 +1598,12 @@ Echo.channel('search-channel')  // Keep the name consistent here
             const maxPrice = document.getElementById('maxPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const marginCost = document.getElementById('marginCost' + rowId + (tradeType === 'sell' ? '2' : '1') +
-            uniqueId);
+                uniqueId);
             const selectedMode = document.querySelector(
                 `input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
 
             const marginUsed = document.getElementById('marginUsed' + rowId + (tradeType === 'sell' ? '2' : '1') +
-            uniqueId);
+                uniqueId);
 
             const instrumentType = document.getElementById('instrumentType' + rowId + (tradeType === 'sell' ? '2' : '1') +
                 uniqueId).value;
@@ -1568,12 +1661,12 @@ Echo.channel('search-channel')  // Keep the name consistent here
             const maxPrice = document.getElementById('maxPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const marginCost = document.getElementById('marginCost' + rowId + (tradeType === 'sell' ? '2' : '1') +
-            uniqueId);
+                uniqueId);
             const selectedMode = document.querySelector(
                 `input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
 
             const marginUsed = document.getElementById('marginUsed' + rowId + (tradeType === 'sell' ? '2' : '1') +
-            uniqueId);
+                uniqueId);
 
 
 
@@ -1636,9 +1729,9 @@ Echo.channel('search-channel')  // Keep the name consistent here
             const maxPrice = document.getElementById('maxPrice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const realPrice = document.getElementById('realprice' + rowId + (tradeType === 'sell' ? '2' : '1') + uniqueId);
             const marginCost = document.getElementById('marginCost' + rowId + (tradeType === 'sell' ? '2' : '1') +
-            uniqueId);
+                uniqueId);
             const marginUsed = document.getElementById('marginUsed' + rowId + (tradeType === 'sell' ? '2' : '1') +
-            uniqueId);
+                uniqueId);
             const selectedMode = document.querySelector(
                 `input[name="tradeMode${rowId}${tradeType === 'sell' ? '2' : '1'}${uniqueId}"]:checked`)?.value;
 
@@ -1697,10 +1790,10 @@ Echo.channel('search-channel')  // Keep the name consistent here
         function addWatchlist(item) {
             const loadingToast = Toastify({
                 text: "Processing your order...",
-                duration: -1, 
+                duration: -1,
                 gravity: "top",
                 offset: {
-                    y: "90px" 
+                    y: "90px"
                 },
                 position: "center",
                 backgroundColor: "#3498db",
@@ -1711,19 +1804,21 @@ Echo.channel('search-channel')  // Keep the name consistent here
                 url: "{{ route('add-watchlist') }}",
                 type: "POST",
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: item,
 
                 success: function(response) {
                     loadingToast.hideToast();
                     if (response.success) {
+                        console.log(response);
+                        
                         Toastify({
-                            text: "✅ Script Added to Watchlist",
+                            text: response.message ,
                             duration: 1500,
                             gravity: "top",
                             offset: {
-                                y: "90px" 
+                                y: "90px"
                             },
                             position: "center",
                             backgroundColor: "#3ab67a",
@@ -1736,7 +1831,7 @@ Echo.channel('search-channel')  // Keep the name consistent here
                             close: true,
                             gravity: "top",
                             offset: {
-                                y: "90px" 
+                                y: "90px"
                             },
                             position: "center",
                             backgroundColor: "#dc3545"
@@ -1751,7 +1846,7 @@ Echo.channel('search-channel')  // Keep the name consistent here
                         close: true,
                         gravity: "top",
                         offset: {
-                            y: "90px" 
+                            y: "90px"
                         },
                         position: "center",
                         backgroundColor: "#dc3545"
@@ -1769,20 +1864,20 @@ Echo.channel('search-channel')  // Keep the name consistent here
 
             const loadingToast = Toastify({
                 text: "Processing your order...",
-                duration: -1, 
+                duration: -1,
                 gravity: "top",
                 offset: {
-                    y: "90px" 
+                    y: "90px"
                 },
                 position: "center",
-                backgroundColor: "#3498db", 
+                backgroundColor: "#3498db",
             }).showToast();
 
             $.ajax({
                 url: "{{ route('remove-watchlist') }}",
                 type: "POST",
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
                     id: id
@@ -1795,7 +1890,7 @@ Echo.channel('search-channel')  // Keep the name consistent here
                             duration: 1500,
                             gravity: "top",
                             offset: {
-                                y: "90px" 
+                                y: "90px"
                             },
                             position: "center",
                             backgroundColor: "#3ab67a"
@@ -1806,7 +1901,7 @@ Echo.channel('search-channel')  // Keep the name consistent here
                             duration: 3000,
                             gravity: "top",
                             offset: {
-                                y: "90px" 
+                                y: "90px"
                             },
                             position: "center",
                             backgroundColor: "#dc3545"
@@ -1945,9 +2040,7 @@ Echo.channel('search-channel')  // Keep the name consistent here
                 });
             });
         }
-
-    
-</script>
+    </script>
 
 
 
