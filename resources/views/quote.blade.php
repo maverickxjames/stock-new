@@ -554,7 +554,7 @@
             aria-labelledby="offcanvasRightLabel" style="width: 1200px">
             <div class="offcanvas-header">
                 <h5 id="offcanvasRightLabel">Add Your Script</h5>
-                <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
+                <button id="clearCacheBtn3" type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close"
                     style="border: none">
                     <img src="https://cdn-icons-png.flaticon.com/128/2976/2976286.png" width="24" alt=""
                         onclick="hideSearch()">
@@ -2062,7 +2062,26 @@
     {{-- <script src="js/demo.js"></script> --}}
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        document.getElementById('clearCacheBtn3').addEventListener('click', function() {
+  
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+    fetch('/clear-ltp-cache', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            // 'Authorization': 'Bearer ' + localStorage.getItem('token') // if needed
+        },
+        body: JSON.stringify({ userId: userId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // alert(data.message);
+    });
+});
+    </script>
 </body>
 
 

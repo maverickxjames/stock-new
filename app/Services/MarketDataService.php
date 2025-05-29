@@ -307,7 +307,7 @@ class MarketDataService
                 // SearchEvent::dispatch($data2);
 
 
-                // UpdateLTPJob::dispatch($data2);
+                UpdateLTPJob::dispatch($data2);
                 // // Broadcast the processed data to the client
                 // broadcast(new \App\Events\Stock($data2))->toOthers();
             }

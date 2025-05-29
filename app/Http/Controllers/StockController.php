@@ -505,17 +505,17 @@ class StockController extends Controller
         pclose(popen("start /B php artisan run:ltp {$userId}", "r"));
 
         // Get instrumentKeys in user's watchlist
-$watchlistKeys = DB::table('watchlist')
-    ->where('userid', $userId)
-    ->whereIn('instrumentKey', $instrumentKeys)
-    ->pluck('instrumentKey')
-    ->toArray();
+        $watchlistKeys = DB::table('watchlist')
+            ->where('userid', $userId)
+            ->whereIn('instrumentKey', $instrumentKeys)
+            ->pluck('instrumentKey')
+            ->toArray();
 
-// Add isWatchlist attribute to each record
-$data = $data->map(function ($item) use ($watchlistKeys) {
-    $item->isWatchlist = in_array($item->instrumentKey, $watchlistKeys);
-    return $item;
-});
+        // Add isWatchlist attribute to each record
+        $data = $data->map(function ($item) use ($watchlistKeys) {
+            $item->isWatchlist = in_array($item->instrumentKey, $watchlistKeys);
+            return $item;
+        });
 
 
 
