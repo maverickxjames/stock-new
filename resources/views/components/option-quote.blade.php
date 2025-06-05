@@ -282,7 +282,7 @@
                                                                             readonly type="text"
                                                                             class="form-control"
                                                                             placeholder="Enter price"
-                                                                            value="{{ $stock->ltp }}">
+                                                                            value="{{ $stock->ask }}">
 
 
                                                                         <span class="input-group-text">₹</span>
@@ -448,7 +448,8 @@
                                                                     <!-- Buy/Sell Buttons -->
                                                                     <div class="mt-3 d-flex justify-content-between">
                                                                         <button type="subit"
-                                                                            class="btn btn-success btn-sm  text-uppercase me-3 btn-block">BUY</button>
+                                                                            class="btn btn-success text-uppercase fw-bold text-center w-100 py-3 fs-5">
+                                                                            BUY @ ₹ <span id="stockrealprice21{{ $i }}" >{{ $stock->ask }}</span></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -530,7 +531,7 @@
                                                                             readonly type="text"
                                                                             class="form-control"
                                                                             placeholder="Enter price"
-                                                                            value="{{ $stock->ltp }}">
+                                                                            value="{{ $stock->bid }}">
 
                                                                         <span class="input-group-text">₹</span>
                                                                     </div>
@@ -686,7 +687,8 @@
                                                                     <div class="mt-3 d-flex justify-content-between">
 
                                                                         <button type="submit"
-                                                                            class="btn btn-danger btn-sm text-uppercase btn-block">SELL</button>
+                                                                             class="btn btn-danger text-uppercase fw-bold text-center w-100 py-3 fs-5">
+                                                                            SELL @ ₹ <span id="stockrealprice22{{ $i }}" >{{ $stock->bid }}</span></button>
                                                                     </div>
 
                                                                 </div>

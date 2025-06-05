@@ -912,8 +912,8 @@
                         const receivedIsin = key;
 
                         const ltp = Number(feedData?.ltpc?.ltp ?? 0);
-                        const bid = Number(feedData?.marketLevel?.bidAskQuote?.[0]?.bidQ ?? 0);
-                        const ask = Number(feedData?.marketLevel?.bidAskQuote?.[0]?.askQ ?? 0);
+                        const bid = Number(feedData?.marketLevel?.bidAskQuote?.[0]?.bp ?? 0);
+                        const ask = Number(feedData?.marketLevel?.bidAskQuote?.[0]?.ap ?? 0);
                         const high = Number(feedData?.marketOHLC?.ohlc?.[0]?.high ?? 0);
                         const low = Number(feedData?.marketOHLC?.ohlc?.[0]?.low ?? 0);
 
@@ -1016,8 +1016,10 @@
 
 
                             document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice11${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bidQ || '0';
-                            document.getElementById(`realprice12${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.askQ || '0';
+                            document.getElementById(`realprice11${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
+                            document.getElementById(`stockrealprice11${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
+                            document.getElementById(`realprice12${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0';
+                            document.getElementById(`stockrealprice12${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0';
                             document.getElementById(`highlow1${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
                                 .high || '0' + '/' + feedData.marketOHLC.ohlc[0].low || '0';
                             document.getElementById(`openclose1${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
@@ -1035,9 +1037,9 @@
                                          ${percentageChange>0 ? '<span class="text-success" id="perc1'+rowId+'"> ('+badgeValue+' pts)</span>' : '<span class="text-danger" id="perc1'+rowId+'">  ('+badgeValue+' pts)</span>'}`;
 
                             document.getElementById(`bid1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .bidQ || '0';
+                                .bp || '0';
                             document.getElementById(`ask1${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .askQ || '0';
+                                .ap || '0';
                         }
                         if (isinElement2) {
                             const rowId = isinElement2.id.replace('isin2', '');
@@ -1047,8 +1049,10 @@
                             const cp = feedData?.ltpc?.cp || 0;
 
                             document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice21${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bidQ || '0';
-                            document.getElementById(`realprice22${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.askQ || '0';
+                            document.getElementById(`realprice21${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
+                            document.getElementById(`stockrealprice21${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
+                            document.getElementById(`realprice22${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0'; 
+                            document.getElementById(`stockrealprice22${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0'; 
                             document.getElementById(`highlow2${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
                                 .high || '0' + '/' + feedData.marketOHLC.ohlc[0].low || '0';
                             document.getElementById(`openclose2${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
@@ -1067,9 +1071,9 @@
 
                             // bid and ask
                             document.getElementById(`bid2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .bidQ || '0';
+                                .bp || '0';
                             document.getElementById(`ask2${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .askQ || '0';
+                                .ap || '0';
                         }
                         if (isinElement3) {
                             const rowId = isinElement3.id.replace('isin3', '');
@@ -1080,8 +1084,10 @@
 
 
                             document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
-                            document.getElementById(`realprice31${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bidQ || '0';
-                            document.getElementById(`realprice32${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.askQ || '0';
+                            document.getElementById(`realprice31${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
+                            document.getElementById(`stockrealprice31${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
+                            document.getElementById(`realprice32${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0';
+                            document.getElementById(`stockrealprice32${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0';
                             document.getElementById(`highlow3${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
                                 .high || '0' + '/' + feedData.marketOHLC.ohlc[0].low || '0';
                             document.getElementById(`openclose3${rowId}`).textContent = feedData.marketOHLC.ohlc[0]
@@ -1100,9 +1106,9 @@
 
                             // bid and ask
                             document.getElementById(`bid3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .bidQ || '0';
+                                .bp || '0';
                             document.getElementById(`ask3${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .askQ || '0';
+                                .ap || '0';
                         }
                         if (isinElement4) {
                             const rowId = isinElement4.id.replace('isin4', '');
@@ -1151,9 +1157,9 @@
 
                             // bid and ask
                             document.getElementById(`bid4${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .bidQ || '0';
+                                .bp || '0';
                             document.getElementById(`ask4${rowId}`).textContent = feedData.marketLevel.bidAskQuote[0]
-                                .askQ || '0';
+                                .ap || '0';
                         }
 
                     }

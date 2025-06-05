@@ -22,11 +22,12 @@ class UpdateLotSizeJob implements ShouldQueue
     {
         $getSymbol = DB::table('future_temp')
             ->where('lotSize', 0)
+            ->where('instrumentType', '!=', 'INDEX')
             ->get(['instrumentKey']);
 
             $cookie = DB::table('upstocks')->where('id', 1)->value('cookie');
 
-            Log::info("Cookie fetched: " . $cookie);
+            // Log::info("Cookie fetched: " . $cookie);
 
         foreach ($getSymbol as $symbol) {
             $url = "https://service.upstox.com/instrument/v1/instruments?instrumentKeys=" . $symbol->instrumentKey . "&pageNo=1&pageSize=1";
