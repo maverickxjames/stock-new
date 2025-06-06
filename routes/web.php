@@ -172,6 +172,8 @@ Route::middleware('auth')->group(function () {
     Route::get('ww', function(){
         return view('wallet');
     });
+
+    Route::get('brokerage',[StockController::class,'brokerage'])->name('brokerage');
 });
 
 

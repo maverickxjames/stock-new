@@ -912,4 +912,6 @@ class StockController extends Controller
         $stock = DB::table('future_temp')->where('instrumentKey', $id)->first();
         return view('stockDetails', compact('stock'));
     }
+
+    
 }
