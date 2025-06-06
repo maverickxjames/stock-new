@@ -69,6 +69,12 @@ $user=Auth::user();
                     </a>
                 </li>
                 <li>
+                    <a href="javascript:void(0);" onclick="window.location.href='{{ route('brokerage') }}'">
+                        <i class="material-symbols-outlined">request_quote</i>
+                        <span class="nav-text">Brokerage</span>
+                    </a>
+                </li>
+                <li>
                     <a href="javascript:void(0);">
                         <i class="material-symbols-outlined">info</i>
                         <span class="nav-text">About</span>

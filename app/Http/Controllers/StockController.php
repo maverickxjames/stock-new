@@ -913,5 +913,12 @@ class StockController extends Controller
         return view('stockDetails', compact('stock'));
     }
 
+    public function brokerage(Request $request)
+    {
+       
+        return view('brokerage');
+
+    }
+
     
 }
