@@ -939,6 +939,8 @@
                                 bidSpan.classList.add("text-success");
                             } else if (bid < prevBid) {
                                 bidSpan.classList.add("text-danger");
+                            } else {
+                                bidSpan.classList.add("text-primary");
                             }
                         }
 
@@ -951,6 +953,8 @@
                                 askSpan.classList.add("text-success");
                             } else if (ask < prevAsk) {
                                 askSpan.classList.add("text-danger");
+                            }  else {
+                                askSpan.classList.add("text-primary");
                             }
                         }
                         if (highSpanElement) {
@@ -1332,8 +1336,8 @@
                                                 <!-- Title and prices -->
                                                 <div class="d-flex flex-wrap align-items-center mb-1">
                                                     <h5 class="fs-6 fw-bold mb-0 me-3" id="script_symbol">${item.tradingSymbol} |</h5>
-                                                    <span class="fs-6 text-success me-2" id="bid_${item.instrumentKey}">${item.bid}</span>
-                                                    <span class="fs-6 text-success" id="ask_${item.instrumentKey}">${item.ask}</span>
+                                                    <span class="fs-6 fw-bold text-primary me-2" id="bid_${item.instrumentKey}">${item.bid}</span>
+                                                    <span class="fs-6 fw-bold text-primary" id="ask_${item.instrumentKey}">${item.ask}</span>
                                                 </div>
 
                                                 <!-- BID/ASK and HIGH/LOW -->
@@ -1388,8 +1392,8 @@
                                                 <!-- Title and prices -->
                                                 <div class="d-flex flex-wrap align-items-center mb-1">
                                                     <h5 class="fs-6 fw-bold mb-0 me-3" id="script_symbol">${item.tradingSymbol} |</h5>
-                                                    <span class="fs-6 text-success me-2" id="ltp1_${item.row}">${item.bid}</span>
-                                                    <span class="fs-6 text-success" id="ltp2_${item.row}">${item.ask}</span>
+                                                    <span class="fs-6 fw-bold text-primary me-2" id="ltp1_${item.row}">${item.bid}</span>
+                                                    <span class="fs-6 fw-bold text-primary" id="ltp2_${item.row}">${item.ask}</span>
                                                 </div>
 
                                                 <!-- BID/ASK and HIGH/LOW -->
