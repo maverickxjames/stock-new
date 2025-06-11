@@ -978,7 +978,7 @@
 
 
 
-
+        const previousLTPs = {};
 
         Echo.channel('watchlists')
             .listen('Watchlist', (event) => {
@@ -1019,7 +1019,24 @@
                             
 
 
-                            document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            const ltpElement=document.getElementById(`ltp1${rowId}`);
+                            const newLtp=feedData.ltpc.ltp || '0';
+                           const prevLtp = previousLTPs[`ltp1${rowId}`] || newLtp;
+
+                            ltpElement.textContent = newLtp;
+                            ltpElement.classList.remove("text-success", "text-danger", "text-primary");
+
+                            if (newLtp > prevLtp) {
+                                ltpElement.classList.add("text-success");
+                            } else if (newLtp < prevLtp) {
+                                ltpElement.classList.add("text-danger");
+                            } else {
+                                ltpElement.classList.add("text-primary");
+                            }
+
+                            previousLTPs[`ltp1${rowId}`] = newLtp; // Save the current LTP for future comparisons
+
                             document.getElementById(`realprice11${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
                             document.getElementById(`stockrealprice11${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
                             document.getElementById(`realprice12${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0';
@@ -1052,7 +1069,27 @@
                             const ltp = feedData?.ltpc?.ltp || 1;
                             const cp = feedData?.ltpc?.cp || 0;
 
-                            document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`ltp2${rowId}`).textContent = feedData.ltpc.ltp || '0';
+
+                            const ltpElement=document.getElementById(`ltp2${rowId}`);
+                            const newLtp=feedData.ltpc.ltp || '0';
+
+                            const prevLtp = previousLTPs[`ltp2${rowId}`] || newLtp;
+                            ltpElement.textContent = newLtp;
+
+                            ltpElement.classList.remove("text-success", "text-danger", "text-primary");
+
+                            if (newLtp > prevLtp) {
+                                ltpElement.classList.add("text-success");
+                            } else if (newLtp < prevLtp) {
+                                ltpElement.classList.add("text-danger");
+                            } else {
+                                ltpElement.classList.add("text-primary");
+                            }
+
+                            previousLTPs[`ltp2${rowId}`] = newLtp; // Save the current LTP for future comparisons
+
+
                             document.getElementById(`realprice21${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
                             document.getElementById(`stockrealprice21${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
                             document.getElementById(`realprice22${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0'; 
@@ -1087,7 +1124,26 @@
 
 
 
-                            document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
+                            // document.getElementById(`ltp3${rowId}`).textContent = feedData.ltpc.ltp || '0';
+
+                            const ltpElement=document.getElementById(`ltp3${rowId}`);
+                            const newLtp=feedData.ltpc.ltp || '0';
+                            const prevLtp = previousLTPs[`ltp3${rowId}`] || newLtp;
+
+                            ltpElement.textContent = newLtp;
+                            ltpElement.classList.remove("text-success", "text-danger", "text-primary");
+
+                            if (newLtp > prevLtp) {
+                                ltpElement.classList.add("text-success");
+                            } else if (newLtp < prevLtp) {
+                                ltpElement.classList.add("text-danger");
+                            } else {
+                                ltpElement.classList.add("text-primary");
+                            }
+
+                            previousLTPs[`ltp3${rowId}`] = newLtp; // Save the current LTP for future comparisons
+
+                            
                             document.getElementById(`realprice31${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
                             document.getElementById(`stockrealprice31${rowId}`).textContent = feedData?.marketLevel?.bidAskQuote?.[0]?.ap || '0';
                             document.getElementById(`realprice32${rowId}`).value = feedData?.marketLevel?.bidAskQuote?.[0]?.bp || '0';

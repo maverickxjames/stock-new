@@ -736,7 +736,7 @@
                         <p style="display: none" id="isin3{{ $i }}">{{ $foisin }}</p>
                         <div class="card trad-card overflow-hidden shadow-lg border-0 rounded-lg">
                             <div class="card-header border-0 pb-0 d-flex justify-content-between align-items-center">
-                                <div>
+                                <div style="width: 100%">
                                     <p class="mb-0 fs-5 font-w500 d-flex align-items-center"
                                         id="change3{{ $i }}">
                                         <?php 
@@ -776,19 +776,21 @@
                                                                     }    
                                                                     ?>
                                     </p>
-
+                                    <div class="d-flex justify-content-between ">
                                     <div class="d-flex align-items-center gap-2">
                                         <span><img src="https://s3tv-symbol.dhan.co/symbols/<?php echo $stock->assetSymbol; ?>.svg"
                                                 alt=""
                                                 style="border-radius: 100%;width:2rem;height:2rem"></span>
                                         <h4 class="text-dark mb-0 font-w600">{{ $key->tradingSymbol }} </h4>
                                     </div>
-                                    <div class="d-flex justify-content-between ">
-                                        <p class="mb-0" style="position: absolute;top: 54px;right: 14px;">
-                                         
-                                            <span id="ltp3{{ $i }}" class="font-w600 text-primary fs-4">
+                                    
+                                        {{-- <p class="mb-0" style="position: absolute;top: 54px;right: 14px;"> --}}
+                                          <div class="d-flex align-items-center gap-2">
+                                            {{-- <span class="text-muted fs-6">LTP:</span> --}}
+                                            <span id="ltp3{{ $i }}" class="fw-bold text-primary fs-4">
                                                 {{ $stock->ltp }}</span>
-                                        </p>
+                                            </div>
+                                        {{-- </p> --}}
                                     </div>
                                 </div>
                                 <div class="text-end" style="position: absolute;top: 10px;right: 14px;">
