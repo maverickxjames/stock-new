@@ -897,7 +897,7 @@
         const previousValues = {};
         Echo.channel('search-channel') // Keep the name consistent here
             .listen('SearchEvent', (event) => {
-                console.log(event);
+                // console.log(event);
                 const feeds = event.searchResult.feeds;
                 for (const key in feeds) {
                     if (feeds.hasOwnProperty(key)) {
@@ -908,7 +908,6 @@
                         }
 
                         if (!feedData) continue;
-                        console.log("feedData", feedData);
                         const receivedIsin = key;
 
                         const ltp = Number(feedData?.ltpc?.ltp ?? 0);
@@ -916,9 +915,6 @@
                         const ask = Number(feedData?.marketLevel?.bidAskQuote?.[0]?.ap ?? 0);
                         const high = Number(feedData?.marketOHLC?.ohlc?.[0]?.high ?? 0);
                         const low = Number(feedData?.marketOHLC?.ohlc?.[0]?.low ?? 0);
-
-                        console.log("bid", bid, "ask", ask, "ltp", ltp, "high", high, "low", low);
-
 
                         const spanElement = document.querySelector(`span#${CSS.escape(receivedIsin)}`);
                         const bidSpan = document.querySelector(`span#bid_${CSS.escape(receivedIsin)}`);
@@ -932,30 +928,30 @@
                         }
                         // Highlight bid changes
                         if (bidSpan) {
-                            const prevBid = previousValues[receivedIsin]?.bid ?? bid;
+                            // const prevBid = previousValues[receivedIsin]?.bid ?? bid;
                             bidSpan.textContent = bid.toFixed(2);
-                            bidSpan.classList.remove("text-success", "text-danger");
-                            if (bid > prevBid) {
-                                bidSpan.classList.add("text-success");
-                            } else if (bid < prevBid) {
-                                bidSpan.classList.add("text-danger");
-                            } else {
-                                bidSpan.classList.add("text-primary");
-                            }
+                            // bidSpan.classList.remove("text-success", "text-danger","text-primary");
+                            // if (bid > prevBid) {
+                            //     bidSpan.classList.add("text-success");
+                            // } else if (bid < prevBid) {
+                            //     bidSpan.classList.add("text-danger");
+                            // } else {
+                            //     bidSpan.classList.add("text-primary");
+                            // }
                         }
 
                         // Highlight ask changes
                         if (askSpan) {
-                            const prevAsk = previousValues[receivedIsin]?.ask ?? ask;
+                            // const prevAsk = previousValues[receivedIsin]?.ask ?? ask;
                             askSpan.textContent = ask.toFixed(2);
-                            askSpan.classList.remove("text-success", "text-danger");
-                            if (ask > prevAsk) {
-                                askSpan.classList.add("text-success");
-                            } else if (ask < prevAsk) {
-                                askSpan.classList.add("text-danger");
-                            }  else {
-                                askSpan.classList.add("text-primary");
-                            }
+                            // askSpan.classList.remove("text-success", "text-danger","text-primary");
+                            // if (ask > prevAsk) {
+                            //     askSpan.classList.add("text-success");
+                            // } else if (ask < prevAsk) {
+                            //     askSpan.classList.add("text-danger");
+                            // }  else {
+                            //     askSpan.classList.add("text-primary");
+                            // }
                         }
                         if (highSpanElement) {
                             highSpanElement.textContent = high.toFixed(2);
@@ -965,10 +961,10 @@
                         }
 
                         // Save current values
-                        previousValues[receivedIsin] = {
-                            bid,
-                            ask
-                        };
+                        // previousValues[receivedIsin] = {
+                        //     bid,
+                        //     ask
+                        // };
 
 
 
@@ -1021,15 +1017,23 @@
 
                             // document.getElementById(`ltp1${rowId}`).textContent = feedData.ltpc.ltp || '0';
                             const ltpElement=document.getElementById(`ltp1${rowId}`);
-                            const newLtp=feedData.ltpc.ltp || '0';
-                           const prevLtp = previousLTPs[`ltp1${rowId}`] || newLtp;
+                           const newLtp = parseFloat(feedData.ltpc.ltp || '0');
+                            const prevLtp = parseFloat(previousLTPs[`ltp1${rowId}`] || newLtp);
 
-                            ltpElement.textContent = newLtp;
+                            // Simulate random tick if LTP is same
+                            let visualLtp = newLtp;
+                            if (newLtp === prevLtp) {
+                                const randomTick = (Math.random() * 0.1).toFixed(2); // 0.00 to 0.10
+                                const direction = Math.random() > 0.5 ? 1 : -1;       // randomly up or down
+                                visualLtp += direction * parseFloat(randomTick);
+                            }
+
+                            ltpElement.textContent = newLtp.toFixed(2); // Display actual value
                             ltpElement.classList.remove("text-success", "text-danger", "text-primary");
 
-                            if (newLtp > prevLtp) {
+                            if (visualLtp > prevLtp) {
                                 ltpElement.classList.add("text-success");
-                            } else if (newLtp < prevLtp) {
+                            } else if (visualLtp < prevLtp) {
                                 ltpElement.classList.add("text-danger");
                             } else {
                                 ltpElement.classList.add("text-primary");
@@ -1075,13 +1079,21 @@
                             const newLtp=feedData.ltpc.ltp || '0';
 
                             const prevLtp = previousLTPs[`ltp2${rowId}`] || newLtp;
-                            ltpElement.textContent = newLtp;
 
+                            // Simulate random tick if LTP is same
+                             let visualLtp = newLtp;
+                            if (newLtp === prevLtp) {
+                                const randomTick = (Math.random() * 0.1).toFixed(2); // 0.00 to 0.10
+                                const direction = Math.random() > 0.5 ? 1 : -1;       // randomly up or down
+                                visualLtp += direction * parseFloat(randomTick);
+                            }
+
+                            ltpElement.textContent = newLtp.toFixed(2); // Display actual value
                             ltpElement.classList.remove("text-success", "text-danger", "text-primary");
 
-                            if (newLtp > prevLtp) {
+                            if (visualLtp > prevLtp) {
                                 ltpElement.classList.add("text-success");
-                            } else if (newLtp < prevLtp) {
+                            } else if (visualLtp < prevLtp) {
                                 ltpElement.classList.add("text-danger");
                             } else {
                                 ltpElement.classList.add("text-primary");
@@ -1130,17 +1142,24 @@
                             const newLtp=feedData.ltpc.ltp || '0';
                             const prevLtp = previousLTPs[`ltp3${rowId}`] || newLtp;
 
-                            ltpElement.textContent = newLtp;
+                             let visualLtp = newLtp;
+                            if (newLtp === prevLtp) {
+                                const randomTick = (Math.random() * 0.1).toFixed(2); // 0.00 to 0.10
+                                const direction = Math.random() > 0.5 ? 1 : -1;       // randomly up or down
+                                visualLtp += direction * parseFloat(randomTick);
+                            }
+
+                            ltpElement.textContent = newLtp.toFixed(2); // Display actual value
                             ltpElement.classList.remove("text-success", "text-danger", "text-primary");
 
-                            if (newLtp > prevLtp) {
+                            if (visualLtp > prevLtp) {
                                 ltpElement.classList.add("text-success");
-                            } else if (newLtp < prevLtp) {
+                            } else if (visualLtp < prevLtp) {
                                 ltpElement.classList.add("text-danger");
                             } else {
                                 ltpElement.classList.add("text-primary");
                             }
-
+                            
                             previousLTPs[`ltp3${rowId}`] = newLtp; // Save the current LTP for future comparisons
 
                             
@@ -1392,8 +1411,8 @@
                                                 <!-- Title and prices -->
                                                 <div class="d-flex flex-wrap align-items-center mb-1">
                                                     <h5 class="fs-6 fw-bold mb-0 me-3" id="script_symbol">${item.tradingSymbol} |</h5>
-                                                    <span class="fs-6 fw-bold text-primary me-2" id="bid_${item.instrumentKey}">${item.bid}</span>
-                                                    <span class="fs-6 fw-bold text-primary" id="ask_${item.instrumentKey}">${item.ask}</span>
+                                                    <span class="fs-6 fw-bold text-success me-2" id="bid_${item.instrumentKey}">${item.bid}</span>
+                                                    <span class="fs-6 fw-bold text-danger" id="ask_${item.instrumentKey}">${item.ask}</span>
                                                 </div>
 
                                                 <!-- BID/ASK and HIGH/LOW -->
@@ -1448,8 +1467,8 @@
                                                 <!-- Title and prices -->
                                                 <div class="d-flex flex-wrap align-items-center mb-1">
                                                     <h5 class="fs-6 fw-bold mb-0 me-3" id="script_symbol">${item.tradingSymbol} |</h5>
-                                                    <span class="fs-6 fw-bold text-primary me-2" id="ltp1_${item.row}">${item.bid}</span>
-                                                    <span class="fs-6 fw-bold text-primary" id="ltp2_${item.row}">${item.ask}</span>
+                                                    <span class="fs-6 fw-bold text-success me-2" id="ltp1_${item.row}">${item.bid}</span>
+                                                    <span class="fs-6 fw-bold text-danger" id="ltp2_${item.row}">${item.ask}</span>
                                                 </div>
 
                                                 <!-- BID/ASK and HIGH/LOW -->
