@@ -491,6 +491,25 @@ $upstock=Upstock::where('id',1)->first();
                 </form>
 
 
+                <h2 class="mb-4">Run Artisan Commands</h2>
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @elseif(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
+    <form method="POST" action="/run-command" class="mb-3">
+        @csrf
+        <button type="submit" name="command" value="optimize" class="btn btn-primary m-2">Optimize</button>
+        <button type="submit" name="command" value="market:fetch-indices" class="btn btn-success m-2">Indices</button>
+        <button type="submit" name="command" value="market:fetch-updates" class="btn btn-warning m-2">Watchlist</button>
+        <button type="submit" name="command" value="config:clear" class="btn btn-danger m-2">Config Clear</button>
+        <button type="submit" name="command" value="market:fetch-trade-updates" class="btn btn-danger m-2">Trade</button>
+        <button type="submit" name="command" value="dabba:chalu" class="btn btn-danger m-2">Start</button>
+    </form>
+
+
 
             </div>
 

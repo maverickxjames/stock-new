@@ -30,6 +30,7 @@ class UpdateLTPJob implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info("UpdateLTPJob started", ['marketData' => $this->marketData]);
         $datas = $this->marketData['feeds'];
         foreach ($datas as $instrumentKey => $data) {
            

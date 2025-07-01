@@ -61,18 +61,16 @@ class StartProject extends Command
                 'sudo supervisorctl restart websockets > /dev/null 2>&1 &',
             ];
         }else{
-                 $commands = [
-                    'php artisan optimize',
-                    'docker-compose up -d',
-                    'start /b php artisan websockets:serve',
-                    'start /b php artisan serve',
-                    'start /b php artisan queue:work',
-                    'start /b php artisan market:fetch-trade-updates',
-                    'start /b php artisan market:fetch-updates',
-                    'start /b php artisan market:fetch-indices',
+$phpPath = 'X:\xampp\php\php.exe'; // Adjust this to your actual PHP path
 
-                    // 'start /b php artisan queue:work'
-                ]; 
+$commands = [
+    "$phpPath artisan optimize",
+    'docker-compose up -d',
+    "start /b $phpPath artisan queue:work",
+    "start /b $phpPath artisan market:fetch-trade-updates",
+    "start /b $phpPath artisan market:fetch-updates",
+    "start /b $phpPath artisan market:fetch-indices",
+];
         }
 
         // for Linux 

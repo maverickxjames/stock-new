@@ -346,7 +346,7 @@ $user = Auth::user();
                                                                                     class="form-control text-center"
                                                                                     placeholder="Enter size"
                                                                                     id="lotSize11{{ $i }}"
-                                                                                    name="lotSize11{{ $i }}" value="1"
+                                                                                    name="lotSize11{{ $i }}" value="0.1"
                                                                                     readonly>
                                                                                 <button
                                                                                     onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy',1)"
@@ -362,7 +362,7 @@ $user = Auth::user();
                                                                                 placeholder="Enter size"
                                                                                 id="quantity11{{ $i }}"
                                                                                 name="quantity11{{ $i }}" value={{
-                                                                                $quantity }}
+                                                                                $quantity*0.1 }}
                                                                                 onkeyup="handleQuantityChange({{ $quantity }},{{ $i }},{{ $user->real_wallet }},'buy',1)">
                                                                         </div>
                                                                     </div>
@@ -600,7 +600,7 @@ $user = Auth::user();
                                                                                     class="form-control text-center"
                                                                                     placeholder="Enter size"
                                                                                     id="lotSize12{{ $i }}"
-                                                                                    name="lotSize12{{ $i }}" value="1"
+                                                                                    name="lotSize12{{ $i }}" value="0.1"
                                                                                     readonly>
                                                                                 <button
                                                                                     onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell',1)"
@@ -616,7 +616,7 @@ $user = Auth::user();
                                                                                 placeholder="Enter size"
                                                                                 id="quantity12{{ $i }}"
                                                                                 name="quantity12{{ $i }}" value={{
-                                                                                $quantity }}
+                                                                                $quantity*0.1 }}
                                                                                 onkeyup="handleQuantityChange({{ $quantity }},{{ $i }},{{ $user->real_wallet }},'sell',1)">
                                                                         </div>
                                                                     </div>

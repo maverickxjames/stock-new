@@ -353,7 +353,7 @@
                                                                                         placeholder="Enter size"
                                                                                         id="lotSize31{{ $i }}"
                                                                                         name="lotSize31{{ $i }}"
-                                                                                        value="1" readonly>
+                                                                                        value="0.1" readonly>
                                                                                     <button
                                                                                         onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'buy',3)"
                                                                                         class="btn btn-outline-secondary"
@@ -369,7 +369,7 @@
                                                                                     placeholder="Enter size"
                                                                                     id="quantity31{{ $i }}"
                                                                                     name="quantity31{{ $i }}"
-                                                                                    value={{ $quantity }} 
+                                                                                    value={{ $quantity*0.1 }} 
                                                                                     onkeyup="handleQuantityChange({{ $quantity }},{{ $i }},{{ $user->real_wallet }},'buy',3)">
                                                                             </div>
                                                                         </div>
@@ -435,7 +435,7 @@
                                                                                     <span>
                                                                                         After Margin: <span
                                                                                             id="marginCost31{{ $i }}"
-                                                                                            class="text-success">₹{{ number_format($stock->ltp*1*$quantity/500,2) }}(7x)</span>
+                                                                                            class="text-success">₹{{ number_format($stock->ltp*1*$quantity/500,2) }}</span>
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -607,7 +607,7 @@
                                                                                         placeholder="Enter size"
                                                                                         id="lotSize32{{ $i }}"
                                                                                         name="lotSize32{{ $i }}"
-                                                                                        value="1" readonly>
+                                                                                        value="0.1" readonly>
                                                                                     <button
                                                                                         onclick="incrementLot( {{ $quantity }}, {{ $i }}, {{ $user->real_wallet }},'sell',3)"
                                                                                         class="btn btn-outline-secondary"
@@ -623,7 +623,7 @@
                                                                                     placeholder="Enter size"
                                                                                     id="quantity32{{ $i }}"
                                                                                     name="quantity32{{ $i }}"
-                                                                                    value={{ $quantity }}
+                                                                                    value={{ $quantity*0.1 }}
                                                                                     onkeyup="handleQuantityChange({{ $quantity }},{{ $i }},{{ $user->real_wallet }},'sell',3)">
                                                                             </div>
                                                                         </div>

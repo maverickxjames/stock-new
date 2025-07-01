@@ -761,11 +761,13 @@ class StockController extends Controller
         foreach ($equities as $equity) {
             $symbol = $equity->symbol;
 
+            $symbol = "bankex";
+
             // if ($equity->id < 114) {
             //     continue;
             // }
             // $url = "https://service.upstox.com/search/v1?allValuesFor=expiry&expiries=05%20Jun%2025&pageNumber=1&query=ALUMINI&records=30&segments=FUT"; 
-            $url = "https://service.upstox.com/search/v1?allValuesFor=expiry&expiries=26%20Jun%2025&pageNumber=3&query=$symbol&records=500&segments=OPT";
+            $url = "https://service.upstox.com/search/v1?pageNumber=1&query=$symbol&records=2&segments=INDEX";
             // $url = "https://service.upstox.com/search/v1?allValuesFor=expiry&pageNumber=1&query=" . $symbol . "&records=500&segments=OPT";
             // $cookie = "access_token=eyJ0eXAiOiJKV1QiLCJraWQiOiJpZHQtODAxYzAxZmEtOWRmNy00YjMyLThjZmItNzE2MzgxZjQ0YzAxIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI4NTc2NzcyIiwianRpIjoiTlRvTUIxcnUzV0tmeEk0MWtwcThkQWg3NVJvIiwiaWF0IjoxNzQzNDYwNzgyLCJleHAiOjE3NDM0NjQzODIsImlzcyI6ImxvZ2luLXNlcnZpY2UiLCJzY29wZSI6WyJzZXJ2aWNlOnJlYWQiLCJzZXJ2aWNlOndyaXRlIl0sImNsaWVudF9pZCI6IklORC1ueWp2NzB1OXhjZzJ0OGUzaGtycGRtNWIiLCJrZXlfaWQiOiJpZHQtODAxYzAxZmEtOWRmNy00YjMyLThjZmItNzE2MzgxZjQ0YzAxIiwicmVmcmVzaF90b2tlbl9pZCI6IlRraW02OUdiYS1xUW9QMnRWWW1HVC10V05ROCIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJyb2xlIjoiQ1VTVE9NRVIiLCJ1c2VyX3R5cGUiOiJDVVNUT01FUiIsInVzZXJfaWQiOiIzS0JSNTgiLCJ2ZXJzaW9uIjoiVjIiLCJzdHAiOiJPTVMzIn0.b96qVNDbiFz0dUdjkm90CZq1PdKvDmZSJ7IKzdNG9tPOtpQDMacDcPx5tPWe8PUOYmYs_e2uiwJmJcpGMmuOK7aKszhEeQiBxgwoRKAJQndrN5MKQjLfqDzpo_Oo6TDQMj80TuS3gUt63OTOIcB30FXC0BZ1tSIXoS0QJAqZoKGGmf2msjXMt5UTMTtddUe0bX88dAlb8WvRyb0GZYEKzBhXi665XmB7FgveNlfa77rnHQowIm2jmnTho8XOguH4QZ7ajdGWmOBTyHjXUl4NvxBPtPu7jO08hNyT4tUNy79hplHdnValbJm5Phtz72Y9DpKv_EtnhBsBz_wiKvv9EQ;";
             $response = Http::withHeaders([
@@ -840,12 +842,12 @@ class StockController extends Controller
                 } else {
                     echo "Not Inserted";
                 }
-
+               
                 
             }
 
             // exit;
-            // break; // Remove this line if you want to process all symbols
+            break; // Remove this line if you want to process all symbols
         }
     }
 

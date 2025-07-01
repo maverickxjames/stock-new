@@ -121,9 +121,9 @@ class MarketDataService
 
                 $data2 = json_decode($apidata, true);
 
-                var_dump($data2);
+                // var_dump($data2);
 
-                // UpdateLTPJob::dispatch($data2);
+                UpdateLTPJob::dispatch($data2);
                 // Broadcast the processed data to the client
                 broadcast(new \App\Events\Watchlist($data2))->toOthers();
             }
@@ -241,7 +241,7 @@ class MarketDataService
                 $data2 = json_decode($apidata, true);
                 // var_dump($data2);
 
-                // UpdateLTPJob::dispatch($data2);
+                UpdateLTPJob::dispatch($data2);
                 // Broadcast the processed data to the client
                 broadcast(new \App\Events\Stock($data2))->toOthers();
             }

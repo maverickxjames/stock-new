@@ -978,7 +978,7 @@
 
         Echo.channel('watchlists')
             .listen('Watchlist', (event) => {
-                // console.log(event);
+                 console.log(event);
                 const feeds = event.watchlist.feeds;
 
                 for (const key in feeds) {
@@ -1093,8 +1093,10 @@
 
                             if (visualLtp > prevLtp) {
                                 ltpElement.classList.add("text-success");
+                                ltpElement.classList.add("greenbg");
                             } else if (visualLtp < prevLtp) {
                                 ltpElement.classList.add("text-danger");
+                                ltpElement.classList.add("redbg");
                             } else {
                                 ltpElement.classList.add("text-primary");
                             }
@@ -1772,16 +1774,26 @@
 
 
 
-            let currentValue = parseInt(lotInput.value) || 0;
+            let currentValue = parseFloat(lotInput.value) || 0;
             let realPriceValue = parseFloat(realPrice.value) || 0;
-
-            // Increment the lot size
-            lotInput.value = currentValue + 1;
-
+            
+            if(rowId==2){
+                currentValue = parseFloat((currentValue + 1).toFixed(1));
+           lotInput.value = currentValue;
             // Update quantity and cost price
-            quantity.value = lotInput.value * quantityPerLot;
+            quantity.value = (currentValue * quantityPerLot).toFixed(2);
+            }else{
+                 currentValue = parseFloat((currentValue + 0.1).toFixed(1));
+           lotInput.value = currentValue;
+            // Update quantity and cost price
+            quantity.value = (currentValue * quantityPerLot).toFixed(2);
+            }
+
+          
             let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
             let mcp = ((realPriceValue * lotInput.value * quantityPerLot) / margin).toFixed(2);
+            console.log("after increment", currentValue, lotInput.value, quantity.value, cp, mcp);
+            
 
 
             marginCost.innerHTML = `₹ ${mcp}`;
@@ -1836,15 +1848,24 @@
                 margin = 0;
             }
 
-            let currentValue = parseInt(lotInput.value) || 0;
+            let currentValue = parseFloat(lotInput.value) || 0;
             let realPriceValue = parseFloat(realPrice.value) || 0;
 
             // Decrement the lot size only if it's greater than 1
-            if (currentValue > 1) {
-                lotInput.value = currentValue - 1;
+            if (currentValue > 0.1) {
+                if(rowId==2){
+                    currentValue = parseFloat((currentValue - 1).toFixed(1));
+                lotInput.value = currentValue;
 
                 // Update quantity and cost price
-                quantity.value = lotInput.value * quantityPerLot;
+                quantity.value = (currentValue * quantityPerLot).toFixed(2);
+                }else{
+                    currentValue = parseFloat((currentValue - 0.1).toFixed(1));
+                lotInput.value = currentValue;
+
+                // Update quantity and cost price
+                quantity.value = (currentValue * quantityPerLot).toFixed(2);
+                }
                 let cp = (realPriceValue * lotInput.value * quantityPerLot).toFixed(2);
                 let mcp = ((realPriceValue * lotInput.value * quantityPerLot) / margin).toFixed(2);
 
@@ -1864,8 +1885,9 @@
                     document.getElementById('error-fund' + (tradeType === 'sell' ? '2' : '1') + uniqueId).style.display =
                         'block';
                 }
-            } else {
-                console.log("Lot size cannot be less than 1.");
+            } 
+            else {
+                console.log("Lot size cannot be less than 0.1.");
             }
 
 

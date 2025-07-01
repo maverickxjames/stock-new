@@ -14,6 +14,32 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TradeController;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/artisan', function () {
+    return view('artisan-tools');
+});
+
+Route::post('/run-command', function (Request $request) {
+    $command = $request->input('command');
+
+    // Security: allow only certain commands
+    $allowed = [
+        'optimize',
+        'market:fetch-updates',
+        'market:fetch-trade-updates',
+        'config:clear',
+        'market:fetch-indices',
+        'dabba:chalu'
+    ];
+
+    if (in_array($command, $allowed)) {
+        Artisan::call($command);
+        return back()->with('success', "Command '{$command}' executed.");
+    }
+
+    return back()->with('error', 'Unauthorized command.');
+});
 
 
 Route::middleware('guest')->group(function () {
